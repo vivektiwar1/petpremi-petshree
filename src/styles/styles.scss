@@ -1,14 +1,14 @@
 @import "src/styles/variables";
-@import "src/styles/variables";
 
 *,
 *::before,
-*::after {
+*::after,
+ul {
     margin: 0;
     padding: 0;
     box-sizing: inherit;
     text-rendering: optimizeLegibility;
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
 }
 
 html {

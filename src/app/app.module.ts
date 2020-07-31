@@ -15,7 +15,9 @@ import { GalleryComponent } from './dashboard/components/gallery/gallery.compone
 import { VideosComponent } from './dashboard/components/videos/videos.component';
 import { EnquiryComponent } from './dashboard/components/enquiry/enquiry.component';
 import { SanitizePipe } from './pipes/sanitize.pipe';
-
+import { LightboxModule } from 'ngx-lightbox';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ScrollActiveDirective } from './directives/scroll-active.directive';
 
 @NgModule({
   declarations: [
@@ -28,13 +30,16 @@ import { SanitizePipe } from './pipes/sanitize.pipe';
     GalleryComponent,
     VideosComponent,
     EnquiryComponent,
-    SanitizePipe
+    SanitizePipe,
+    ScrollActiveDirective
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
+    LightboxModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

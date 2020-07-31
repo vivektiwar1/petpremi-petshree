@@ -4,7 +4,7 @@
 
             <app-nav-menu [activeLink$]="activeLink$"></app-nav-menu>
 
-            <section class="content mt-sm-5 max-width">
+            <section class="content mt-sm-5 max-width" scrollActive>
                 <div class="bg-white pb-4 border-rounded" id="home">
                     <app-home [userDetails]="userDetails"></app-home>
                 </div>
@@ -16,19 +16,10 @@
 
                 <div class="bg-white mt-3 py-4 border-rounded" id="gallery">
                     <app-header>Gallery</app-header>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+                    <app-gallery [images]="userDetails?.images"></app-gallery>
                 </div>
 
-                <div class="bg-white mt-3 py-4 border-rounded" id="videos" activateOnScroll>
+                <div class="bg-white mt-3 py-4 border-rounded" id="videos">
                     <app-header>Video</app-header>
                     <br>
                     <br>
@@ -42,7 +33,7 @@
                     <br>
                 </div>
 
-                <div class="bg-white mt-3 mb-5 py-4 border-rounded" id="enquiry" activateOnScroll>
+                <div class="bg-white mt-3 mb-5 py-4 border-rounded" id="enquiry">
                     <app-header>Enquiry</app-header>
                     <app-enquiry [enquiryLoader]="apiInProgress.enquiryLoader" [enquiryForm]="enquiryForm"
                         (onSubmitEvent)="onSubmit()"></app-enquiry>

@@ -6,6 +6,7 @@ import { map, tap, delay } from "rxjs/operators";
 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DashboardService } from '../dashboard.service';
+import { ScrollOffset } from 'src/app/app.constant';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +32,7 @@ export class DashboardComponent implements OnInit {
     this.activeLink$ = this.activatedRoute.fragment.pipe(
       delay(1),
       map(fragment => fragment ? fragment : 'home'),
-      tap(() => this.viewportScroller.setOffset([0, 48])),
+      tap(() => this.viewportScroller.setOffset([0, ScrollOffset])),
       tap(fragment => this.viewportScroller.scrollToAnchor(fragment))
     );
   }

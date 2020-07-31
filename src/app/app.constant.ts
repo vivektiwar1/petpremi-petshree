@@ -25,3 +25,6 @@ export const navMenu = [
         icon: 'assets/images/icons/chat.svg'
     }
 ]
+
+export const ImagesPerPage = 6; 
+export const ScrollOffset = 48;

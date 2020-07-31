@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { of, Observable } from 'rxjs';
+import { of, Observable, Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 @Injectable({
@@ -8,9 +8,18 @@ import { delay } from 'rxjs/operators';
 })
 export class DashboardService {
 
+  private _navActive$: Subject<string> = new Subject();
   constructor(
     private http: HttpClient
   ) { }
+
+  getActiveNav(): Observable<string> {
+    return this._navActive$.asObservable();
+  }
+
+  setNavActive(anchorId: string) {
+    this._navActive$.next(anchorId);
+  }
 
   getUserDetails(): Observable<any> {
     //return this.http.get('url here')
@@ -36,7 +45,20 @@ export class DashboardService {
         instagamLink: '',
         twitterLink: '',
         avatar: 'https://www.justlifelogo.com/wp-content/uploads/2016/09/pet-care-dog-logo-for-sale.jpg',
-        coverImage: 'https://www.antelliq.com/media/wysiwyg/antelliq/pho-pet-care-what-we-do.png'
+        coverImage: 'https://www.antelliq.com/media/wysiwyg/antelliq/pho-pet-care-what-we-do.png',
+        images: [
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf1.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf2.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf3.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf4.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf5.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf6.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf8.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf9.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf1.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf1.png",
+          "https://wolftracker9eee.blob.core.windows.net/wolfpictures-mock/wolf2.png",
+        ]
       },
       status: 200
     }).pipe(

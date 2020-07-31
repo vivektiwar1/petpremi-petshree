@@ -1,1 +1,17 @@
-<p>gallery works!</p>
+<div class="container-fluid">
+    <div *ngIf="imageList.length" class="row">
+        <div class="col-6 gallery-item"
+            *ngFor="let item of imageList | paginate: {itemsPerPage: imagesPerPage, currentPage: currentPage, totalItems: totalItems }; let i = index;let isOdd = odd"
+            [ngClass]="{'pl-4': !isOdd, 'pr-4': isOdd}">
+            <figure (click)="openGallery(i + ((currentPage-1)*imagesPerPage))">
+                <img [src]="item.src" alt="">
+            </figure>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <pagination-controls (pageChange)="currentPage = $event;" autoHide="true" responsive="true">
+            </pagination-controls>
+        </div>
+    </div>
+</div>
