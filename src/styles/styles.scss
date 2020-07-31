@@ -1,0 +1,29 @@
+@import "src/styles/variables";
+@import "src/styles/variables";
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+    text-rendering: optimizeLegibility;
+    font-family: 'Lato', sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.font-weight-medium {
+    font-weight: 500;
+}
+
+.border-rounded {
+    border-radius: $border-radius-lg;
+}
+
+.full-screen {
+    min-height: 100vh;
+}

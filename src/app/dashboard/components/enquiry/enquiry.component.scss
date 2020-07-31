@@ -1,0 +1,30 @@
+@import "src/styles/variables";
+
+form {
+    font-family: "Poppins", sans-serif;
+}
+
+label {
+    color: $label-heading-color;
+    font-size: $font-size-sm;
+}
+
+.btn-warning {
+    background-color: $color-secondary;
+    border-color: $color-secondary;
+    color: $white;
+    border-radius: $border-radius-sm;
+
+    &:hover,
+    &:active,
+    &:visited,
+    &:focus {
+        background-color: darken($color-secondary, 8);
+        border-color: darken($color-secondary, 8);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        pointer-events: unset;
+    }
+}

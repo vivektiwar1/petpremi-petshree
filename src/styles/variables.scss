@@ -1,0 +1,36 @@
+// breakpoints
+$media-breakpoint-sm: 576px;
+
+// colors
+$color-primary: #06256f;
+$color-secondary: #efac36;
+$label-heading-color: #335f7f;
+$nav-item-border: #f7f7f7;
+$white: #fff;
+
+// general
+$background-image: url("/assets/images/background.png");
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$section-width: 480px;
+$border-radius-sm: 8px;
+$border-radius-lg: 16px;
+$transition-time: 0.3s;
+
+// nav-menu
+$nav-item-active: $color-secondary;
+$nav-item-text: $color-primary;
+
+// home page
+$cover-height: 200px;
+$cover-margin-bottom: 50px;
+$cover-margin: 0 -40px $cover-margin-bottom;
+$cover-border-radius: 0% 0% 50% 50% / 0% 0% 20% 20%;
+$avatar-border: 3px;
+$about-primary-heading: #0D375F;
+$action-green: #25D366;
+$action-blue: #1F52B2
+
