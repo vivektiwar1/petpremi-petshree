@@ -2,7 +2,7 @@
     <ng-container *ngIf="!apiInProgress.userDataLoader; else loader">
         <div class="d-flex justify-content-center">
 
-            <app-nav-menu [activeLink$]="activeLink$"></app-nav-menu>
+            <app-nav-menu [activeLink$]="activeLink$" [hiddenNavItems]="hiddenNavItems"></app-nav-menu>
 
             <section class="content mt-sm-5 max-width" scrollActive>
                 <div class="bg-white pb-4 border-rounded" id="home">
@@ -14,23 +14,14 @@
                     <app-about [userDetails]="userDetails"></app-about>
                 </div>
 
-                <div class="bg-white mt-3 py-4 border-rounded" id="gallery">
+                <div *ngIf="userDetails?.images?.length" class="bg-white mt-3 py-4 border-rounded" id="gallery">
                     <app-header>Gallery</app-header>
-                    <app-gallery [images]="userDetails?.images"></app-gallery>
+                    <app-gallery [imageList]="userDetails.images"></app-gallery>
                 </div>
 
-                <div class="bg-white mt-3 py-4 border-rounded" id="videos">
-                    <app-header>Video</app-header>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+                <div *ngIf="userDetails?.videos?.length" class="bg-white mt-3 py-4 border-rounded" id="videos">
+                    <app-header>Videos</app-header>
+                    <app-videos [videos]="userDetails.videos"></app-videos>
                 </div>
 
                 <div class="bg-white mt-3 mb-5 py-4 border-rounded" id="enquiry">

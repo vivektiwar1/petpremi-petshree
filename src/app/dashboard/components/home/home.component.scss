@@ -12,7 +12,7 @@
         border: $avatar-border solid $color-secondary;
         position: relative;
         top: $cover-margin-bottom;
-        background: url('/assets/images/image-preload.svg') center/cover no-repeat;
+        background: $preloader;
         overflow: hidden;
     }
 }

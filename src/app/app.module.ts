@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from '@angular/forms';
+import { YouTubePlayerModule } from "@angular/youtube-player";
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/container/dashboard.component';
@@ -39,7 +40,8 @@ import { ScrollActiveDirective } from './directives/scroll-active.directive';
     ReactiveFormsModule,
     RouterModule.forRoot([]),
     LightboxModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    YouTubePlayerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

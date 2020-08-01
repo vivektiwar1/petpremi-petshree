@@ -9,24 +9,16 @@ import { ImagesPerPage } from 'src/app/app.constant';
 })
 export class GalleryComponent implements OnInit {
 
-  @Input() images: Array<string>;
-  imageList: Array<IAlbum> = [];
+  @Input() imageList: Array<IAlbum>;
   currentPage: number = 1;
   totalItems: number = 1;
-  imagesPerPage = ImagesPerPage;
+  readonly imagesPerPage = ImagesPerPage;
 
   constructor(
     private lightBox: Lightbox,
   ) { }
 
   ngOnInit(): void {
-    this.imageList = (this.images || []).map((image, index) => {
-      return {
-        src: image,
-        caption: `Image ${index + 1}`,
-        thumb: image
-      };
-    })
     this.totalItems = this.imageList.length;
   }
 

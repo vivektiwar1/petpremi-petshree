@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   activeLink$: Observable<string>;
   userDetails: any;
   enquiryForm: FormGroup;
+  hiddenNavItems: Array<string> = [];
   apiInProgress = {
     userDataLoader: false,
     enquiryLoader: false
@@ -47,6 +48,7 @@ export class DashboardComponent implements OnInit {
       this.apiInProgress.userDataLoader = true;
       const response = await this.dashboardService.getUserDetails().toPromise();
       this.apiInProgress.userDataLoader = false;
+      this.createHideNavArray(response.data);
       this.userDetails = response.data;
     } catch (error) {
       this.apiInProgress.userDataLoader = false;
@@ -76,5 +78,11 @@ export class DashboardComponent implements OnInit {
     } catch (error) {
       this.apiInProgress.enquiryLoader = false;
     }
+  }
+
+  createHideNavArray(response) {
+    const properties = Object.keys(response);
+    !properties.includes('images') &&  this.hiddenNavItems.push('gallery')
+    !properties.includes('videos') && this.hiddenNavItems.push('videos');
   }
 }

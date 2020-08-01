@@ -16,6 +16,7 @@
     border-top-right-radius: $border-radius-sm;
 
     &-item {
+        display: flex;
         color: $nav-item-text;
         transition: $transition-time all;
         background: $white;

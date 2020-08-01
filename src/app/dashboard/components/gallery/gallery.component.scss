@@ -6,7 +6,7 @@
         padding-top: 100%;
         overflow: hidden;
         border-radius: $border-radius-sm;
-        background: url('/assets/images/image-preload.svg') no-repeat center/cover;
+        background: $preloader;
 
         img {
             position: absolute;

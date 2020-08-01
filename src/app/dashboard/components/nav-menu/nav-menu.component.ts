@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { navMenu } from "src/app/app.constant";
+import { NavMenu } from "src/app/app.constant";
 import { Observable, merge } from 'rxjs';
 import { DashboardService } from '../../dashboard.service';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -10,8 +10,10 @@ import { distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./nav-menu.component.scss']
 })
 export class NavMenuComponent implements OnInit{
-  navMenuItems = navMenu;
+  readonly navMenuItems = NavMenu;
   @Input() activeLink$: Observable<string>;
+  @Input() hiddenNavItems: Array<string>;
+
   mergedActiveLink$: Observable<string>;
 
   constructor(private dashboardService: DashboardService) {}

@@ -1,4 +1,4 @@
-export const navMenu = [
+export const NavMenu = [
     {
         name: 'Home',
         anchorId: 'home',
@@ -27,4 +27,5 @@ export const navMenu = [
 ]
 
 export const ImagesPerPage = 6; 
+export const VideosPerPage = 3; 
 export const ScrollOffset = 48;
