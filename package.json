@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~9.1.12",
+    "@angular/animations": "^9.1.12",
     "@angular/common": "~9.1.12",
     "@angular/compiler": "~9.1.12",
     "@angular/core": "~9.1.12",
@@ -22,6 +22,7 @@
     "bootstrap": "^5.0.0-alpha1",
     "ngx-lightbox": "^2.2.0",
     "ngx-pagination": "^5.0.0",
+    "ngx-toastr": "^13.0.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

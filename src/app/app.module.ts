@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -16,9 +17,11 @@ import { GalleryComponent } from './dashboard/components/gallery/gallery.compone
 import { VideosComponent } from './dashboard/components/videos/videos.component';
 import { EnquiryComponent } from './dashboard/components/enquiry/enquiry.component';
 import { SanitizePipe } from './pipes/sanitize.pipe';
+import { ScrollActiveDirective } from './directives/scroll-active.directive';
+
 import { LightboxModule } from 'ngx-lightbox';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { ScrollActiveDirective } from './directives/scroll-active.directive';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -36,11 +39,13 @@ import { ScrollActiveDirective } from './directives/scroll-active.directive';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([]),
     LightboxModule,
     NgxPaginationModule,
+    ToastrModule.forRoot(),
     YouTubePlayerModule
   ],
   providers: [],

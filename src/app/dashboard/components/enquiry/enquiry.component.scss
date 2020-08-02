@@ -9,6 +9,19 @@ label {
     font-size: $font-size-sm;
 }
 
+.error {
+    border-color: $color-danger;
+    outline: none;
+    transition: $transition-time;
+    box-shadow: 0 0 0 0.2rem rgba($color-danger, 0.2);
+
+    &-message {
+        color: $color-danger;
+        height: 14px;
+        font-size: $font-size-xs;
+    }
+}
+
 .btn-warning {
     background-color: $color-secondary;
     border-color: $color-secondary;

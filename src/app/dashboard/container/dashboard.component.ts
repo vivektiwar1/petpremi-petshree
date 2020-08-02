@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ViewportScroller } from "@angular/common";
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, tap, delay } from "rxjs/operators";
+import { Observable, Subject } from 'rxjs';
+import { map, tap, delay, takeUntil } from "rxjs/operators";
 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DashboardService } from '../dashboard.service';
 import { ScrollOffset } from 'src/app/app.constant';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   activeLink$: Observable<string>;
+  destroy$: Subject<void> = new Subject();
   userDetails: any;
   enquiryForm: FormGroup;
   hiddenNavItems: Array<string> = [];
@@ -26,8 +28,9 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private dashboardService: DashboardService,
+    private formBuilder: FormBuilder,
+    private toastrService: ToastrService,
     private viewportScroller: ViewportScroller
   ) {
     this.activeLink$ = this.activatedRoute.fragment.pipe(
@@ -59,19 +62,27 @@ export class DashboardComponent implements OnInit {
   createEnquiryForm() {
     this.enquiryForm = this.formBuilder.group({
       name: [null, Validators.required],
-      email: [null, Validators.required],
-      phone: [null],
+      email: [null, Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)])],
+      phone: [null, Validators.compose([Validators.minLength(10), Validators.maxLength(10)])],
       message: [null, Validators.required]
     });
+    const phoneControl = this.enquiryForm.get('phone');
+
+    phoneControl.valueChanges.pipe(
+      map(value => value && value.replace(/\D/g, '')),
+      takeUntil(this.destroy$)
+    ).subscribe(value => {
+      phoneControl.value !== value && value.length <= 10 && phoneControl.setValue(value)
+    })
   }
 
   onSubmit() {
     try {
-      alert('check console');
       console.log(this.enquiryForm.value)
       if (this.enquiryForm.valid) {
         this.apiInProgress.enquiryLoader = true;
         // await this.dashboardService.postEnquiry(this.enquiryForm.value).toPromise();
+        this.toastrService.success('Thanks For Reaching Out!');
         this.apiInProgress.enquiryLoader = false;
         this.enquiryForm.reset();
       }
@@ -81,8 +92,11 @@ export class DashboardComponent implements OnInit {
   }
 
   createHideNavArray(response) {
-    const properties = Object.keys(response);
-    !properties.includes('images') &&  this.hiddenNavItems.push('gallery')
-    !properties.includes('videos') && this.hiddenNavItems.push('videos');
+    response['images'] && !response['images'].length && this.hiddenNavItems.push('gallery')
+    response['videos'] && !response['videos'].length && this.hiddenNavItems.push('videos');
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
   }
 }

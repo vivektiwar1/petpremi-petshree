@@ -1,27 +1,53 @@
 <form *ngIf="enquiryForm" [formGroup]="enquiryForm" class="container-fluid pb-5" autocomplete="off"
     (ngSubmit)="onSubmit()">
-    <div class="form-group px-3 mb-3">
+    <div class="form-group px-3">
         <label class="mb-2" for="name">Name</label>
-        <input class="form-control" type="text" id="name" placeholder="Name" formControlName="name">
+        <input class="form-control" type="text" id="name" placeholder="Name" formControlName="name"
+            [ngClass]="{error: getEnquiryFormField('name').errors && getEnquiryFormField('name').touched}">
+        <div class="error-message">
+            <ng-container *ngIf="getEnquiryFormField('name').errors && getEnquiryFormField('name').touched">
+                <span>Name is required!</span>
+            </ng-container>
+        </div>
     </div>
-    <div class="form-group px-3 mb-3">
+    <div class="form-group px-3">
         <label class="mb-2" for="email">Email</label>
-        <input class="form-control" type="email" id="email" placeholder="Email" formControlName="email">
+        <input class="form-control" type="email" id="email" placeholder="Email" formControlName="email"
+            [ngClass]="{error: getEnquiryFormField('email').errors && getEnquiryFormField('email').touched}">
+        <div class="error-message">
+            <ng-container *ngIf="getEnquiryFormField('email').errors && getEnquiryFormField('email').touched">
+                <span *ngIf="getEnquiryFormField('email').hasError('required')">Email is required!</span>
+                <span *ngIf="getEnquiryFormField('email').hasError('pattern')">Email is invalid!</span>
+            </ng-container>
+        </div>
     </div>
-    <div class="form-group px-3 mb-3">
+    <div class="form-group px-3">
         <label class="mb-2" for="phone">Phone</label>
-        <input class="form-control" type="tel" id="phone" placeholder="Phone" formControlName="phone">
+        <input class="form-control" type="tel" id="phone" placeholder="Phone" formControlName="phone"
+            [ngClass]="{error: getEnquiryFormField('phone').errors && getEnquiryFormField('phone').touched}">
+        <div class="error-message">
+            <ng-container *ngIf="getEnquiryFormField('phone').errors && getEnquiryFormField('phone').touched">
+                <span>Phone must be of 10 digits!</span>
+            </ng-container>
+        </div>
     </div>
     <div class="form-group px-3 mb-4">
         <label class="mb-2" for="message">Message</label>
         <textarea class="form-control" type="text" id="message" placeholder="Enter Message" rows="3"
-            formControlName="message"></textarea>
+            formControlName="message"
+            [ngClass]="{error: getEnquiryFormField('message').errors && getEnquiryFormField('message').touched}"></textarea>
+        <div class="error-message">
+            <ng-container *ngIf="getEnquiryFormField('message').errors && getEnquiryFormField('message').touched">
+                <span>Message is required!</span>
+            </ng-container>
+        </div>
     </div>
 
     <div class="form-group pl-3">
         <button class="btn btn-warning" [disabled]="enquiryForm.invalid || enquiryLoader">
             {{enquiryLoader ? 'Sending' : 'Send Message'}}
-            <span *ngIf="enquiryLoader" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span *ngIf="enquiryLoader" class="spinner-border spinner-border-sm" role="status"
+                aria-hidden="true"></span>
         </button>
     </div>
 </form>

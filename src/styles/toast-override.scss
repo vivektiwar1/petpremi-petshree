@@ -1,0 +1,6 @@
+.toast-container {
+    @media (max-width: $media-breakpoint-sm) {
+        right: unset;
+        transform: translateX((calc(50vw - 50%)));
+    }
+}

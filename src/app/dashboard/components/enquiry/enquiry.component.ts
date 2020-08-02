@@ -15,4 +15,8 @@ export class EnquiryComponent {
   onSubmit() {
     this.onSubmitEvent.emit();
   }
+
+  getEnquiryFormField(field) {
+    return this.enquiryForm.get(field);
+  }
 }
