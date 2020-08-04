@@ -38,10 +38,10 @@
         &.active {
             background: $nav-item-active;
             color: $white;
-            transition: $transition-time all;
+            transition: $transition-time all ease-in;
             img {
                 filter: brightness(0) invert(1);
-                transition: $transition-time all;
+                transition: $transition-time all ease-in;
             }
         }
     }

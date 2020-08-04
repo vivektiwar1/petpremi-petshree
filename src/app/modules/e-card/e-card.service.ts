@@ -6,7 +6,7 @@ import { delay } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
+export class ECardService {
 
   private _navActive$: Subject<string> = new Subject();
   constructor(

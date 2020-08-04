@@ -1,20 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ViewportScroller } from "@angular/common";
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map, tap, delay, takeUntil } from "rxjs/operators";
 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { DashboardService } from '../dashboard.service';
 import { ScrollOffset } from 'src/app/app.constant';
 import { ToastrService } from 'ngx-toastr';
+import { ECardService } from '../e-card.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-e-card',
+  templateUrl: './e-card.component.html',
+  styleUrls: ['./e-card.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class ECardComponent implements OnDestroy {
 
   activeLink$: Observable<string>;
   destroy$: Subject<void> = new Subject();
@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private dashboardService: DashboardService,
+    private eCardService: ECardService,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
     private viewportScroller: ViewportScroller
@@ -37,19 +37,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
       delay(1),
       map(fragment => fragment ? fragment : 'home'),
       tap(() => this.viewportScroller.setOffset([0, ScrollOffset])),
-      tap(fragment => this.viewportScroller.scrollToAnchor(fragment))
+      tap(fragment => this.viewportScroller.scrollToAnchor(fragment)),
+      takeUntil(this.destroy$)
     );
+
+    this.activatedRoute.params.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(({userId}) => {
+      userId ? this.init(userId) : this.init('');
+    })
   }
 
-  async ngOnInit() {
-    await this.getUserDetails();
+  async init(userId) {
+    await this.getUserDetails(userId);
     this.createEnquiryForm()
   }
 
-  async getUserDetails() {
+  async getUserDetails(userId) {
     try {
       this.apiInProgress.userDataLoader = true;
-      const response = await this.dashboardService.getUserDetails().toPromise();
+      const response = await this.eCardService.getUserDetails().toPromise();
       this.apiInProgress.userDataLoader = false;
       this.createHideNavArray(response.data);
       this.userDetails = response.data;
@@ -81,7 +88,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       console.log(this.enquiryForm.value)
       if (this.enquiryForm.valid) {
         this.apiInProgress.enquiryLoader = true;
-        // await this.dashboardService.postEnquiry(this.enquiryForm.value).toPromise();
+        // await this.eCard.postEnquiry(this.enquiryForm.value).toPromise();
         this.toastrService.success('Thanks For Reaching Out!');
         this.apiInProgress.enquiryLoader = false;
         this.enquiryForm.reset();

@@ -2,7 +2,7 @@ import { Directive, ElementRef, OnInit, AfterViewInit, OnDestroy } from '@angula
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { ScrollOffset } from '../app.constant';
-import { DashboardService } from '../dashboard/dashboard.service';
+import { ECardService } from '../modules/e-card/e-card.service';
 
 @Directive({
   selector: '[scrollActive]'
@@ -14,7 +14,7 @@ export class ScrollActiveDirective implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private element: ElementRef,
-    private dashboardService: DashboardService
+    private eCardService: ECardService
   ) { }
 
   ngOnInit() {
@@ -25,7 +25,7 @@ export class ScrollActiveDirective implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
       takeUntil(this.onDestroy$)
     ).subscribe(id => {
-      this.dashboardService.setNavActive(id);
+      this.eCardService.setNavActive(id);
     });
 
     scrollEvent$.pipe(
@@ -38,8 +38,6 @@ export class ScrollActiveDirective implements OnInit, AfterViewInit, OnDestroy {
           if (offset - smallOffset >= elem.offsetTop && offset + smallOffset < elem.offsetTop + ScrollOffset + 2 + elem.offsetHeight) {
             this.onElemChange.next(elem.getAttribute('id'));
           }
-          if(index >= 0) {
-         }
         });
       }
     })
