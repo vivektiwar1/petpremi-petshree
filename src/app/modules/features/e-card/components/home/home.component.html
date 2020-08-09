@@ -29,35 +29,39 @@
             </div>
             <div class="d-flex mt-2">
                 <img class="mr-4 mt-1" src="assets/images/icons/location.svg" width="18" height="18">
-                <span>{{userDetails?.businessAddress}}</span>
+                <span *ngFor="let address of userDetails?.businessAddress">
+                    <ng-container *ngIf="address?.displayOrder == 1">
+                        {{address.businessAddress}}
+                    </ng-container>
+                </span>
             </div>
         </div>
 
         <div class="social-networks my-4 py-1 py-sm-3">
             <div class="d-flex justify-content-between mx-auto">
-                <a [href]="userDetails?.fbLink">
+                <a *ngIf="userDetails.fbLink" [href]="userDetails.fbLink">
                     <img src="assets/images/icons/facebookLogo.svg" alt="Facebook">
                 </a>
-                <a [href]="userDetails?.whatsAppLink">
+                <a *ngIf="userDetails.whatsAppLink" [href]="userDetails.whatsAppLink">
                     <img src="assets/images/icons/whatsappLogo.svg" alt="WhatsApp">
                 </a>
-                <a [href]="userDetails?.youtubeLink">
+                <a *ngIf="userDetails.youtubeLink" [href]="userDetails.youtubeLink">
                     <img src="assets/images/icons/youtubeLogo.svg" alt="YouTube">
                 </a>
-                <a [href]="userDetails?.instagamLink">
+                <a *ngIf="userDetails.instagramLink" [href]="userDetails.instagramLink">
                     <img src="assets/images/icons/instagramLogo.svg" alt="Instagram">
                 </a>
-                <a [href]="userDetails?.twitterLink">
+                <a *ngIf="userDetails.twitterLink" [href]="userDetails.twitterLink">
                     <img src="assets/images/icons/twitterLogo.svg" alt="Twitter">
                 </a>
             </div>
         </div>
 
         <div class="action pb-3 d-flex justify-content-center">
-            <a class="btn">
+            <a class="btn" [href]="userDetails?.whatsAppLink">
                 Share on Whatsapp
             </a>
-            <a class="btn">
+            <a class="btn" [href]="userDetails?.phoneLink">
                 Add to Phonebook
             </a>
         </div>

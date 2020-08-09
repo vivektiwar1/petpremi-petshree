@@ -7,9 +7,11 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./enquiry.component.scss']
 })
 export class EnquiryComponent {
-
+  
+  @Input() countries: Array<any>;
   @Input() enquiryForm: FormGroup;
   @Input() enquiryLoader: boolean;
+  @Input() titles: Array<any>;
   @Output() onSubmitEvent: EventEmitter<void> = new EventEmitter<void>();
 
   onSubmit() {

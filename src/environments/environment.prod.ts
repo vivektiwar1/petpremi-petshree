@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  apiBase: 'http://boltonte.com:8083/service/api',
+  password: 'malhotra123',
+  production: true,
+  username: 'admin',
 };

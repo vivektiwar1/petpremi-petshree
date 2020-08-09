@@ -1,6 +1,6 @@
 <main class="background">
     <ng-container *ngIf="!apiInProgress.userDataLoader; else loader">
-        <div class="d-flex justify-content-center">
+        <div *ngIf="userDetails" class="d-flex justify-content-center">
 
             <app-nav-menu [activeLink$]="activeLink$" [hiddenNavItems]="hiddenNavItems"></app-nav-menu>
 
@@ -27,7 +27,7 @@
                 <div class="bg-white mt-3 mb-5 py-4 border-rounded" id="enquiry">
                     <app-header>Enquiry</app-header>
                     <app-enquiry [enquiryLoader]="apiInProgress.enquiryLoader" [enquiryForm]="enquiryForm"
-                        (onSubmitEvent)="onSubmit()"></app-enquiry>
+                        [titles]="titles" [countries]="countries" (onSubmitEvent)="onSubmit()"></app-enquiry>
                 </div>
             </section>
 

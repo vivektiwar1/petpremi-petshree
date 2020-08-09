@@ -4,9 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ECardComponent } from './container/e-card.component';
 
 const routes: Routes = [
-  {
-    path: '', component: ECardComponent
-  }
+  { path: ':userName', component: ECardComponent },
+  { path: '', component: ECardComponent }
 ];
 
 @NgModule({

@@ -1,8 +1,8 @@
 import { Directive, ElementRef, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
-import { takeUntil, distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { ScrollOffset } from '../app.constant';
-import { ECardService } from '../modules/e-card/e-card.service';
+import { takeUntil, distinctUntilChanged, debounceTime, throttleTime } from 'rxjs/operators';
+import { ScrollOffset } from 'src/app/app.constant';
+import { ECardService } from '../e-card.service';
 
 @Directive({
   selector: '[scrollActive]'
@@ -21,7 +21,8 @@ export class ScrollActiveDirective implements OnInit, AfterViewInit, OnDestroy {
     const scrollEvent$ = fromEvent(window, 'scroll');
     
     this.onElemChange.pipe(
-      debounceTime(200),
+      throttleTime(20),
+      // debounceTime(20),
       distinctUntilChanged(),
       takeUntil(this.onDestroy$)
     ).subscribe(id => {

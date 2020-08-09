@@ -2,24 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule, Routes } from "@angular/router";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from "./app-routing.module";
+
 import { ToastrModule } from 'ngx-toastr';
-
-const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'ecard',
-    pathMatch: 'full'
-  },
-  {
-    path: 'ecard',
-    loadChildren: () => import('./modules/e-card/e-card.module').then(m => m.ECardModule)
-  }
-
-];
+import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { RequestInterceptor } from './interceptors/request.interceptor';
+import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,11 +19,19 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
+    SharedModule,
     HttpClientModule,
-    RouterModule.forRoot(routes, { useHash: true }),
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
