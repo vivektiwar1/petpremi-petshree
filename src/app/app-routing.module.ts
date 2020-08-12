@@ -5,12 +5,16 @@ import { ErrorPageComponent } from './modules/shared/components/error-page/error
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'ecard',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
     },
     {
         path: 'ecard',
         loadChildren: () => import('./modules/features/e-card/e-card.module').then(m => m.ECardModule)
+    },
+    {
+        path: 'dashboard',
+        loadChildren: () => import('./modules/features/dashboard/dashboard.module').then(m => m.DashboardModule)
     },
     {
         path: '**',
@@ -20,7 +24,7 @@ const routes: Routes = [
     {
         path: '404',
         component: ErrorPageComponent
-    }
+    },
 ];
 
 @NgModule({

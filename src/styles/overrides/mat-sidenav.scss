@@ -1,0 +1,27 @@
+$drawer-width: 25%;
+$drawer-max-width: 250px;
+$mini-drawer-width: 50px;
+
+.mat-drawer-container {
+    width: 100%;
+    min-height: 100vh;
+    background: $color-primary;
+
+    .mat-drawer {
+        width: $drawer-width;
+        max-width: $drawer-max-width;
+        background: inherit;
+        visibility: unset !important;
+        transform: translate3d(-80%, 0, 0);
+    }
+
+    .mat-drawer-side {
+        border: unset;
+    }
+
+    .mat-drawer-content {
+        margin-left: $mini-drawer-width;
+        overflow: unset;
+        z-index: 3;
+    }
+}

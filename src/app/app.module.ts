@@ -11,6 +11,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { RequestInterceptor } from './interceptors/request.interceptor';
 import { SharedModule } from './modules/shared/shared.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModule } from './modules/shared/shared.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
+    MatSidenavModule,
     HttpClientModule,
     ToastrModule.forRoot(),
   ],

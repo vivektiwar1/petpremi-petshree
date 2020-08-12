@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ScrollOffset } from 'src/app/app.constant';
 import { ToastrService } from 'ngx-toastr';
 import { ECardService } from '../e-card.service';
+import { CommonService } from 'src/app/services/common.service';
 
 
 @Component({
@@ -34,11 +35,13 @@ export class ECardComponent implements OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private eCardService: ECardService,
+    private commonService: CommonService,
     private formBuilder: FormBuilder,
     private router: Router,
     private toastrService: ToastrService,
     private viewportScroller: ViewportScroller
   ) {
+    this.commonService.hideDashboardNavs()
     this.activeLink$ = this.activatedRoute.fragment.pipe(
       delay(300),
       map(fragment => fragment ? fragment : 'home'),
@@ -50,6 +53,7 @@ export class ECardComponent implements OnDestroy {
     this.activatedRoute.params.pipe(
       takeUntil(this.destroy$)
     ).subscribe(({ userName }) => {
+      this.userDetails = null;
       userName ? this.init(userName) : this.navigateToErrorPage();
     })
   }
@@ -57,25 +61,62 @@ export class ECardComponent implements OnDestroy {
   async init(userName) {
     this.userName = userName;
     await this.getUserDetails(userName);
-    this.createEnquiryForm();
   }
 
   async getUserDetails(userName) {
     try {
       this.apiInProgress.userDataLoader = true;
       const response = await this.eCardService.getUserDetails(userName).toPromise();
-      this.apiInProgress.userDataLoader = false;
+      
       const userDetails = response && response[0];
+
       if (!userDetails) {
         this.navigateToErrorPage();
         return;
       }
-      this.createHideNavArray(userDetails);
-      this.userDetails = userDetails;
+
+      this.createUserDetails(userDetails);
     } catch (error) {
       this.apiInProgress.userDataLoader = false;
       console.error(error);
     }
+  }
+
+  async createUserDetails(userDetails) {
+    this.userDetails = {
+      ...userDetails,
+      avatar: await this.eCardService.getImages(this.userName, 'avatar').toPromise(),
+      coverImage: await this.eCardService.getImages(this.userName, 'cover').toPromise(),
+      images: await this.getImages(),
+      videos: await this.getVideos(),
+    };
+    this.apiInProgress.userDataLoader = false;
+
+    this.createHideNavArray(this.userDetails);
+    this.createEnquiryForm()
+  }
+
+  async getImages() {
+    const imageList = await this.eCardService.getMediaFiles(this.userName, 'gallery').pipe(
+      map((response: any) => (response || []).map(async item => {
+        return {
+          src: await this.eCardService.getImages(this.userName, 'gallery', item.fileName).toPromise(),
+          thumb: await this.eCardService.getImages(this.userName, 'gallery', item.fileName).toPromise(),
+          caption: item.title
+        }
+      }))
+    ).toPromise();
+    return Promise.all(imageList);
+  }
+
+  async getVideos() {
+    return await this.eCardService.getMediaFiles(this.userName, 'youtube').pipe(
+      map((response: []) => (response || []).map(item => {
+        return {
+          videoId: item['fileName']
+        }
+      }))
+    ).toPromise()
   }
 
   async createEnquiryForm() {

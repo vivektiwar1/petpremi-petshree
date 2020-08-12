@@ -11,7 +11,6 @@ import { AboutComponent } from './components/about/about.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { VideosComponent } from './components/videos/videos.component';
 import { EnquiryComponent } from './components/enquiry/enquiry.component';
-import { SanitizePipe } from 'src/app/pipes/sanitize.pipe';
 import { ScrollActiveDirective } from './directives/scroll-active.directive';
 
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -21,6 +20,7 @@ import { LightboxModule } from 'ngx-lightbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { ECardService } from './e-card.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +44,9 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     NgxPaginationModule,
     LightboxModule,
     YouTubePlayerModule
+  ],
+  providers: [
+    ECardService
   ]
 })
 export class ECardModule { }

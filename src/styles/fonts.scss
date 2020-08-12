@@ -1,0 +1,26 @@
+@import '~@angular/material/theming';
+
+$custom-typography: mat-typography-config(
+  $font-family: 'inherit'
+);
+
+@include mat-core($custom-typography);
+
+app-e-card {
+    font-family: "Montserrat", sans-serif;
+
+    * {
+        font-family: inherit;
+    }
+}
+
+.font-weight {
+    &-regular {
+        font-weight: 400;
+    }
+    
+    &-medium {
+        font-weight: 500;
+    }
+}
+

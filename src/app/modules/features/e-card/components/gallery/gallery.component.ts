@@ -20,6 +20,7 @@ export class GalleryComponent implements OnInit {
 
   ngOnInit(): void {
     this.totalItems = this.imageList.length;
+    console.log(this.imageList);
   }
 
   openGallery(index: number): void {

@@ -14,24 +14,22 @@ export class ResponseInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
-    return next.handle(request).pipe(
-      filter(event => event instanceof HttpResponse),
-      switchMap(response => {
-        if (request.method === 'POST') {
+    if (request.method === 'POST') {
+      return next.handle(request).pipe(
+        filter(event => event instanceof HttpResponse),
+        switchMap(response => {
           return !response['body']['isError'] ?
             of(new HttpResponse({
               body: response['body']['responseResult']['data']['content']
             })) : throwError(response['body']['responseError']);
-        } else {
-          return of(new HttpResponse({
-            body: response
-          }));
-        }
-      }),
-      catchError(error => {
-        console.error(error);
-        return throwError(!error.status ? error.message : error.error.responseMessage);
-      })
-    );
+        }),
+        catchError(error => {
+          console.error(error);
+          return throwError(!error.status ? error.message : error.error.responseMessage);
+        })
+      );
+    } else {
+      return next.handle(request);
+    }
   }
 }

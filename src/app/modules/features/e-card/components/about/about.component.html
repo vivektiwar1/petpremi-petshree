@@ -21,7 +21,7 @@
             <div class="col-8 text-black font-weight-medium">
                 <ng-container *ngFor="let schedule of address?.timings">
                     {{ schedule.days }}
-                    <div class="font-weight-light" *ngFor="let time of schedule?.time">{{time}}</div>
+                    <div class="font-weight-regular" *ngFor="let time of schedule?.time">{{time}}</div>
                 </ng-container>
             </div>
         </div>

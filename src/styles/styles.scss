@@ -1,26 +1,30 @@
 @import "src/styles/variables";
+@import "src/styles/fonts";
 @import "src/styles/width";
-@import "src/styles/toast-override";
+@import "src/styles/overrides/toast";
+@import "src/styles/overrides/mat-sidenav";
 
 *,
 *::before,
 *::after,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
 ul {
     margin: 0;
     padding: 0;
     box-sizing: inherit;
     text-rendering: optimizeLegibility;
-    font-family: "Lato", sans-serif;
 }
 
 html {
     box-sizing: border-box;
     scroll-behavior: smooth;
     height: 100%;
-}
-
-.font-weight-medium {
-    font-weight: 500;
 }
 
 .border-rounded {
@@ -30,3 +34,4 @@ html {
 .full-screen {
     min-height: 100vh;
 }
+

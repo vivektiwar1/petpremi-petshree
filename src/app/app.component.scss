@@ -1,12 +1,27 @@
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
-    text-rendering: optimizeLegibility;
+@import "src/styles/variables";
+
+.mat-drawer-content {
+    button {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        top: $header-height - 18px;
+        left: -18px;
+        outline: unset;
+        transform: rotate(0);
+        transition: transform 0.5s;
+        
+        &.rotate {
+            transform: rotate(180deg);
+            transition: transform 0.5s;
+        }
+    }
 }
 
-html {
-    box-sizing: border-box;
+.content {
+    background: $white;
+    overflow: auto;
+    border-top-left-radius: 51px;
+    height: 100%;
 }
