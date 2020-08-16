@@ -1,0 +1,28 @@
+@import "src/styles/variables";
+
+.mt-6 {
+    margin-top: 5rem;
+}
+
+.mat-list-item {
+    color: $white;
+
+    &.active {
+        color: $color-secondary;
+        background: rgba($color: #000000, $alpha: 0.2);
+    }
+}
+
+.suffix-icon {
+    margin-right: -2px;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity $transition-time;
+}
+
+::ng-deep mat-drawer.mat-drawer-opened {
+    .suffix-icon {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

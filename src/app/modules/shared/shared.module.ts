@@ -4,6 +4,10 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { HeaderComponent } from './components/header/header.component';
 
+import { MatListModule } from "@angular/material/list";
+import { MatIconModule } from "@angular/material/icon";
+import { RouterModule } from '@angular/router';
+
 @NgModule({
   declarations: [
     ErrorPageComponent,
@@ -11,7 +15,10 @@ import { HeaderComponent } from './components/header/header.component';
     SideNavComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatListModule,
+    MatIconModule,
+    RouterModule
   ],
   exports: [
     HeaderComponent,

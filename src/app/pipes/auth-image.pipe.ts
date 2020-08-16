@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { assert } from 'console';
 
 @Pipe({
   name: 'authImage'

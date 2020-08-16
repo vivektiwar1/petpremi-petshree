@@ -2,6 +2,7 @@
 
 .error-page {
     background: $error-page-background;
+    min-height: 100vh;
     height: 100vh;
     display: flex;
 
@@ -9,9 +10,8 @@
         flex: 0 0 60%;
         display: flex;
         flex-direction: column;
-        height: 100%;
         background: $white;
-        padding: 9rem 5rem;
+        padding: 12rem 5rem;
         @media (max-width: $media-breakpoint-sm) {
             padding: 2rem 2rem;
         }
@@ -27,5 +27,9 @@
 
     .right-block {
         flex: 0 0 40%;
+
+        img {
+            max-width: 450px;
+        }
     }
 }

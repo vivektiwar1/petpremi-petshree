@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('./modules/features/dashboard/dashboard.module').then(m => m.DashboardModule)
     },
     {
+        path: 'appointment',
+        loadChildren: () => import('./modules/features/appointment/appointment.module').then(m => m.AppointmentModule)
+    },
+    {
         path: '**',
         redirectTo: '404',
         pathMatch: 'full'
