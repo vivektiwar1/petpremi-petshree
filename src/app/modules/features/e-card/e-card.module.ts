@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { ECardService } from './e-card.service';
+import { AuthImagePipe } from 'src/app/pipes/auth-image.pipe';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ECardService } from './e-card.service';
     YouTubePlayerModule
   ],
   providers: [
+    AuthImagePipe,
     ECardService
   ]
 })

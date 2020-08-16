@@ -67,7 +67,6 @@ export class ECardComponent implements OnDestroy {
     try {
       this.apiInProgress.userDataLoader = true;
       const response = await this.eCardService.getUserDetails(userName).toPromise();
-      
       const userDetails = response && response[0];
 
       if (!userDetails) {
@@ -85,28 +84,27 @@ export class ECardComponent implements OnDestroy {
   async createUserDetails(userDetails) {
     this.userDetails = {
       ...userDetails,
-      avatar: await this.eCardService.getImages(this.userName, 'avatar').toPromise(),
-      coverImage: await this.eCardService.getImages(this.userName, 'cover').toPromise(),
+      avatar: this.eCardService.getImageLinks(this.userName, 'avatar'),
+      coverImage: this.eCardService.getImageLinks(this.userName, 'cover'),
       images: await this.getImages(),
       videos: await this.getVideos(),
     };
     this.apiInProgress.userDataLoader = false;
-
+    console.log(this.userDetails);
     this.createHideNavArray(this.userDetails);
-    this.createEnquiryForm()
+    this.createEnquiryForm();
   }
 
   async getImages() {
-    const imageList = await this.eCardService.getMediaFiles(this.userName, 'gallery').pipe(
-      map((response: any) => (response || []).map(async item => {
+    return this.eCardService.getMediaFiles(this.userName, 'gallery').pipe(
+      map((response: any) => (response || []).map(item => {
         return {
-          src: await this.eCardService.getImages(this.userName, 'gallery', item.fileName).toPromise(),
-          thumb: await this.eCardService.getImages(this.userName, 'gallery', item.fileName).toPromise(),
+          src: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
+          thumb: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
           caption: item.title
         }
       }))
     ).toPromise();
-    return Promise.all(imageList);
   }
 
   async getVideos() {

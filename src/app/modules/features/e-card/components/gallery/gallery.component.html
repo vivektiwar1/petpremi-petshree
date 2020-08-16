@@ -4,7 +4,7 @@
             *ngFor="let item of imageList | paginate: {id: 'galleryPagination', itemsPerPage: imagesPerPage, currentPage: currentPage, totalItems: totalItems }; let i = index;let isOdd = odd"
             [ngClass]="{'pl-4': !isOdd, 'pr-4': isOdd}">
             <figure (click)="openGallery(i + ((currentPage-1)*imagesPerPage))">
-                <img [src]="item.src" alt="" [title]="item.caption">
+                <img [src]="item.src | authImage | async" [title]="item.caption">
             </figure>
         </div>
     </div>

@@ -93,12 +93,7 @@ export class ECardService {
     return this.http.post(this.getApiUrl('/crud'), apiData);
   }
 
-  getImages(userName, type, fileName = "") {
-    return this.http.get(this.getApiUrl(`/assets/partner/e/card?userName=${userName}&asset=${type}&fileName=${fileName}`), {
-      headers: {
-        'Content-Type': 'image/jpeg;charset=UTF-8',
-      },
-      responseType: 'blob'
-    })
+  getImageLinks(userName, type, fileName = "") {
+    return this.getApiUrl(`/assets/partner/e/card?userName=${userName}&asset=${type}&fileName=${fileName}`);
   }
 }
