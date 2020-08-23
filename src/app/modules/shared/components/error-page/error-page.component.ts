@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-error-page',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ErrorPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private commonService: CommonService
+  ) {
+    this.commonService.hideDashboardNavs();
+  }
 
   ngOnInit(): void {
   }

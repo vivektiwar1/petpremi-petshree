@@ -1,0 +1,39 @@
+@import "src/styles/variables";
+
+// input.form-control {
+//     text-indent: 24px;
+// }
+
+// .set-icon {
+//     position: absolute;
+//     top: 0;
+//     left: 8px;
+//     height: 100%;
+//     display: flex;
+//     align-items: center;
+// }
+
+.search-suggestions {
+    list-style-type: none;
+    position: absolute;
+    z-index: 1;
+    border-radius: $border-radius-12;
+    overflow: hidden;
+    background: $white;
+    width: 100%;
+    box-shadow: 0px 0px 9px #0000001a;
+
+    li {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+
+        &.active {
+            background: $about-primary-heading;
+            color: $white;
+        }
+
+        &:not(.active):hover {
+            background: lighten($about-primary-heading, 50%);
+        }
+    }
+}

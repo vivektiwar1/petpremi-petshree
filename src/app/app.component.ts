@@ -9,7 +9,7 @@ import { CommonService } from './services/common.service';
 })
 export class AppComponent {
   navStatus$: Observable<boolean>;
-  isNavOpen: boolean;
+  isDrawerStatePersistant: boolean = true;
 
   constructor(
     private commonService: CommonService
@@ -17,9 +17,8 @@ export class AppComponent {
     this.navStatus$ = this.commonService.navStatus$;
   }
 
-  onStateChange(state: string) {
-    console.log(state)
-    this.isNavOpen = state === 'open' ? true : false
+  setDrawerState(state: boolean) {
+    this.isDrawerStatePersistant = state;
   }
 
 }

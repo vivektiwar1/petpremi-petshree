@@ -1,0 +1,32 @@
+@import "src/styles/variables";
+
+.info {
+    &-container {
+        border-radius: $border-radius-16;
+
+        .image {
+            width: 4rem;
+        }
+
+        .content {
+            .name {
+                color: #52575d;
+            }
+        }
+    }
+
+    &-item {
+        position: relative;
+        padding: 0 1rem;
+
+        &:not(:last-child)::before {
+            content: "";
+            width: 100%;
+            height: 50%;
+            top: 50%;
+            position: absolute;
+            border-right: 2px solid $background-color;
+            transform: translateY(-50%);
+        }
+    }
+}

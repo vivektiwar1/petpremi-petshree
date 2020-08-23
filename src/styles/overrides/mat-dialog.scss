@@ -1,0 +1,9 @@
+.mat-dialog {
+    &-title {
+        color: $dialog-title-color;
+    }
+
+    &-content.full-page {
+        max-height: 90vh;
+    }
+}

@@ -1,0 +1,6 @@
+<button class="btn" [class]="className" [disabled]="disabled" (click)="handleClick()">
+    <ng-content select="[icon-prefix]"></ng-content>
+    {{buttonText}}
+    <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <ng-content select="[icon-suffix]"></ng-content>
+</button>

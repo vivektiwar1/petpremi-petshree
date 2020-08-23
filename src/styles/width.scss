@@ -3,7 +3,7 @@ $width: ('10': 10%, '15': 15%, '20': 20%, '30': 30%,'40': 40%, '60': 60%, '70': 
 .w {
     @each $name, $value in $width {
         &-#{$name} {
-            width: $value;
+            width: $value !important;
         }
     }
 }

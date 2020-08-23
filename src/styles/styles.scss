@@ -1,7 +1,13 @@
 @import "src/styles/variables";
 @import "src/styles/fonts";
 @import "src/styles/width";
+
+@import "src/styles/overrides/bootstrap";
 @import "src/styles/overrides/toast";
+
+@import "src/styles/overrides/mat-dialog";
+@import "src/styles/overrides/mat-icon";
+@import "src/styles/overrides/mat-select";
 @import "src/styles/overrides/mat-sidenav";
 
 *,
@@ -28,10 +34,13 @@ html {
 }
 
 .border-rounded {
-    border-radius: $border-radius-lg;
+    border-radius: $border-radius-16;
 }
 
 .full-screen {
     min-height: 100vh;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}

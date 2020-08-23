@@ -1,0 +1,17 @@
+@import "src/styles/variables";
+
+figure.ads {
+    width: 40vw;
+    margin: 3rem auto;
+    max-width: 450px;
+    min-width: 350px;
+
+    img {
+        width: 100%;
+    }
+
+    @media (max-width: $media-breakpoint-sm) {
+        width: 100%;
+        max-width: unset;
+    }
+}

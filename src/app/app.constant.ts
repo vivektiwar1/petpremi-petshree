@@ -26,6 +26,12 @@ export const NavMenu = [
     }
 ]
 
-export const ImagesPerPage = 6; 
-export const VideosPerPage = 3; 
+export const ImagesPerPage = 6;
+export const VideosPerPage = 3;
 export const ScrollOffset = 48;
+
+export const AppointmentsTabLinks = [
+    { name: 'appointments', active: true },
+    { name: 'calender', active: false },
+    { name: 'reminders', active: false }
+]

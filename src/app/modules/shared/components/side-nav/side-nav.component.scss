@@ -13,6 +13,12 @@
     }
 }
 
+.logo-compact  {
+    float: right;
+    width: 30px;
+    margin-right: 10px;
+}
+
 .suffix-icon {
     margin-right: -2px;
     opacity: 1;
@@ -21,7 +27,7 @@
 }
 
 ::ng-deep mat-drawer.mat-drawer-opened {
-    .suffix-icon {
+    .suffix-icon, .logo-compact  {
         opacity: 0;
         visibility: hidden;
     }

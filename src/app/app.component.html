@@ -1,16 +1,18 @@
-<ng-container *ngIf="navStatus$ | async; else eCard">
+<ng-container *ngIf="navStatus$ | async; else fullScreen">
     <div class="container-fluid pet-premi-grid">
         <div class="row">
-        </div>
-        <div class="row">
             <mat-drawer-container autosize>
-                <mat-drawer #drawer mode="side" opened="true">
+                <mat-drawer #drawer mode="side" opened="true"
+                    (mouseover)="!drawer.opened && drawer.open() && setDrawerState(false)"
+                    (mouseout)="!isDrawerStatePersistant && drawer.opened && drawer.close() && setDrawerState(false)">
                     <app-side-nav></app-side-nav>
                 </mat-drawer>
 
                 <mat-drawer-content>
-                    <button (click)="drawer.toggle()"
-                        [ngClass]="{rotate: !drawer.opened}">&lt;</button>
+                    <button class="d-flex justify-content-center align-items-center" (click)="drawer.toggle(); setDrawerState(true)"
+                        [ngClass]="{rotate: !drawer.opened}">
+                        <mat-icon class="">keyboard_arrow_left</mat-icon>
+                    </button>
                     <div class="content">
                         <app-header></app-header>
                         <router-outlet></router-outlet>
@@ -21,6 +23,6 @@
     </div>
 </ng-container>
 
-<ng-template #eCard>
+<ng-template #fullScreen>
     <router-outlet></router-outlet>
 </ng-template>

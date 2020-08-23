@@ -8,19 +8,34 @@ $color-danger: red;
 $label-heading-color: #335f7f;
 $nav-item-border: #f7f7f7;
 $white: #fff;
+$black: #000;
+$background-color: #f2faff;
+$global-border: 1px solid $background-color;
+$main-font-color: #2e4765;
+$dialog-title-color: #00375f;
 
 // general
 $background-image: url("/assets/images/background.png");
-$preloader: url('/assets/images/image-preload.svg') center/cover no-repeat;
-$font-size-xs: 12px;
-$font-size-sm: 14px;
-$font-size-md: 16px;
-$font-size-lg: 18px;
-$font-size-xl: 24px;
+$preloader: url("/assets/images/image-preload.svg") center/cover no-repeat;
+
+$font-size-8: 8px;
+$font-size-12: 12px;
+$font-size-14: 14px;
+$font-size-16: 16px;
+$font-size-18: 18px;
+$font-size-24: 24px;
+
+$border-radius-8: 8px;
+$border-radius-10: 10px;
+$border-radius-12: 12px;
+$border-radius-16: 16px;
+$border-radius-28: 28px;
+
 $section-width: 480px;
-$border-radius-sm: 8px;
-$border-radius-lg: 16px;
 $transition-time: 0.3s;
+$global-padding-x: 2rem;
+$global-padding-y: 1rem;
+$global-padding: $global-padding-y $global-padding-x;
 
 // nav-menu
 $nav-item-active: $color-secondary;
@@ -32,13 +47,13 @@ $cover-margin-bottom: 70px;
 $cover-margin: 0 -40px $cover-margin-bottom;
 $cover-border-radius: 0% 0% 50% 50% / 0% 0% 20% 20%;
 $avatar-border: 3px;
-$about-primary-heading: #0D375F;
-$action-green: #25D366;
-$action-blue: #1F52B2;
+$about-primary-heading: #0d375f;
+$action-green: #25d366;
+$action-blue: #1f52b2;
 
 // error page
-$error-page-background: #C1D3A9;
+$error-page-background: #c1d3a9;
 
 // app component
-$header-height: 100px;
-
+$header-height: 70px;
+$tab-nav-height: calc(#{$font-size-16 * 1.54} + #{$global-padding-y * 2});

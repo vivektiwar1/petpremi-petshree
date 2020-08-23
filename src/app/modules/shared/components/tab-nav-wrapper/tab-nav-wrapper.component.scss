@@ -1,0 +1,10 @@
+@import "src/styles/variables";
+
+.tab-nav {
+    display: flex;
+    align-items: center;
+    background: $white;
+    border-top: $global-border;
+    padding: 0 $global-padding-x;
+    height: $tab-nav-height;
+}

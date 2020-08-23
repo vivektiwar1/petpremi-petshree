@@ -2,7 +2,7 @@ $drawer-width: 25%;
 $drawer-max-width: 250px;
 $mini-drawer-width: 50px;
 
-.mat-drawer-container {
+.mat-drawer-container:not(.default) {
     width: 100%;
     min-height: 100vh;
     background: $color-primary;

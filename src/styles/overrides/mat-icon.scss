@@ -1,0 +1,24 @@
+.mat-icon {
+    &.small {
+        font-size: $font-size-16;
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+    }
+
+    &.rounded-icon {
+        background: #f8f7f8;
+        border-radius: 50%;
+        color: $label-heading-color;
+    }
+
+    &-button {
+        outline: none;
+
+        &:active,
+        &:focus {
+            outline: none;
+        }
+    }
+}

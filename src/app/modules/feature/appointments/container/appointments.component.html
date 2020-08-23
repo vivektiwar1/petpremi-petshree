@@ -1,0 +1,18 @@
+<app-tab-nav-wrapper [tabLinks]="tabLinks" (tabHandler)="onTabItemClick($event)">
+</app-tab-nav-wrapper>
+
+<main>
+    <div class="container-fluid">
+        <div class="tab-content">
+            <app-appointment class="tab-pane fade"
+                [ngDelayedClass]="{active: activeTab === 'appointments', classList: ['active', 'show']}">
+            </app-appointment>
+            <app-calendar class="tab-pane fade"
+                [ngDelayedClass]="{active: activeTab === 'calender', classList: ['active', 'show']}">
+            </app-calendar>
+            <app-reminders class="tab-pane fade"
+                [ngDelayedClass]="{active: activeTab === 'reminders', classList: ['active', 'show']}">
+            </app-reminders>
+        </div>
+    </div>
+</main>

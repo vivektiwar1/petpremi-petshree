@@ -10,15 +10,15 @@ const routes: Routes = [
     },
     {
         path: 'ecard',
-        loadChildren: () => import('./modules/features/e-card/e-card.module').then(m => m.ECardModule)
+        loadChildren: () => import('./modules/feature/e-card/e-card.module').then(m => m.ECardModule)
     },
     {
         path: 'dashboard',
-        loadChildren: () => import('./modules/features/dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () => import('./modules/feature/dashboard/dashboard.module').then(m => m.DashboardModule)
     },
     {
-        path: 'appointment',
-        loadChildren: () => import('./modules/features/appointment/appointment.module').then(m => m.AppointmentModule)
+        path: 'appointments',
+        loadChildren: () => import('./modules/feature/appointments/appointments.module').then(m => m.AppointmentsModule)
     },
     {
         path: '**',

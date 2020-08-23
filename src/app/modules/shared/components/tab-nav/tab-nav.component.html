@@ -1,0 +1,5 @@
+<nav>
+    <a *ngFor="let tab of tabLinks" (click)="onTabItemClick(tab)" [ngClass]="{active: tab.active}">
+        {{tab.name | titlecase}}
+    </a>
+</nav>
