@@ -82,6 +82,7 @@ export class ECardComponent implements OnDestroy {
   }
 
   async createUserDetails(userDetails) {
+    this.createEnquiryForm();
     this.userDetails = {
       ...userDetails,
       avatar: this.eCardService.getImageLinks(this.userName, 'avatar'),
@@ -91,7 +92,6 @@ export class ECardComponent implements OnDestroy {
     };
     this.apiInProgress.userDataLoader = false;
     this.createHideNavArray(this.userDetails);
-    this.createEnquiryForm();
   }
 
   async getImages() {
@@ -139,7 +139,7 @@ export class ECardComponent implements OnDestroy {
       countryId: [this.countries[0]['id']],
       phone: [null, Validators.compose([Validators.minLength(10), Validators.maxLength(10)])],
       message: [null, Validators.required]
-    });
+    }, {updateOn: 'submit'});
     const phoneControl = this.enquiryForm.get('phone');
 
     phoneControl.valueChanges.pipe(
@@ -158,7 +158,9 @@ export class ECardComponent implements OnDestroy {
   }
 
   async onSubmit() {
+    
     try {
+      this.enquiryForm.markAllAsTouched();
       if (this.enquiryForm.valid) {
         this.apiInProgress.enquiryLoader = true;
         const formData = {
