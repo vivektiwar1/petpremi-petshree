@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { VCard } from "ngx-vcard";
+import { version } from 'process';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,8 @@ export class HomeComponent {
         param: {
           type: 'work'
         }
-      }
+      },
+      version: '2.1'
     }
   }
 
