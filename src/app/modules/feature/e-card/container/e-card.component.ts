@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map, tap, delay, takeUntil } from "rxjs/operators";
 
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import { ScrollOffset } from 'src/app/app.constant';
 import { ToastrService } from 'ngx-toastr';
 import { ECardService } from '../e-card.service';
@@ -128,25 +128,42 @@ export class ECardComponent implements OnDestroy {
       return {
         code: item.code,
         name: item.name,
-        id: item.id
+        id: item.id,
+        minLength: item.fromLength,
+        maxLength: item.toLength
       }
     });
+
+    let selectedCountry = this.countries[0];
 
     this.enquiryForm = this.formBuilder.group({
       titleId: [this.titles[0]['id']],
       name: [null, Validators.required],
       email: [null, Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)])],
-      countryId: [this.countries[0]['id']],
-      phone: [null, Validators.compose([Validators.minLength(10), Validators.maxLength(10)])],
+      countryId: [selectedCountry['id'], { updateOn: 'change' }],
+      phone: [null, {
+        validators: Validators.compose([Validators.minLength(selectedCountry['minLength']), Validators.maxLength(selectedCountry['maxLength'])]),
+        updateOn: 'change'
+      }],
       message: [null, Validators.required]
-    }, {updateOn: 'submit'});
-    const phoneControl = this.enquiryForm.get('phone');
+    }, { updateOn: 'submit' });
+
+    const phoneControl = this.enquiryForm.get('phone') as FormControl;
+    const countryControl = this.enquiryForm.get('countryId');
+
+    countryControl.valueChanges.subscribe(countryCode => {
+      selectedCountry = this.countries.find(country => country.id === countryCode);
+      phoneControl.setValidators([Validators.minLength(selectedCountry['minLength']), Validators.maxLength(selectedCountry['maxLength'])]);
+      phoneControl.updateValueAndValidity();
+    })
 
     phoneControl.valueChanges.pipe(
       map(value => value && value.replace(/\D/g, '')),
+      map(value => value && value.replace(/^0/g, '')),
+      map(value => value.slice(0, selectedCountry['maxLength'])),
       takeUntil(this.destroy$)
     ).subscribe(value => {
-      phoneControl.value !== value && value.length <= 10 && phoneControl.setValue(value)
+      value !== phoneControl.value && phoneControl.setValue(value);
     })
   }
 
@@ -158,7 +175,7 @@ export class ECardComponent implements OnDestroy {
   }
 
   async onSubmit() {
-    
+
     try {
       this.enquiryForm.markAllAsTouched();
       if (this.enquiryForm.valid) {
@@ -170,7 +187,10 @@ export class ECardComponent implements OnDestroy {
         await this.eCardService.postEnquiry(formData).toPromise();
         this.toastrService.success('Thanks For Reaching Out!');
         this.apiInProgress.enquiryLoader = false;
-        this.enquiryForm.reset();
+        this.enquiryForm.reset({
+          titleId: this.titles[0]['id'],
+          countryId: this.countries[0]['id']
+        });
       }
     } catch (error) {
       this.apiInProgress.enquiryLoader = false;
