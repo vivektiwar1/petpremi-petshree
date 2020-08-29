@@ -1,0 +1,71 @@
+<div class="card shadow">
+  <div class="pl-4 pr-3 custom-border bottom">
+    <app-tab-nav [tabLinks]="tabLinks" (tabHandler)="onTabItemClick($event)"></app-tab-nav>
+  </div>
+
+  <div class="tab-content p-4">
+    <div class="tab-pane fade" [ngDelayedClass]="{active: activeTab === 'today', classList: ['active', 'show']}">
+      <mat-expansion-panel class="custom mat-elevation-z0">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            Reason for Appointment
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="d-flex justify-content-between pt-3">
+          <div class="no-outline form-control-icon w-40">
+            <input class="form-control" placeholder="Search for complaint">
+            <mat-icon class="small icon-right">search</mat-icon>
+          </div>
+          <button class="ml-auto custom-one">+ Add new complaint</button>
+        </div>
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="custom mat-elevation-z0 mt-3">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            Diagnosis
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="pt-3">
+          this is a test
+        </div>
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="custom mat-elevation-z0 mt-3">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            Services & Goods
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="pt-3">
+          this is a test
+        </div>
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="custom mat-elevation-z0 mt-3">
+        <mat-expansion-panel-header expandedHeight="48px">
+          <mat-panel-title>
+            Exam
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="pt-3">
+          this is a test
+        </div>
+
+      </mat-expansion-panel>
+
+      <div class="d-flex justify-content-end mt-3">
+        <button class="custom-one">View previous visit</button>
+        <button class="custom-one mx-3">+ Add reminder</button>
+        <app-button buttonText="SAVE PRESCRIPTION" className="btn-warning" (buttonClicked)="''"></app-button>
+      </div>
+    </div>
+  </div>
+</div>

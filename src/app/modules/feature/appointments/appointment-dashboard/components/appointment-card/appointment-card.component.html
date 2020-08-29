@@ -1,6 +1,7 @@
 <div class="card p-3 position-relative">
     <div class="d-flex align-items-center title mt-2">
-        <img class="avatar rounded-circle" src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4">
+        <img class="avatar rounded-circle"
+            src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4">
         <div class="d-flex flex-column ml-3">
             <h6 class="name">Prateek</h6>
             <span class="profession">Online Consultation</span>
@@ -17,8 +18,8 @@
         </div>
     </div>
     <div class="d-flex justify-content-center actions mt-2">
-        <button>Reschedule</button>
-        <button class="ml-2">View Details</button>
+        <button class="custom-one">Reschedule</button>
+        <button class="ml-2 custom-one" (click)="openAppointmentDetails('123456')">View Details</button>
     </div>
     <div class="status status-warning position-absolute">
         confirmed

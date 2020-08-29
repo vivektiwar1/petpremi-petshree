@@ -1,6 +1,6 @@
 <div class="tab-nav">
     <app-tab-nav [tabLinks]="tabLinks" (tabHandler)="onTabItemClick($event)"></app-tab-nav>
     <div class="ml-auto">
-        {{date | date: 'hh:mm:ss aa'}}
+        {{(date$ | async) | date: 'hh:mm:ss aa'}}
     </div>
 </div>

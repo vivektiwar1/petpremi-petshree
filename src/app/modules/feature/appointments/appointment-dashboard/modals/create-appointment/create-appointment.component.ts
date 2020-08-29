@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, delay, filter } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { AddClientComponent } from '../add-client/add-client.component';
+import { AddPetComponent } from '../add-pet/add-pet.component';
 
 @Component({
   selector: 'app-create-appointment',
@@ -15,7 +18,8 @@ export class CreateAppointmentComponent implements OnInit {
   apiInProgress: boolean;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private matDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +51,7 @@ export class CreateAppointmentComponent implements OnInit {
     );
 
   }
-  
+
   onSubmit() {
     if (this.appointmentForm.valid) {
       this.apiInProgress = true;
@@ -56,6 +60,20 @@ export class CreateAppointmentComponent implements OnInit {
       }, 2000);
       console.log(this.appointmentForm.value);
     }
+  }
+
+  addClient() {
+    const dialog = this.matDialog.open(AddClientComponent, {
+      disableClose: true,
+      width: "40vw"
+    })
+  }
+
+  addPet() {
+    const dialog = this.matDialog.open(AddPetComponent, {
+      disableClose: true,
+      width: "40vw"
+    })
   }
 
 }

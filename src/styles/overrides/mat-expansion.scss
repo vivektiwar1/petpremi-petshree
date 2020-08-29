@@ -1,0 +1,28 @@
+.mat-expansion-panel.custom {
+    
+    &.mat-expanded {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    &:not(.mat-expanded) {
+        border-radius: $border-radius-12;
+    }
+
+    .mat-expansion-panel-header {
+        background: #F6F9FC;
+        border-top-left-radius: $border-radius-12;
+        border-top-right-radius: $border-radius-12;
+
+        &:hover, &:focus {
+            background: #F6F9FC !important;
+        }
+    }
+
+    &:not(.mat-extented) .mat-expansion-panel-content {
+        border: 1px solid #D3E6F4;
+        border-bottom-left-radius: $border-radius-12;
+        border-bottom-right-radius: $border-radius-12;
+    }
+
+}

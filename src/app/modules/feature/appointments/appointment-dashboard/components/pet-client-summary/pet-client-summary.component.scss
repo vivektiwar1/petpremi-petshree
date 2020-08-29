@@ -1,0 +1,66 @@
+@import "src/styles/variables";
+
+.card-details {
+    background: $white;
+
+    img {
+        width: 50px;
+    }
+
+    border-radius: $border-radius-18;
+
+    &.active {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+.card-details-expanded {
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.15);
+    border-bottom-left-radius: $border-radius-28;
+    border-bottom-right-radius: $border-radius-28;
+}
+
+.pet {
+    img {
+        width: 80px;
+    }
+
+    .details {
+        .gender {
+            font-size: $font-size-14;
+            line-height: $font-size-14 * 1.5;
+        }
+
+        .info {
+            line-height: $font-size-14 * 1.5;
+            label {
+                color: $dialog-title-color;
+                font-size: $font-size-14;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.owner {
+    .details {
+        .name {
+            color: $dialog-title-color;
+        }
+
+        .relation {
+            font-size: $font-size-14;
+            line-height: $font-size-14 * 1.5;
+        }
+
+        .info {
+            line-height: $font-size-14 * 1.5;
+            label {
+                color: $dialog-title-color;
+                font-size: $font-size-14;
+                margin: 0;
+            }
+        }
+    }
+}

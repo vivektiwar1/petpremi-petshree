@@ -1,0 +1,40 @@
+@import "src/styles/variables";
+
+.card {
+    border-radius: $border-radius-16;
+    overflow: hidden;
+
+    .title {
+
+        .avatar {
+            width: 50px;
+        }
+
+        .profession {
+            font-size: $font-size-14;
+            font-weight: 300;
+        }
+    }
+
+    .details {
+        label {
+            color: $dialog-title-color;
+            margin: 0;
+        }
+    }
+    .status {
+        top: 0;
+        right: 0;
+        text-align: center;
+        width: 40%;
+        font-size: $font-size-12;
+        border-bottom-left-radius: $border-radius-16;
+        padding: 0.2rem 0;
+        text-transform: capitalize;
+
+        &-warning {
+            background: rgba($color-secondary, 0.08);
+            color: $color-secondary;
+        }
+    }
+}

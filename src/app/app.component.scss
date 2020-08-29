@@ -31,13 +31,10 @@
         display: block;
         
         main:not(.default) {
-            margin: $global-padding;
+            padding: $global-padding;
             min-height: calc(100vh - #{$tab-nav-height} - #{$header-height} - #{$global-padding-y*2});
 
-            div.container-fluid {
-                padding: $global-padding;
-                background: $white;
-                border-radius: $border-radius-28;
+            section {
                 min-height: inherit;
             }
         }

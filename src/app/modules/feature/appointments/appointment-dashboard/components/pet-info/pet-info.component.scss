@@ -1,0 +1,19 @@
+@import "src/styles/variables";
+
+.card {
+    border-radius: $border-radius-16;
+    border: none;
+    overflow: hidden;
+
+    .info {
+        label {
+            color: $dialog-title-color;
+            font-size: $font-size-12;
+            margin: 0;
+        }
+
+       .shift-right {
+            margin-left: 50%;
+        }
+    }
+}

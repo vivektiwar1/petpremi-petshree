@@ -11,12 +11,12 @@ export class TabNavComponent {
   @Output() tabHandler: EventEmitter<string> = new EventEmitter<string>();
 
   onTabItemClick(tab) {
-    this.toggleActiveTab(tab.name)
-    this.tabHandler.emit(tab.name);
+    this.toggleActiveTab(tab.value)
+    this.tabHandler.emit(tab.value);
   }
 
   toggleActiveTab(tabName) {
-    (this.tabLinks || []).forEach(tab => tab.active = tab.name === tabName);
+    (this.tabLinks || []).forEach(tab => tab.active = tab.value === tabName);
   }
 
 }

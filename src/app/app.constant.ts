@@ -31,7 +31,7 @@ export const VideosPerPage = 3;
 export const ScrollOffset = 48;
 
 export const AppointmentsTabLinks = [
-    { name: 'appointments', active: true },
-    { name: 'calender', active: false },
-    { name: 'reminders', active: false }
-]
+    { name: 'Appointments', value: 'appointments', active: true },
+    { name: 'Calender', value: 'calender', active: false },
+    { name: 'Reminders', value: 'reminders', active: false }
+];

@@ -1,0 +1,25 @@
+button.custom-one {
+    color: $dialog-title-color;
+    border: 1px solid rgba($dialog-title-color, 0.2);
+    font-weight: 500;
+    font-size: $font-size-12;
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius-10;
+    outline: none;
+    background: $white;
+    text-transform: uppercase;
+    transition: all $transition-time;
+    &:active {
+        transform: scale(0.96);
+        transform-origin: center;
+        box-shadow: 0 2px 2px rgba($dialog-title-color, 0.2);
+        transition: all $transition-time;
+    }
+
+    &:not(:active):hover {
+        transform: scale(1.02);
+        transform-origin: center;
+        box-shadow: 0 2px 2px rgba($dialog-title-color, 0.2);
+        transition: all $transition-time;
+    }
+}

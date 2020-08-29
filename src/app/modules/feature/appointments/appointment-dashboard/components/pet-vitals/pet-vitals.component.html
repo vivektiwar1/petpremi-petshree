@@ -1,0 +1,21 @@
+<div class="card shadow p-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Vitals</h5>
+        <button class="custom-one">+ ADD</button>
+    </div>
+
+    <div class="d-flex info mt-2">
+        <div class="d-flex flex-column">
+            <label>Latest Weight</label>
+            <h4 class="font-weight-light mt-1">16,500 g</h4>
+        </div>
+        <div class="d-flex flex-column shift-right">
+            <label>Latest Temp</label>
+            <h4 class="font-weight-light mt-1">101 F</h4>
+        </div>
+    </div>
+
+    <div>
+        <spline-chart [chartData]="this.chartData"></spline-chart>
+    </div>
+</div>

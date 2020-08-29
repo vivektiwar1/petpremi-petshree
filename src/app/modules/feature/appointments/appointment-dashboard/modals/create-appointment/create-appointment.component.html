@@ -6,17 +6,19 @@
 <mat-dialog-content class="full-page">
     <form [formGroup]="appointmentForm" class="no-outline" autocomplete="off">
         <div class="row">
-            <div class="col-12 col-sm-6 form-group">
+            <div class="col-12 col-sm-6 form-group mb-1">
                 <input-search label="Client" placeholder="Search Client" name="client"
                     [parentFormGroup]="appointmentForm" [searchItems$]="searchItems$">
                     <mat-icon class="small">search</mat-icon>
                 </input-search>
+                <label class="font-weight-medium mt-2 cursor-pointer" (click)="addClient()">+ Add New Client</label>
             </div>
-            <div class="col-12 col-sm-6 form-group">
+            <div class="col-12 col-sm-6 form-group mb-1">
                 <input-search label="Pet" placeholder="Search Pet" name="pet" [parentFormGroup]="appointmentForm"
                     [searchItems$]="searchItems$">
                     <mat-icon class="small">search</mat-icon>
                 </input-search>
+                <label class="font-weight-medium mt-2 cursor-pointer" (click)="addPet()">+ Add New Pet</label>
             </div>
         </div>
 
@@ -44,8 +46,7 @@
 
         <div class="row">
             <div class="col-12 col-sm-6 form-group">
-                <input-date
-                    label="Date" name="date" [parentFormGroup]="appointmentForm"></input-date>
+                <input-date label="Date" name="date" [parentFormGroup]="appointmentForm"></input-date>
             </div>
             <div class="col-12 col-sm-6 form-group">
                 <input-dropdown label="Time" name="time" placeholder="Select time" [parentFormGroup]="appointmentForm"
@@ -72,7 +73,8 @@
         </div>
     </form>
 
-    <app-button class="mt-4" className="btn-warning" buttonText="ADD APPOINTMENT" [disabled]="(appointmentForm.invalid || apiInProgress)" (buttonClicked)="onSubmit()">
+    <app-button class="mt-2" className="btn-warning" buttonText="ADD APPOINTMENT"
+        [disabled]="(appointmentForm.invalid || apiInProgress)" (buttonClicked)="onSubmit()">
     </app-button>
 
     <figure class="ads">

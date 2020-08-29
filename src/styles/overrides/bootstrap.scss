@@ -1,4 +1,8 @@
-form {
+.container-fluid.custom-padding {
+    padding: $global-padding;
+}
+
+form, div {
     .form-group {
         label {
             color: $main-font-color;
@@ -17,9 +21,9 @@ form {
     .custom-form-control {
         border: 1px solid #ced4da;
         border-radius: 0.25rem;
-        transition: border-color .15s ease-in-out;
-        padding: .375rem .75rem;
-        height: calc(1.5em + .75rem + 2px);
+        transition: border-color 0.15s ease-in-out;
+        padding: 0.375rem 0.75rem;
+        height: calc(1.5em + 0.75rem + 2px);
 
         input {
             height: 100%;

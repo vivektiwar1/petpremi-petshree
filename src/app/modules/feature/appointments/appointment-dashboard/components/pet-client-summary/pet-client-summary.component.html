@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-4 pl-0">
+        <div class="card-details p-4 active d-flex align-items-center">
+            <mat-icon class="large border rounded cursor-pointer" (click)="closeAppointmentDetails()">keyboard_backspace</mat-icon>
+            <h6 class="ml-3">11:00 AM - 12:00 PM</h6>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="row flex-nowrap overflow-hidden">
+            <div class="col-5" *ngFor="let _ of [1,2,3,4]">
+                <div class="card-details cursor-pointer px-3 py-2 d-flex">
+                    <img class="avatar rounded-circle align-self-start"
+                        src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4">
+
+                    <div class="ml-3 flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <label class="m-0">Fluff</label>
+                            <label class="m-0">12:00 PM</label>
+                        </div>
+                        <div class="text-right text-muted">
+                            Online Consultant
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="row bg-white card-details-expanded">
+            <div class="col-4 p-4">
+                <div class="d-flex pet">
+                    <img class="avatar rounded-circle align-self-start"
+                        src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4">
+                    <div class="details ml-3 flex-grow-1">
+                        <h5>Lisa</h5>
+                        <div class="gender">Female</div>
+                        <div class="info mt-3 d-flex justify-content-between">
+                            <div>
+                                <label>Breed</label>
+                                <div>Human</div>
+                            </div>
+                            <div class="mr-5">
+                                <label>Age</label>
+                                <div>21Y</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-4 p-4">
+                <div class="owner">
+                    <div class="details ml-3 flex-grow-1">
+                        <div class="name">Prateek Srivastav</div>
+                        <div class="relation">Owner</div>
+                        <div class="info mt-3 d-flex justify-content-between">
+                            <div>
+                                <label>Email</label>
+                                <div>prateek@gmail.com</div>
+                            </div>
+                            <div class="mr-5">
+                                <label>Phone</label>
+                                <div>+91-9891780719</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3 p-4 d-flex align-items-end justify-content-end">
+                <mat-icon class="mb-1 large border rounded cursor-pointer">more_horiz</mat-icon>
+                <app-button class="ml-3" className="btn-warning" buttonText="FINISH APT"></app-button>
+            </div>
+        </div>
+    </div>
+</div>

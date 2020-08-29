@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { of, timer, } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tab-nav-wrapper',
@@ -9,7 +11,9 @@ export class TabNavWrapperComponent {
 
   @Input() tabLinks: Array<any>;
   @Output() tabHandler: EventEmitter<string> = new EventEmitter<string>();
-  date: Date = new Date();
+  date$ = timer(0, 1000).pipe(
+    switchMap(() => of(new Date()))
+  );
 
   onTabItemClick(name) {
     this.tabHandler.emit(name);
