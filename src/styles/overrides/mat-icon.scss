@@ -1,4 +1,6 @@
 .mat-icon {
+    cursor: pointer;
+    
     &.small {
         font-size: $font-size-16;
         width: 28px;

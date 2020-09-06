@@ -30,3 +30,35 @@
         }
     }
 }
+
+.appointments-nav {
+    .navigate-cards {
+        position: absolute;
+        z-index: 1;
+        opacity: 0;
+        visibility: hidden;
+        transition: $transition-time opacity linear;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #f2f6fc;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        text-align: center;
+        line-height: calc(32 * 1.5px);
+
+        &.prev {
+            left: 14px;
+        }
+
+        &.next {
+            right: 14px;
+        }
+    }
+
+    &:hover .navigate-cards {
+        opacity: 1;
+        visibility: visible;
+        transition: $transition-time opacity linear;
+    }
+}

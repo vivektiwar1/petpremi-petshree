@@ -5,7 +5,7 @@ import { ErrorPageComponent } from './modules/shared/components/error-page/error
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'appointments',
         pathMatch: 'full'
     },
     {

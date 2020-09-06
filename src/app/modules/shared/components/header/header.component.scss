@@ -1,6 +1,70 @@
 @import "src/styles/variables";
 
-header {
+nav {
     height: $header-height;
     background: $white;
+    padding: 0 $global-padding-x;
+
+    .text-blue {
+        color: $main-font-color;
+
+        span {
+            vertical-align: text-bottom;
+        }
+    }
+
+    .notifications {
+        position: relative;
+        &.unread::before {
+            content: "";
+            position: absolute;
+            height: 6px;
+            width: 6px;
+            top: 10px;
+            right: 10px;
+            background: $color-secondary;
+            border-radius: 100%;
+        }
+    }
+
+    .search {
+        display: flex;
+        flex-direction: row-reverse;
+        input[type="checkbox"] {
+            height: 0;
+            width: 0;
+
+            &:checked + .search-box {
+                width: 100%;
+
+                input.custom-form-control {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .search-box {
+            width: 36px;
+            overflow: hidden;
+            transition: 0.3s width linear;
+            position: relative;
+
+            label {
+                margin: 0;
+                position: absolute;
+                right: 8px;
+                top: 50%;
+                transform: translateY(-48%);
+                z-index: 1;
+            }
+
+            input.custom-form-control {
+                width: 100%;
+                padding-right: 30px;
+                opacity: 0;
+                transition: 0.3s opacity linear;
+                border-radius: $border-radius-16;
+            }
+        }
+    }
 }
