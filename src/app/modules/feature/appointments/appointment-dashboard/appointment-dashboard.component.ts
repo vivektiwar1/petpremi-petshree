@@ -36,4 +36,20 @@ export class AppointmentDashboardComponent implements OnInit {
     });
   }
 
+  scrollBack(element: HTMLDivElement) {
+    element.scrollTo({
+      top: 0,
+      left: element.scrollLeft - (element.firstElementChild as HTMLDivElement).offsetWidth,
+      behavior: 'smooth'
+    });
+  }
+  
+  scrollForward(element: HTMLElement) {
+    element.scrollTo({
+      top: 0,
+      left: element.scrollLeft + (element.firstElementChild as HTMLDivElement).offsetWidth,
+      behavior: 'smooth'
+    });
+  }
+
 }

@@ -50,13 +50,13 @@
             </div>
 
             <div class="col-12 appointments-nav position-relative">
-                <div class="navigate-cards prev">
+                <div class="navigate-cards prev" (click)="scrollBack(upcomingAppointment)">
                     <mat-icon>keyboard_arrow_left</mat-icon>
                 </div>
-                <div class="row py-3 flex-nowrap overflow-hidden">
+                <div class="row py-3 flex-nowrap overflow-scroll-hidden" #upcomingAppointment>
                     <app-appointment-card class="col-3" *ngFor="let _ of [1,2,3,4,5]"></app-appointment-card>
                 </div>
-                <div class="navigate-cards next">
+                <div class="navigate-cards next" (click)="scrollForward(upcomingAppointment)">
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </div>
             </div>
@@ -68,13 +68,13 @@
             </div>
 
             <div class="col-12 appointments-nav position-relative">
-                <div class="navigate-cards prev">
+                <div class="navigate-cards prev" (click)="scrollBack(liveAppointment)">
                     <mat-icon>keyboard_arrow_left</mat-icon>
                 </div>
-                <div class="row py-3 flex-nowrap overflow-hidden">
+                <div class="row py-3 flex-nowrap overflow-scroll-hidden" #liveAppointment>
                     <app-appointment-card class="col-3" *ngFor="let _ of [1,2,3,4,5]"></app-appointment-card>
                 </div>
-                <div class="navigate-cards next">
+                <div class="navigate-cards next" (click)="scrollForward(liveAppointment)">
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </div>
             </div>

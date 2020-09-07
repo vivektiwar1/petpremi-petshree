@@ -72,3 +72,18 @@ html {
         border-radius: $border-radius-28;
     }
 }
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+
+    &::-webkit-scrollbar {
+        width: 0 !important;
+    }
+}
+
+.overflow-scroll-hidden {
+    @extend .hide-scrollbar;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
