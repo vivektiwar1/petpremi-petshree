@@ -24,6 +24,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { InputSearchComponent } from './components/form-controls/input-search/input-search.component';
 import { InputDateComponent } from './components/form-controls/input-date/input-date.component';
 import { ButtonComponent } from './components/button/button.component';
+import { AddClientComponent } from './modals/add-client/add-client.component';
+import { AddPetComponent } from './modals/add-pet/add-pet.component';
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,9 @@ import { ButtonComponent } from './components/button/button.component';
     InputDateComponent,
     NgDelayedClassDirective,
     TabNavWrapperComponent,
+    AddClientComponent,
+    AddPetComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +73,8 @@ import { ButtonComponent } from './components/button/button.component';
     NgDelayedClassDirective,
     SideNavComponent,
     TabNavComponent,
-    TabNavWrapperComponent
+    TabNavWrapperComponent,
+    TableComponent
   ]
 })
 export class SharedModule { }

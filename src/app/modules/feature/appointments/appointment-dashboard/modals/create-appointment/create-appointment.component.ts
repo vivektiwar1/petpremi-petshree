@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, delay, filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { AddClientComponent } from '../add-client/add-client.component';
-import { AddPetComponent } from '../add-pet/add-pet.component';
+import { AddClientComponent } from 'src/app/modules/shared/modals/add-client/add-client.component';
+import { AddPetComponent } from 'src/app/modules/shared/modals/add-pet/add-pet.component';
 
 @Component({
   selector: 'app-create-appointment',
@@ -66,14 +66,14 @@ export class CreateAppointmentComponent implements OnInit {
     const dialog = this.matDialog.open(AddClientComponent, {
       disableClose: true,
       width: "40vw"
-    })
+    });
   }
 
   addPet() {
     const dialog = this.matDialog.open(AddPetComponent, {
       disableClose: true,
       width: "40vw"
-    })
+    });
   }
 
 }

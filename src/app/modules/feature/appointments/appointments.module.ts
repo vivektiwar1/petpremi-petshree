@@ -19,9 +19,6 @@ import { PetInfoComponent } from './appointment-dashboard/components/pet-info/pe
 import { PetVitalsComponent } from './appointment-dashboard/components/pet-vitals/pet-vitals.component';
 
 import { CreateAppointmentComponent } from './appointment-dashboard/modals/create-appointment/create-appointment.component';
-import { AddPetComponent } from './appointment-dashboard/modals/add-pet/add-pet.component';
-import { AddClientComponent } from './appointment-dashboard/modals/add-client/add-client.component';
-
 
 import {MatExpansionModule} from '@angular/material/expansion';
 import { PetClientSummaryComponent } from './appointment-dashboard/components/pet-client-summary/pet-client-summary.component';
@@ -34,8 +31,6 @@ import { PetClientSummaryComponent } from './appointment-dashboard/components/pe
     RemindersComponent,
     CreateAppointmentComponent,
     AppointmentCardComponent,
-    AddPetComponent,
-    AddClientComponent,
     AppointmentDetailsComponent,
     PetInfoComponent,
     PetVitalsComponent,

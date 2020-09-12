@@ -35,3 +35,8 @@ export const AppointmentsTabLinks = [
     { name: 'Calender', value: 'calender', active: false },
     { name: 'Reminders', value: 'reminders', active: false }
 ];
+
+export const CustomersTabLinks = [
+    { name: 'Clients', value: 'clients', active: true },
+    { name: 'Pets', value: 'pets', active: false },
+];

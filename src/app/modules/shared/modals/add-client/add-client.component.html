@@ -5,7 +5,7 @@
 
 
 <mat-dialog-content>
-    <form [formGroup]="addClientForm" class="no-outline" autocomplete="off">
+    <form *ngIf="addClientForm" [formGroup]="addClientForm" class="no-outline" autocomplete="off">
 
         <div class="row">
             <div class="col-12 col-sm-6 form-group">

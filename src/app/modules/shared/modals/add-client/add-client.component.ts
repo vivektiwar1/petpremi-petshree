@@ -21,7 +21,7 @@ export class AddClientComponent implements OnInit {
   createForm() {
     this.addClientForm = this.formBuilder.group({
       clientName: ['', Validators.required],
-      clientphone: ['', Validators.required],
+      clientPhone: ['', Validators.required],
       name: ['', Validators.required],
       type: ['', Validators.required],
       breed: ['', Validators.required],

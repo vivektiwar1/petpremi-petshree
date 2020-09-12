@@ -87,3 +87,12 @@ html {
     overflow-y: hidden;
     overflow-x: auto;
 }
+
+.global {
+    &-customer-hr {
+        margin: 0;
+        border-color: #D3E6F4;
+        border-top-width: 3px;
+    }
+
+}

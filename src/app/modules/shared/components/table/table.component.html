@@ -1,0 +1,45 @@
+<div *ngIf="!loading; else loader" class="table-responsive">
+    <table *ngIf="displayedColumn" class="table table-custom-customers">
+        <thead>
+            <tr>
+                <th *ngFor="let column of displayedColumn">
+                    {{column.name}}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container>
+                <tr *ngFor="let dataItem of dataSource">
+                    <td *ngFor="let column of displayedColumn">
+                        <ng-container *ngIf="column.type === 'figureCaption'">
+                            <div *ngFor="let item of dataItem[column.fieldName]; let isFirst = first"
+                                class="d-inline-flex align-items-center" [class.ml-2]="!isFirst">
+                                <img width="40" class="avatar rounded-circle"
+                                    [src]="item.image">
+                                <span class="ml-2">{{item.name}}</span>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="column.type === 'text'">
+                            {{dataItem[column.fieldName]}}
+                        </ng-container>
+
+                        <ng-container *ngIf="column.type === 'dateTime'">
+                            {{dataItem[column.fieldName] | date: 'd MMMM y'}} at
+                            {{dataItem[column.fieldName] | date: 'hh:mm a'}}
+                        </ng-container>
+
+                        <ng-container *ngIf="column.type === 'action'">
+                            <mat-icon *ngFor="let icon of actionItems; let isFirst = first" class="large"
+                                [class.ml-2]="!isFirst" (click)="onActionClick(icon, dataItem)">{{icon}}</mat-icon>
+                        </ng-container>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #loader>
+    loading...
+</ng-template>
