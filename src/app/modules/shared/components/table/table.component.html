@@ -1,30 +1,34 @@
-<div *ngIf="!loading; else loader" class="table-responsive">
-    <table *ngIf="displayedColumn" class="table table-custom-customers">
+<div class="table-responsive table-loader">
+    <table *ngIf="displayedColumn" class="table table-custom-customers" matSort>
         <thead>
             <tr>
-                <th *ngFor="let column of displayedColumn">
-                    {{column.name}}
-                </th>
+                <ng-container *ngFor="let column of displayedColumn">
+                    <th *ngIf="column.type !== 'action'" [mat-sort-header]="column.fieldName">
+                        {{column.name}}
+                    </th>
+                    <th *ngIf="column.type === 'action'"></th>
+                </ng-container>
             </tr>
         </thead>
         <tbody>
-            <ng-container>
-                <tr *ngFor="let dataItem of dataSource">
+            <ng-container *ngIf="dataSource?.content;">
+                <tr *ngFor="let dataItem of dataSource?.content">
                     <td *ngFor="let column of displayedColumn">
-                        <ng-container *ngIf="column.type === 'figureCaption'">
+                        <ng-container *ngIf="column.type === 'figureCaption' && dataItem[column.fieldName]">
                             <div *ngFor="let item of dataItem[column.fieldName]; let isFirst = first"
-                                class="d-inline-flex align-items-center" [class.ml-2]="!isFirst">
-                                <img width="40" class="avatar rounded-circle"
-                                    [src]="item.image">
+                                class="d-inline-flex align-items-center" [class.ml-2]="!isFirst"
+                                (click)="onActionClick('navigate', dataItem, column.fieldName)">
+                                <img width="40" class="avatar rounded-circle" [src]="item.image"
+                                    onerror="this.error = null; this.src='assets/images/default-profile.png'">
                                 <span class="ml-2">{{item.name}}</span>
                             </div>
                         </ng-container>
 
-                        <ng-container *ngIf="column.type === 'text'">
+                        <ng-container *ngIf="column.type === 'text' && dataItem[column.fieldName]">
                             {{dataItem[column.fieldName]}}
                         </ng-container>
 
-                        <ng-container *ngIf="column.type === 'dateTime'">
+                        <ng-container *ngIf="column.type === 'dateTime' && dataItem[column.fieldName]">
                             {{dataItem[column.fieldName] | date: 'd MMMM y'}} at
                             {{dataItem[column.fieldName] | date: 'hh:mm a'}}
                         </ng-container>
@@ -38,8 +42,9 @@
             </ng-container>
         </tbody>
     </table>
+    <mat-paginator *ngIf="dataSource?.content" [length]="dataSource.totalElements" [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator>
+    <div *ngIf="loading" class="table-loader-wrapper">
+        <mat-spinner diameter="60"></mat-spinner>
+    </div>
 </div>
-
-<ng-template #loader>
-    loading...
-</ng-template>

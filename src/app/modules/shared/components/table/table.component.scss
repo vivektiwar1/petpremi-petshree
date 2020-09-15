@@ -20,6 +20,10 @@
                     border-top-right-radius: 10px;
                     border-bottom-right-radius: 10px;
                 }
+
+                ::ng-deep .mat-sort-header-button:focus {
+                    outline: unset;
+                }
             }
         }
 
@@ -42,5 +46,23 @@
                 color: #52575d;
             }
         }
+    }
+}
+
+.table-loader {
+    position: relative;
+    min-height: 50vh;
+
+    &-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 56px;
+        right: 0;
+        background: rgba(0, 0, 0, 0.15);
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }

@@ -1,15 +1,8 @@
-<app-tab-nav-wrapper [tabLinks]="tabLinks" (tabHandler)="onTabItemClick($event)">
+<app-tab-nav-wrapper *ngIf="tabLinks" [tabLinks]="tabLinks" (tabHandler)="onTabItemClick($event)">
 </app-tab-nav-wrapper>
 
 <main>
     <section>
-        <div class="tab-content">
-            <app-clients class="tab-pane fade"
-                [ngDelayedClass]="{active: activeTab === 'clients', classList: ['active', 'show']}">
-            </app-clients>
-            <app-pets class="tab-pane fade"
-                [ngDelayedClass]="{active: activeTab === 'pets', classList: ['active', 'show']}">
-            </app-pets>
-        </div>
+        <router-outlet></router-outlet>
     </section>
 </main>

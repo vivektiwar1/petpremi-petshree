@@ -20,6 +20,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 
 import { InputSearchComponent } from './components/form-controls/input-search/input-search.component';
 import { InputDateComponent } from './components/form-controls/input-date/input-date.component';
@@ -27,6 +28,9 @@ import { ButtonComponent } from './components/button/button.component';
 import { AddClientComponent } from './modals/add-client/add-client.component';
 import { AddPetComponent } from './modals/add-pet/add-pet.component';
 import { TableComponent } from './components/table/table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -55,6 +59,9 @@ import { TableComponent } from './components/table/table.component';
     MatNativeDateModule,
     MatSelectModule,
     MatTabsModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     RouterModule
   ],

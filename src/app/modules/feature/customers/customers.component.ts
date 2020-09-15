@@ -11,7 +11,7 @@ import { CustomersTabLinks } from "src/app/app.constant";
 })
 export class CustomersComponent implements OnInit {
 
-  tabLinks = CustomersTabLinks;
+  tabLinks: Array<any>;
   activeTab: string;
   appointmentId: string;
 
@@ -21,6 +21,7 @@ export class CustomersComponent implements OnInit {
     private router: Router
   ) {
     this.commonService.showDashboardNavs();
+    this.tabLinks = CustomersTabLinks.map(item => ({ ...item, active: router.url.includes(item.value) }));
     this.activeTab = (this.tabLinks.find(item => item.active) || {})['value'] || '';
     this.activatedRoute.queryParams.subscribe(params => {
       this.appointmentId = params.appointmentId;
@@ -31,8 +32,9 @@ export class CustomersComponent implements OnInit {
   }
 
   onTabItemClick(tab) {
-    console.log(tab)
-    this.activeTab = tab;
+    this.router.navigate([`./${tab}`], {
+      relativeTo: this.activatedRoute
+    });
   }
 
 }

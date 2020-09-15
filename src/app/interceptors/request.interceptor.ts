@@ -7,18 +7,30 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const clone = request.clone({
-      setHeaders: {
-        Authorization: `Basic ${window.btoa(environment.username + ':' + environment.password)}`
-      }
-    })
+    let clone;
+    if (this.router.url.startsWith('/ecard')) {
+      clone = request.clone({
+        setHeaders: {
+          Authorization: `Basic ${window.btoa(environment.username + ':' + environment.password)}`
+        }
+      });
+    } else {
+      clone = request.clone({
+        setHeaders: {
+          Authorization: `Bearer 4782187e-740d-4f06-8a32-47e91272ab63`
+        }
+      });
+    }
 
     return next.handle(clone);
   }

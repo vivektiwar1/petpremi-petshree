@@ -21,6 +21,43 @@
         </div>
     </div>
 
+    <!-- <div class="my-3" [hidden]="false">
+        <h5>Search Clients</h5>
+        <form class="row mt-2 no-outline" *ngIf="searchForm" [formGroup]="searchForm">
+            <div class="col-12 col-sm-6 form-group mb-1">
+                <label class="mb-0" for="clientName">Client Name</label>
+                <input class="form-control" id="clientName" formControlName="clientName"
+                    placeholder="Enter Client Name">
+            </div>
+            <div class="col-12 col-sm-6 form-group mb-1">
+                <label class="mb-0" for="petName">Pet Name</label>
+                <input class="form-control" id="petName" formControlName="petName" placeholder="Enter Pet Name">
+            </div>
+            <div class="col-12 col-sm-6 form-group px-3 mb-1">
+                <label class="mb-0" for="phone">Phone</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="form-control">
+                            <mat-select formControlName="countryId">
+                                <mat-option *ngFor="let country of countries" [value]="country.id">
+                                    +{{country.code}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <input class="form-control" type="tel" id="mobile" placeholder="Mobile" formControlName="mobile">
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 form-group mb-1">
+                <label class="mb-0" for="email">Email</label>
+                <input class="form-control" id="email" formControlName="email" placeholder="Enter Email">
+            </div>
+            <div class="col-12 col-sm-6">
+                mat-date-ra
+            </div>
+        </form>
+    </div> -->
+
     <div class="row mt-1">
         <div class="col-12">
             <hr class="global-customer-hr">
@@ -29,12 +66,8 @@
 
     <div class="row mt-4">
         <div class="col-12">
-            <app-table 
-                [displayedColumn]="displayedColumn"
-                [actionItems]="actionItems"
-                [dataSource]="dataSource"
-                (actionHandler)="handleAction($event)"
-            ></app-table>
+            <app-table [loading]="apiInProgress" [displayedColumn]="displayedColumn" [actionItems]="actionItems"
+                [dataSource]="dataSource" (actionHandler)="handleAction($event)"></app-table>
         </div>
     </div>
-</div> 
+</div>

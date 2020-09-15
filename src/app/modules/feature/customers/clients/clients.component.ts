@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AddClientComponent } from 'src/app/modules/shared/modals/add-client/add-client.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DisplayedColumn } from 'src/app/models/displayedColumn.interface';
+import { ClientsService } from './clients.service';
+import { pageLimit as TableDataLimit } from 'src/app/app.constant';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-clients',
@@ -13,32 +17,62 @@ export class ClientsComponent implements OnInit {
   displayedColumn: Array<DisplayedColumn> = [
     { name: 'Clients', fieldName: 'clients', type: 'figureCaption' },
     { name: 'Pets', fieldName: 'pets', type: 'figureCaption' },
-    { name: 'Contact Number', fieldName: 'phone', type: 'text' },
+    { name: 'Contact Number', fieldName: 'mobile', type: 'text' },
     { name: 'Email', fieldName: 'email', type: 'text' },
     { name: 'Last Visit', fieldName: 'lastVisit', type: 'dateTime' },
     { name: '', fieldName: '', type: 'action' }
   ];
 
   actionItems = ['edit', 'delete'];
+  dataSource: any;
+  apiInProgress: boolean;
+  tableDataLimit: number = TableDataLimit;
+  searchForm: FormGroup;
+  countries: any;
 
-  dataSource = Array(10).fill({
-    clients: [
-      {name: 'Prateek Srivastav', image: 'https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4'}
-    ],
-    pets: [
-      {name: 'Lisa', image: 'https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4'},
-      {name: 'Lizzy', image: 'https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4'}
-    ],
-    phone: '+91-9891780719',
-    email: 'prateek@gmail.com',
-    lastVisit: new Date(),
-  });
-
-  constructor( 
-    private matDialog: MatDialog
+  constructor(
+    private clientService: ClientsService,
+    private matDialog: MatDialog,
+    private commonService: CommonService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.createSearchForm();
+    this.getClientsList();
+  }
+
+  async createSearchForm() {
+
+    // await this.commonService.getCountryList();
+
+    this.searchForm = this.formBuilder.group({
+      clientName: [''],
+      petName: [''],
+      countryId: [''],
+      mobile: [],
+      email: [''],
+      lastVisit: []
+    });
+    console.log(this.searchForm);
+  }
+
+  async getClientsList(listOptions?) {
+    try {
+      this.apiInProgress = true;
+      const response = await this.clientService.getClients(
+        listOptions?.pageSize ?? this.tableDataLimit, listOptions?.pageNumber, listOptions?.sort
+      ).toPromise() as any;
+      this.apiInProgress = false;
+      if (!response.isError) {
+        this.dataSource = response?.responseResult?.data;
+      } else {
+        console.error(new Error(response?.responseError?.message))
+      }
+    } catch (error) {
+      console.log(error);
+      this.apiInProgress = false;
+    }
   }
 
   openAddClientModal() {
@@ -48,8 +82,12 @@ export class ClientsComponent implements OnInit {
     })
   }
 
-  handleAction(actionDetails) {
-    console.log(actionDetails);
+  handleAction({ action, data }) {
+    switch (action) {
+      case 'tableAction':
+        this.getClientsList(data);
+        break;
+    }
   }
 
 }
