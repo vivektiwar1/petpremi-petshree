@@ -1,5 +1,5 @@
 <div class="table-responsive table-loader">
-    <table *ngIf="displayedColumn" class="table table-custom-customers" matSort>
+    <table *ngIf="displayedColumn?.length" class="table table-custom-customers" matSort>
         <thead>
             <tr>
                 <ng-container *ngFor="let column of displayedColumn">
@@ -11,17 +11,23 @@
             </tr>
         </thead>
         <tbody>
-            <ng-container *ngIf="dataSource?.content;">
+            <ng-container *ngIf="dataSource?.content?.length; else noData">
                 <tr *ngFor="let dataItem of dataSource?.content">
                     <td *ngFor="let column of displayedColumn">
                         <ng-container *ngIf="column.type === 'figureCaption' && dataItem[column.fieldName]">
-                            <div *ngFor="let item of dataItem[column.fieldName]; let isFirst = first"
-                                class="d-inline-flex align-items-center" [class.ml-2]="!isFirst"
-                                (click)="onActionClick('navigate', dataItem, column.fieldName)">
-                                <img width="40" class="avatar rounded-circle" [src]="item.image"
-                                    onerror="this.error = null; this.src='assets/images/default-profile.png'">
-                                <span class="ml-2">{{item.name}}</span>
-                            </div>
+                            <ng-container
+                                *ngFor="let item of dataItem[column.fieldName]; let isFirst = first; let i = index">
+                                <div *ngIf="i < 2" class="d-inline-flex align-items-center cursor-pointer"
+                                    [class.ml-2]="!isFirst"
+                                    (click)="onActionClick('navigate', dataItem, column.fieldName)">
+                                    <img width="40" class="avatar rounded-circle" [src]="item.image"
+                                        onerror="this.error = null; this.src='assets/images/default-profile.png'">
+                                    <span class="ml-2">{{item.name}}</span>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="dataItem[column.fieldName]?.length > 2">
+                                <span>+{{dataItem[column.fieldName].length - 2}}</span>
+                            </ng-container>
                         </ng-container>
 
                         <ng-container *ngIf="column.type === 'text' && dataItem[column.fieldName]">
@@ -40,9 +46,15 @@
                     </td>
                 </tr>
             </ng-container>
+            <ng-template #noData>
+                <tr>
+                    <td class="text-center" [colSpan]="displayedColumn.length">No Data Found</td>
+                </tr>
+            </ng-template>
         </tbody>
     </table>
-    <mat-paginator *ngIf="dataSource?.content" [length]="dataSource.totalElements" [pageSizeOptions]="pageSizeOptions">
+    <mat-paginator *ngIf="dataSource?.content?.length" [length]="dataSource.totalElements"
+        [pageSizeOptions]="pageSizeOptions">
     </mat-paginator>
     <div *ngIf="loading" class="table-loader-wrapper">
         <mat-spinner diameter="60"></mat-spinner>

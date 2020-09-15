@@ -1,0 +1,11 @@
+<label *ngIf="label" class="mb-0" [attr.for]="name">{{label}}</label>
+<ng-container *ngIf="parentFormGroup">
+    <div class="d-flex align-items-center custom-form-control" (click)="picker.open()">
+        <mat-date-range-input class="cursor-pointer" [formGroup]="parentFormGroup" [rangePicker]="picker">
+            <input class="cursor-pointer" matStartDate [formControlName]="startKey" placeholder="Start date" readonly>
+            <input class="cursor-pointer" style="height: unset" matEndDate [formControlName]="endKey" placeholder="End date" readonly>
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+    </div>
+</ng-container>

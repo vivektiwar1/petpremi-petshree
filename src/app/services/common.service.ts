@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,12 +9,15 @@ import { environment } from 'src/environments/environment';
 })
 export class CommonService {
   private _navStatus$: Subject<boolean>;
+  private httpSpy: HttpClient;
 
   constructor(
     private router: Router,
-    private httpClient: HttpClient
-  ) { 
+    private httpClient: HttpClient,
+    private httpBackend: HttpBackend
+  ) {
     this._navStatus$ = new Subject();
+    this.httpSpy = new HttpClient(httpBackend);
   }
 
   hideDashboardNavs(): void {
@@ -40,18 +43,24 @@ export class CommonService {
       }
     };
 
-    const response = await this.httpClient.post(`${environment.apiBase}/crud`, apiData).toPromise();
-    console.log(response);
-    const countries = [];
-    return (countries as Array<any> || []).map(item => {
-      return {
-        code: item.code,
-        name: item.name,
-        id: item.id,
-        minLength: item.fromLength,
-        maxLength: item.toLength
+    const response = await this.httpSpy.post(`${environment.apiBase}/crud`, apiData, {
+      headers: {
+        Authorization: `Basic ${window.btoa(environment.username + ':' + environment.password)}`
       }
-    })
+    }).toPromise() as any;
+    if (!response.isError) {
+      return (response.responseResult?.data?.content as Array<any> || []).map(item => {
+        return {
+          code: item.code,
+          name: item.name,
+          id: item.id,
+          minLength: item.fromLength,
+          maxLength: item.toLength
+        }
+      })
+    } else {
+      return [];
+    }
   }
 
 }

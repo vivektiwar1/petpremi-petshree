@@ -31,6 +31,7 @@ import { TableComponent } from './components/table/table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { InputDateRangeComponent } from './components/form-controls/input-date-range/input-date-range.component';
 
 @NgModule({
   declarations: [
@@ -43,11 +44,12 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     KeyboardNavigationDirective,
     InputSearchComponent,
     InputDateComponent,
+    InputDateRangeComponent,
     NgDelayedClassDirective,
     TabNavWrapperComponent,
     AddClientComponent,
     AddPetComponent,
-    TableComponent
+    TableComponent,
   ],
   imports: [
     CommonModule,
@@ -69,6 +71,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     ButtonComponent,
     HeaderComponent,
     InputDateComponent,
+    InputDateRangeComponent,
     InputDropdownComponent,
     InputSearchComponent,
     KeyboardNavigationDirective,

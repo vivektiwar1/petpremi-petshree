@@ -28,24 +28,25 @@ export class TableComponent implements OnInit {
     if (tableData) {
       this.dataSource = tableData;
       this.cdRef.detectChanges();
-      this.paginator.pageIndex = this.dataSource.number;
-      this.paginator.pageSize = this.dataSource.size;
+      if (this.paginator) {
+        this.paginator.pageIndex = this.dataSource.number;
+        this.paginator.pageSize = this.dataSource.size;
 
-      this.subsRef = this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-      
-      const tableEvents = merge(this.sort.sortChange, this.paginator.page).subscribe(() => {
-        this.onActionClick('tableAction', {
-          data: {
-            sort: {
-              ...(this.sort.direction ? { [this.sort.direction.toUpperCase()]: [this.sort.active] } : {})
-            },
-            pageSize: this.paginator.pageSize,
-            pageNumber: this.paginator.pageIndex
-          }
+        this.subsRef = this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+        const tableEvents = merge(this.sort.sortChange, this.paginator.page).subscribe(() => {
+          this.onActionClick('tableAction', {
+            data: {
+              sort: {
+                ...(this.sort.direction ? { [this.sort.direction.toUpperCase()]: [this.sort.active] } : {})
+              },
+              pageSize: this.paginator.pageSize,
+              pageNumber: this.paginator.pageIndex
+            }
+          });
         });
-      });
-
-      this.subsRef.add(tableEvents);
+        this.subsRef.add(tableEvents);
+      }
     }
   }
   @Input('loading') loading: boolean;

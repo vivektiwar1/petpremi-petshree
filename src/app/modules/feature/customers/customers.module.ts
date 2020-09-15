@@ -10,9 +10,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatSelectModule } from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -23,9 +22,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     SharedModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule
   ]
 })
 export class CustomersModule { }

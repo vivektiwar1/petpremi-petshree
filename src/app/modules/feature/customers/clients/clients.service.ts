@@ -10,7 +10,7 @@ export class ClientsService {
     private http: HttpClient
   ) { }
 
-  getClients(pageSize, pageNumber = 0, sort?) {
+  getClients(pageSize, pageNumber = 0, sort?, searchHash?) {
     const apiData = {
       commonParamHash: {
         entityName: "User",
@@ -24,9 +24,7 @@ export class ClientsService {
           ...(sort ? {...sort} : { DESC: ["lastLogin"] })
         }
       },
-      objectHash: {
-
-      }
+      objectHash: searchHash ? searchHash : {}
     }
     return this.http.post('http://petshree.com:8083/service/oauth2/api/crud', apiData);
   }

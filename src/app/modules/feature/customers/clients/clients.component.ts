@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AddClientComponent } from 'src/app/modules/shared/modals/add-client/add-client.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DisplayedColumn } from 'src/app/models/displayedColumn.interface';
@@ -25,10 +25,16 @@ export class ClientsComponent implements OnInit {
 
   actionItems = ['edit', 'delete'];
   dataSource: any;
-  apiInProgress: boolean;
+  apiInProgress = {
+    data: false,
+    search: false
+  }
   tableDataLimit: number = TableDataLimit;
   searchForm: FormGroup;
   countries: any;
+  hideSearchBox: boolean = true;
+
+  @ViewChild('clientSearchRef') clientSearchRef: ElementRef<HTMLElement>;
 
   constructor(
     private clientService: ClientsService,
@@ -44,26 +50,28 @@ export class ClientsComponent implements OnInit {
 
   async createSearchForm() {
 
-    // await this.commonService.getCountryList();
+    this.countries = await this.commonService.getCountryList() as Array<any>;
 
     this.searchForm = this.formBuilder.group({
-      clientName: [''],
-      petName: [''],
-      countryId: [''],
+      clientName: [null],
+      petName: [null],
+      countryId: [],
       mobile: [],
-      email: [''],
-      lastVisit: []
+      email: [null],
+      lastVisit: this.formBuilder.group({
+        startDate: [null],
+        endDate: [null]
+      })
     });
-    console.log(this.searchForm);
   }
 
   async getClientsList(listOptions?) {
     try {
-      this.apiInProgress = true;
+      this.apiInProgress.data = true;
       const response = await this.clientService.getClients(
-        listOptions?.pageSize ?? this.tableDataLimit, listOptions?.pageNumber, listOptions?.sort
+        listOptions?.pageSize ?? this.tableDataLimit, listOptions?.pageNumber, listOptions?.sort, listOptions?.searchHash
       ).toPromise() as any;
-      this.apiInProgress = false;
+      this.apiInProgress.data = false;
       if (!response.isError) {
         this.dataSource = response?.responseResult?.data;
       } else {
@@ -71,7 +79,7 @@ export class ClientsComponent implements OnInit {
       }
     } catch (error) {
       console.log(error);
-      this.apiInProgress = false;
+      this.apiInProgress.data = false;
     }
   }
 
@@ -88,6 +96,38 @@ export class ClientsComponent implements OnInit {
         this.getClientsList(data);
         break;
     }
+  }
+
+  async onSearch() {
+    if (this.searchForm.valid) {
+
+      const searchHash = {
+        ...(this.searchForm.value.clientName ? { fullName_LIKE: this.searchForm.value.clientName } : {}),
+        ...(this.searchForm.value.petName ? { pets_FK: this.searchForm.value.petName } : {}),
+        ...(this.searchForm.value.email ? { email_LIKE: this.searchForm.value.email } : {}),
+        ...(this.searchForm.value.countryId && this.searchForm.value.mobile ?
+          { country_FK: this.searchForm.value.countryId, mobile_LIKE: this.searchForm.value.mobile } : {}),
+        ...(this.searchForm.value.lastVisit.startDate && this.searchForm.value.lastVisit.endDate ?
+          {
+            lastLogin_BETWEEN: [
+              this.searchForm.value.lastVisit.startDate,
+              this.searchForm.value.lastVisit.endDate
+            ]
+          } : {}),
+      }
+
+      if (Object.keys(searchHash).length) {
+        this.apiInProgress.search = true;
+        await this.getClientsList({ searchHash });
+        this.apiInProgress.search = false;
+      }
+    }
+  }
+
+  async resetSearch() {
+    this.searchForm.reset();
+    await this.getClientsList();
+    this.clientSearchRef.nativeElement.click();
   }
 
 }
