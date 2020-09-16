@@ -12,10 +12,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ClientDetailsComponent } from './client-details/client-details.component';
+import { PetDetailsComponent } from './pet-details/pet-details.component';
 
 
 @NgModule({
-  declarations: [CustomersComponent, ClientsComponent, PetsComponent],
+  declarations: [CustomersComponent, ClientsComponent, PetsComponent, ClientDetailsComponent, PetDetailsComponent],
   imports: [
     CommonModule,
     CustomersRoutingModule,

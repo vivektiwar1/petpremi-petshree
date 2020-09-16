@@ -6,6 +6,7 @@ import { ClientsService } from './clients.service';
 import { pageLimit as TableDataLimit } from 'src/app/app.constant';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clients',
@@ -40,7 +41,8 @@ export class ClientsComponent implements OnInit {
     private clientService: ClientsService,
     private matDialog: MatDialog,
     private commonService: CommonService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -91,9 +93,13 @@ export class ClientsComponent implements OnInit {
   }
 
   handleAction({ action, data }) {
+    console.log(action);
     switch (action) {
       case 'tableAction':
         this.getClientsList(data);
+        break;
+      case 'navigate':
+        this.openDetails(data);
         break;
     }
   }
@@ -125,9 +131,15 @@ export class ClientsComponent implements OnInit {
   }
 
   async resetSearch() {
-    this.searchForm.reset();
-    await this.getClientsList();
-    this.clientSearchRef.nativeElement.click();
+    if (this.searchForm.touched && this.searchForm.dirty) {
+      this.searchForm.reset();
+      await this.getClientsList();
+      this.clientSearchRef.nativeElement.click();
+    }
+  }
+
+  openDetails(info) {
+    this.router.navigate(['/customers', info.navigateTo, info.id]);
   }
 
 }

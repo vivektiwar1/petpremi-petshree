@@ -1,4 +1,4 @@
-<div class="container-fluid custom-padding bg-white border-xl">
+<div class="container-fluid custom-padding bg-white border-radius-xl">
     <div class="row pt-3">
         <div class="col-7">
             <h4>Clients</h4>
@@ -63,7 +63,7 @@
             <div class="col-12 col-sm-6 d-flex align-items-end">
                 <app-button class="ml-auto" className="btn-warning" buttonText="Search" [disabled]="searchForm.invalid">
                 </app-button>
-                <button class="custom-one ml-2" (click)="resetSearch()">Reset Search</button>
+                <button class="custom-one ml-2" (click)="resetSearch()" [disabled]="searchForm.untouched && searchForm.pristine">Reset Search</button>
             </div>
         </form>
     </div>

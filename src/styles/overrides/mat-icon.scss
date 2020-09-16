@@ -1,6 +1,12 @@
 .mat-icon {
     cursor: pointer;
-    
+    outline: none;
+
+    &:active,
+    &:focus {
+        outline: none;
+    }
+
     &.small {
         font-size: $font-size-16;
         width: 28px;
@@ -21,14 +27,5 @@
         background: #f8f7f8;
         border-radius: 50%;
         color: $label-heading-color;
-    }
-
-    &-button {
-        outline: none;
-
-        &:active,
-        &:focus {
-            outline: none;
-        }
     }
 }

@@ -19,7 +19,7 @@
                                 *ngFor="let item of dataItem[column.fieldName]; let isFirst = first; let i = index">
                                 <div *ngIf="i < 2" class="d-inline-flex align-items-center cursor-pointer"
                                     [class.ml-2]="!isFirst"
-                                    (click)="onActionClick('navigate', dataItem, column.fieldName)">
+                                    (click)="onActionClick('navigate', item, column.fieldName)">
                                     <img width="40" class="avatar rounded-circle" [src]="item.image"
                                         onerror="this.error = null; this.src='assets/images/default-profile.png'">
                                     <span class="ml-2">{{item.name}}</span>

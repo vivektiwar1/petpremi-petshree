@@ -78,9 +78,14 @@ html {
         border-right-width: 1px;
         border-right-style: solid;
     }
+
+    &.box {
+        border-width: 1px;
+        border-style: solid;
+    }
 }
 
-.border {
+.border-radius {
     &-xl {
         border-radius: $border-radius-28;
     }

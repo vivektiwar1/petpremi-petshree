@@ -43,3 +43,9 @@ export const CustomersTabLinks = [
 
 export const pageSizeOptions = [5, 10, 25, 50];
 export const pageLimit = 5;
+
+export const ClientDetailsTabLinks = [
+    { name: 'Pets', value: 'pets', active: true },
+    { name: 'Appointments', value: 'Appointments', active: false },
+    { name: 'Reminders', value: 'Reminders', active: false },
+];

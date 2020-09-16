@@ -1,0 +1,103 @@
+<div class="container-fluid custom-padding">
+    <div class="row">
+        <div class="col-4 pl-0">
+            <div class="card-details p-4 active d-flex align-items-center shadow">
+                <mat-icon class="large border rounded cursor-pointer" routerLink="/customers/clients">keyboard_backspace
+                </mat-icon>
+
+                <div class="d-flex align-items-center">
+                    <img class="avatar mx-4 rounded-circle"
+                        src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4">
+                    <h4>Prateek Srivastav</h4>
+                </div>
+            </div>
+
+            <div class="owner mt-4 p-4 card-details shadow">
+                <div class="details ml-3 flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5>Contact Info</h5>
+                        <mat-icon class="large">edit</mat-icon>
+                    </div>
+                    <div class="info mt-3 d-flex justify-content-between">
+                        <div>
+                            <label>Email</label>
+                            <div>prateek@gmail.com</div>
+                        </div>
+                        <div class="mr-5">
+                            <label>Phone</label>
+                            <div>+91-9891780719</div>
+                        </div>
+                    </div>
+                    <div class="info mt-3">
+                        <div>
+                            <label>Address</label>
+                            <div>Anonymous</div>
+                        </div>
+                    </div>
+                    <div class="info mt-3">
+                        <div>
+                            <label>Notes</label>
+                            <div>Shinaye</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 pr-0">
+            <div class="card-details p-4 h-100 shadow">
+                hahah
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 px-0">
+            <div class="card-details shadow">
+                <div class="d-flex justify-content-between px-4 pt-2 custom-border bottom">
+                    <app-tab-nav [tabLinks]="tabLinks" (tabHandler)="onTabItemClick($event)"></app-tab-nav>
+                    <div class="d-flex align-items-center">
+                        <div class="mr-3">2 Patients</div>
+                        <app-button buttonText="+ ADD PETS" className="btn-warning"></app-button>
+                    </div>
+                </div>
+
+                <div class="tab-content p-4">
+                    <section class="d-flex tab-pane fade"
+                        [ngDelayedClass]="{active: activeTab === 'pets', classList: ['active', 'show']}">
+                        <div *ngFor="let _ of [1,2,3]; let isFirst = first" class="pets cursor-pointer w-20 py-3 px-4"
+                            [class.ml-3]="!isFirst">
+                            <div class="first-block d-flex align-items-center">
+                                <img class="avatar rounded-circle"
+                                    src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4">
+                                <div class="d-flex ml-3 flex-grow-1 justify-content-between align-items-center">
+                                    <div class="info d-flex flex-column">
+                                        <label>Mads</label>
+                                        <span>Male</span>
+                                    </div>
+                                    <span>Dog</span>
+                                </div>
+                            </div>
+
+                            <div class="second-block d-flex info mt-2">
+                                <div class="info d-flex flex-column">
+                                    <label>Breed</label>
+                                    <span>Human</span>
+                                </div>
+                                <div class="info d-flex flex-column ml-auto">
+                                    <label>Age</label>
+                                    <span>21</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="tab-pane fade"
+                        [ngDelayedClass]="{active: activeTab === 'appointments', classList: ['active', 'show']}">
+                    </section>
+                    <section class="tab-pane fade"
+                        [ngDelayedClass]="{active: activeTab === 'reminders', classList: ['active', 'show']}">
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
