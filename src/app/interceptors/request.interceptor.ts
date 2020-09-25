@@ -27,7 +27,7 @@ export class RequestInterceptor implements HttpInterceptor {
     } else {
       clone = request.clone({
         setHeaders: {
-          Authorization: `Bearer f526a677-8aee-44ed-af09-5956da06dffe`
+          Authorization: `Bearer 8d425b9d-3a18-4f5a-87e1-2dfe2bca463e`
         }
       });
     }

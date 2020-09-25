@@ -1,9 +1,11 @@
-<figure class="text-center mt-5">
+<figure class="text-center mt-5" (mouseover)="handleMouseOver()">
     <img class="cursor-pointer" src="assets/images/logo.svg" alt="Pet Shree logo">
     <img class="logo-compact cursor-pointer" src="assets/images/logo-compact.svg" alt="Pet Shree logo">
 </figure>
 
-<mat-nav-list class="mt-6">
+<div class="negative-space"></div>
+
+<mat-nav-list (mouseover)="handleMouseOver()">
     <mat-list-item routerLink="/dashboard" routerLinkActive="active">
         <mat-icon fontSet="material-icons-outlined">dashboard</mat-icon>
         <div class="ml-3">Dashboard</div>

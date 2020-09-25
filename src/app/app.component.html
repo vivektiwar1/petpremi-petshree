@@ -3,9 +3,8 @@
         <div class="row">
             <mat-drawer-container autosize>
                 <mat-drawer #drawer mode="side"
-                    (mouseover)="!drawer.opened && drawer.open() && setDrawerState(false)"
                     (mouseout)="!isDrawerStatePersistant && drawer.opened && drawer.close() && setDrawerState(false)">
-                    <app-side-nav></app-side-nav>
+                    <app-side-nav (onMouseOver)="!drawer.opened && drawer.open() && setDrawerState(false)"></app-side-nav>
                 </mat-drawer>
 
                 <mat-drawer-content>
