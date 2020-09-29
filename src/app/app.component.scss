@@ -30,7 +30,7 @@
     height: 100%;
     
     ::ng-deep router-outlet + * {
-        display: block;
+        // display: block;
         
         main:not(.default) {
             padding: $global-padding;

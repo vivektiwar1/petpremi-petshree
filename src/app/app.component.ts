@@ -9,7 +9,7 @@ import { CommonService } from './services/common.service';
 })
 export class AppComponent {
   navStatus$: Observable<boolean>;
-  isDrawerStatePersistant: boolean = true;
+  isDrawerStatePersistent: boolean = true;
 
   constructor(
     private commonService: CommonService
@@ -18,7 +18,7 @@ export class AppComponent {
   }
 
   setDrawerState(state: boolean) {
-    this.isDrawerStatePersistant = state;
+    this.isDrawerStatePersistent = state;
   }
 
 }

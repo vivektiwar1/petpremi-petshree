@@ -28,3 +28,30 @@ button.custom-one {
         opacity: 0.8;
     }
 }
+
+button.no-outline {
+    &,
+    &:active,
+    &:focus {
+        outline: none !important;
+        box-shadow: unset !important;
+    }
+}
+
+.btn-effect {
+    &:not(:disabled):active {
+        transform: scale(0.96);
+        transform-origin: center;
+        transition: all $transition-time;
+    }
+
+    &:not(:disabled):not(:active):hover {
+        transform: scale(1.02);
+        transform-origin: center;
+        transition: all $transition-time;
+    }
+}
+
+button:disabled, .btn:disabled {
+    cursor: not-allowed;
+}

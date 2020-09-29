@@ -1,4 +1,4 @@
-<app-tab-nav-wrapper [tabLinks]="tabLinks" (tabHandler)="onTabItemClick($event)">
+<app-tab-nav-wrapper *ngIf="tabLinks" [tabLinks]="tabLinks" (tabHandler)="onTabItemClick($event)">
 </app-tab-nav-wrapper>
 
 <main>

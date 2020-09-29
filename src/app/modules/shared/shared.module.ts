@@ -30,7 +30,7 @@ import { AddPetComponent } from './modals/add-pet/add-pet.component';
 import { TableComponent } from './components/table/table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatProgressSpinnerModule, MatSpinner } from "@angular/material/progress-spinner";
 import { InputDateRangeComponent } from './components/form-controls/input-date-range/input-date-range.component';
 
 @NgModule({
@@ -79,8 +79,11 @@ import { InputDateRangeComponent } from './components/form-controls/input-date-r
     MatDialogModule,
     MatIconModule,
     MatInputModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
     MatTabsModule,
     NgDelayedClassDirective,
+    ReactiveFormsModule,
     SideNavComponent,
     TabNavComponent,
     TabNavWrapperComponent,

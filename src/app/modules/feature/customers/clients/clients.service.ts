@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,11 @@ export class ClientsService {
           pageSize
         },
         sort: {
-          ...(sort ? {...sort} : { DESC: ["lastLogin"] })
+          ...(sort ? {...sort} : { DESC: ["lastVisit"] })
         }
       },
       objectHash: searchHash ? searchHash : {}
     }
-    return this.http.post('http://petshree.com:8083/service/oauth2/api/crud', apiData);
+    return this.http.post(`${environment.apiBase}/service/oauth2/api/crud`, apiData);
   }
 }

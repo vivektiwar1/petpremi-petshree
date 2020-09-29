@@ -1,7 +1,3 @@
-.container-fluid.custom-padding {
-    padding: $global-padding;
-}
-
 form,
 div {
     .form-group {
@@ -35,4 +31,8 @@ div {
             border-color: #80bdff;
         }
     }
+}
+
+.textarea-min-height {
+    min-height: calc(1.5em + 0.75rem + 2px);
 }

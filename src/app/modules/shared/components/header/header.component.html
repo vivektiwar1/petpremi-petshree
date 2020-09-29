@@ -1,27 +1,3 @@
-<!-- <header class="d-flex justify-content-between w-100">
-    <select class="align-self-center">
-        <option>hello</option>
-    </select>
-
-    <div class="d-flex">
-        <div class="d-flex align-items-center px-3 border-right">
-            <mat-icon class="cursor-pointer">search</mat-icon>
-        </div>
-        <div class="d-flex align-items-center px-3 border-right">
-            <mat-icon class="cursor-pointer">search</mat-icon>
-        </div>
-        <div class="d-flex align-items-center px-3 border-right">
-            <mat-icon class="cursor-pointer">search</mat-icon>
-        </div>
-        <div class="d-flex align-items-center px-3">
-            <img class="avatar rounded-circle" width="30" src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4">
-            <select class="ml-3">
-                <option>hello</option>
-            </select>
-        </div>
-    </div>
-</header> -->
-
 <nav class="navbar navbar-expand-lg">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +17,7 @@
                     <a class="dropdown-item" href="#">Another action</a>
                 </div>
             </li>
-            <li class="nav-item text-blue d-flex ml-auto border-right">
+            <!-- <li class="nav-item text-blue d-flex ml-auto border-right">
                 <div class="search px-3 align-self-center">
                     <input type="checkbox" id="search-bar">
                     <div class="search-box no-outline">
@@ -51,13 +27,13 @@
                         <input class="custom-form-control" type="text" placeholder="Search">
                     </div>
                 </div>
-            </li>
-            <li class="nav-item text-blue d-flex border-right">
+            </li> -->
+            <li class="nav-item text-blue ml-auto d-flex border-right">
                 <div class="px-3 align-self-center">
                     <mat-icon class="cursor-pointer">language</mat-icon>
                 </div>
             </li>
-            <li class="nav-item d-flex border-right">
+            <!-- <li class="nav-item d-flex border-right">
                 <div class="px-3 align-self-center dropdown">
                     <a class="nav-link text-blue notifications unread" id="notifications" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,18 +44,19 @@
                         <a class="dropdown-item" href="#">Another action</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
             <li class="nav-item d-flex align-self-lg-center px-3 dropdown">
                 <img class="avatar rounded-circle align-self-center" width="30"
-                    src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4">
+                    src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4" onerror="this.error = null; this.src = 'assets/images/default-profile.png'">
                 <a class="nav-link text-blue" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <span>Prateek Srivastav</span>
                     <mat-icon class="large">expand_more</mat-icon>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" routerLink="/settings/profile">Profile</a>
+                    <a class="dropdown-item" (click)="handleChangePassword()">Change Password</a>
+                    <a class="dropdown-item" (click)="handleLogout()">Logout</a>
                 </div>
             </li>
         </ul>

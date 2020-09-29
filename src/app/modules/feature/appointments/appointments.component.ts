@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AppointmentsComponent implements OnInit {
 
-  tabLinks = AppointmentsTabLinks;
+  tabLinks: Array<any>;
   activeTab: string;
   appointmentId: string;
 
@@ -20,18 +20,21 @@ export class AppointmentsComponent implements OnInit {
     private router: Router
   ) {
     this.commonService.showDashboardNavs();
+    this.tabLinks = AppointmentsTabLinks.map(item => ({ ...item, active: router.url.includes(item.value) }));
     this.activeTab = (this.tabLinks.find(item => item.active) || {})['value'] || '';
     this.activatedRoute.queryParams.subscribe(params => {
       this.appointmentId = params.appointmentId;
-    })
+    });
   }
 
   ngOnInit(): void {
+    
   }
 
   onTabItemClick(tab) {
-    console.log(tab)
-    this.activeTab = tab;
+    this.router.navigate([`./${tab}`], {
+      relativeTo: this.activatedRoute
+    });
   }
 
   openAppointmentDetails(appointmentId: string) {

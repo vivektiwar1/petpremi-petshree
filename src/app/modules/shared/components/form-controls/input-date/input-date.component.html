@@ -5,7 +5,9 @@
             [formControl]="parentFormGroup.get(name)">
         <input [attr.id]="label ? name : ''" matInput type="text" class="form-control border-0 pl-0" style="cursor: default; caret-color: transparent;"
             [value]="(parentFormGroup.get(name).value | date: 'dd/MMM/y')" (click)="picker.open()"
-            (keydown)="$event.preventDefault()">
+            (keydown)="$event.preventDefault()"
+            [placeholder]="placeholder"
+            >
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </div>

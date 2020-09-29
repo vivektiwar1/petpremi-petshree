@@ -25,6 +25,10 @@ const routes: Routes = [
         loadChildren: () => import('./modules/feature/customers/customers.module').then(m => m.CustomersModule)
     },
     {
+        path: 'settings',
+        loadChildren: () => import('./modules/feature/settings/settings.module').then(m => m.SettingsModule)
+    },
+    {
         path: '**',
         redirectTo: '404',
         pathMatch: 'full'

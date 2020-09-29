@@ -20,7 +20,7 @@ export class ECardService {
   }
 
   private getApiUrl(url: string): string {
-    return `${environment.apiBase}${url}`;
+    return `${environment.apiBase}/service/api${url}`;
   }
 
   getUserDetails(userName): Observable<any> {

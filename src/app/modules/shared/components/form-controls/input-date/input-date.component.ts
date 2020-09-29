@@ -11,6 +11,7 @@ export class InputDateComponent implements OnInit {
   @Input() parentFormGroup: FormGroup;
   @Input() name: string;
   @Input() label: string;
+  @Input() placeholder = 'Select Date';
   @Input() minDate = new Date();
 
 
