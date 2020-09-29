@@ -1,10 +1,10 @@
 export const environment = {
-  apiBase: 'http://boltonte.com:8083/service/api',
+  apiBase: 'http://localhost/service/api',
   password: 'malhotra123',
   production: false,
   username: 'admin',
-  api: 'http://boltonte.com:8083/',
+  api: 'http://localhost/',
   auth: btoa('admin:malhotra123'),
-  fbId: '',
-  googleId: '',
+  fbId: '643712706077783',
+  googleId: '69629454397-m76vmhhs1ikn1cc75ncfhedksf189j0f.apps.googleusercontent.com',
 };
