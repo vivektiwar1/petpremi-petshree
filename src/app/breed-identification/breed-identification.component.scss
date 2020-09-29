@@ -1,0 +1,135 @@
+@import "~src/vendor/scss/constants/colors.constants";
+@import "~src/vendor/scss/constants/height.constants";
+@import "~src/vendor/scss/mixins/bp.mixins";
+
+section {
+  position: relative;
+
+  .arrow {
+    position: absolute;
+    top: 15px;
+    left: 40px;
+    height: 18px;
+    width: auto;
+    cursor: pointer;
+  }
+
+  .container {
+    min-height: 600px;
+    margin-top: 40px;
+    background: $White;
+    box-shadow: 0 0 10px #0000001f;
+    display: flex;
+    max-height: none;
+    padding: 6px 0;
+  }
+}
+
+@include upto-desktop() {
+  section .container {
+    margin-top: 0;
+    box-shadow: none;
+    border: none;
+    flex-direction: column;
+    max-width: 100%;
+    min-height: calc(100vh - #{$HeaderHeight});
+    padding-top: 0;
+  }
+
+  app-breed-result:host {
+    border-radius: 0;
+  }
+
+  .map {
+    padding: 0;
+
+    .content {
+      border-radius: 0;
+    }
+  }
+
+  .result {
+    .content {
+      padding: 25px 15px 45px;
+    }
+  }
+}
+
+@include for-tablet-portrait-up() {
+  .map .content {
+    .search {
+      top: 30px;
+      width: auto;
+
+      input {
+        min-width: 210px;
+      }
+    }
+
+    .main {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: auto;
+
+      .actions {
+        margin-top: 27px;
+        flex-direction: row;
+
+        > button {
+          + button {
+            margin: 0 0 0 28px;
+          }
+        }
+      }
+    }
+  }
+
+  .result > .content {
+    .cards {
+      padding: 20px;
+
+      .result-card {
+        > div {
+          flex-direction: row;
+
+          > .image  {
+            > img {
+              max-height: 196px;
+            }
+          }
+
+          > .info {
+            margin-top: 0;
+            padding-left: 24px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include for-desktop-up() {
+  section .container {
+    max-height: 80vh;
+    border-radius: 20px;
+  }
+}
+
+@include upto-desktop() {
+  section .arrow {
+    display: none;
+  }
+}
+
+@include for-desktop-up() {
+  section .container {
+    max-width: 920px;
+  }
+}
+
+@include for-large-desktop-up() {
+  section .container {
+    max-width: 994px;
+  }
+}

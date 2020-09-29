@@ -22,6 +22,8 @@ import { CreateAppointmentComponent } from './appointment-dashboard/modals/creat
 
 import {MatExpansionModule} from '@angular/material/expansion';
 import { PetClientSummaryComponent } from './appointment-dashboard/components/pet-client-summary/pet-client-summary.component';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {ResponseInterceptor} from "../../../interceptors/response.interceptor";
 
 @NgModule({
   declarations: [
@@ -44,6 +46,9 @@ import { PetClientSummaryComponent } from './appointment-dashboard/components/pe
     ReactiveFormsModule,
     SharedModule,
     SharedChartsModule
+  ],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true},
   ]
 })
 export class AppointmentsModule { }

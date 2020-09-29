@@ -1,0 +1,14 @@
+<div class="close" role="button" aria-label="close">
+  <img alt="close" [src]="'/assets/icon/close.svg'" (click)="close()"/>
+</div>
+<div class="content">
+  <video #player autoplay muted playsinline></video>
+  <div class="message" *ngIf="(error$ | async) as error">
+    <div>{{error | translate}}</div>
+  </div>
+  <div class="action">
+    <div class="large" role="button" aria-label="Take photo" (click)="capture()">
+      <div class="small"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+<app-breed-identify (searchImage)="searchImage($event)" (searchPet)="searchPet($event)"></app-breed-identify>
+
+<div class="result">
+
+  <div class="content" #resultContainer>
+
+    <h1>{{'breed.result.popular' | translate}}</h1>
+
+    <div class="slickContainer" appBreedSlick (slideActivated)="showInfo($event)" [list]="list"></div>
+
+    <div class="cards">
+      <div class="result-card">
+        <div>
+          <div class="image">
+            <img src="https://via.placeholder.com/300x300" alt=""/>
+          </div>
+          <div class="info">
+            <div class="match" appPct [pct]="40" [text]="'breed.result.match' | translate">
+              <div class="ppc-progress">
+                <div class="ppc-progress-fill"></div>
+              </div>
+              <div class="ppc-percents">
+                <div class="pcc-percents-wrapper">
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <h2>Poodle</h2>
+            <div class="detail">Dog Breed</div>
+            <p>
+              We would recommend you to immediately schedule a check-up or cleaning with your Vet so they can determine
+              the extent of the issue.We would recommend you to immediately schedule a check-up or cleaning with your
+              Vet
+              so they can determine the extent of the issue.
+            </p>
+
+            <div class="links">
+              <div>
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+                <div>Wikipedia</div>
+              </div>
+            </div>
+            <div class="more">
+              <div class="heading">
+                {{'breed.result.more_images' | translate}}
+              </div>
+              <div class="images">
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="image">
+            <img src="https://via.placeholder.com/300x300" alt=""/>
+          </div>
+          <div class="info">
+            <div class="match" appPct [pct]="80" [text]="'breed.result.match' | translate">
+              <div class="ppc-progress">
+                <div class="ppc-progress-fill"></div>
+              </div>
+              <div class="ppc-percents">
+                <div class="pcc-percents-wrapper">
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <h2>Poodle</h2>
+            <div class="detail">Dog Breed</div>
+            <p>
+              We would recommend you to immediately schedule a check-up or cleaning with your Vet so they can determine
+              the extent of the issue.We would recommend you to immediately schedule a check-up or cleaning with your
+              Vet
+              so they can determine the extent of the issue.
+            </p>
+
+            <div class="links">
+              <div>
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+                <div>Wikipedia</div>
+              </div>
+            </div>
+            <div class="more">
+              <div class="heading">{{'breed.result.more_images' | translate}}</div>
+              <div class="images">
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+                <img src="https://via.placeholder.com/300x300" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="image">
+            <img src="https://via.placeholder.com/300x300" alt=""/>
+          </div>
+          <div class="info no-result">
+            <img [src]="'/assets/img/husky.png'" alt="no results"/>
+            <h2>{{'breed.result.no.heading' | translate}}</h2>
+            <p>{{'breed.result.no.desc' | translate}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<mat-dialog-content #contentBlock>
+
+  <button *ngIf="!data.disableClose"
+          (click)="$event.stopPropagation();ref.close()">
+  </button>
+
+  <app-auth-form [isModal]="true"
+                 [modalFormType]="data.formType"
+                 (scrollTop)="scrollToForm()"
+                 (closeModal)="ref.close()">
+  </app-auth-form>
+
+</mat-dialog-content>

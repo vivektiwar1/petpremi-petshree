@@ -1,0 +1,82 @@
+@import "~src/vendor/scss/constants/colors.constants";
+@import "~src/vendor/scss/constants/z-indices.constants";
+@import "~src/vendor/scss/mixins/bp.mixins";
+
+section {
+  position: fixed;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 45px;
+  z-index: $ZIndexPage;
+  display: none;
+  flex-direction: column;
+
+  > div {
+    position: relative;
+    border-radius: 50%;
+    overflow: visible;
+
+    + div {
+      margin-top: 14px;
+    }
+
+    &.active {
+      > img {
+        border: 1px solid $Primary;
+        box-shadow: 0 1px 8px #0000001f;
+      }
+    }
+
+    > img {
+      height: 60px;
+      width: 60px;
+      padding: 12px;
+      border: 1px solid #f0f0f0;
+      background: $White;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    > span {
+      font-family: Bradley Hand, sans-serif;
+      color: #707070;
+      opacity: 0.8;
+      position: absolute;
+      top: 70px;
+      left: -30px;
+      transform: matrix(0.97, -0.24, 0.24, 0.97, 0, 0);
+      font-size: 12px;
+      align-items: center;
+      width: 70px;
+      text-align: center;
+
+      &:before {
+        content: url("/assets/img/dotted-path.png");
+        position: absolute;
+        top: -34px;
+        left: 10px;
+        height: 32px;
+        width: auto;
+      }
+
+      &.show-top {
+        top: auto;
+        left: -22px;
+        bottom: 88px;
+
+        &:before {
+          transform: rotate(-34deg);
+          bottom: -30px;
+          left: -8px;
+          top: auto;
+        }
+      }
+    }
+  }
+}
+
+@include for-desktop-up() {
+  section {
+    display: flex;
+  }
+}

@@ -1,3 +1,11 @@
+@import "~src/vendor/scss/constants/colors.constants";
+@import "~src/vendor/scss/constants/z-indices.constants";
+@import "~src/vendor/scss/constants/height.constants";
+@import "~src/vendor/scss/mixins/bp.mixins";
+@import "~src/vendor/scss/header/index";
+@import "~src/vendor/scss/home/home";
+@import "~src/vendor/scss/breed-identification/breed-identification";
+
 @import "src/styles/variables";
 @import "src/styles/fonts";
 @import "src/styles/width";
@@ -99,22 +107,236 @@ html {
     overflow-x: auto;
 }
 
-.global {
-    &-customer-hr {
-        margin: 0;
-        border-color: #d3e6f4;
-        border-top-width: 3px;
+.mat-select-arrow,
+.mat-select-value {
+  color: $Black;
+}
+
+.select1 {
+  min-width: 45px;
+  max-width: 50px;
+
+  .mat-select-placeholder {
+    color: #1f1f1f;
+  }
+
+  span {
+    text-transform: uppercase;
+  }
+}
+
+.highlight {
+  font-weight: bold;
+  background: #e8e6ff;
+}
+
+.input1 {
+  border: 1px solid #ffb006;
+  border-radius: 8px 2px 8px 8px;
+  width: 100%;
+
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+
+  .mat-form-field-infix {
+    padding: 0;
+    border: 0;
+  }
+
+  .mat-form-field-label-wrapper {
+    top: -9px;
+    color: #1f1f1f;
+
+    span {
+      background: $White;
+      margin: 0 14px;
     }
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  input {
+    line-height: 20px;
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+}
+
+.input2 {
+  label {
+    padding: 16px;
+    margin: 0;
+  }
+
+  .mat-form-field-infix {
+    border: 0;
+    width: 100%;
+  }
+
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  .mat-form-field-subscript-wrapper {
+    position: static;
+    margin-top: 0;
+  }
+}
+
+.mat-radio-1 {
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+  .mat-radio-outer-circle {
+    border-color: $Primary !important;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-inner-circle,
+  .mat-radio-inner-circle {
+    background-color: $Primary !important;
+  }
+}
+.mat-autocomplete-panel,
+.mat-select-panel {
+  box-shadow: 0 0 6px #00000029;
+  border: 1px solid $White;
+  border-radius: 0 0 6px 6px;
+  background: $White;
+
+  > .mat-option {
+    border: 1px solid $White;
+    border-radius: 6px;
+
+    &.mat-selected:hover,
+    &.mat-active:hover {
+      background-color: $Primary;
+    }
+
+    &:hover {
+      background-color: $Primary;
+    }
+
+    > .mat-option-text {
+      color: #1f1f1f;
+
+      &:hover {
+        color: $White;
+        background-color: $Primary;
+      }
+    }
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+.progress-1 {
+  .mat-progress-bar-buffer {
+    background-color: $Primary !important;
+  }
+
+  .mat-progress-bar-fill::after {
+    background-color: $White !important;
+  }
+}
+
+.breed-map .gm-style > div > div:last-of-type {
+  background: #058018af;
+}
+
+.auth-panel {
+  justify-content: center;
+  width: 100%;
+
+  .mat-dialog-container {
+    padding: 0;
+    border-radius: 0;
+
+    mat-dialog-content {
+      height: 100vh;
+    }
+  }
+}
+
+@include for-tablet-landscape-up {
+  .auth-panel {
+    max-width: 80vw !important;
+
+    .mat-dialog-container {
+      border-radius: 20px;
+
+      mat-dialog-content {
+        height: auto;
+        max-height: 70vh;
+      }
+    }
+  }
+}
+
+@include for-desktop-up {
+  .auth-panel {
+    max-width: 920px !important;
+
+    .mat-dialog-container {
+      mat-dialog-content {
+        overflow: hidden;
+        height: 100vh;
+      }
+    }
+  }
+}
+
+a:active,
+a:visited,
+a:focus {
+  outline: inherit;
+  color: inherit;
+  text-decoration: inherit;
+}
+
+input:focus,
+div:focus,
+img:focus,
+button:active,
+button:focus {
+  outline: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f1f1f1;
+}
+
+.global {
+  &-customer-hr {
+      margin: 0;
+      border-color: #d3e6f4;
+      border-top-width: 3px;
+  }
 }
 
 .title-color {
-    color: $dialog-title-color;
+  color: $dialog-title-color;
 }
 
 .custom-padding {
-    padding: $global-padding;
+  padding: $global-padding;
 }
 
 .custom-scrollbar {
-    @include custom-scrollbar;
+  @include custom-scrollbar;
 }

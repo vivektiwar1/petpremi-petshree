@@ -1,14 +1,14 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ViewportScroller } from "@angular/common";
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { map, tap, delay, takeUntil } from "rxjs/operators";
+import {Component, OnDestroy} from '@angular/core';
+import {ViewportScroller} from "@angular/common";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable, Subject} from 'rxjs';
+import {delay, map, takeUntil, tap} from "rxjs/operators";
 
-import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
-import { ScrollOffset } from 'src/app/app.constant';
-import { ToastrService } from 'ngx-toastr';
-import { ECardService } from '../e-card.service';
-import { CommonService } from 'src/app/services/common.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {ScrollOffset} from 'src/app/app.constant';
+import {ToastrService} from 'ngx-toastr';
+import {ECardService} from '../e-card.service';
+import {CommonService} from 'src/app/services/common.service';
 
 
 @Component({
@@ -41,7 +41,7 @@ export class ECardComponent implements OnDestroy {
     private toastrService: ToastrService,
     private viewportScroller: ViewportScroller
   ) {
-    this.commonService.hideDashboardNavs()
+    this.commonService.hideDashboardNavs();
     this.activeLink$ = this.activatedRoute.fragment.pipe(
       delay(300),
       map(fragment => fragment ? fragment : 'home'),
@@ -155,7 +155,7 @@ export class ECardComponent implements OnDestroy {
       selectedCountry = this.countries.find(country => country.id === countryCode);
       phoneControl.setValidators([Validators.minLength(selectedCountry['minLength']), Validators.maxLength(selectedCountry['maxLength'])]);
       phoneControl.updateValueAndValidity();
-    })
+    });
 
     phoneControl.valueChanges.pipe(
       map(value => value && value.replace(/\D/g, '')),
@@ -182,7 +182,8 @@ export class ECardComponent implements OnDestroy {
         this.apiInProgress.enquiryLoader = true;
         const formData = {
           ...this.enquiryForm.value,
-          userName: this.userName
+          userName: this.userName,
+          mobile: this.enquiryForm.value.phone
         };
         await this.eCardService.postEnquiry(formData).toPromise();
         this.toastrService.success('Thanks For Reaching Out!');

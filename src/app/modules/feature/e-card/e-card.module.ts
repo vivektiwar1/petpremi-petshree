@@ -23,6 +23,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { ECardService } from './e-card.service';
 import { AuthImagePipe } from 'src/app/pipes/auth-image.pipe';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {ResponseInterceptor} from "../../../interceptors/response.interceptor";
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { AuthImagePipe } from 'src/app/pipes/auth-image.pipe';
   ],
   providers: [
     AuthImagePipe,
-    ECardService
+    ECardService,
+    {provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true},
   ]
 })
 export class ECardModule { }

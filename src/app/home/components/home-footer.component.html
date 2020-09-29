@@ -1,0 +1,85 @@
+<footer>
+  <div #scrollTopElement class="home-footer-scroll-top" (click)="scrollTop()"></div>
+  <div class="resources">
+    <div class="newsletter col-md-8 col-12" #newsLetterElement>
+      <picture>
+        <source media="(min-width: 992px)" [srcset]="'/assets/img/home/footer/footer-pets.png'">
+        <img
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+          alt="">
+      </picture>
+      <div class="heading">
+        <span class="big">{{'home.footer.heading.big' | translate}}</span>
+        <span>{{'home.footer.heading.small' | translate}}</span>
+      </div>
+      <div class="form">
+        <form (ngSubmit)="submitNewsLetter()">
+          <div class="form-element">
+            <input
+              title="{{'home.footer.form.placeholder' | translate}}"
+              [formControl]="newsletter"
+              [placeholder]="'home.footer.form.placeholder' | translate"
+            />
+            <button [disabled]="newsletter.dirty && newsletter.touched && newsletter.invalid">
+              {{'home.footer.form.cta' | translate}}
+            </button>
+          </div>
+          <div *ngIf="newsletter.dirty && newsletter.touched && newsletter.errors" class="mat-error">
+            {{'home.footer.form.error' | translate}}
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="container links" #resourcesElement>
+      <div class="col-12 col-sm-3 logo">
+        <a [routerLink]="['/']"><img [src]="'/assets/img/logo-white.png'" [alt]="'common.org' | translate"></a>
+      </div>
+      <div class="d-none d-sm-block col-sm-3 link">
+        <div>{{'common.headings.resources' | translate}}</div>
+        <ul>
+          <li><a [routerLink]="['/symptom-check']">{{'common.links.symptomChecker' | translate}}</a></li>
+          <li><a [routerLink]="['/breed-identification']">{{'common.links.breedIdentification' | translate}}</a></li>
+          <li><a [routerLink]="['/life-with-pets']">{{'common.links.lifeWithPets' | translate}}</a></li>
+          <li><a [routerLink]="['/breed-selector']">{{'common.links.breedSelector' | translate}}</a></li>
+          <li><a [routerLink]="['/compare-breeds']">{{'common.links.compareBreeds' | translate}}</a></li>
+        </ul>
+      </div>
+      <div class="d-none d-sm-block col-sm-3 link">
+        <div>{{'common.headings.company' | translate}}</div>
+        <ul>
+          <li><a [routerLink]="['/about-us']">{{'common.links.about' | translate}}</a></li>
+          <li><a [routerLink]="['/contact-us']">{{'common.links.contact' | translate}}</a></li>
+          <li><a [routerLink]="['/privacy-policy']">{{'common.links.privacy' | translate}}</a></li>
+          <li><a [routerLink]="['/terms']">{{'common.links.terms' | translate}}</a></li>
+        </ul>
+      </div>
+      <div class="col-12 col-sm-3 link">
+        <div>{{'common.headings.connect' | translate}}</div>
+
+        <div class="row social-links">
+          <div>
+            <a href="javascript:void(0);" target="_blank">
+              <img alt="" [src]="'/assets/img/social-links/facebook.png'"/></a>
+            <a href="javascript:void(0);" target="_blank">
+              <img alt="" [src]="'/assets/img/social-links/instagram.png'"/></a>
+            <a href="javascript:void(0);" target="_blank">
+              <img alt="" [src]="'/assets/img/social-links/youtube.png'"/></a>
+          </div>
+          <div>
+            <a href="javascript:void(0);" target="_blank">
+              <img alt="" [src]="'/assets/img/social-links/twitter.png'"/>
+            </a>
+            <a href="javascript:void(0);" target="_blank">
+              <img alt="" [src]="'/assets/img/social-links/snapchat.png'"/>
+            </a>
+            <a href="javascript:void(0);" target="_blank">
+              <img alt="" [src]="'/assets/img/social-links/pinterest.png'"/>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">{{'home.footer.copyright' | translate}}</div>
+  </div>
+</footer>
