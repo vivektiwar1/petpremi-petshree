@@ -1,5 +1,5 @@
 export const environment = {
-  apiBase: 'http://boltonte.com:8083/service/api',
+  apiBase: 'http://petshree.com:8083/service/api',
   password: 'malhotra123',
   production: true,
   username: 'admin',

@@ -4,10 +4,10 @@
   },
   "common": {
     "changePet": "HI - change pet",
-    "org": "Pet Premi",
+    "org": "PetShree",
     "links": {
-      "symptomChecker": "Symptom Checker",
-      "breedIdentification": "Breed Identification",
+      "symptomChecker": "Book Appointment",
+      "breedIdentification": "Consult Online",
       "lifeWithPets": "Life with Pets 101",
       "breedSelector": "Breed Selector",
       "compareBreeds": "Compare Breeds",
@@ -25,11 +25,11 @@
       "company": "Company",
       "connect": "Connect"
     },
-    "email": "info@petpremi.com"
+    "email": "info@petshree.com"
   },
   "home": {
     "breed": {
-      "heading": "HI - Ai-powered Breed Identification",
+      "heading": "HI - Ai-powered Consult Online",
       "subHeading": "HI - See a dog, but don’t know its breed? Click - Identify - Learn!",
       "btnText": "HI - Try Now",
       "speech": {
@@ -38,7 +38,7 @@
       }
     },
     "symptomChecker": {
-      "heading": "HI - Dog Symptom Checker!",
+      "heading": "HI - Dog Book Appointment!",
       "subHeading": "HI - It’s normal to be worried about your Dog, if you notice Anything Unusual!",
       "btnText": "HI - Try Now",
       "speech": {
@@ -62,8 +62,8 @@
   "symptom": {
     "footer": "Hindi Disclaimer: This tool is intended as a guide only. It helps you to decide how quickly you should seek professional veterinary attention for your pet.",
     "heading": {
-      "1": "Dog Symptom Checker",
-      "2": "Cat Symptom Checker"
+      "1": "Dog Book Appointment",
+      "2": "Cat Book Appointment"
     },
     "check": {
       "subHeading": {
@@ -148,7 +148,7 @@
     "goHome": "Let’s Go Home"
   },
   "auth": {
-    "title1": "Welcome to PetPremi",
+    "title1": "Welcome to petshree",
     "description1": "For better experience with your pets!",
     "signInTitle": "Sign In",
     "signUpTitle": "Sign Up",
