@@ -67,7 +67,12 @@
               "ngx-lightbox",
               "highcharts",
               "highcharts/highmaps",
-              "highcharts/highstock"
+              "highcharts/highstock",
+              "jquery",
+              "lodash",
+              "moment-timezone",
+              "slick-carousel",
+              "lottie-web"
             ]
           },
           "configurations": {

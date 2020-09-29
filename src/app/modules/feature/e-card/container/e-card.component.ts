@@ -67,8 +67,8 @@ export class ECardComponent implements OnDestroy {
     try {
       this.apiInProgress.userDataLoader = true;
       const response = await this.eCardService.getUserDetails(userName).toPromise();
-      const userDetails = response && response[0];
-
+      const userDetails = response?.responseResult?.data?.content?.[0];
+      console.log(userDetails);
       if (!userDetails) {
         this.navigateToErrorPage();
         return;
@@ -96,7 +96,7 @@ export class ECardComponent implements OnDestroy {
 
   async getImages() {
     return this.eCardService.getMediaFiles(this.userName, 'gallery').pipe(
-      map((response: any) => (response || []).map(item => {
+      map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
         return {
           src: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
           thumb: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
@@ -108,7 +108,7 @@ export class ECardComponent implements OnDestroy {
 
   async getVideos() {
     return await this.eCardService.getMediaFiles(this.userName, 'youtube').pipe(
-      map((response: []) => (response || []).map(item => {
+      map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
         return {
           videoId: item['fileName']
         }
@@ -118,13 +118,13 @@ export class ECardComponent implements OnDestroy {
 
   async createEnquiryForm() {
     const [titles, countries] = await this.getData();
-    this.titles = (titles as Array<any> || []).map(item => {
+    this.titles = ((titles as any)?.responseResult?.data?.content || []).map(item => {
       return {
         title: item.label && item.label.length ? item.label : item.title,
         id: item.id
       }
     });
-    this.countries = (countries as Array<any> || []).map(item => {
+    this.countries = ((countries as any)?.responseResult?.data?.content || []).map(item => {
       return {
         code: item.code,
         name: item.name,

@@ -111,8 +111,8 @@ export class ClientsComponent implements OnInit {
         ...(this.searchForm.value.clientName ? { fullName_LIKE: this.searchForm.value.clientName } : {}),
         ...(this.searchForm.value.petName ? { pets_FK: this.searchForm.value.petName } : {}),
         ...(this.searchForm.value.email ? { email_LIKE: this.searchForm.value.email } : {}),
-        ...(this.searchForm.value.countryId && this.searchForm.value.mobile ?
-          { country_FK: this.searchForm.value.countryId, mobile_LIKE: this.searchForm.value.mobile } : {}),
+        ...(this.searchForm.value.countryId ? { country_FK: this.searchForm.value.countryId } : {}),
+        ...(this.searchForm.value.mobile ? { mobile_LIKE: this.searchForm.value.mobile } : {}),
         ...(this.searchForm.value.lastVisit.startDate && this.searchForm.value.lastVisit.endDate ?
           {
             lastLogin_BETWEEN: [
