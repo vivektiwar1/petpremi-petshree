@@ -1,0 +1,15 @@
+@import "~src/vendor/scss/constants/height.constants";
+@import "~src/vendor/scss/constants/colors.constants";
+
+.features {
+  height: calc(100vh - #{$HeaderHeight});
+  margin-bottom: 0;
+  position: static;
+  padding: 0 0 35px;
+}
+
+@media (orientation: landscape) {
+  .features {
+    min-height: 650px;
+  }
+}

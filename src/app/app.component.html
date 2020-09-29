@@ -1,3 +1,6 @@
+<div class="progress">
+  <mat-progress-bar class="progress-1" *ngIf="loading$ | async" color="accent" mode="indeterminate"></mat-progress-bar>
+</div>
 <ng-container *ngIf="navStatus$ | async; else fullScreen">
     <div class="container-fluid pet-premi-grid">
         <div class="row">
@@ -14,7 +17,7 @@
                         <mat-icon class="">keyboard_arrow_left</mat-icon>
                     </button>
                     <div class="content">
-                        <app-header></app-header>
+                        <app-header1></app-header1>
                         <router-outlet></router-outlet>
                     </div>
                 </mat-drawer-content>
@@ -24,5 +27,7 @@
 </ng-container>
 
 <ng-template #fullScreen>
+  <main class="main">
     <router-outlet></router-outlet>
+  </main>
 </ng-template>

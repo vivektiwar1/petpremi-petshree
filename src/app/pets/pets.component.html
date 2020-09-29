@@ -1,0 +1,13 @@
+<section *ngIf="(store.state$ | async) as state;">
+  <div *ngFor="let pet of state.pets; index as i;"
+       [class.active]="state.pet && (state.pet.id === pet.id)">
+    <img (click)="changePet(pet)"
+         [src]="pet.image || pet.imageName ? (pet.image || (api + 'service/assets/file/fetch?fileName=' + pet.imageName)) : '/assets/img/dog.png'"
+         class="change"
+         [alt]="pet.label || pet.name"/>
+    <span *ngIf=" state.pet && (i === 0 || !state.pets[i + 1]) && (state.pet.id !== pet.id)"
+          [class.show-top]="state.pet.id !== state.pets[0].id">
+        {{'common.changePet' | translate}}
+      </span>
+  </div>
+</section>

@@ -1,0 +1,77 @@
+<div class="map" *ngIf="(store.state$ | async) as state;">
+
+  <div class="content">
+
+    <agm-map *ngIf="mapInfo$ | async as mapInfo" class="breed-map" [zoom]="mapInfo.mapZoom"
+             [latitude]="mapInfo.latitude" [longitude]="mapInfo.longitude" [showDefaultInfoWindow]="false"
+             [streetViewControl]="false" [zoomControl]="false" [fullscreenControl]="false"
+             [styles]="styles" [disableDefaultUI]="true" (mapReady)="customZoom($event)">
+    </agm-map>
+
+    <div class="search">
+      <div>
+        <img class="pin" [src]="'/assets/icon/pin.png'" alt="" (click)="input.focus()"/>
+        <input #input appGoogleAutoComplete (input)="clearError()"
+               (addressAutoCompleteList)="addressAutoCompleteList$.next($event)"
+               autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+               [title]="'breed.search.title' | translate"
+               [placeholder]="'breed.search.placeholder' | translate"
+               [matAutocomplete]="autoComplete"
+               (keyup.enter)="submitAddress(input.value)"/>
+        <mat-autocomplete #autoComplete="matAutocomplete" (optionSelected)="submitAddress($event.option.value)">
+          <mat-option *ngFor="let option of (addressAutoCompleteList$ | async)" [value]="option">{{option}}</mat-option>
+        </mat-autocomplete>
+        <img (click)="setCurrentLocation()" class="aim" [src]="'/assets/icon/aim.png'" alt=""/>
+      </div>
+      <ng-container *ngIf="mapInfo$ | async as mapInfo">
+        <span class="error" *ngIf="mapInfo.error === locationErrors.NO_SUPPORT">
+          {{'error.location_support' | translate}}
+        </span>
+        <span class="error" *ngIf="mapInfo.error === locationErrors.USER_DENIED">
+          {{'error.location_access' | translate}}
+        </span>
+        <span class="error" *ngIf="mapInfo.error === locationErrors.UNAVAILABLE">
+          {{'error.location_available' | translate}}
+        </span>
+        <span class="error" *ngIf="mapInfo.error === locationErrors.INCOMPLETE">
+          {{'error.location_complete' | translate}}
+        </span>
+        <span class="error" *ngIf="mapInfo.error === locationErrors.NOT_FOUND">
+          {{'error.location_found' | translate}}
+        </span>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="locationSearches$ | async as searches">
+      <div class="map-result _{{search.index || (i + 1)}}"
+           *ngFor="let search of searches; index as i;"
+           (click)="searchPet.next(search)">
+        <img [src]="search.img" alt=""/>
+        <span>{{search.name}}</span>
+      </div>
+    </ng-container>
+
+    <div class="main">
+      <h1>{{'breed.search.h1.' + state.pet.id | translate}}</h1>
+      <h2>{{'breed.search.h2.' + state.pet.id | translate}}</h2>
+      <div class="actions">
+        <button>
+          <input #uploadRef type="file" id="upload-input" accept="image/*" name="image" (change)="upload($event.target)"/>
+          <label for="upload-input"></label>
+          <img [src]="'/assets/icon/camera.png'" alt=""/>
+          {{'breed.search.action.upload' | translate}}
+        </button>
+        <button (click)="getPicture = true;">
+          <img [src]="'/assets/icon/photo.png'" alt=""/>
+          {{'breed.search.action.photo' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-get-picture *ngIf="getPicture" (closed)="getPicture = false;"
+                   (captured)="capturePhoto($event)"></app-get-picture>
+
+  <app-crop-picture *ngIf="(imageToCrop$ | async) as imageCrop" [image]="imageCrop"
+                    (cropped)="croppedImage($event)" (cancel)="croppedImage()"></app-crop-picture>
+</div>

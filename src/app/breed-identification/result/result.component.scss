@@ -1,0 +1,236 @@
+@import "~src/vendor/scss/constants/colors.constants";
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  width: 100%;
+  overflow-y: auto;
+  background: url('/assets/img/paws-patch2.png') repeat;
+  flex-direction: column;
+  border-radius: 20px 20px 0 0;
+}
+
+.result {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+
+  > .content {
+    padding: 25px 145px 45px;
+
+    > h1 {
+      font-family: Avenir, sans-serif;
+      color: #152B40;
+      font-size: 18px;
+      margin: 0;
+      font-weight: 600;
+      padding: 0;
+      line-height: 20px;
+    }
+
+    .slickContainer {
+      margin-top: 16px;
+      background: $White;
+    }
+
+    .cards {
+      background: #113464;
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .result-card {
+      background: $White;
+      line-height: 14px;
+      color: #1F1F1F;
+      border-radius: 12px;
+      padding: 0 16px;
+
+      > div {
+        padding: 16px 0;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        + div {
+          border-top: 1px solid #eee;
+        }
+
+        > .image  {
+          text-align: center;
+
+          > img {
+            border-radius: 8px;
+            width: auto;
+            max-height: 216px;
+            height: 100%;
+          }
+        }
+
+        > .info {
+          display: flex;
+          flex-direction: column;
+          padding: 0 50px 0 0;
+          position: relative;
+          overflow: hidden;
+          width: 100%;
+          flex: 1;
+          margin-top: 15px;
+
+          &.no-result {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-right: 0;
+
+            > img {
+              width: 42px;
+              height: auto;
+            }
+
+            > h2 {
+              margin-top: 10px;
+            }
+
+            > p {
+              margin-top: 4px;
+              line-height: 14px;
+            }
+          }
+
+          @mixin circle($size) {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - #{$size/2});
+            top: calc(50% - #{$size/2});
+            width: $size;
+            height: $size;
+          }
+
+          .match {
+            $size: 40px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: $size;
+            color: #1F1F1F;
+            text-transform: uppercase;
+            opacity: 0.7;
+            border-radius: 50%;
+            height: $size;
+            font-size: 8px;
+            $fill: #50A55D;
+
+            .ppc-progress {
+              @include circle($size);
+              clip: rect(0, $size, $size, #{$size/2});
+
+              .ppc-progress-fill {
+                @include circle($size);
+                clip: rect(0, #{$size/2}, $size, 0);
+                background: $fill;
+                transform: rotate(60deg);
+              }
+            }
+
+            .ppc-percents {
+              //@include circle(#{$size/1.15});
+              @include circle(#{$size/1.12});
+              background: $White;
+              text-align: center;
+              display: table;
+
+              .pcc-percents-wrapper {
+                display: table-cell;
+                vertical-align: middle;
+
+                span {
+                  display: block;
+                  word-break: break-word;
+                  font-weight: 500;
+                  color: #1F1F1F;
+                  line-height: 1.4;
+                }
+              }
+            }
+          }
+
+          > h2 {
+            font-size: 16px;
+            font-weight: 500;
+            padding: 0;
+            margin: 0;
+            color: #113464;
+          }
+
+          .detail {
+            margin-top: 2px;
+            font-size: 8px;
+            font-weight: 500;
+            opacity: 0.7;
+          }
+
+          > p {
+            font-size: 12px;
+            line-height: 12px;
+            padding: 0;
+            margin: 10px 0 0;
+          }
+
+          .links {
+            margin-top: 10px;
+            font-size: 8px;
+
+            > div {
+              display: inline-flex;
+              flex-direction: column;
+              align-items: center;
+
+              + div {
+                margin-left: 15px;
+              }
+
+              > img {
+                width: 26px;
+                height: auto;
+                border-radius: 4px;
+                margin-bottom: 2px;
+              }
+            }
+          }
+
+          .more {
+            margin-top: 15px;
+
+            > .heading {
+              font-size: 10px;
+            }
+
+            > .images {
+              display: flex;
+              overflow-x: auto;
+              padding-bottom: 4px;
+
+              > img {
+                margin-top: 6px;
+                border-radius: 4px;
+                height: 52px;
+                width: auto;
+
+                + img {
+                  margin-left: 9px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+@import "~src/vendor/scss/constants/colors.constants";
+@import "~src/vendor/scss/constants/height.constants";
+@import "sp1.mixins";
+
+section {
+  position: relative;
+
+  .container {
+    min-height: 600px;
+    margin-top: 40px;
+    box-shadow: 0 0 10px #0000001f;
+    display: flex;
+    max-height: none;
+  }
+}
+
+@include for-tablet-landscape-up {
+  section .container {
+    max-height: calc(80vh - #{$HeaderHeight});
+    border-radius: 20px;
+  }
+}
+
+@include upto-tab {
+  :host {
+    flex-direction: column;
+    min-height: calc(100vh - #{$HeaderHeight});
+  }
+
+  section .container {
+    margin-top: 0;
+    box-shadow: none;
+    border: none;
+    flex-direction: column;
+    min-height: calc(100vh - #{$HeaderHeight});
+    max-width: 100%;
+  }
+}
+
+@include for-desktop-up {
+  section .container {
+    max-width: 920px;
+  }
+}
+
+@include for-large-desktop-up {
+  section .container {
+    max-width: 994px;
+  }
+}

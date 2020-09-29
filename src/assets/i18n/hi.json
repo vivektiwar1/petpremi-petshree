@@ -1,0 +1,215 @@
+{
+  "header": {
+    "search": "HI - Search"
+  },
+  "common": {
+    "changePet": "HI - change pet",
+    "org": "Pet Premi",
+    "links": {
+      "symptomChecker": "Symptom Checker",
+      "breedIdentification": "Breed Identification",
+      "lifeWithPets": "Life with Pets 101",
+      "breedSelector": "Breed Selector",
+      "compareBreeds": "Compare Breeds",
+      "about": "About Us",
+      "contact": "Contact Us",
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions",
+      "home": "Home",
+      "signIn": "Sign In",
+      "profile": "Profile",
+      "logout": "Logout"
+    },
+    "headings": {
+      "resources": "Resources",
+      "company": "Company",
+      "connect": "Connect"
+    },
+    "email": "info@petpremi.com"
+  },
+  "home": {
+    "breed": {
+      "heading": "HI - Ai-powered Breed Identification",
+      "subHeading": "HI - See a dog, but don’t know its breed? Click - Identify - Learn!",
+      "btnText": "HI - Try Now",
+      "speech": {
+        "1": "HI - What Dog?",
+        "2": "HI - What Cat?"
+      }
+    },
+    "symptomChecker": {
+      "heading": "HI - Dog Symptom Checker!",
+      "subHeading": "HI - It’s normal to be worried about your Dog, if you notice Anything Unusual!",
+      "btnText": "HI - Try Now",
+      "speech": {
+        "1": "HI - What's wrong!!",
+        "2": "HI - What's wrong!!"
+      }
+    },
+    "footer": {
+      "heading": {
+        "big": "Join with us,",
+        "small": " For our newsletter."
+      },
+      "form": {
+        "placeholder": "Enter your Email",
+        "cta": "Subscribe",
+        "error": "Invalid email"
+      },
+      "copyright": "Copyright © 2017 Bolton Technologies. All rights reserved."
+    }
+  },
+  "symptom": {
+    "footer": "Hindi Disclaimer: This tool is intended as a guide only. It helps you to decide how quickly you should seek professional veterinary attention for your pet.",
+    "heading": {
+      "1": "Dog Symptom Checker",
+      "2": "Cat Symptom Checker"
+    },
+    "check": {
+      "subHeading": {
+        "1": "We can read your paws!",
+        "2": "We can read your paws!"
+      },
+      "step": {
+        "1": "Symptom",
+        "2": "Questions",
+        "3": "Potential Problems"
+      },
+      "basicQues": {
+        "1": "Hi, please select the symptom which best describes your Dog’s condition.",
+        "2": "Hi, please select the symptom which best describes your Cat’s condition."
+      },
+      "whatMeans": "What does that mean?",
+      "previousQues": "Click for previous question",
+      "searchSymptoms": "Search for Symptom",
+      "mostCommon": "Most common Symptoms",
+      "footer": "If your pet symptoms are not on the website and you are in any doubt over your pet’s condition, contact your vet asap."
+    },
+    "result": {
+      "subHeading": "Priority Rating",
+      "footer": {
+        "text": "Do you think your pet have this condition?",
+        "yes": "Yes",
+        "no": "No",
+        "maybe": "Maybe"
+      },
+      "potential_problem": "Potential Problem",
+      "do_next": "What to do Next?",
+      "prevention": "Preventive Care At Home"
+    }
+  },
+  "breed": {
+    "search": {
+      "title": "Enter your location",
+      "placeholder": "Search location",
+      "action.upload": "Upload/Browse",
+      "action.photo": "Take Photo",
+      "h1": {
+        "1": "Identify Dog’s breed",
+        "2": "Identify Cat’s breed"
+      },
+      "h2": {
+        "1": "Upload a photo or click a picture to identify a dog’s breed",
+        "2": "Upload a photo or click a picture to identify a cat’s breed"
+      }
+    },
+    "result": {
+      "popular": "Popular Searches",
+      "match": "Match",
+      "more_images": "More Images",
+      "no": {
+        "heading": "We could not find any result",
+        "desc": "Make sure the image is well lit and of a pet."
+      }
+    }
+  },
+  "error": {
+    "camera_support": "Your browser does not support media devices",
+    "camera_permission": "To use visual search, enable the camera in this browser",
+    "location_support": "Location is not supported on your device",
+    "location_access": "Please allow location from your browser",
+    "location_available": "Location not available currently",
+    "location_complete": "Location is incomplete. Please enter street location",
+    "location_found": "Location not found. Please retry",
+    "feature_support": "This feature is not supported on your browser",
+    "file_type": "Uploaded file type is not supported",
+    "file_size_small": "Uploaded file is too small",
+    "file_load": "Failed to load file , please retry"
+  },
+  "comingSoon": {
+    "heading": "Coming Soon",
+    "desc": "This feature is under construction and will be available soon.",
+    "try": "Till then, Try:",
+    "goHome": "Go to Home"
+  },
+  "404": {
+    "heading": "404 Error",
+    "desc": "The page you requested could not be found",
+    "goHome": "Let’s Go Home"
+  },
+  "auth": {
+    "title1": "Welcome to PetPremi",
+    "description1": "For better experience with your pets!",
+    "signInTitle": "Sign In",
+    "signUpTitle": "Sign Up",
+    "fpTitle": "Forgot Password",
+    "verifyOtpTitle": "Verify OTP",
+    "changePasswordTitle": "Change Password",
+    "forgotPassword": "Forgot Password?",
+    "notMember": "Not a member?",
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "fb": "Facebook",
+    "google": "Google",
+    "feelLazy": "If feeling lazy?",
+    "getStarted": "Let’s Get Started!",
+    "alreadyMember": "Already a member?",
+    "error": {
+      "permissions": "Please grant permissions to login",
+      "unknown": "It looks like something went wrong. Please retry"
+    },
+    "userExist": "User already exists",
+    "userExistDiffType": "User already exists with different type, please verify",
+    "resendOtp": "Resend OTP",
+    "verify": "Verify",
+    "resendAfter": "Resend after:",
+    "verifyDetailsTitle": "Verify Details"
+  },
+  "form": {
+    "emailPhone": {
+      "emailPhone": "Email or Mobile",
+      "error": "Invalid email or mobile"
+    },
+    "password": {
+      "password": "Password",
+      "error": "Invalid password",
+      "minLengthError": "Password should be at least 8 characters long",
+      "maxLengthError": "Password should be at most 10 characters long",
+      "patternError": "Password should have at least one uppercase letter, one lowercase letter, one number and one special character"
+    },
+    "email": {
+      "email": "Email",
+      "error": "Invalid Email"
+    },
+    "mobile": {
+      "mobile": "Phone",
+      "error": "Invalid Phone"
+    },
+    "firstName": {
+      "firstName": "First Name",
+      "error": "Invalid First Name"
+    },
+    "lastName": {
+      "lastName": "Last Name",
+      "error": "Invalid Last Name"
+    },
+    "confirmPassword": {
+      "confirmPassword": "Confirm Password",
+      "error": "Passwords do not match"
+    },
+    "otp": {
+      "otp": "OTP",
+      "error": "Invalid OTP"
+    }
+  }
+}

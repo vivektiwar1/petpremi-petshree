@@ -1,0 +1,187 @@
+<header>
+  <!--  Desktop Header -->
+  <div class="container-menu-header">
+    <div class="container">
+
+      <a [routerLink]="['/']" class="logo">
+        <img [src]="'/assets/img/logo.png'" [alt]="'common.org' | translate">
+      </a>
+
+      <nav class="visible-menu">
+        <ul>
+          <li><a href="javascript:void(0);" (click)="search()">
+            <img [src]="'/assets/icon/search.png'" alt=""/>
+            {{'header.search' | translate}}
+          </a></li>
+          <li *ngIf="store.state$ | async as state;">
+            <ng-container *ngIf="state.isAuthenticated else guest;">
+              <div class="sub-menu" (click)="toggleProfile(profileMenu)">
+                <button>
+                  <img [src]="'/assets/icon/profile.png'" alt=""/>
+                  {{'common.links.profile' | translate}}
+                </button>
+                <ul class="sub-menu-items hide" #profileMenu>
+                  <li>
+                    <a routerLinkActive="active" [routerLink]="['/profile']">
+                      {{'common.links.profile' | translate}}
+                    </a>
+                  </li>
+                  <li>
+                    <a (click)="auth.logout()" [routerLink]="['/']">
+                      {{'common.links.logout' | translate}}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+            <ng-template #guest>
+              <a routerLinkActive="active" [routerLink]="['/auth']">
+                <img [src]="'/assets/icon/profile.png'" alt=""/>
+                {{'common.links.signIn' | translate}}
+              </a>
+            </ng-template>
+          </li>
+          <li *ngIf="languageSwitcher">
+            <mat-select class="select1" (selectionChange)="service.changeLanguage($event.value)"
+                        [value]="translate.currentLang" [placeholder]="translate.currentLang">
+              <mat-option *ngFor="let lang of translate.store.langs" [value]="lang">{{lang | uppercase}}</mat-option>
+            </mat-select>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="btn-show-menu">
+        <div class="btn-show-menu-mobile hamburger hamburger--squeeze" (click)="toggleMenu()">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--  Desktop Header -->
+
+  <!-- Mobile Header -->
+  <div class="container-menu-header-mobile">
+    <div class="wrap_header_mobile">
+      <a [routerLink]="['/']" class="logo-mobile">
+        <img [src]="'/assets/img/logo.png'" [alt]="'common.org' | translate">
+      </a>
+
+      <nav class="visible-menu">
+        <ul>
+          <li *ngIf="languageSwitcher">
+            <mat-select class="select1" (selectionChange)="service.changeLanguage($event.value)"
+                        [value]="translate.currentLang" [placeholder]="translate.currentLang">
+              <mat-option *ngFor="let lang of translate.store.langs" [value]="lang">{{lang | uppercase}}</mat-option>
+            </mat-select>
+          </li>
+          <li *ngIf="petSwitcher && (store.state$ | async) as state;">
+            <div class="pets" (click)="showPets()">
+              <img *ngIf="state.pet" class="pet"
+                   [src]="state.pet.image || state.pet.imageName ? (state.pet.image || (api + 'service/assets/file/fetch?fileName=' + state.pet.imageName)) : '/assets/img/dog.png'"
+                   [alt]="state.pet.label || state.pet.name"/>
+              <div class="pet-menu" #petBlock>
+                <img *ngFor="let pet of state.pets"
+                     [class.active]="state.pet.id === pet.id"
+                     [src]="pet.image || pet.imageName ? (pet.image || (api + 'service/assets/file/fetch?fileName=' + pet.imageName)) : '/assets/img/dog.png'"
+                     [alt]="pet.label || pet.name"
+                     (click)="changePet(pet)"/>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="btn-show-menu">
+        <div class="btn-show-menu-mobile hamburger hamburger--squeeze" (click)="toggleMenu()">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile Header -->
+
+  <!-- Menu Mobile -->
+  <div #slideMenu class="wrap-side-menu animated hide" (click)="$event.stopPropagation();">
+    <div class="header">
+      <a [routerLink]="['/']" class="logo">
+        <img [src]="'/assets/img/logo-white.png'" [alt]="'common.org' | translate">
+      </a>
+      <div class="close" (click)="toggleMenu()"></div>
+    </div>
+    <nav class="side-menu">
+      <ul>
+        <li>
+          <a routerLinkActive="active" [routerLink]="['/']" [routerLinkActiveOptions]="{exact: true}"
+             (click)="toggleMenu()">{{'common.links.home' | translate}}</a>
+        </li>
+        <li>
+          <a routerLinkActive="active" [routerLink]="['/symptom-check']"
+             (click)="toggleMenu()">{{'common.links.symptomChecker' | translate}}</a>
+        </li>
+        <li>
+          <a routerLinkActive="active" [routerLink]="['/breed-identification']"
+             (click)="toggleMenu()">{{'common.links.breedIdentification' | translate}}</a>
+        </li>
+        <li>
+          <a routerLinkActive="active" [routerLink]="['/breed-selector']"
+             (click)="toggleMenu()">{{'common.links.breedSelector' | translate}}</a>
+        </li>
+        <li>
+          <a routerLinkActive="active" [routerLink]="['/compare-breeds']"
+             (click)="toggleMenu()">{{'common.links.compareBreeds' | translate}}</a>
+        </li>
+        <li>
+          <a routerLinkActive="active" [routerLink]="['/about-us']"
+             (click)="toggleMenu()">{{'common.links.about' | translate}}</a>
+        </li>
+        <li>
+          <a routerLinkActive="active" [routerLink]="['/contact-us']"
+             (click)="toggleMenu()">{{'common.links.contact' | translate}}</a>
+        </li>
+        <ng-container *ngIf="store.state$ | async as state;">
+          <ng-container *ngIf="state.isAuthenticated else guest;">
+            <li>
+              <a routerLinkActive="active" [routerLink]="['/profile']">
+                {{'common.links.profile' | translate}}
+              </a>
+            </li>
+            <li>
+              <a (click)="auth.logout()" [routerLink]="['/']">
+                {{'common.links.logout' | translate}}
+              </a>
+            </li>
+          </ng-container>
+          <ng-template #guest>
+            <li>
+              <a routerLinkActive="active" [routerLink]="['/auth']">
+                {{'common.links.signIn' | translate}}
+              </a>
+            </li>
+          </ng-template>
+        </ng-container>
+      </ul>
+    </nav>
+    <div class="footer">
+      <div class="email">
+        <a target="_blank" [href]="'mailto:' + ('common.email' | translate)">
+          {{'common.email' | translate}}</a>
+      </div>
+      <div class="icons">
+        <a href="javascript:void(0);" target="_blank">
+          <img alt="" [src]="'/assets/img/social-links/twitter.png'"/></a>
+        <a href="javascript:void(0);" target="_blank">
+          <img alt="" [src]="'/assets/img/social-links/instagram.png'"/></a>
+        <a href="javascript:void(0);" target="_blank">
+          <img alt="" [src]="'/assets/img/social-links/facebook.png'"/></a>
+      </div>
+    </div>
+  </div>
+  <!-- Menu Mobile -->
+</header>
+
+<app-pets *ngIf="petSwitcher" (petChanged)="changePet($event)"></app-pets>

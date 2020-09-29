@@ -1,0 +1,141 @@
+app-breed-identification {
+  app-breed-result {
+    app-breed-identify {
+      .map .content {
+        .map-result {
+          &._1 {
+            top: 100px;
+            left: 21%;
+          }
+
+          &._2 {
+            top: 20%;
+            right: 5%;
+          }
+
+          &._3 {
+            left: 15%;
+            bottom: 20%;
+          }
+
+          &._4 {
+            left: 48%;
+            bottom: 8%;
+          }
+
+          &._5 {
+            right: 14%;
+            bottom: 18%;
+          }
+        }
+      }
+    }
+
+    .slickContainer {
+      .slick-track {
+        display: flex;
+        margin-bottom: 24px;
+        align-items: center;
+
+        .slick-slide + .slick-slide {
+          margin-left: 15px;
+        }
+
+        .slide {
+          &.active {
+            position: relative;
+
+            > img {
+              border: 2px solid #113464;
+              box-shadow: 0 3px 6px #00000029;
+            }
+
+            &:after {
+              position: absolute;
+              bottom: -32px;
+              content: '';
+              border-left: 12px solid transparent;
+              border-right: 12px solid transparent;
+              border-bottom: 12px solid #113464;
+              left: 50%;
+              transform: translate(-50%);
+            }
+          }
+
+          > img {
+            height: 152px;
+            min-width: 150px;
+            width: auto;
+            margin: 0 auto;
+            border-radius: 8px;
+          }
+        }
+      }
+
+      .slick-arrow {
+        z-index: $ZIndexInitial;
+        height: 0;
+        width: 15px;
+
+        &:before {
+          content: none;
+          opacity: 1;
+        }
+
+        > img {
+          height: auto;
+          width: 24px;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, calc(-50% - 12px));
+        }
+      }
+
+      .slick-prev {
+        left: 0;
+        transform: rotate(180deg);
+
+        > img {
+          transform: translate(-50%, calc(-50% + 12px));
+        }
+      }
+
+      .slick-next {
+        right: 0;
+      }
+    }
+  }
+}
+
+@include for-phone-only() {
+  app-breed-identification {
+    app-breed-result {
+      app-breed-identify {
+        .map .content {
+          .map-result {
+            &._1 {
+              top: 120px;
+              left: 16px;
+            }
+
+            &._2 {
+              top: 152px;
+              right: 32px;
+            }
+
+            &._3 {
+              top: 200px;
+              left: 20%;
+              bottom: auto;
+            }
+
+            &._4,
+            &._5 {
+              display: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

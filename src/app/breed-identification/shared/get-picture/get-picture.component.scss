@@ -1,0 +1,76 @@
+@import "~src/vendor/scss/constants/colors.constants";
+@import "~src/vendor/scss/constants/z-indices.constants";
+
+$BaseZIndex: $ZIndexPage + 5;
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: $BaseZIndex;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: $BaseZIndex + 1;
+  cursor: pointer;
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  video {
+    width: 100%;
+    transition: height 1s;
+    border-radius: 4px 4px 0 0;
+    height: 90%;
+  }
+
+  .message {
+    position: absolute;
+    bottom: 65px;
+    width: 100%;
+
+    > div {
+      width: 210px;
+      padding: 12px;
+      background: #222;
+      border-radius: 4px;
+      color: $White;
+      text-align: center;
+      margin: auto;
+    }
+  }
+
+  .action {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+
+    .large {
+      margin-top: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      background: #8b8c8b;
+      position: relative;
+    }
+
+    .small {
+      width: 26px;
+      height: 26px;
+      border-radius: 13px;
+      top: 0;
+      left: 0;
+      background: $White;
+      position: absolute;
+      margin: 7px;
+    }
+  }
+}

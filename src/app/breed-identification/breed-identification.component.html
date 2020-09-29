@@ -1,0 +1,13 @@
+<app-header></app-header>
+
+<section>
+  <img class="arrow"
+       (click)="backPressed()"
+       [src]="'/assets/icon/back.png'"
+       alt="back"/>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</section>
+
+<app-footer></app-footer>

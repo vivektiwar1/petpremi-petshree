@@ -1,0 +1,15 @@
+<app-header [petSwitcher]="false"></app-header>
+
+<section>
+  <div class="container">
+    <div>
+      <h1>{{'comingSoon.heading' | translate}}</h1>
+      <h2>{{'comingSoon.desc' | translate}}</h2>
+      <span>{{'comingSoon.try' | translate}}</span>
+      <a [routerLink]="['/']">{{'comingSoon.goHome' | translate}}</a>
+    </div>
+    <div class="img-block">
+      <img [src]="'/assets/img/dog-big-ears.png'" alt=""/>
+    </div>
+  </div>
+</section>

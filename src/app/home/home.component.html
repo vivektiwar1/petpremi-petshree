@@ -1,0 +1,48 @@
+<app-header (petChanged)="slick.resetSlide$.next()"></app-header>
+
+<section class="home">
+  <div class="container">
+    <div class="features" appHomeSlick #container (slideActivated)="loadSlide($event)">
+      <div class="slide-1 pet-animation" style="background-image: url('/assets/img/home/slide-1/bg.png');">
+        <div class="heading">
+          <h1 [class.paw]="store.state.languageCode === 'en'">{{'home.breed.heading' | translate}}</h1>
+        </div>
+        <h2 [innerHTML]="'home.breed.subHeading' | translate"></h2>
+        <div class="link"><a [routerLink]="['/breed-identification']">{{'home.breed.btnText' | translate}}</a></div>
+
+        <img class="tree" [src]="'/assets/img/home/slide-1/plants-left.png'" alt=""/>
+        <img class="bench" [src]="'/assets/img/home/slide-1/bench.png'" alt=""/>
+        <img class="plant" [src]="'/assets/img/home/slide-1/lamp-plant.png'" alt=""/>
+        <img class="lamp" [src]="'/assets/img/home/slide-1/lamp.png'" alt=""/>
+        <div class="human-container">
+          <div class="human-animation">
+            <span *ngIf="store.state.pet">
+<!--              <img class="bubble" [src]="'/assets/img/bubble.svg'" alt=""/>-->
+              {{'home.breed.speech.' + store.state.pet.id | translate}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-2 pet-animation" style="background-image: url('/assets/img/home/slide-2/brick-wall.png')">
+        <div class="heading"><h1>{{'home.symptomChecker.heading' | translate}}</h1></div>
+        <h2 [innerHTML]="'home.symptomChecker.subHeading' | translate"></h2>
+        <div class="link"><a [routerLink]="['/symptom-check']">{{'home.symptomChecker.btnText' | translate}}</a></div>
+        <img class="couch" [src]="'/assets/img/home/slide-2/couch.png'" alt=""/>
+        <img *ngIf="store.state.pet" class="food" alt=""
+             [src]="'/assets/img/home/slide-2/' + store.state.pet.id + '-food.png'"/>
+        <img class="plant" [src]="'/assets/img/home/slide-2/plant.png'" alt=""/>
+        <div class="human-container">
+          <div class="human-animation">
+            <span *ngIf="store.state.pet">
+<!--              <img class="bubble" [src]="'/assets/img/bubble2.svg'" alt=""/>-->
+              {{'home.symptomChecker.speech.' + store.state.pet.id | translate}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-home-footer></app-home-footer>

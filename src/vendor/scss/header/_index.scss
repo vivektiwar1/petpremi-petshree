@@ -1,0 +1,92 @@
+@import "desktop";
+@import "mobile";
+
+header {
+  .visible-menu ul {
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    li {
+      display: block;
+      position: relative;
+      padding-left: 40px;
+
+      &:first-of-type {
+        padding: 0;
+      }
+
+      &:hover {
+        > a {
+          text-decoration: none;
+          color: $Primary;
+        }
+
+        /*> .sub_menu {
+          visibility: visible;
+          opacity: 1;
+        }*/
+      }
+
+      a {
+        font-size: 16px;
+        color: $Black;
+        padding: 0;
+        display: flex;
+        align-items: center;
+
+        &.active,
+        &:active {
+          color: $Primary;
+          padding: 10px;
+          //border-bottom: 1px solid $Primary;
+        }
+
+        img {
+          width: 14px;
+          height: auto;
+          margin-right: 9px;
+        }
+      }
+
+      /*> .sub_menu {
+        top: 100%;
+        left: 0;
+        position: absolute;
+      }*/
+    }
+  }
+}
+
+.btn-show-menu {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.turn-arrow {
+  transform: rotate(90deg);
+}
+
+@include upto-desktop() {
+  .wrap-side-menu ul {
+    margin: 0;
+    max-width: 100%;
+
+    a {
+      padding-left: 0;
+    }
+  }
+
+  .container-menu-header-mobile {
+    display: flex;
+  }
+
+  .container-menu-header {
+    display: none;
+  }
+}

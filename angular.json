@@ -54,7 +54,10 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ngx-lightbox/lightbox.css",
               "node_modules/ngx-toastr/toastr.css",
-              "src/styles/styles.scss"
+              "src/styles/styles.scss",
+              "src/vendor/scss/slick.scss",
+              "node_modules/animate.css/animate.min.css",
+              "node_modules/cropperjs/dist/cropper.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -77,6 +80,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "aot": true,
               "budgets": [
                 {
                   "type": "initial",

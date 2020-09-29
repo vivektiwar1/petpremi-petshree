@@ -1,4 +1,14 @@
 @import "src/styles/variables";
+@import "~src/vendor/scss/constants/_height.constants.scss";
+@import "~src/vendor/scss/constants/z-indices.constants";
+
+.progress {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: $ZIndexPage + 2;
+  height: auto;
+}
 
 .mat-drawer-content {
     button {
@@ -29,7 +39,7 @@
 
     ::ng-deep router-outlet + * {
         display: block;
-        
+
         main:not(.default) {
             padding: $global-padding;
             min-height: calc(100vh - #{$tab-nav-height} - #{$header-height} - #{$global-padding-y*2});
@@ -39,4 +49,7 @@
             }
         }
     }
+}
+.main {
+  padding-top: $HeaderHeight;
 }
