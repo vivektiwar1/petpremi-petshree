@@ -11,6 +11,7 @@ import {SlickService} from '../shared/services/slick.service';
 import lottie, {AnimationItem} from 'lottie-web';
 import {AppStore} from '../app.store';
 import {Subscription} from 'rxjs';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-home',
@@ -58,8 +59,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy, OnInit {
   };
   animations: { [index: number]: { pet: { [index: number]: AnimationItem }, human: AnimationItem } } = {};
 
-  constructor(public store: AppStore,
-              public slick: SlickService) {
+  constructor(
+    public store: AppStore,
+    public slick: SlickService,
+    private commonService: CommonService
+  ) {
+    commonService.hideDashboardNavs();
   }
 
   ngOnInit(): void {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
@@ -9,12 +10,17 @@ import { CommonService } from 'src/app/services/common.service';
 export class ErrorPageComponent implements OnInit {
 
   constructor(
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) {
     this.commonService.hideDashboardNavs();
   }
 
   ngOnInit(): void {
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/']);
   }
 
 }
