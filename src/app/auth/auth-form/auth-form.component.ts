@@ -277,7 +277,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(s => s && s.unsubscribe());
+    this.subscriptions?.forEach(s => s && s.unsubscribe());
   }
 
   private changeForm(type = AuthFormTypes.LOGIN) {

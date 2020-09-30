@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-auth',
@@ -7,4 +8,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthComponent {
+  constructor(private commonService:CommonService) {
+    commonService.hideDashboardNavs();
+  }
 }

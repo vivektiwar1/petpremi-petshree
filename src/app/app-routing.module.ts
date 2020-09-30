@@ -7,7 +7,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'appointments',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
