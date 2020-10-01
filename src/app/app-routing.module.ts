@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ErrorPageComponent } from './modules/shared/components/error-page/error-page.component';
-import { GuestGuard } from './shared/guards/guest.guard';
-import { AuthGuard } from './shared/guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ErrorPageComponent} from './modules/shared/components/error-page/error-page.component';
+import {GuestGuard} from './shared/guards/guest.guard';
+import {AuthGuard} from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -90,7 +90,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      useHash: true
+      // useHash: true
     })
   ],
   exports: [
