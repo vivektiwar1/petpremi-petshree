@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorPageComponent } from './modules/shared/components/error-page/error-page.component';
 import { GuestGuard } from './shared/guards/guest.guard';
