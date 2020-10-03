@@ -103,7 +103,7 @@
                                 <div class="input-group-prepend">
                                     <div class="form-control">
                                         <mat-select formControlName="country">
-                                            <mat-option *ngFor="let country of countries" [value]="country.id">
+                                            <mat-option *ngFor="let country of countryList" [value]="country.id">
                                                 +{{country.code}}
                                             </mat-option>
                                         </mat-select>
@@ -142,7 +142,7 @@
                         <div class="col-12 col-sm-6 form-group">
                             <input-dropdown label="Gender" name="gender" placeholder="Select Gender"
                                 [parentFormGroup]="personalForm"
-                                [selectionList]="[{name: 'Male', value: 1}, {name: 'Female', value: 2}]">
+                                [selectionList]="genderList">
                             </input-dropdown>
                         </div>
                         <div class="col-12 form-group">
@@ -153,7 +153,8 @@
                         </div>
                         <div class="col-12 text-right">
                             <app-button className="btn-warning btn-large" buttonText="Save"
-                                (buttonClicked)="onSubmit('personalForm')" [disabled]="personalForm.invalid">
+                                (buttonClicked)="onSubmit('personalForm')"
+                                [disabled]="personalForm.invalid || personalForm.pristine">
                             </app-button>
                         </div>
                     </div>
@@ -173,29 +174,66 @@
                 <div class="col-12">
                     <h3 class="title-color">Professional Details</h3>
                     <div class="row mt-3">
-                        <div class="col-12 col-sm-6 form-group">
+                        <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="experience">Total years of Experience</label>
                             <input class="form-control" id="experience" formControlName="userExperience"
-                                placeholder="Enter Total years of Experience">
+                                placeholder="Enter Total years of Experience"
+                                [class.error]="getProfessionalFormField('userExperience').errors && getProfessionalFormField('userExperience').touched">
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getProfessionalFormField('userExperience').errors && getProfessionalFormField('userExperience').touched">
+                                    <span>This field is required!</span>
+                                </ng-container>
+                            </div>
                         </div>
-                        <div class="col-12 col-sm-6 form-group">
+                        <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="charges">Charges (per meeting)</label>
                             <input class="form-control" id="charges" formControlName="userCharges"
-                                placeholder="Ex: ₹400">
+                                placeholder="Eg: ₹400"
+                                [class.error]="getProfessionalFormField('userCharges').errors && getProfessionalFormField('userCharges').touched">
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getProfessionalFormField('userCharges').errors && getProfessionalFormField('userCharges').touched">
+                                    <span>This field is required!</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group mb-0">
+                            <label class="mb-1" for="chargesSlot">Slots <small>(minutes)</small></label>
+                            <input class="form-control" id="chargesSlot" formControlName="chargesSlotInMin"
+                                placeholder="Eg: 30"
+                                [class.error]="getProfessionalFormField('chargesSlotInMin').errors && getProfessionalFormField('chargesSlotInMin').touched">
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getProfessionalFormField('chargesSlotInMin').errors && getProfessionalFormField('chargesSlotInMin').touched">
+                                    <span>This field is required!</span>
+                                </ng-container>
+                            </div>
                         </div>
                         <div class="col-12 col-sm-6 form-group">
-                            <label class="mb-1" for="charges">Slots <small>(minutes)</small></label>
-                            <input class="form-control" id="charges" formControlName="chargesSlotInMin"
-                                placeholder="Ex: 30">
-                        </div>
-                        <div class="col-12 col-sm-6 form-group">
-                            <label class="mb-1" for="certificate">Add Certificate</label>
+                            <div class="d-flex justify-content-between mb-1">
+                                <label class="mb-0" for="certificate">
+                                    <span> Add Certificate </span>
+                                </label>
+                                <div *ngIf="apiInProgress.certificates"
+                                    class="d-flex align-items-center justify-content-center"> <span
+                                        class="mr-1">Uploading</span>
+                                    <mat-spinner diameter="20"></mat-spinner>
+                                </div>
+                            </div>
                             <input type="file" class="form-control" id="certificate" placeholder="Add Certificate"
-                                multiple>
+                                [disabled]="apiInProgress.certificates" multiple style="padding-top: .186rem"
+                                (input)="uploadCertificates($event.target.files, inputRef)" accept="image/*" #inputRef>
+                            <div class="error-message">
+                                <a *ngIf="certificatesLink?.length"
+                                    class="text-warning text-decoration-none cursor-pointer"
+                                    (click)="viewCertificates()">View Certificates</a>
+                            </div>
                         </div>
                         <div class="col-12 text-right">
                             <app-button className="btn-warning btn-large" buttonText="Save"
-                                (buttonClicked)="onSubmit('professionalForm')" [disabled]="professionalForm.invalid">
+                                (buttonClicked)="onSubmit('professionalForm')"
+                                [disabled]="professionalForm.invalid || professionalForm.pristine">
                             </app-button>
                         </div>
                     </div>
@@ -209,7 +247,7 @@
     </form>
 
     <form *ngIf="clinicForm" class="no-outline" [formGroup]="clinicForm" autocomplete="off">
-        <div class="container-fluid mt-3 custom-padding bg-white border-radius-xl"
+        <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
             [class.loader]="apiInProgress.clinicForm">
             <div class="row py-3">
                 <div class="col-12">
@@ -217,25 +255,42 @@
                     <!-- <div class="row mt-2">
                     </div> -->
                     <div class="row mt-3">
-                        <div class="col-12 col-sm-6 form-group">
+                        <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="clinicName">Clinic Name</label>
                             <input class="form-control" id="clinicName" formControlName="clinicName"
-                                placeholder="Enter Clinic Name">
+                                placeholder="Enter Clinic Name"
+                                [class.error]="getClinicFormField('clinicName').errors && getClinicFormField('clinicName').touched">
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getClinicFormField('clinicName').errors && getClinicFormField('clinicName').touched">
+                                    <span>Clinic name is required!</span>
+                                </ng-container>
+                            </div>
                         </div>
-                        <div class="col-12 col-sm-6 form-group">
+                        <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="clinicPhone">Clinic Phone Number</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="form-control">
                                         <mat-select formControlName="clinicCountryId">
-                                            <mat-option *ngFor="let country of countries" [value]="country.id">
+                                            <mat-option *ngFor="let country of countryList" [value]="country.id">
                                                 +{{country.code}}
                                             </mat-option>
                                         </mat-select>
                                     </div>
                                 </div>
                                 <input class="form-control" type="tel" id="clinicPhone" placeholder="Enter Clinic Phone"
-                                    formControlName="clinicMobile">
+                                    formControlName="clinicMobile"
+                                    [class.error]="getClinicFormField('clinicMobile').errors && getClinicFormField('clinicMobile').touched">
+                            </div>
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getClinicFormField('clinicMobile').errors && getClinicFormField('clinicMobile').touched">
+                                    <span *ngIf="getClinicFormField('clinicMobile').hasError('minlength')">
+                                        Phone number is invalid!</span>
+                                    <span *ngIf="getClinicFormField('clinicMobile').hasError('required')">
+                                        Phone number is required!</span>
+                                </ng-container>
                             </div>
                         </div>
                         <div class="col-12 form-group">
@@ -244,9 +299,35 @@
                                 id="clinicAddress" formControlName="clinicAddress" placeholder="Enter Clinic Address"
                                 rows="1" cdkTextareaAutosize #autosize="cdkTextareaAutosize"></textarea>
                         </div>
+
+                        <div class="col-12 col-sm-6 form-group">
+                            <input-dropdown label="Country" name="country" placeholder="Select Country"
+                                [parentFormGroup]="clinicForm" [selectionList]="countryList">
+                            </input-dropdown>
+                        </div>
+
+                        <div class="col-12 col-sm-6 form-group">
+                            <input-dropdown label="State" name="state" placeholder="Select State"
+                                [parentFormGroup]="clinicForm" [selectionList]="stateList">
+                            </input-dropdown>
+                        </div>
+
+                        <div class="col-12 col-sm-6 form-group">
+                            <input-dropdown label="City" name="city" placeholder="Select City"
+                                [parentFormGroup]="clinicForm" [selectionList]="cityList">
+                            </input-dropdown>
+                        </div>
+
+                        <div class="col-12 col-sm-6 form-group">
+                            <input-dropdown label="Pin Code" name="pinCode" placeholder="Select Pin Code"
+                                [parentFormGroup]="clinicForm" [selectionList]="pinCodeList">
+                            </input-dropdown>
+                        </div>
+
                         <div class="col-12 d-flex justify-content-between align-items-center">
                             <h6 class="title-color mb-0">Add Schedule</h6>
-                            <button class="btn btn-effect text-warning no-outline px-0" (click)="addSchedule()" [disabled]="clinicForm.get('schedule').invalid">+ ADD
+                            <button class="btn btn-effect text-warning no-outline px-0" (click)="addSchedule()"
+                                [disabled]="clinicForm.get('schedule').invalid">+ ADD
                                 ANOTHER SCHEDULE</button>
                         </div>
                         <div class="col-12" formArrayName="schedule">
@@ -255,14 +336,18 @@
                                     <div class="col-12 position-relative">
                                         <div class="border rounded p-2">
                                             <div class="row">
-                                                <div class="col-12 col-sm-6 form-group">
+                                                <div class="col-12 col-md-6 form-group">
                                                     <label class="mb-1" [for]="'name - ' + scheduleIndex">Schedule
                                                         {{scheduleIndex + 1}}</label>
-                                                    <input class="form-control" [id]="'name - ' + scheduleIndex"
-                                                        formControlName="scheduleName"
-                                                        placeholder="Ex: Monday, Tuesday, Friday">
+                                                    <mat-chip-list>
+                                                        <mat-chip *ngFor="let day of weekDays"
+                                                            (click)="selectWeekDays(day.value, scheduleIndex)"
+                                                            [class.chip-active]="getScheduleDayControl(scheduleIndex)?.value?.includes(day.value)">
+                                                            {{day.name}}
+                                                        </mat-chip>
+                                                    </mat-chip-list>
                                                 </div>
-                                                <div class="col-12 col-sm-6" formArrayName="slots">
+                                                <div class="col-12 col-md-6" formArrayName="slots">
                                                     <ng-container
                                                         *ngFor="let item of clinicForm.get('schedule.' + scheduleIndex + '.slots')['controls']; let slotsIndex = index">
                                                         <div class="row" [formGroupName]="slotsIndex"
@@ -319,8 +404,9 @@
                                                     <div class="col-12">
                                                         <div class="text-right">
                                                             <button class="btn btn-effect text-warning no-outline px-0"
-                                                                (click)="addSlots(scheduleIndex)" [disabled]="clinicForm.get('schedule.' + scheduleIndex + '.slots').invalid">+ ADD ANOTHER
-                                                                SLOT</button>
+                                                                (click)="addSlots(scheduleIndex)"
+                                                                [disabled]="clinicForm.get('schedule.' + scheduleIndex + '.slots').invalid">+
+                                                                ADD ANOTHER SLOT</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -334,7 +420,8 @@
                         </div>
                         <div class="col-12 mt-3 text-right">
                             <app-button className="btn-warning btn-large" buttonText="Save"
-                                (buttonClicked)="onSubmit('clinicForm')" [disabled]="clinicForm.invalid">
+                                (buttonClicked)="onSubmit('clinicForm')"
+                                [disabled]="clinicForm.invalid || clinicForm.pristine">
                             </app-button>
                         </div>
                     </div>
@@ -345,6 +432,16 @@
             </div>
         </div>
     </form>
+
+    <div *ngIf="canCreatePartner" class="container-fluid my-3 custom-padding bg-white border-radius-xl">
+        <div class="row py-2">
+            <div class="col-12 text-center">
+                <app-button className="btn-warning btn-large w-md-30" buttonText="Create Partner Account"
+                    (buttonClicked)="createPartnerAccount()">
+                </app-button>
+            </div>
+        </div>
+    </div>
 </ng-container>
 
 <ng-template #loading>
@@ -396,7 +493,7 @@
                     <div class="input-group-prepend">
                         <div class="form-control">
                             <mat-select formControlName="clinicCountryId">
-                                <mat-option *ngFor="let country of countries" [value]="country.id">
+                                <mat-option *ngFor="let country of countryList" [value]="country.id">
                                     +{{country.code}}
                                 </mat-option>
                             </mat-select>

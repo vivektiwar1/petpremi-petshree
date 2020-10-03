@@ -7,3 +7,12 @@ export function WhiteSpaceValidator(control: AbstractControl) {
     };
     return null;
 }
+
+export function NumberOnlyValidator(control: AbstractControl) {
+    if (control?.value && /\D/.test(control.value)) {
+        const newValue = control.value.replace(/\D/, '');
+        control.setValue(newValue, { emitEvent: false });
+        return newValue.length ? null : { required: true }
+    };
+    return null;
+}
