@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {BreedService} from './breed.service';
 import {AuthService} from '../shared/services/auth.service';
-import {AuthModalConfig} from '../auth/auth-form/auth.constants';
 
 @Component({
   selector: 'app-breed-identification',
@@ -15,8 +14,7 @@ export class BreedIdentificationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.auth.checkAndLogin(new AuthModalConfig({disableClose: true}))
-      .then(() => true);
+    this.auth.checkAndLogin().then(() => true);
   }
 
   backPressed() {
