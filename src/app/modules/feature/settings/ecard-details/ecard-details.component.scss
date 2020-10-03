@@ -1,0 +1,46 @@
+@import "src/styles/variables";
+
+.error {
+    border-color: $color-danger;
+    outline: none;
+    transition: $transition-time;
+    box-shadow: 0 0 0 0.2rem rgba($color-danger, 0.2);
+
+    &-message {
+        color: $color-danger;
+        height: 1rem;
+        font-size: $font-size-12;
+        text-align: right;
+        span {
+            vertical-align: middle;
+        }
+    }
+}
+
+.loader {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+
+    &-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 56px;
+        right: 0;
+        background: rgba(0, 0, 0, 0.15);
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+}
+
+.remove {
+    &-slot {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}

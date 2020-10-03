@@ -32,6 +32,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule, MatSpinner } from "@angular/material/progress-spinner";
 import { InputDateRangeComponent } from './components/form-controls/input-date-range/input-date-range.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { InputDateRangeComponent } from './components/form-controls/input-date-r
     MatNativeDateModule,
     MatSelectModule,
     MatTabsModule,
+    MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
@@ -82,6 +84,7 @@ import { InputDateRangeComponent } from './components/form-controls/input-date-r
     MatSelectModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    MatTooltipModule,
     NgDelayedClassDirective,
     ReactiveFormsModule,
     SideNavComponent,

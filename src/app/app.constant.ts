@@ -51,5 +51,7 @@ export const ClientDetailsTabLinks = [
 ];
 
 export const SettingsTabLinks = [
-    { name: 'Profile', value: 'profile', active: true }
+    { name: 'Profile', value: 'profile', active: true },
+    { name: 'Configuration', value: 'configuration', active: false },
+    { name: 'Ecard Media', value: 'ecard-media', active: false }
 ];

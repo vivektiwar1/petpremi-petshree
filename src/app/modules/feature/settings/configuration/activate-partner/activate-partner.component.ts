@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { WhiteSpaceValidator } from 'src/app/validators/common';
-import { ProfileService } from '../profile.service';
+import { ConfigurationService } from '../configuration.service';
 
 @Component({
   selector: 'app-activate-partner',
@@ -17,7 +17,7 @@ export class ActivatePartnerComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data,
-    private profileService: ProfileService,
+    private configurationService: ConfigurationService,
     private toasts: ToastrService,
     private dialogRef: MatDialogRef<ActivatePartnerComponent>
   ) { }
@@ -29,7 +29,7 @@ export class ActivatePartnerComponent implements OnInit {
     if (this.partnerNameControl.valid) {
       try {
         this.apiInProgress = true;
-        await this.profileService.activatePartner(this.partnerNameControl.value, this.data.userId).toPromise();
+        await this.configurationService.activatePartner(this.partnerNameControl.value, this.data.userId).toPromise();
         this.apiInProgress = false;
         this.dialogRef.close();
         this.toasts.success('Partner Added Successfully');

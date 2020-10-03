@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {ErrorPageComponent} from './modules/shared/components/error-page/error-page.component';
-import {GuestGuard} from './shared/guards/guest.guard';
-import {AuthGuard} from './shared/guards/auth.guard';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ErrorPageComponent } from './modules/shared/components/error-page/error-page.component';
+import { GuestGuard } from './shared/guards/guest.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -44,14 +44,6 @@ const routes: Routes = [
     loadChildren: () => import('./coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
   },
   {
-    path: 'privacy-policy',
-    loadChildren: () => import('./coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
-  },
-  {
-    path: 'terms',
-    loadChildren: () => import('./coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
-  },
-  {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
     canLoad: [GuestGuard],
@@ -75,6 +67,14 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./modules/feature/settings/settings.module').then(m => m.SettingsModule)
+  },
+  {
+    path: 'privacy-policy',
+    loadChildren: () => import('./privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule)
+  },
+  {
+    path: 'terms',
+    loadChildren: () => import('./terms/terms.module').then(m => m.TermsModule)
   },
   {
     path: '**',

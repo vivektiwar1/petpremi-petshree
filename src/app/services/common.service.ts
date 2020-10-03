@@ -11,12 +11,13 @@ import { catchError } from 'rxjs/operators';
 export class CommonService {
   private _navStatus$: Subject<boolean>;
   private httpSpy: HttpClient;
-  private countryList: any;
-  private stateList: any;
-  private cityList: any;
-  private pinCodeList: any;
-  private titleList: any;
-  private genderList: any;
+  private countryList: Array<any>;
+  private stateList: Array<any>;
+  private cityList: Array<any>;
+  private pinCodeList: Array<any>;
+  private titleList: Array<any>;
+  private genderList: Array<any>;
+  private documentType: Array<any>;
   private userId: any;
 
   constructor(
@@ -233,5 +234,37 @@ export class CommonService {
       return this.genderList;
     }
   }
+
+  async getDocumentType() {
+    if (!this.documentType?.length) {
+      const apiData = {
+        commonParamHash: {
+          entityName: "DocumentType",
+          operation: "READ"
+        },
+        objectHash: {
+          status: true
+        }
+      };
+
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.documentType = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            ...item,
+            value: item.id,
+            name: item.documentType
+          }
+        });
+        return this.documentType;
+      } else {
+        return [];
+      }
+    } else {
+      return this.documentType;
+    }
+  }
+
+
 
 }

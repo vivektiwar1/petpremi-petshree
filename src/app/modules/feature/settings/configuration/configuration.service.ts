@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileService {
+export class ConfigurationService {
 
   constructor(
     private httpClient: HttpClient

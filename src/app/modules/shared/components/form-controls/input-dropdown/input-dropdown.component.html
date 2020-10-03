@@ -1,9 +1,9 @@
 <label *ngIf="label" class="mb-0" [attr.for]="name">{{label}}</label>
-<div class="form-control" *ngIf="parentFormGroup">
+<div class="form-control" *ngIf="parentFormGroup" [class.disabled]="parentFormGroup.get(name).disabled">
     <mat-select class="custom-icon" [attr.id]="label ? name : ''" [formControl]="parentFormGroup.get(name)"
         [placeholder]="placeholder ? placeholder : ''" [attr.name]="name">
         <ng-content></ng-content>
-        <mat-option *ngFor="let item of selectionList" [value]="item.value"> {{item.name}}
+        <mat-option *ngFor="let item of selectionList" [value]="item.value"> {{item.name | titlecase}}
         </mat-option>
     </mat-select>
 </div>
@@ -13,7 +13,7 @@
         (selectionChange)="onSelection($event)" [placeholder]="placeholder ? placeholder : ''"
         [attr.name]="label ? name : ''">
         <ng-content></ng-content>
-        <mat-option *ngFor="let item of selectionList" [value]="item.value"> {{item.name}}
+        <mat-option *ngFor="let item of selectionList" [value]="item.value"> {{item.name | titlecase}}
         </mat-option>
     </mat-select>
 </div>

@@ -1,6 +1,5 @@
 mat-select {
     &.custom-icon {
-        
         .mat-select-arrow {
             position: relative;
             border-bottom: 5px solid;
@@ -21,4 +20,8 @@ mat-select {
             }
         }
     }
+}
+
+.mat-select-disabled .mat-select-value {
+    cursor: not-allowed;
 }
