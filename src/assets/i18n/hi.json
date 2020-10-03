@@ -173,7 +173,12 @@
     "resendOtp": "Resend OTP",
     "verify": "Verify",
     "resendAfter": "Resend after:",
-    "verifyDetailsTitle": "Verify Details"
+    "verifyDetailsTitle": "Verify Details",
+    "types": {
+      "customer": "Customer",
+      "partner": "Partner",
+      "admin": "Admin"
+    }
   },
   "form": {
     "emailPhone": {

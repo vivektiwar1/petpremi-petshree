@@ -13,6 +13,7 @@ export class AuthService {
   countries$ = new BehaviorSubject(null);
   titles$ = new BehaviorSubject(null);
   genders$ = new BehaviorSubject(null);
+  userData$ = new BehaviorSubject(null);
   private dialogOpened = null;
 
   constructor(private dialog: MatDialog,
@@ -58,6 +59,18 @@ export class AuthService {
     }));
   }
 
+  getUserProfile(objectHash: { identifier: string, userType?: string }) {
+    console.log('here');
+    return this.dataService.http.get(`${environment.api}service/oauth2/api/user/data`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .pipe(take(1), map(user => {
+      localStorage.setItem('userData', JSON.stringify(user))
+      this.userData$.next(user);
+    })).toPromise();
+  }
   getCountries() {
     return this.dataService.search('Country')
       .pipe(take(1), map(countries => {
