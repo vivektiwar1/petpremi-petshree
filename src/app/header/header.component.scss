@@ -129,7 +129,6 @@
   .header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
 
     .logo {
       img {
@@ -167,6 +166,7 @@
   .side-menu {
     flex: 1;
     overflow-y: auto;
+    margin: 30px 0;
 
     &::-webkit-scrollbar-thumb {
       background: $White;
@@ -181,7 +181,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100%;
       padding: 0;
 
       text-align: center;
@@ -190,7 +189,11 @@
       li {
         position: relative;
         list-style-type: none;
-        padding: 10px 15px;
+        padding: 10px 15px 0;
+
+        &:first-of-type {
+          padding-top: 0;
+        }
 
         &:hover {
           color: $White;
@@ -251,7 +254,6 @@
 
   .footer {
     display: flex;
-    margin-top: 30px;
 
     .email a {
       font-weight: 900;
@@ -337,17 +339,20 @@
 
 @include for-tablet-landscape-up {
   .wrap-side-menu {
-    min-width: 700px;
-    width: 60%;
+    width: 536px;
     padding: 40px 137px 40px 40px;
 
-    .side-menu ul {
-      align-items: flex-end;
-      text-align: right;
+    .side-menu {
+      margin: 88px 0 30px;
 
-      li a {
-        font-size: 32px;
-        line-height: 44px;
+      ul {
+        align-items: flex-end;
+        text-align: right;
+
+        li a {
+          font-size: 32px;
+          line-height: 44px;
+        }
       }
     }
 

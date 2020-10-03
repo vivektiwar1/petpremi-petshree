@@ -47,12 +47,23 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     img1: `${this.getAssetId(this.currentForm)}-illustration.png`,
     bg1Col: this.getBgCol(this.currentForm),
   };
+  userTypes = [{
+    value: AUTH_USER_TYPE.CUSTOMER,
+    show: 'auth.types.customer'
+  }, {
+    value: AUTH_USER_TYPE.PARTNER,
+    show: 'auth.types.partner'
+  }, {
+    value: AUTH_USER_TYPE.ADMIN,
+    show: 'auth.types.admin'
+  }];
+  userType = AUTH_USER_TYPE.CUSTOMER;
 
   loginForm = this.fb.group({
     username: ['', [Validators.required, CustomValidators.userNameValidator]],
     password: ['', [Validators.required]],
     grant_type: 'password',
-    user_type: AUTH_USER_TYPE.CUSTOMER,
+    user_type: this.userType,
     login_type: AUTH_SIGN_UP_CLIENT.SELF,
   });
 
@@ -73,7 +84,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     titleId: ['', Validators.required],
     confirmPassword: ['', Validators.required],
     signUpBy: AUTH_SIGN_UP_CLIENT.SELF,
-    userType: AUTH_USER_TYPE.CUSTOMER,
+    userType: this.userType,
     countryIndex: 0,
     profileImage: [''],
   }, {
@@ -94,7 +105,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     password: ['', [Validators.required, ...PWD_VALIDATORS]],
     confirmPassword: ['', Validators.required],
     randomKey: [''],
-    userType: AUTH_USER_TYPE.CUSTOMER,
+    userType: this.userType,
     signUpBy: AUTH_SIGN_UP_CLIENT.SELF
   }, {
     updateOn: 'blur',
@@ -212,6 +223,17 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     return this.form.controls;
   }
 
+  get enableUserType() {
+    switch (this.currentForm) {
+      case AuthFormTypes.LOGIN:
+        return true;
+      case AuthFormTypes.SIGN_UP_STAGE1:
+        return this.authFlow === AUTH_SIGN_UP_CLIENT.SELF;
+      default:
+        return false;
+    }
+  }
+
   getFormGroupControls(group) {
     return (this.formControl[group] as FormGroup).controls;
   }
@@ -233,12 +255,15 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
         this.verifyOtpForm.valueChanges,
       ).subscribe(() => this.formError$.next('')),
     ];
+  }
+
+  getBasicData() {
     if (this.isSignUpForm) {
       if (!this.service.titles$.value) {
         this.service.getTitles()
           .subscribe(data => data.length && this.signUpForm.controls.titleId.setValue(data[0].id),
             () => this.signUpLoadError$.next(true));
-      } else {
+      } else if (!this.signUpForm.controls.titleId.value) {
         const title = this.getTitle();
         if (title) {
           this.signUpForm.controls.titleId.setValue(title.id);
@@ -251,7 +276,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
               this.signUpForm.controls.countryId.setValue(data[0].id);
             }
           }, () => this.signUpLoadError$.next(true));
-      } else {
+      } else if (!this.signUpForm.controls.countryId.value) {
         const country = this.getCountry();
         if (country) {
           this.signUpForm.controls.countryId.setValue(country.id);
@@ -261,7 +286,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
         this.service.getGenders()
           .subscribe(data => data.length && this.signUpForm.controls.genderId.setValue(data[0].id),
             () => this.signUpLoadError$.next(true));
-      } else {
+      } else if (!this.signUpForm.controls.genderId.value) {
         const gender = this.getGender();
         if (gender) {
           this.signUpForm.controls.genderId.setValue(gender.id);
@@ -283,6 +308,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   private changeForm(type = AuthFormTypes.LOGIN) {
     this.currentForm = type;
     this.updateStaticAssets(type);
+    this.getBasicData();
     if (!this.firstTime) {
       this.scrollToForm();
     }
@@ -367,7 +393,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       username: '',
       password: '',
       grant_type: 'password',
-      user_type: AUTH_USER_TYPE.CUSTOMER,
+      user_type: this.userType,
       login_type: AUTH_SIGN_UP_CLIENT.SELF,
     });
     const title = this.getTitle();
@@ -385,7 +411,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       titleId: title ? title.id : '',
       confirmPassword: '',
       signUpBy: this.authFlow,
-      userType: AUTH_USER_TYPE.CUSTOMER,
+      userType: this.userType,
       countryIndex: 0,
       profileImage: '',
     });
@@ -447,7 +473,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
               profileImage: info.profileImage,
               social: info.social,
               signUpBy,
-              userType: AUTH_USER_TYPE.CUSTOMER,
+              userType: this.userType,
               timeZone: momentTz.tz.guess(),
               mobile: '',
               countryId: country ? country.id : '',
@@ -465,10 +491,17 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
                 formData.append('password', info.accessToken);
                 formData.append('username', info.email);
                 formData.append('grant_type', 'password');
-                formData.append('user_type', AUTH_USER_TYPE.CUSTOMER);
+                formData.append('user_type', this.userType);
                 formData.append('login_type', signUpBy);
                 return this.service.signIn(formData)
                   .toPromise()
+                  .then(data => {
+                    if (this.isModal) {
+                      this.closeModal.emit(data);
+                    } else {
+                      this.router.navigate(['/']);
+                    }
+                  })
                   .catch(loginError => {
                     const errorMsg = loginError?.error && (loginError.error.error_description || loginError.error.responseMessage);
                     if (errorMsg) {
@@ -602,7 +635,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
           password: '',
           confirmPassword: '',
           randomKey: data.randomKey,
-          userType: AUTH_USER_TYPE.CUSTOMER,
+          userType: this.userType,
           signUpBy: this.authFlow,
         });
         this.changeForm(AuthFormTypes.CHANGE_PASSWORD);
@@ -676,17 +709,17 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   validateIdentifierFromServer(identifier, validate = true) {
     return this.service.checkIdentifier({
       identifier,
-      userType: AUTH_USER_TYPE.CUSTOMER
+      userType: this.userType
     }).pipe(
       switchMap((data: any): any => {
         const {activated, apiError, randomKey} = data || {};
         if (apiError) {
           return of({error: data});
         }
-        if (!data || !randomKey || (activated !== undefined && activated)) {
+        if (!data || (activated !== undefined && activated)) {
           return of({error: {userExist: true}, activated});
         }
-        if (!validate && (activated !== undefined && !activated)) {
+        if (activated !== undefined && !activated && (!randomKey || !validate)) {
           return of({error: {userExist: true}});
         }
         const observable = (activated !== undefined && !activated) ? of(data) : this.service.checkIdentifier({
@@ -758,11 +791,20 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   getCountry(index = 0) {
     const countries = this.service.countries$.value;
     return countries && countries.length ? countries[index] : null;
-
   }
 
   getGender(index = 0) {
     const genders = this.service.genders$.value;
     return genders && genders.length ? genders[index] : null;
+  }
+
+  changeUserType(type) {
+    if (this.enableUserType) {
+      this.userType = type;
+      this.form.patchValue({
+        user_type: type,
+        userType: type,
+      });
+    }
   }
 }

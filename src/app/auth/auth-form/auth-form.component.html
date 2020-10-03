@@ -20,6 +20,17 @@
         mode="indeterminate">
       </mat-spinner>
     </h1>
+    <div class="user-type">
+      <mat-select
+        [class.disabled]="!enableUserType"
+        [disabled]="!enableUserType"
+        (selectionChange)="changeUserType($event.value)"
+        [(value)]="userType">
+        <mat-option *ngFor="let type of userTypes" [value]="type.value">
+          {{type.show | translate}}
+        </mat-option>
+      </mat-select>
+    </div>
     <mat-error *ngIf="signUpLoadError$ | async" class="text-center mb-2">
       {{'auth.error.unknown' | translate}}
     </mat-error>

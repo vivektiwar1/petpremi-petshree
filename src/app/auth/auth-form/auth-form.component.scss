@@ -61,6 +61,22 @@
     flex-direction: column;
     flex: 1;
 
+    .user-type {
+      text-align: center;
+      margin: 5px 0 48px;
+
+      mat-select {
+        width: 150px;
+        border: 1px solid $Primary;
+        padding: 3px;
+        border-radius: 5px;
+
+        &.disabled {
+          border: 1px solid #eee;
+        }
+      }
+    }
+
     .fullName > :not(:first-child) {
       margin-left: 10px;
     }
@@ -101,7 +117,6 @@
       font-family: Avenir, sans-serif;
       font-weight: 900;
       color: #152B40;
-      margin-bottom: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
