@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
+
 
 @Component({
   selector: 'app-header1',
@@ -7,10 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(
+  user: any;
+  constructor(private service: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('userData'));
+    console.log(this.user);
   }
 
   handleChangePassword() {
@@ -18,7 +25,8 @@ export class HeaderComponent implements OnInit {
   }
 
   handleLogout() {
-    
+    this.service.logout();
+    this.router.navigate(['/']);
   }
 
 }

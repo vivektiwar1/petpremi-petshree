@@ -547,6 +547,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   processApiResponse(data: any) {
     switch (this.currentForm) {
       case AuthFormTypes.LOGIN:
+        this.service.getUserProfile(data.randomKey);
       case AuthFormTypes.CHANGE_PASSWORD:
       case AuthFormTypes.SIGN_UP_STAGE2: {
         return this.isModal ? this.closeModal.emit(data) : this.router.navigate(['/customers/clients']);
@@ -580,6 +581,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
         return this.service.getUserDetails(data.randomKey)
           .toPromise()
           .then(userData => {
+            console.log(userData)
             const user = userData.length ? userData[0] : null;
             const countries = this.service.countries$.value;
             const countryIndex = countries && user.country?.id ? countries.findIndex(country => country.id === user.country.id) : 0;
