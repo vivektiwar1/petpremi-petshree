@@ -549,7 +549,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       case AuthFormTypes.LOGIN:
       case AuthFormTypes.CHANGE_PASSWORD:
       case AuthFormTypes.SIGN_UP_STAGE2: {
-        return this.isModal ? this.closeModal.emit(data) : this.router.navigate(['/']);
+        return this.isModal ? this.closeModal.emit(data) : this.router.navigate(['/customers/clients']);
       }
       case AuthFormTypes.SIGN_UP_STAGE1: {
         this.translate.get('auth.verify')
