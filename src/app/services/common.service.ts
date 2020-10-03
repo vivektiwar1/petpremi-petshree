@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,12 @@ import { environment } from 'src/environments/environment';
 export class CommonService {
   private _navStatus$: Subject<boolean>;
   private httpSpy: HttpClient;
-  private countryCode: any;
+  private countryList: any;
+  private stateList: any;
+  private cityList: any;
+  private pinCodeList: any;
   private titleList: any;
+  private genderList: any;
   private userId: any;
 
   constructor(
@@ -35,74 +40,50 @@ export class CommonService {
     return this._navStatus$.asObservable();
   }
 
-  async getCountryList() {
-
-    if (!this.countryCode?.length) {
-      const apiData = {
-        commonParamHash: {
-          entityName: "Country",
-          operation: "SEARCH"
-        },
-        objectHash: {
-          status: true
-        }
-      };
-
-      const response = await this.httpSpy.post(`${environment.apiBase}/service/api/crud`, apiData, {
-        headers: {
-          Authorization: `Basic ${window.btoa(environment.username + ':' + environment.password)}`
-        }
-      }).toPromise() as any;
-      if (!response.isError) {
-        this.countryCode = (response.responseResult?.data?.content as Array<any> || []).map(item => {
-          return {
-            code: item.code,
-            name: item.name,
-            id: item.id,
-            minLength: item.fromLength,
-            maxLength: item.toLength
-          }
-        });
-        return this.countryCode;
-      } else {
-        return [];
-      }
-    } else {
-      return this.countryCode;
-    }
-
+  releaseCaching() {
+    (this.countryList = this.titleList = this.userId =
+      this.stateList = this.cityList = this.pinCodeList = null
+    );
   }
 
-  async getTitleList() {
-    if (!this.titleList?.length) {
-      const apiData = {
-        commonParamHash: {
-          entityName: "Title",
-          operation: "SEARCH"
+  private getSearchObject(searchKey: string) {
+    return {
+      commonParamHash: {
+        entityName: searchKey,
+        uiBean: "BNE" + searchKey,
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
         },
-        objectHash: {
-          status: true
+        sort: {
+          ASC: [
+            "id"
+          ]
         }
-      };
-      const response = await this.httpSpy.post(`${environment.apiBase}/service/api/crud`, apiData, {
-        headers: {
-          Authorization: `Basic ${window.btoa(environment.username + ':' + environment.password)}`
-        }
-      }).toPromise() as any;
-      if (!response.isError) {
-        this.titleList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
-          return {
-            title: item.title,
-            id: item.id,
-          }
-        });
-        return this.titleList;
-      } else {
-        return [];
+      },
+      objectHash: {
+        status: true
       }
-    } else {
-      return this.titleList;
     }
+  }
+
+  private dataRequest(apiData) {
+    return this.httpSpy.post(`${environment.apiBase}/service/api/crud`, apiData, {
+      headers: {
+        Authorization: `Basic ${window.btoa(environment.username + ':' + environment.password)}`
+      }
+    }).pipe(
+      catchError(error => {
+        const errorMessage = error?.error?.responseError?.message || error?.error?.responseMessage || 'Something went wrong';
+        throw new Error(`${errorMessage} Api => ${apiData?.commonParamHash?.entityName}`)
+      }),
+      catchError(error => {
+        console.error(error);
+        console.warn('using fallback value ==> []');
+        return of([]);
+      })
+    ).toPromise() as any;
   }
 
   async getUserId() {
@@ -121,8 +102,136 @@ export class CommonService {
     }
   }
 
-  releaseCaching() {
-    this.countryCode = this.titleList = this.userId = null;
+  async getCountryList() {
+    if (!this.countryList?.length) {
+      const apiData = this.getSearchObject('Country');
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.countryList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            code: item.code,
+            name: item.name,
+            id: item.id,
+            minLength: item.fromLength,
+            maxLength: item.toLength,
+            value: item.id
+          }
+        });
+        return this.countryList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.countryList;
+    }
+
+  }
+
+  async getTitleList() {
+    if (!this.titleList?.length) {
+      const apiData = this.getSearchObject('Title');
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.titleList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            title: item.name,
+            id: item.id,
+          }
+        });
+        return this.titleList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.titleList;
+    }
+  }
+
+  async getStateList() {
+    if (!this.stateList?.length) {
+      const apiData = this.getSearchObject('State');
+      const response = await this.httpSpy.post(`${environment.apiBase}/service/api/crud`, apiData, {
+        headers: {
+          Authorization: `Basic ${window.btoa(environment.username + ':' + environment.password)}`
+        }
+      }).toPromise() as any;
+      if (!response.isError) {
+        this.stateList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            name: item.name,
+            value: item.id
+          }
+        });
+        return this.stateList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.stateList;
+    }
+
+  }
+
+  async getCityList() {
+    if (!this.cityList?.length) {
+      const apiData = this.getSearchObject('City');
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.cityList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            name: item.name,
+            value: item.id
+          }
+        });
+        return this.cityList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.cityList;
+    }
+
+  }
+
+  async getPinCodeList() {
+    if (!this.pinCodeList?.length) {
+      const apiData = this.getSearchObject('PINCode');
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.pinCodeList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            name: item.name,
+            value: item.id
+          }
+        });
+        return this.pinCodeList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.pinCodeList;
+    }
+
+  }
+
+  async getGenderList() {
+    if (!this.genderList?.length) {
+      const apiData = this.getSearchObject('Gender');
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.genderList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            name: item.name,
+            value: item.id
+          }
+        });
+        return this.genderList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.genderList;
+    }
   }
 
 }

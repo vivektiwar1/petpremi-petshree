@@ -1,0 +1,18 @@
+@import "src/styles/variables";
+
+.error {
+    border-color: $color-danger;
+    outline: none;
+    transition: $transition-time;
+    box-shadow: 0 0 0 0.2rem rgba($color-danger, 0.2);
+
+    &-message {
+        color: $color-danger;
+        height: 1rem;
+        font-size: $font-size-12;
+        text-align: left;
+        span {
+            vertical-align: middle;
+        }
+    }
+}
