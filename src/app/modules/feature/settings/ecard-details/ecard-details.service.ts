@@ -31,10 +31,6 @@ export class EcardDetailsService {
         entityName: "UserDocument",
         uiBean: "BNEUserDocument",
         operation: "SEARCH",
-        pagination: {
-          pageNumber: 0,
-          pageSize: 10
-        },
         sort: {
           ASC: [
             "displayOrder"
