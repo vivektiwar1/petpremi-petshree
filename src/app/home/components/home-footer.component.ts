@@ -13,6 +13,7 @@ import {debounceTime} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {FormBuilder, Validators} from '@angular/forms';
 import $ from 'jquery';
+import { HomeService } from '../home.service';
 
 @Component({
   selector: 'app-home-footer',
@@ -29,6 +30,7 @@ export class HomeFooterComponent implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild('resourcesElement') resourcesElement: ElementRef;
 
   constructor(private fb: FormBuilder,
+              private service: HomeService,
               private renderer: Renderer2,
               private footer: ElementRef) {
   }
@@ -50,7 +52,7 @@ export class HomeFooterComponent implements AfterViewInit, OnDestroy, OnInit {
 
   submitNewsLetter() {
     if (this.newsletter.valid) {
-      console.log(this.newsletter.value);
+      this.service.subscribeUs(this.newsletter.value).then(() => this.newsletter.reset());
     }
   }
 

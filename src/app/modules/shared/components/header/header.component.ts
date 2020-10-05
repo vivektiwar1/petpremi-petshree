@@ -12,12 +12,11 @@ export class HeaderComponent implements OnInit {
 
   user: any;
   constructor(private service: AuthService,
-    private router: Router
+              private router: Router
   ) {}
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('userData'));
-    console.log(this.user);
   }
 
   handleChangePassword() {

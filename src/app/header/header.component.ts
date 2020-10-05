@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {LANGUAGE_SWITCHER} from '../shared/constants/app.constants';
 import {AppService} from '../app.service';
 import {AppStore} from '../app.store';
@@ -13,9 +13,10 @@ import {AuthService} from '../shared/services/auth.service';
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   languageSwitcher = LANGUAGE_SWITCHER;
   api = environment.api;
+  user: any;
   @Input() petSwitcher = true;
   @Output() petChanged = new EventEmitter();
   @ViewChild('petBlock') petBlock: ElementRef;
@@ -27,9 +28,9 @@ export class HeaderComponent {
               public auth: AuthService) {
   }
 
-  /*ngOnInit() {
-    this.w = $(window);
-  }*/
+  ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('userData'));
+  }
 
   /*ngAfterViewInit() {
     const arrowMainMenu = $('.arrow-main-menu');

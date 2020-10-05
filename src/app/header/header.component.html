@@ -17,8 +17,8 @@
             <ng-container *ngIf="state.isAuthenticated else guest;">
               <div class="sub-menu" (click)="toggleProfile(profileMenu)">
                 <button>
-                  <img [src]="'/assets/icon/profile.png'" alt=""/>
-                  {{'common.links.profile' | translate}}
+                  <img :src={{user.avatarURL}} alt=""/>
+                  {{user.userName}}
                 </button>
                 <ul class="sub-menu-items hide" #profileMenu>
                   <li>

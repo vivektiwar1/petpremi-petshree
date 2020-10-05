@@ -60,7 +60,6 @@ export class AuthService {
   }
 
   getUserProfile(objectHash: { identifier: string, userType?: string }) {
-    console.log('here');
     return this.dataService.http.get(`${environment.api}service/oauth2/api/user/data`, {
       headers: {
         'Content-Type': 'application/json'
