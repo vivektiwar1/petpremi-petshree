@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
 import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AppStore } from '../app.store';
@@ -11,7 +12,8 @@ export class HomeService {
 
   constructor(
     private httpClient: HttpClient,
-    private store: AppStore
+    private store: AppStore,
+    private toastrService: ToastrService,
   ) { }
 
   subscribeUs(email) {
@@ -24,9 +26,6 @@ export class HomeService {
         },
         params: {email}
       })
-      .pipe(take(1), map((res: any) => {
-          // Need to confirm and replace with proper message
-        console.log(res.responseMessage);
-      })).toPromise();
+      .pipe(take(1), map((res: any) => this.toastrService.success(res.responseMessage))).toPromise();
   }
 }
