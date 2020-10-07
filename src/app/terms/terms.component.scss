@@ -6,6 +6,13 @@
 .main p, .main li{
   text-align: justify;
 }
+@media screen and (max-width: 1024px) {
+  .main {
+    margin-left: 0rem;
+    margin-right: 0rem;
+    padding: 4rem;
+  }
+}
 @media screen and (max-width: 992px) {
   .main {
     margin-left: 0rem;

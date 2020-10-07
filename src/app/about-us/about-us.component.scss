@@ -1,7 +1,7 @@
 .main {
-  margin-left: 2rem;
-  margin-right: 2rem;
-  padding: 4rem 0rem;
+  margin-left: 6rem;
+  margin-right: 6rem;
+  padding: 4rem 0rem 0rem 0rem;
 }
 .bg-img1 {
   position: absolute;
@@ -48,12 +48,19 @@
   padding: 15px 25px;
 }
 .meet-the-team img {
-  width: 70%;
-  height: 200px;
+  width: 60%;
+  height: 155px;
 }
 .bg-f0f3f6 {
   background-color: #f0f3f6;
 }
 .z-index-2 {
   z-index: -2;
+}
+@media only screen and (max-width: 767px) {
+  .main {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding: 3rem 0rem 0rem 0rem;
+  }
 }

@@ -1,0 +1,123 @@
+@import "src/styles/variables";
+main {
+		padding: 1.5rem 2rem !important;
+		height: initial !important;
+		overflow-y: initial !important;
+}
+.card-details {
+    background: $white;
+
+    img {
+        width: 50px;
+    }
+
+    border-radius: $border-radius-18;
+}
+
+.owner {
+    .details {
+        .name {
+            color: $dialog-title-color;
+        }
+
+        .relation {
+            font-size: $font-size-14;
+            line-height: $font-size-14 * 1.5;
+        }
+
+        .info {
+            line-height: $font-size-14 * 1.5;
+            label {
+                color: $dialog-title-color;
+                font-size: $font-size-14;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.pets {
+    border-radius: $border-radius-28;
+    border: 1px solid #d3e6f4;
+
+    .first-block {
+        padding-bottom: 1rem;
+        border-bottom: 2px solid $background-color;
+    }
+
+    .second-block {
+        padding-top: 1rem;
+    }
+
+    .info {
+        line-height: $font-size-14 * 1.5;
+        label {
+            color: $dialog-title-color;
+            font-size: $font-size-14;
+            margin: 0;
+        }
+    }
+}
+.treatment {
+	vertical-align: text-bottom;
+}
+.nav-link, .navbar {
+	padding: 0px;
+}
+.mat-chevron-down {
+	height: 10px;
+	line-height: 0px;
+}
+.circle-span {
+	text-transform: uppercase;
+	font-size:14px;
+}
+.circle-span span {
+	height: 16px;
+	width: 16px;
+	margin-right: 10px;
+	border-radius: 50%;
+	display: inline-block;
+	vertical-align: text-bottom;
+}
+.clr-male {
+	background: #efac39;
+}
+.clr-female {
+	background: #608bc5;
+}
+.clr-crcle-black {
+	background: #333333;
+}
+.img-height-fix {
+	height: 250px;
+}
+.lr-padd {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	// background: #fff;
+	border-top: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
+}
+.brdr-left {
+	border-left: 1px solid #dee2e6;
+}
+.add-customer-btn {
+	padding: 6px 0px;
+	text-align: center;
+	color: #efac36;
+	display: inline-block;
+	font-weight: 400;
+}
+.add-customer-btn:hover {
+	text-decoration: none;
+}
+.brdr-top-none {
+	border-top: 0px solid;
+}
+@media only screen and (max-width: 767px) {
+  .m-margin-btm {
+    margin-bottom: 2rem;
+  }
+}
+
