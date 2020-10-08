@@ -10,13 +10,13 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  user: any;
+  user: any = [];
   constructor(private service: AuthService,
               private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('userData'));
+    this.service.userData$.subscribe(data => this.user = data);
   }
 
   handleChangePassword() {

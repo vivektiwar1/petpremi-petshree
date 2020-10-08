@@ -96,8 +96,8 @@ main {
 	padding-left: 1rem;
 	padding-right: 1rem;
 	// background: #fff;
-	border-top: 1px solid #dee2e6;
-	border-bottom: 1px solid #dee2e6;
+	border-top: 1px solid #f1f7fb;
+	border-bottom: 1px solid #f1f7fb;
 }
 .brdr-left {
 	border-left: 1px solid #dee2e6;
@@ -114,6 +114,72 @@ main {
 }
 .brdr-top-none {
 	border-top: 0px solid;
+}
+.font-500 {
+    font-weight: 500;
+}
+.pet-ben-left img {
+    height: 50px;
+    width: 50px;
+}
+.fs-12 {
+    font-size: 12px;
+}
+.crcl-div {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 0px 3px #ffffff;
+}
+.red-dot {
+    background: red;
+    border: 2px solid red;
+}
+.bl-red {
+    border-left: 3px solid red;
+    border-bottom: 1px solid #f2fafe;
+}
+.blue-dot {
+    background: blue;
+    border: 2px solid blue;
+}
+.bl-blue {
+    border-left: 3px solid blue;
+    border-bottom: 1px solid #f2fafe;
+}
+.yellow-dot {
+    background: yellow;
+    border: 2px solid yellow;
+}
+.bl-yellow {
+    border-left: 3px solid yellow;
+    border-bottom: 1px solid #f2fafe;
+}
+.pink-dot {
+    background: #ea4d82;
+    border: 2px solid #ea4d82;
+}
+.bl-pink {
+    border-left: 3px solid #ea4d82;
+    border-bottom: 1px solid #f2fafe;
+}
+.text-blue {
+    color: #2e4765;
+}
+.btn-reschedule {
+    color: #2e4765;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 12px;
+    border: 1px solid #ecf0f3;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+.btn-reschedule:hover {
+    text-decoration: none;
+}
+.box-shadow-left {
+    box-shadow: 0 5px 5px rgba(0,0,0,.15);
 }
 @media only screen and (max-width: 767px) {
   .m-margin-btm {
