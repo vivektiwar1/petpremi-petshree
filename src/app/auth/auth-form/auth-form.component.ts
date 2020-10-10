@@ -141,6 +141,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     validatedEmail: [''],
     id: [''],
     profileImage: [''],
+    activated: true,
   }, {
     updateOn: 'blur',
     asyncValidators: this.validateUserEmail.bind(this),
@@ -647,7 +648,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   }
 
   private sendInfoToServer(): Observable<any> {
-    const data = this.form.value;
+    const data = {...this.form.value};
     delete data.confirmPassword;
     delete data.countryIndex;
     if (data.profileImage !== undefined && !data.profileImage) {
