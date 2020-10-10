@@ -33,6 +33,7 @@ const storageConstants = {
   TOKEN: '_token',
   REFRESH_TOKEN: '_refreshToken',
   TOKEN_EXPIRES_IN: '_tokenExpiresIn',
+  USER_DATA: 'userData'
 };
 
 @Injectable()
@@ -100,6 +101,7 @@ export class AppStore extends Store<AppState> {
       localStorage.setItem(storageConstants.TOKEN_EXPIRES_IN, tokenExpiresIn + '');
     } else {
       localStorage.removeItem(storageConstants.TOKEN);
+      localStorage.removeItem(storageConstants.USER_DATA);
       localStorage.removeItem(storageConstants.REFRESH_TOKEN);
       localStorage.removeItem(storageConstants.TOKEN_EXPIRES_IN);
     }

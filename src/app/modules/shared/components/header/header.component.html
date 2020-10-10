@@ -46,7 +46,7 @@
                 </div>
             </li> -->
             <li class="nav-item d-flex align-self-lg-center px-3 dropdown">
-                <img class="avatar rounded-circle align-self-center" width="30" :src={{user.avatarURL}}/>
+                <img class="avatar rounded-circle align-self-center" width="30" [src]='user.avatarURL || "assets/images/default-profile.png"'/>
                     <!-- src="https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/c8.0.585.585a/s526x395/1972374_606224692800805_339481721_n.jpg?_nc_cat=107&_nc_sid=85a577&_nc_ohc=RK9cfAHgrKcAX_LeN2H&_nc_ht=scontent-bom1-2.xx&oh=9924bca01cfd4f07fe033bbc5b51d237&oe=5F67B1D4" onerror="this.error = null; this.src = 'assets/images/default-profile.png'"> -->
                 <a class="nav-link text-blue" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">

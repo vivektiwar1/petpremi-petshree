@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('userData'));
+    this.auth.userData$.subscribe(data => this.user = data);
   }
 
   /*ngAfterViewInit() {

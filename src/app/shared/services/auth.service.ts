@@ -13,12 +13,15 @@ export class AuthService {
   countries$ = new BehaviorSubject(null);
   titles$ = new BehaviorSubject(null);
   genders$ = new BehaviorSubject(null);
-  userData$ = new BehaviorSubject(null);
+  userData$ = new BehaviorSubject([]);
   private dialogOpened = null;
 
   constructor(private dialog: MatDialog,
               private dataService: DataService,
               private app: AppStore) {
+      if(this.app.state.isAuthenticated) {
+        this.userData$.next(JSON.parse(localStorage.getItem('userData')));
+      }
   }
 
   checkAndLogin(config: AuthModalConfig = new AuthModalConfig()): Promise<any> {
@@ -60,15 +63,17 @@ export class AuthService {
   }
 
   getUserProfile(objectHash: { identifier: string, userType?: string }) {
-    return this.dataService.http.get(`${environment.api}service/oauth2/api/user/data`, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .pipe(take(1), map(user => {
-      localStorage.setItem('userData', JSON.stringify(user))
-      this.userData$.next(user);
-    })).toPromise();
+    if(this.app.state.isAuthenticated) {
+      return this.dataService.http.get(`${environment.api}service/oauth2/api/user/data`, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .pipe(take(1), map((user:any) => {
+        localStorage.setItem('userData', JSON.stringify(user))
+        this.userData$.next(user);
+      })).toPromise();
+    }
   }
   getCountries() {
     return this.dataService.search('Country')
