@@ -66,6 +66,8 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     grant_type: 'password',
     user_type: this.userType,
     login_type: AUTH_SIGN_UP_CLIENT.SELF,
+  }, {
+    updateOn: 'blur',
   });
 
   signUpForm = this.fb.group({
@@ -770,7 +772,10 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
                 return of({error: {userExistDiffType: true}});
               }
               return Promise.all([
-                this.translate.get('auth.userExist2SendOtp').toPromise(),
+                this.translate.get('auth.' + ((activated !== undefined && !activated)
+                  ? 'userExistSendOtp'
+                  : 'userExist2SendOtp')
+                ).toPromise(),
                 this.translate.get('common.confirm').toPromise(),
                 this.translate.get('common.cancel').toPromise(),
               ]).then(([message1, yes, no]) => {

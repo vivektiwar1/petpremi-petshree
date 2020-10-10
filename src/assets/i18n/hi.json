@@ -182,6 +182,7 @@
       "admin": "Admin"
     },
     "userExistFP": "User already exists. Do you want to try Forgot Password?",
+    "userExistSendOtp": "User already exists. Do you wish to proceed the activation process?",
     "userExist2SendOtp": "User already exists with different role. Do you wish to process the validation process?"
   },
   "form": {
