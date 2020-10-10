@@ -615,7 +615,6 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
         return this.service.getUserDetails(data.randomKey)
           .toPromise()
           .then(userData => {
-            console.log(userData)
             const user = userData.length ? userData[0] : null;
             const countries = this.service.countries$.value;
             const countryIndex = countries && user.country?.id ? countries.findIndex(country => country.id === user.country.id) : 0;
