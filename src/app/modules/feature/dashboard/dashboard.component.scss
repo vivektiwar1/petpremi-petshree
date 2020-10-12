@@ -216,6 +216,9 @@ main {
     width: 180px;
     top: -72px;
 }
+text.highcharts-credits {
+    display: none;
+}
 @media only screen and (max-width: 991px) {
     .img-clinic-male-doc {
         position: absolute;
