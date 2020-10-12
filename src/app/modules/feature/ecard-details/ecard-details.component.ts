@@ -29,7 +29,9 @@ export class EcardDetailsComponent implements OnInit {
     private ecardDetailsService: EcardDetailsService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
-  ) { }
+  ) {
+    this.commonService.showDashboardNavs();
+  }
 
   async ngOnInit(): Promise<void> {
     this.apiInProgress.page = true;

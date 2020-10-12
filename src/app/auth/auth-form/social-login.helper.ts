@@ -66,6 +66,9 @@ export abstract class SocialLoginHelper {
   * main server to login or sign up user
   * */
   loginWithGoogle(): Promise<SocialAuthResponse> {
+    if (!gapi || !gapi.auth2) {
+      return Promise.reject(AuthErrors.UNKNOWN);
+    }
     const auth = gapi.auth2.getAuthInstance();
     return new Promise((resolve, reject) => {
       auth.signIn().then(() => {

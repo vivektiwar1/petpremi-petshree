@@ -25,6 +25,7 @@ import {CustomValidators, PWD_VALIDATORS, validateAllFormFields} from '../../sha
 import {SocialLoginHelper} from './social-login.helper';
 import {AlertModalComponent} from '../../shared/modals/alert-modal/alert-modal.component';
 import {environment} from '../../../environments/environment';
+import {ConfirmModalComponent, ConfirmModalData} from '../../shared/modals/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-auth-form',
@@ -65,6 +66,8 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     grant_type: 'password',
     user_type: this.userType,
     login_type: AUTH_SIGN_UP_CLIENT.SELF,
+  }, {
+    updateOn: 'blur',
   });
 
   signUpForm = this.fb.group({
@@ -140,6 +143,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     validatedEmail: [''],
     id: [''],
     profileImage: [''],
+    activated: true,
   }, {
     updateOn: 'blur',
     asyncValidators: this.validateUserEmail.bind(this),
@@ -163,7 +167,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   @Output() scrollTop = new EventEmitter();
   @Output() closeModal = new EventEmitter<any>();
   @ViewChild('formBlock') formBlock: ElementRef;
-
+  user: any;
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
@@ -172,6 +176,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
               private cd: ChangeDetectorRef,
               private dialog: MatDialog) {
     super();
+    this.service.userData$.subscribe(data => this.user = data);
   }
 
   get isLoginForm() {
@@ -367,9 +372,9 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   fp() {
     this.resetForms();
     this.authFlow = this.signUpClient.SELF;
-    /*return this.isModal
+    return this.isModal
       ? this.changeForm(AuthFormTypes.FORGOT_PASSWORD)
-      : this.router.navigate(['/auth/forgot-password']);*/
+      : this.router.navigate(['/auth/forgot-password']);
   }
 
   signIn() {
@@ -457,7 +462,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       this.loading$.next(true);
       (signUpBy === AUTH_SIGN_UP_CLIENT.FB ? this.loginWithFacebook() : this.loginWithGoogle()).then(info => {
         this.authFlow = signUpBy;
-        return this.validateIdentifierFromServer(info.email)
+        return this.validateIdentifierFromServer(info.email, true, true)
           .toPromise()
           .then(({error, activated}) => {
             const title = this.getTitle();
@@ -499,7 +504,15 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
                     if (this.isModal) {
                       this.closeModal.emit(data);
                     } else {
-                      this.router.navigate(['/']);
+                      this.service.getUserProfile().then(() => {
+                        let path = '/';
+                        this.user.authorities.map(type => {
+                          if (type.authorityId === 1 || type.authorityId === 3) {
+                              path = '/customers/clients';
+                          }
+                        });
+                        this.router.navigate([path]);
+                      });
                     }
                   })
                   .catch(loginError => {
@@ -580,10 +593,18 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   processApiResponse(data: any) {
     switch (this.currentForm) {
       case AuthFormTypes.LOGIN:
-        this.service.getUserProfile(data.randomKey);
       case AuthFormTypes.CHANGE_PASSWORD:
       case AuthFormTypes.SIGN_UP_STAGE2: {
-        return this.isModal ? this.closeModal.emit(data) : this.router.navigate(['/customers/clients']);
+        return this.isModal ? this.closeModal.emit(data) :
+          this.service.getUserProfile().then(() => {
+            let path = '/';
+            this.user.authorities.map(type => {
+              if (type.authorityId === 1 || type.authorityId === 3) {
+                  path = '/customers/clients';
+              }
+            });
+            this.router.navigate([path]);
+          });
       }
       case AuthFormTypes.SIGN_UP_STAGE1: {
         this.translate.get('auth.verify')
@@ -614,7 +635,6 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
         return this.service.getUserDetails(data.randomKey)
           .toPromise()
           .then(userData => {
-            console.log(userData)
             const user = userData.length ? userData[0] : null;
             const countries = this.service.countries$.value;
             const countryIndex = countries && user.country?.id ? countries.findIndex(country => country.id === user.country.id) : 0;
@@ -647,7 +667,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   }
 
   private sendInfoToServer(): Observable<any> {
-    const data = this.form.value;
+    const data = {...this.form.value};
     delete data.confirmPassword;
     delete data.countryIndex;
     if (data.profileImage !== undefined && !data.profileImage) {
@@ -708,7 +728,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     });
   }
 
-  validateIdentifierFromServer(identifier, validate = true) {
+  validateIdentifierFromServer(identifier, validate = true, social = false) {
     return this.service.checkIdentifier({
       identifier,
       userType: this.userType
@@ -718,15 +738,45 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
         if (apiError) {
           return of({error: data});
         }
+        let userExistError = null;
         if (!data || (activated !== undefined && activated)) {
-          return of({error: {userExist: true}, activated});
+          userExistError = {error: {userExist: true}, activated};
         }
         if (activated !== undefined && !activated && (!randomKey || !validate)) {
-          return of({error: {userExist: true}});
+          userExistError = {error: {userExist: true}};
         }
-        const observable = (activated !== undefined && !activated) ? of(data) : this.service.checkIdentifier({
-          identifier,
-        });
+        if (userExistError) {
+          if (social) {
+            return of(userExistError);
+          }
+          return Promise.all([
+            this.translate.get('auth.userExistFP').toPromise(),
+            this.translate.get('common.confirm').toPromise(),
+            this.translate.get('common.cancel').toPromise(),
+          ]).then(([message, yes, no]) => {
+            const dialog = this.dialog.open(ConfirmModalComponent, {
+              disableClose: true,
+              data: {
+                message,
+                yes,
+                no,
+              } as ConfirmModalData,
+            });
+            return dialog.beforeClosed()
+              .toPromise()
+              .then(result => {
+                if (result) {
+                  this.changeForm(AuthFormTypes.FORGOT_PASSWORD);
+                }
+                return userExistError;
+              });
+          });
+        }
+        const observable = (activated !== undefined && !activated)
+          ? of(data)
+          : this.service.checkIdentifier({
+            identifier,
+          });
         return observable.pipe(
           switchMap((id: any): any => {
             if (id && id.apiError) {
@@ -738,42 +788,67 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
               if (!validate) {
                 return of({error: {userExistDiffType: true}});
               }
-              return this.service.sendOtp({
-                randomKey: id.randomKey,
-                timeZone: momentTz.tz.guess(),
-              }).pipe(catchError(() => of({apiError: true})))
-                .toPromise()
-                .then((info: any) => {
-                  if (!info.apiError) {
-                    this.translate.get('auth.userExistDiffType')
-                      .toPromise()
-                      .then(message => this.translate.get('auth.verify')
-                        .toPromise()
-                        .then(action => {
-                          const dialog = this.dialog.open(AlertModalComponent, {
-                            disableClose: true,
-                            data: {
-                              message: info.responseMessage || message,
-                              action,
-                            }
-                          });
-                          dialog.beforeClosed()
-                            .toPromise()
-                            .then(() => {
-                              this.verifyOtpForm.reset({
-                                randomKey: info.randomKey,
-                                otp: '',
-                                timeZone: momentTz.tz.guess(),
-                              });
-                              this.changeForm(AuthFormTypes.VALIDATE_EXISTING_USER);
-                            });
-                        })
-                      );
-                    const error = id && activated !== undefined && !activated ? 'userExist' : 'userExistDiffType';
-                    return {error: {[error]: true}, activated};
-                  }
-                  return info;
+              return Promise.all([
+                this.translate.get('auth.' + ((activated !== undefined && !activated)
+                  ? 'userExistSendOtp'
+                  : 'userExist2SendOtp')
+                ).toPromise(),
+                this.translate.get('common.confirm').toPromise(),
+                this.translate.get('common.cancel').toPromise(),
+              ]).then(([message1, yes, no]) => {
+                const dialog1 = this.dialog.open(ConfirmModalComponent, {
+                  disableClose: true,
+                  data: {
+                    message: message1,
+                    yes,
+                    no,
+                  } as ConfirmModalData,
                 });
+                return dialog1.beforeClosed()
+                  .toPromise()
+                  .then(result => {
+                    if (result) {
+                      return this.service.sendOtp({
+                        randomKey: id.randomKey,
+                        timeZone: momentTz.tz.guess(),
+                      }).pipe(catchError(() => of({apiError: true})))
+                        .toPromise()
+                        .then((info: any) => {
+                          if (!info.apiError) {
+                            this.translate.get('auth.userExistDiffType')
+                              .toPromise()
+                              .then(message => this.translate.get('auth.verify')
+                                .toPromise()
+                                .then(action => {
+                                  const dialog = this.dialog.open(AlertModalComponent, {
+                                    disableClose: true,
+                                    data: {
+                                      message: info.responseMessage || message,
+                                      action,
+                                    }
+                                  });
+                                  dialog.beforeClosed()
+                                    .toPromise()
+                                    .then(() => {
+                                      this.verifyOtpForm.reset({
+                                        randomKey: info.randomKey,
+                                        otp: '',
+                                        timeZone: momentTz.tz.guess(),
+                                      });
+                                      this.changeForm(AuthFormTypes.VALIDATE_EXISTING_USER);
+                                    });
+                                })
+                              );
+                            const error = id && activated !== undefined && !activated ? 'userExist' : 'userExistDiffType';
+                            return {error: {[error]: true}, activated};
+                          }
+                          return info;
+                        });
+                    }
+                    const error1 = id && activated !== undefined && !activated ? 'userExist' : 'userExistDiffType';
+                    return {error: {[error1]: true}, activated};
+                  });
+              });
             }
           }),
         );

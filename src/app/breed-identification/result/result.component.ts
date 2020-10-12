@@ -35,7 +35,7 @@ export class ResultBreedComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.subscriptions = [
-      this.service.backPressed$.subscribe(() => this.goBack())
+      this.service.backPressed$.subscribe(() => this.goBack()),
     ];
   }
 
@@ -44,8 +44,9 @@ export class ResultBreedComponent implements OnDestroy, OnInit {
   }
 
   goBack() {
-    this.router.navigateByUrl('/breed-identification').catch(() => {
-    });
+    history.back();
+    // this.router.navigateByUrl('/breed-identification').catch(() => {
+    // });
   }
 
   searchImage(item) {

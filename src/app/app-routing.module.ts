@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'contact-us',
-    loadChildren: () => import('./coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
+    loadChildren: () => import('./contact-us/contact-us.module').then(m => m.ContactUsModule),
   },
   {
     path: 'auth',
@@ -76,6 +76,7 @@ const routes: Routes = [
     path: 'terms',
     loadChildren: () => import('./terms/terms.module').then(m => m.TermsModule)
   },
+  { path: 'ecard-config', loadChildren: () => import('./modules/feature/ecard-details/ecard-details.module').then(m => m.EcardDetailsModule) },
   {
     path: '**',
     redirectTo: '404',

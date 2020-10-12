@@ -9,6 +9,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {AuthFormComponent} from './auth-form.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {AlertModalModule} from '../../shared/modals/alert-modal/alert-modal.module';
+import {ConfirmModalModule} from '../../shared/modals/confirm-modal/confirm-modal.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import {AlertModalModule} from '../../shared/modals/alert-modal/alert-modal.modu
     MatSelectModule,
     MatRadioModule,
     AlertModalModule,
+    ConfirmModalModule,
   ],
   declarations: [
     AuthFormComponent,
