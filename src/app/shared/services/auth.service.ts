@@ -1,27 +1,27 @@
-import {Injectable} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {BehaviorSubject, of} from 'rxjs';
-import {AuthModalComponent} from '../../auth/auth-modal/auth-modal.component';
-import {AuthModalConfig} from '../../auth/auth-form/auth.constants';
-import {environment} from '../../../environments/environment';
-import {catchError, map, take} from 'rxjs/operators';
-import {DataService} from './data.service';
-import {AppStore} from '../../app.store';
+import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject, of } from 'rxjs';
+import { AuthModalComponent } from '../../auth/auth-modal/auth-modal.component';
+import { AuthModalConfig } from '../../auth/auth-form/auth.constants';
+import { environment } from '../../../environments/environment';
+import { catchError, map, take } from 'rxjs/operators';
+import { DataService } from './data.service';
+import { AppStore } from '../../app.store';
 
 @Injectable()
 export class AuthService {
   countries$ = new BehaviorSubject(null);
   titles$ = new BehaviorSubject(null);
   genders$ = new BehaviorSubject(null);
-  userData$ = new BehaviorSubject([]);
+  userData$ = new BehaviorSubject({});
   private dialogOpened = null;
 
   constructor(private dialog: MatDialog,
-              private dataService: DataService,
-              private app: AppStore) {
-      if(this.app.state.isAuthenticated) {
-        this.userData$.next(JSON.parse(localStorage.getItem('userData')));
-      }
+    private dataService: DataService,
+    private app: AppStore) {
+    if (this.app.state.isAuthenticated) {
+      this.userData$.next(JSON.parse(localStorage.getItem('userData')));
+    }
   }
 
   checkAndLogin(config: AuthModalConfig = new AuthModalConfig()): Promise<any> {
@@ -55,24 +55,24 @@ export class AuthService {
       objectHash,
     ).pipe(map((data: any) => {
       if (data?.access_token) {
-        const {access_token, refresh_token, expires_in} = data;
+        const { access_token, refresh_token, expires_in } = data;
         this.app.setAuthToken(access_token, refresh_token, expires_in);
       }
       return data;
     }));
   }
 
-  getUserProfile(objectHash: { identifier: string, userType?: string }) {
-    if(this.app.state.isAuthenticated) {
+  getUserProfile(params: any = {}) {
+    if (this.app.state.isAuthenticated) {
       return this.dataService.http.get(`${environment.api}service/oauth2/api/user/data`, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
-      .pipe(take(1), map((user:any) => {
-        localStorage.setItem('userData', JSON.stringify(user))
-        this.userData$.next(user);
-      })).toPromise();
+        .pipe(take(1), map((user: any) => {
+          localStorage.setItem('userData', JSON.stringify(user));
+          this.userData$.next(user);
+        })).toPromise();
     }
   }
   getCountries() {
@@ -105,7 +105,7 @@ export class AuthService {
 
   checkIdentifier(objectHash: { identifier: string, userType?: string }) {
     return this.dataService.http.post(`${environment.api}${this.app.state.basePath}check/identifier`, objectHash)
-      .pipe(catchError(() => of({apiError: true})));
+      .pipe(catchError(() => of({ apiError: true })));
   }
 
   sendOtp(payload) {
@@ -127,7 +127,7 @@ export class AuthService {
     return this.dataService.http.post(`${environment.api}${this.app.state.basePath}sign-up/user-stage2`, objectHash)
       .pipe(map((data: any) => {
         if (data?.access_token) {
-          const {access_token, refresh_token, expires_in} = data;
+          const { access_token, refresh_token, expires_in } = data;
           this.app.setAuthToken(access_token, refresh_token, expires_in);
         }
         return data;
@@ -163,7 +163,7 @@ export class AuthService {
     return this.dataService.http.post(`${environment.api}${this.app.state.basePath}user/password/update`, payload)
       .pipe(take(1), map((data: any) => {
         if (data?.access_token) {
-          const {access_token, refresh_token, expires_in} = data;
+          const { access_token, refresh_token, expires_in } = data;
           this.app.setAuthToken(access_token, refresh_token, expires_in);
         }
         return data;

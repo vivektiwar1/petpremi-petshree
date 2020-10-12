@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {LANGUAGE_SWITCHER} from '../shared/constants/app.constants';
 import {AppService} from '../app.service';
 import {AppStore} from '../app.store';
@@ -13,7 +13,7 @@ import {AuthService} from '../shared/services/auth.service';
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent{
   languageSwitcher = LANGUAGE_SWITCHER;
   api = environment.api;
   user: any;
@@ -26,10 +26,7 @@ export class HeaderComponent implements OnInit{
               public translate: TranslateService,
               public service: AppService,
               public auth: AuthService) {
-  }
-
-  ngOnInit() {
-    this.auth.userData$.subscribe(data => this.user = data);
+              this.auth.userData$.subscribe(data => this.user = data);
   }
 
   /*ngAfterViewInit() {

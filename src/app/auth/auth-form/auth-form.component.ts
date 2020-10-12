@@ -167,7 +167,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   @Output() scrollTop = new EventEmitter();
   @Output() closeModal = new EventEmitter<any>();
   @ViewChild('formBlock') formBlock: ElementRef;
-
+  user: any;
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
@@ -176,6 +176,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
               private cd: ChangeDetectorRef,
               private dialog: MatDialog) {
     super();
+    this.service.userData$.subscribe(data => this.user = data);
   }
 
   get isLoginForm() {
@@ -503,7 +504,15 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
                     if (this.isModal) {
                       this.closeModal.emit(data);
                     } else {
-                      this.router.navigate(['/']);
+                      this.service.getUserProfile().then(() => {
+                        let path = '/';
+                        this.user.authorities.map(type => {
+                          if (type.authorityId === 1 || type.authorityId === 3) {
+                              path = '/customers/clients';
+                          }
+                        });
+                        this.router.navigate([path]);
+                      });
                     }
                   })
                   .catch(loginError => {
@@ -584,10 +593,18 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   processApiResponse(data: any) {
     switch (this.currentForm) {
       case AuthFormTypes.LOGIN:
-        this.service.getUserProfile(data.randomKey);
       case AuthFormTypes.CHANGE_PASSWORD:
       case AuthFormTypes.SIGN_UP_STAGE2: {
-        return this.isModal ? this.closeModal.emit(data) : this.router.navigate(['/customers/clients']);
+        return this.isModal ? this.closeModal.emit(data) :
+          this.service.getUserProfile().then(() => {
+            let path = '/';
+            this.user.authorities.map(type => {
+              if (type.authorityId === 1 || type.authorityId === 3) {
+                  path = '/customers/clients';
+              }
+            });
+            this.router.navigate([path]);
+          });
       }
       case AuthFormTypes.SIGN_UP_STAGE1: {
         this.translate.get('auth.verify')

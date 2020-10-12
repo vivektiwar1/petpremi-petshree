@@ -18,7 +18,7 @@
               <div class="sub-menu" (click)="toggleProfile(profileMenu)">
                 <button>
                   <img [src]='user?.avatarURL || "/assets/icon/profile.png"' alt=""/>
-                  {{user?.userName}}
+                  {{user?.firstName}}
                 </button>
                 <ul class="sub-menu-items hide" #profileMenu>
                   <li>
