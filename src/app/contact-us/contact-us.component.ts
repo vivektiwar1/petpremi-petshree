@@ -18,6 +18,7 @@ export class ContactUsComponent{
   titles: Array<any>;
   contactForm: FormGroup;
   destroy$: Subject<void> = new Subject();
+  enquiryLoader: false;
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private toastrService: ToastrService,
@@ -85,30 +86,29 @@ export class ContactUsComponent{
   }
 
   async onSubmit() {
-    console.log(this.contactForm);
     try {
       this.contactForm.markAllAsTouched();
       if (this.contactForm.valid) {
-        // this.apiInProgress.enquiryLoader = true;
+        this.enquiryLoader = true;
         const formData = {
           ...this.contactForm.value,
-          userName: 'Dummy username',
           mobile: this.contactForm.value.phone
         };
+        delete formData.phone;
         await this.eCardService.postEnquiry(formData).toPromise();
         this.toastrService.success('Thanks For Reaching Out!');
-        // this.apiInProgress.enquiryLoader = false;
+        this.enquiryLoader = false;
         this.contactForm.reset({
           titleId: this.titles[0]['id'],
           countryId: this.countries[0]['id']
         });
       } else {
-        console.log('Contact form invalid.')
+        console.log('Contact form invalid.');
       }
-    } catch (error) {
-      // this.apiInProgress.enquiryLoader = false;
-      console.error(error);
-      this.toastrService.error(error, 'Api Error.');
+    } catch (e) {
+      this.enquiryLoader = false;
+      console.error(e);
+      this.toastrService.error(e.error.responseMessage, 'Api Error.');
     }
   }
 

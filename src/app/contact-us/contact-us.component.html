@@ -80,8 +80,10 @@
               </div>
             </div>
             <div class="link">
-              <button class="btn btn-warning">
-                  Submit
+              <button class="btn btn-warning" [disabled]="enquiryLoader">
+                {{enquiryLoader ? 'Sending' : 'Send'}}
+                <span *ngIf="enquiryLoader" class="spinner-border spinner-border-sm" role="status"
+                    aria-hidden="true"></span>
               </button>
             </div>
           </form>
