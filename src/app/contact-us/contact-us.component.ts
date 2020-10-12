@@ -18,7 +18,7 @@ export class ContactUsComponent{
   titles: Array<any>;
   contactForm: FormGroup;
   destroy$: Subject<void> = new Subject();
-  enquiryLoader: false;
+  enquiryLoader = false;
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private toastrService: ToastrService,
