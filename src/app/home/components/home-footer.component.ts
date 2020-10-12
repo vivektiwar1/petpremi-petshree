@@ -39,10 +39,9 @@ export class HomeFooterComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   openContact() {
-    const dialogRef = this.dialog.open(ContactUsComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    const dialogRef = this.dialog.open(ContactUsComponent, {
+      closeOnNavigation: true,
+      panelClass: 'auth-panel',
     });
   }
   ngOnInit(): void {
