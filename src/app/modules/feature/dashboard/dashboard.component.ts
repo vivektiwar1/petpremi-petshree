@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { timer, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common.service';
 import * as Highcharts from 'highcharts';
 
@@ -10,6 +12,11 @@ import * as Highcharts from 'highcharts';
 export class DashboardComponent implements OnInit, OnDestroy {
   chartData: Highcharts.Options;
   chartData1: Highcharts.Options;
+
+  @Output() tabHandler: EventEmitter<string> = new EventEmitter<string>();
+  date$ = timer(0, 1000).pipe(
+    switchMap(() => of(new Date()))
+  );
 
   constructor(
     private commonService: CommonService,
@@ -45,7 +52,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       ]
     }
-    
+
     this.chartData1 ={
       chart: {
         plotBackgroundColor: null,

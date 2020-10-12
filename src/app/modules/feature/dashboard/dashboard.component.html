@@ -3,7 +3,7 @@
 	<div class="container-fluid px-0">
 		<div class="row px-0">
 			<div class="col-md-8 px-0 text-center">
-				<p class="pt-2">1:00 pm</p>
+				<p class="pt-2">{{(date$ | async) | date: 'hh:mm:ss aa'}}</p>
 			</div>
 			<div class="col-md-2 px-0 brdr-left text-center m-hide">
 				<a href="" class="add-customer-btn btn">+ Add Customer</a>

@@ -7,6 +7,7 @@ import {CommonModule} from '@angular/common';
 import {HomeResolve} from './home.resolve';
 import {HeaderModule} from '../header/header.module';
 import {HomeFooterModule} from './components/home-footer.module';
+import { ECardService } from '../modules/feature/e-card/e-card.service';
 
 const routes: Routes = [{
   path: '',
@@ -28,6 +29,7 @@ const routes: Routes = [{
   ],
   providers: [
     HomeResolve,
+    ECardService
   ]
 })
 export class HomeModule {
