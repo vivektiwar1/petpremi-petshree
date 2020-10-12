@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'contact-us',
-    loadChildren: () => import('./coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
+    loadChildren: () => import('./contact-us/contact-us.module').then(m => m.ContactUsModule),
   },
   {
     path: 'auth',

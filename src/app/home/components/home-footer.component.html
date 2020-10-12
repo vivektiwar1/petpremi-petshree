@@ -49,7 +49,8 @@
         <div>{{'common.headings.company' | translate}}</div>
         <ul>
           <li><a [routerLink]="['/about-us']">{{'common.links.about' | translate}}</a></li>
-          <li><a [routerLink]="['/contact-us']">{{'common.links.contact' | translate}}</a></li>
+          <li (click)="openContact()">{{'common.links.contact' | translate}}</li>
+          <!-- <li><a [routerLink]="['/contact-us']">{{'common.links.contact' | translate}}</a></li> -->
           <li><a [routerLink]="['/privacy-policy']">{{'common.links.privacy' | translate}}</a></li>
           <li><a [routerLink]="['/terms']">{{'common.links.terms' | translate}}</a></li>
         </ul>

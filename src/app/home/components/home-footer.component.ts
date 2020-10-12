@@ -14,6 +14,8 @@ import {Subject} from 'rxjs';
 import {FormBuilder, Validators} from '@angular/forms';
 import $ from 'jquery';
 import { HomeService } from '../home.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ContactUsComponent } from 'src/app/contact-us/contact-us.component';
 
 @Component({
   selector: 'app-home-footer',
@@ -32,9 +34,17 @@ export class HomeFooterComponent implements AfterViewInit, OnDestroy, OnInit {
   constructor(private fb: FormBuilder,
               private service: HomeService,
               private renderer: Renderer2,
-              private footer: ElementRef) {
+              private footer: ElementRef,
+              private dialog: MatDialog) {
   }
 
+  openContact() {
+    const dialogRef = this.dialog.open(ContactUsComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   ngOnInit(): void {
     this.resizeEvent.pipe(debounceTime(1)).subscribe(() => this.setResize());
     this.scrollEvent.pipe(debounceTime(1)).subscribe(() => this.setPosition());
