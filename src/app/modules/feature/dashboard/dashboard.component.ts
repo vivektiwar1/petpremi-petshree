@@ -12,6 +12,8 @@ import * as Highcharts from 'highcharts';
 export class DashboardComponent implements OnInit, OnDestroy {
   chartData: Highcharts.Options;
   chartData1: Highcharts.Options;
+  chartData2: Highcharts.Options;
+  chartData3: Highcharts.Options;
 
   @Output() tabHandler: EventEmitter<string> = new EventEmitter<string>();
   date$ = timer(0, 1000).pipe(
@@ -36,6 +38,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       // },
       tooltip: {
         valueSuffix: " °C"
+      },
+      credits: {
+        enabled: false
       },
       series: [
         {
@@ -106,17 +111,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
           name: 'Browsers',
           data: [
             {
-              name: '35%',
-              y: 35,
+              name: '33%',
+              y: 33,
               color: "#af5d9c"
             },
             {
-              name: '30%',
-              y: 30,
+              name: '42%',
+              y: 42,
               color: "#f19e9c"
             }, {
-              name: '35%',
-              y: 35,
+              name: '25%',
+              y: 25,
               color: "#9b2f50"
             }],
           type: 'pie',
@@ -124,6 +129,128 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       ]
     }
+
+    this.chartData2 ={
+      chart: {
+        renderTo: 'container',
+        type: 'column'
+      },
+      title: {
+        text: ''
+      },
+      subtitle: {
+        text: 'Source: Wikipedia.org'
+      },
+      xAxis: {
+        categories: ['su', 'mo', 'tu', 'we', 'th', 'fr', 'st'],
+        title: {
+            text: null
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+            text: '',
+            align: 'high'
+        },
+        labels: {
+            overflow: 'justify'
+        }
+      },
+      tooltip: {
+        formatter: function() {
+            return ''+
+                this.series.name +': '+ this.y;
+        }
+      },
+      plotOptions: {
+        bar: {
+            dataLabels: {
+                enabled: true
+            }
+        }
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -100,
+          y: 100,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor: '#FFFFFF',
+          shadow: true
+      },
+      credits: {
+          enabled: false
+      },
+      series: [
+        {
+          name: 'MALE',
+          // @ts-ignore
+          data: [26, 31 ,12, 14, 18, 8, 50],
+          color: '#efac39'
+        },
+        {
+          name: 'FEMALE',
+          // @ts-ignore
+          data: [10, 8, 12, 5, 55, 36, 14],
+          color: '#608bc5'
+        }
+      ]
+    }
+
+    // this.chartData3 ={
+    //   chart: {
+    //     'type': 'solidgauge'
+    //   },
+    //   title: {
+    //     text: "Monthly Average Temperature"
+    //   },
+    //   pane: {
+    //      'center': ['50%', '50%'],
+    //      'size': '300px',
+    //      'startAngle': 0,
+    //      'endAngle': 360,
+    //      'background': {
+    //        'backgroundColor': '#43810b',
+    //        'innerRadius': '91%',
+    //        'outerRadius': '99%',
+    //        'borderWidth': 0
+    //      }
+    //   },
+    //   yAxis: {
+    //      'min': 0,
+    //      'max': 100,
+    //      'labels': {
+    //        'enabled': false
+    //      },
+   
+    //      'lineWidth': 0,
+    //      'minorTickInterval': null,
+    //      'tickPixelInterval': 400,
+    //      'tickWidth': 0
+    //   },
+    //   plotOptions: {
+    //        'solidgauge': {
+    //            'innerRadius': '90%',
+    //            'linecap': 'round',
+    //        'stickyTracking': false,
+    //        'rounded': true
+    //        },
+    //   },
+    //   series: [
+    //     {
+    //       name: 'MALE',
+    //       // @ts-ignore
+    //       data: [85],
+    //       color: '#c6ed63',dataLabels: {
+    //         'enabled': false
+    //       }
+    //     }
+    //   ]
+    // }
+
   }
 
   ngOnDestroy() {

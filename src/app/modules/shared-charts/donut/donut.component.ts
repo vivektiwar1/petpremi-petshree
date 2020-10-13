@@ -16,6 +16,8 @@ export class DonutComponent implements OnInit {
     yAxis: Array<any>;
     tooltip?: any;
     series: Array<any>;
+    plotOptions?: any;
+    credits?: any;
   }
 
   constructor() { }
@@ -32,6 +34,8 @@ export class DonutComponent implements OnInit {
       yAxis: this.chartData1.yAxis || { title: { text: null } },
       tooltip: this.chartData1.tooltip || null,
       series: this.chartData1.series,
+      plotOptions: this.chartData1.plotOptions,
+      credits: this.chartData1.credits,
     })
   }
 
