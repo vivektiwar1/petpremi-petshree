@@ -7,16 +7,16 @@ import {delay, map, takeUntil, tap} from "rxjs/operators";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ScrollOffset} from 'src/app/app.constant';
 import {ToastrService} from 'ngx-toastr';
-import {ECardService} from '../e-card.service';
+import {OldCardService} from '../old-card.service';
 import {CommonService} from 'src/app/services/common.service';
 
 
 @Component({
-  selector: 'app-e-card',
-  templateUrl: './e-card.component.html',
-  styleUrls: ['./e-card.component.scss']
+  selector: 'app-old-card',
+  templateUrl: './old-card.component.html',
+  styleUrls: ['./old-card.component.scss']
 })
-export class ECardComponent implements OnDestroy {
+export class OldCardComponent implements OnDestroy {
 
   activeLink$: Observable<string>;
   destroy$: Subject<void> = new Subject();
@@ -34,13 +34,14 @@ export class ECardComponent implements OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private eCardService: ECardService,
+    private oldCardService: OldCardService,
     private commonService: CommonService,
     private formBuilder: FormBuilder,
     private router: Router,
     private toastrService: ToastrService,
     private viewportScroller: ViewportScroller
   ) {
+    console.log("working")
     this.commonService.hideDashboardNavs();
     this.activeLink$ = this.activatedRoute.fragment.pipe(
       delay(300),
@@ -64,9 +65,10 @@ export class ECardComponent implements OnDestroy {
   }
 
   async getUserDetails(userName) {
+    console.log("oldcard "+userName)
     try {
       this.apiInProgress.userDataLoader = true;
-      const response = await this.eCardService.getUserDetails(userName).toPromise();
+      const response = await this.oldCardService.getUserDetails(userName).toPromise();
       const userDetails = response?.responseResult?.data?.content?.[0];
       console.log(userDetails);
       if (!userDetails) {
@@ -85,45 +87,29 @@ export class ECardComponent implements OnDestroy {
     this.createEnquiryForm();
     this.userDetails = {
       ...userDetails,
-      avatar: this.eCardService.getImageLinks(this.userName, 'avatar'),
-      coverImage: this.eCardService.getImageLinks(this.userName, 'cover'),
+      avatar: this.oldCardService.getImageLinks(this.userName, 'avatar'),
+      coverImage: this.oldCardService.getImageLinks(this.userName, 'cover'),
       images: await this.getImages(),
       videos: await this.getVideos(),
     };
     this.apiInProgress.userDataLoader = false;
-    console.log("images");
-    
-    console.log(this.userDetails);
-
     this.createHideNavArray(this.userDetails);
   }
 
-  // async getImages() {
-  //   return this.eCardService.getMediaFiles(this.userName, 'gallery' ).pipe(
-  //     map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
-  //       return {
-  //         src: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
-  //         thumb: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
-  //         caption: item.title
-  //       }
-  //     }))
-  //   ).toPromise();
-  // }
   async getImages() {
-    return this.eCardService.getMediaFiles(this.userName, 'gallery' ).pipe(
+    return this.oldCardService.getMediaFiles(this.userName, 'gallery').pipe(
       map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
         return {
-          src: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
-          thumb: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
+          src: this.oldCardService.getImageLinks(this.userName, 'gallery', item.fileName),
+          thumb: this.oldCardService.getImageLinks(this.userName, 'gallery', item.fileName),
           caption: item.title
         }
       }))
     ).toPromise();
   }
-  
 
   async getVideos() {
-    return await this.eCardService.getMediaFiles(this.userName, 'youtube').pipe(
+    return await this.oldCardService.getMediaFiles(this.userName, 'youtube').pipe(
       map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
         return {
           videoId: item['fileName']
@@ -185,8 +171,8 @@ export class ECardComponent implements OnDestroy {
 
   getData() {
     return Promise.all([
-      this.eCardService.getTitles().toPromise(),
-      this.eCardService.getCountries().toPromise()
+      this.oldCardService.getTitles().toPromise(),
+      this.oldCardService.getCountries().toPromise()
     ]);
   }
 
@@ -201,7 +187,7 @@ export class ECardComponent implements OnDestroy {
           userName: this.userName,
           mobile: this.enquiryForm.value.phone
         };
-        await this.eCardService.postEnquiry(formData).toPromise();
+        await this.oldCardService.postEnquiry(formData).toPromise();
         this.toastrService.success('Thanks For Reaching Out!');
         this.apiInProgress.enquiryLoader = false;
         this.enquiryForm.reset({

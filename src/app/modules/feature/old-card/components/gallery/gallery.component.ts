@@ -39,7 +39,6 @@ export class GalleryComponent implements OnInit {
 
   async transformImageList() {
     const images = this.imageList.map(async item => {
-      // console.log(item)
       const imageAsDataURI = await this.authImage.transform(item.thumb);
       return {
         caption: item.caption,
