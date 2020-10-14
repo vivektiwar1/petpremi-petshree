@@ -508,7 +508,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
                         let path = '/';
                         this.user.authorities.map(type => {
                           if (type.authorityId === 1 || type.authorityId === 3) {
-                              path = '/customers/clients';
+                              path = '/dashboard';
                           }
                         });
                         this.router.navigate([path]);
@@ -600,7 +600,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
             let path = '/';
             this.user.authorities.map(type => {
               if (type.authorityId === 1 || type.authorityId === 3) {
-                  path = '/customers/clients';
+                  path = '/dashboard';
               }
             });
             this.router.navigate([path]);
