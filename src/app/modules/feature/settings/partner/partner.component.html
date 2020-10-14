@@ -9,6 +9,158 @@
         </div>
     </div>
 
+    <form  *ngIf="partnerForm" class="no-outline" [formGroup]="partnerForm" autocomplete="off">
+        <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
+            [class.loader]="apiInProgress.partnerForm">
+            <div class="row py-3">
+                <div class="col-12">
+                    <h3 class="title-color">Partner Details</h3>
+                    <!-- <div class="row mt-2">
+                    </div> -->
+                    <div class="row mt-3">
+                        <div class="col-12 col-sm-6 form-group mb-0">
+                            <label class="mb-1" for="businessName">Business Name</label>
+                            <input class="form-control" id="businessName" formControlName="businessName"
+                                placeholder="Enter Business Name"
+                               >
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getPartnerFormField('businessName').errors && getPartnerFormField('businessName').touched">
+                                    <span>Business name is required!</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group mb-0">
+                            <label class="mb-1" for="userName">User Name</label>
+                            <input class="form-control" id="userName" formControlName="userName"
+                                placeholder="Enter User Name" (change)="searchUserName()"> 
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getPartnerFormField('userName').errors && getPartnerFormField('userName').touched">
+                                    <span>User name is required</span>
+                                </ng-container>
+                            
+                            </div>
+                        
+                        </div>
+                        <div class="col-12 col-sm-6 form-group mb-0">
+                            <label class="mb-1" for="email">Email</label>
+                            <input class="form-control" id="email" formControlName="email"
+                                placeholder="Enter Email" (change)="searchUserName()">
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getPartnerFormField('email').errors && getPartnerFormField('email').touched">
+                                    <span>Email is required!</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group mb-0">
+                            <label class="mb-1" for="mobile">Partner Phone Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                     <div class="form-control">
+                                        <mat-select>
+                                            <mat-option *ngFor="let country of countryList" [value]="country.id">
+                                                +{{country.code}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div> 
+                                </div>
+                                <input class="form-control" type="tel" id="mobile" placeholder="Enter Partner Phone"
+                                    formControlName="mobile"
+                                    >
+                            </div>
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getPartnerFormField('mobile').errors && getPartnerFormField('mobile').touched">
+                                    <span *ngIf="getPartnerFormField('mobile').hasError('minlength')">
+                                        Phone number is invalid!</span>
+                                    <span *ngIf="getPartnerFormField('mobile').hasError('required')">
+                                        Phone number is required!</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-12 form-group">
+                            <label class="mb-2" for="address">Partner Address</label>
+                            <textarea class="form-control custom-scrollbar textarea-min-height" type="text"
+                                id="address" formControlName="address" placeholder="Enter Partner Address"
+                                rows="1" cdkTextareaAutosize #autosize="cdkTextareaAutosize"></textarea>
+                        </div>
+
+                        <div class="col-12 col-sm-6 form-group mb-0">
+                            <label class="mb-1" for="fbLink">FaceBook Link</label>
+                            <input class="form-control" id="fbLink" formControlName="fbLink"
+                                placeholder="Enter FaceBook Link"
+                                >
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getPartnerFormField('fbLink').errors && getPartnerFormField('fbLink').touched">
+                                    <span>FaceBook Link is required!</span>
+                                </ng-container>
+                            </div>
+                        </div>    
+                        <div class="col-12 col-sm-6 form-group mb-0">
+                            <label class="mb-1" for="youtubeLink">Youtube Link</label>
+                            <input class="form-control" id="youtubeLink" formControlName="youtubeLink"
+                                placeholder="Enter Youtube Link">
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getPartnerFormField('youtubeLink').errors && getPartnerFormField('youtubeLink').touched">
+                                    <span>Youtube Link is required!</span>
+                                </ng-container>
+                            </div>
+                        </div>    
+                        <div class="col-12 col-sm-6 form-group mb-0">
+                            <label class="mb-1" for="twitterLink">Twitter Link</label>
+                            <input class="form-control" id="twitterLink" formControlName="twitterLink"
+                                placeholder="Enter Twitter Link"
+                                >
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getPartnerFormField('twitterLink').errors && getPartnerFormField('twitterLink').touched">
+                                    <span>Twitter Link is required!</span>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group mb-0">
+                            <label class="mb-1" for="instagramLink">Instagram Link</label>
+                            <input class="form-control" id="instagramLink" formControlName="instagramLink"
+                                placeholder="Enter Twitter Link"
+                               >
+                            <div class="error-message">
+                                <ng-container
+                                    *ngIf="getPartnerFormField('instagramLink').errors && getPartnerFormField('instagramLink').touched">
+                                    <span>Twitter Link is required!</span>
+                                </ng-container>
+                            </div>
+                        </div>
+    
+                        <div class="col-12 col-sm-6 form-group">
+                            <input-dropdown label="Country" name="country" placeholder="Select Country"
+                                [parentFormGroup]="partnerForm" [selectionList]="countryList">
+                            </input-dropdown>
+                        </div>
+    
+                      
+    
+    
+                        
+                       
+                        <div class="col-12 mt-3 text-right">
+                            <app-button className="btn-warning btn-large" buttonText="Save"
+                                (buttonClicked)="onSubmitPartner('partnerForm')"
+                                [disabled]="partnerForm.invalid || partnerForm.pristine">
+                            </app-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="apiInProgress.partnerForm" class="loader-wrapper">
+                <mat-spinner diameter="60"></mat-spinner>
+            </div>
+        </div>
+    </form>
+
     <form *ngIf="clinicForm" class="no-outline" [formGroup]="clinicForm" autocomplete="off">
         <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
             [class.loader]="apiInProgress.clinicForm">

@@ -18,13 +18,17 @@ import { ProfileService } from '../profile/profile.service';
 export class PartnerComponent implements OnInit {
 
   clinicForm: FormGroup;
+  partnerForm:FormGroup;
   scheduleControl: FormArray;
   slotsControl: FormArray;
   userId: string;
+  partnerDetails:any
+
 
   apiInProgress = {
     page: false,
     clinicForm: false,
+    partnerForm:false
   };
 
   destroy$: Subject<void> = new Subject<void>();
@@ -80,6 +84,7 @@ export class PartnerComponent implements OnInit {
         this.commonService.getPinCodeList(),
       ]);
       await this.getPersonalFormData();
+      await this.getPartnerDetails();
       // let response;
       // this.createPersonalForm(response?.content?.[0] || {});
       // this.createProfessionalForm();
@@ -88,16 +93,83 @@ export class PartnerComponent implements OnInit {
     } catch (error) {
       this.apiInProgress.page = false;
     }
+
+   
   }
 
   async getPersonalFormData() {
     try {
       const response = await this.profileService.getPersonalFormData(this.userId).toPromise();
       this.createClinicForm({});
+      this.createPartnerForm({});
     } catch (error) {
       this.toastr.error(`Something went wrong!`);
       console.log(error);
     }
+  }
+
+  async getPartnerDetails(){
+    try {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      const partnerId=userData.partnerId
+      const response = await this.profileService.getPartnerDetails(partnerId).toPromise();
+      this.partnerDetails=response;
+      this.partnerForm.controls['businessName'].setValue(this.partnerDetails.responseResult.data.content[0].name);
+
+      
+     
+    } catch (error) {
+      this.toastr.error(`Something went wrong!`);
+      console.log(error);
+    }  
+  }
+
+  
+  
+  createPartnerForm(formData) {
+
+    // formData = JSON.stringify(`{"clinicName":"lalalal","clinicCountryId":1,"clinicMobile":"5454542242","clinicAddress":"jhadhagjashdsajh","schedule":[{"scheduleDays":["sunday","monday","tuesday","wednesday"],"slots":[{"from":"12:00 AM","to":"12:00 AM"}]}]}`)
+    let selectedPartnerCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
+    const selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
+    this.partnerForm = this.formBuilder.group({
+      userName: [formData.partnerName ? formData.partnerName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
+      businessName:[null,Validators.compose([Validators.required])],
+      email:[null,Validators.compose([Validators.required])],
+      // partnerCountryId: [selectedPartnerCountry?.id],
+      mobile: [, Validators.compose([Validators.required, Validators.minLength(selectedCountry?.minLength || 10), Validators.maxLength(selectedCountry?.maxLength || 10)])],
+      address: [, Validators.compose([WhiteSpaceValidator])],
+      fbLink:[null,Validators.compose([Validators.required])],
+      youtubeLink:[null,Validators.compose([Validators.required])],
+      instagramLink:[null,Validators.compose([Validators.required])],
+      twitterLink:[null,Validators.compose([Validators.required])],
+      country: [{id:selectedCountry?.id}],
+
+      
+    });
+
+    const countryControl = selectedPartnerCountry?.id;
+    const phoneControl = this.partnerForm.get('mobile') as FormControl;
+
+    countryControl.valueChanges.subscribe(countryCode => {
+      selectedPartnerCountry = this.countryList.find(country => country.id === countryCode);
+      phoneControl.setValidators([Validators.minLength(selectedCountry?.minLength), Validators.maxLength(selectedCountry?.maxLength)]);
+      phoneControl.updateValueAndValidity();
+    })
+
+    phoneControl.valueChanges.pipe(
+      map(value => value && value.replace(/\D/g, '')),
+      map(value => value && value.replace(/^0/g, '')),
+      map(value => value && value.slice(0, selectedCountry['maxLength'])),
+      takeUntil(this.destroy$)
+    ).subscribe(value => phoneControl.setValue(value, { emitEvent: false }));
+
+
+  }
+
+  
+
+  getPartnerFormField(key: string) {
+    return this.partnerForm.get(key) as FormControl;
   }
 
   createClinicForm(formData) {
@@ -222,7 +294,7 @@ export class PartnerComponent implements OnInit {
 
   async onSubmit(formType) {
     if (this[formType].valid) {
-      //   console.log(this[formType].value)
+       // console.log(this[formType].value)
       // return;
       try {
         this.apiInProgress[formType] = true;
@@ -245,6 +317,32 @@ export class PartnerComponent implements OnInit {
     }
   }
 
+
+
+  async onSubmitPartner(formType) {
+    if (this[formType].valid) {
+        console.log(this[formType].value)
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        const partnerId=userData.partnerId
+        console.log(partnerId)
+
+      
+      try {
+        this.apiInProgress[formType] = true;
+        const response = await this.profileService.updatePartnerDetails(this[formType].value,partnerId).toPromise();
+        console.log(response);
+
+
+        this.apiInProgress[formType] = false;
+        this.toastr.success('Saved Successfully!');
+      } catch (error) {
+        console.error(error);
+        this.toastr.error(`Something went wrong!`);
+        this.apiInProgress[formType] = false;
+      }
+    }
+  }
+
   modifyFormDataForBackend(formType, formField) {
     return {
       ...(formField in this[formType].value ?
@@ -255,5 +353,36 @@ export class PartnerComponent implements OnInit {
       )
     }
   }
+
+  
+
+
+async searchUserName(){
+  try {
+    let partnerDetails:any
+    let userName=this.partnerForm.get('userName').value;
+    let email=this.partnerForm.get('email').value;
+
+
+    const response = await this.profileService.searchUserName(userName).toPromise();
+    partnerDetails=response;
+    console.log(partnerDetails)
+
+    if(partnerDetails.responseResult.data.content.length>0){
+      this.partnerForm.controls['userName'].setValue('');
+      this.toastr.error(`User Name already exists `)
+    }
+ 
+
+    
+
+    
+   
+  } catch (error) {
+    this.toastr.error(`Something went wrong!`);
+    console.log(error);
+  }  
+}
+  
 
 }
