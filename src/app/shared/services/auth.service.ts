@@ -17,8 +17,8 @@ export class AuthService {
   private dialogOpened = null;
 
   constructor(private dialog: MatDialog,
-    private dataService: DataService,
-    private app: AppStore) {
+              private dataService: DataService,
+              private app: AppStore) {
     if (this.app.state.isAuthenticated) {
       this.userData$.next(JSON.parse(localStorage.getItem('userData')));
     }
