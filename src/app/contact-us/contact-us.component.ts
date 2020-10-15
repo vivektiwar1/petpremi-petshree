@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-contact-us',
@@ -18,9 +19,10 @@ export class ContactUsComponent{
   titles: Array<any>;
   contactForm: FormGroup;
   destroy$: Subject<void> = new Subject();
-  enquiryLoader = false;
+  contactLoader = false;
   constructor(private router: Router,
               private formBuilder: FormBuilder,
+              private matDialog: MatDialog,
               private toastrService: ToastrService,
               private eCardService: ECardService) {
     this.disableClose = this.router.url === '/contact-us';
@@ -71,7 +73,7 @@ export class ContactUsComponent{
     phoneControl.valueChanges.pipe(
       map(value => value && value.replace(/\D/g, '')),
       map(value => value && value.replace(/^0/g, '')),
-      map(value => value.slice(0, selectedCountry['maxLength'])),
+      map(value => value?.slice(0, selectedCountry['maxLength'])),
       takeUntil(this.destroy$)
     ).subscribe(value => {
       value !== phoneControl.value && phoneControl.setValue(value);
@@ -89,7 +91,7 @@ export class ContactUsComponent{
     try {
       this.contactForm.markAllAsTouched();
       if (this.contactForm.valid) {
-        this.enquiryLoader = true;
+        this.contactLoader = true;
         const formData = {
           ...this.contactForm.value,
           mobile: this.contactForm.value.phone
@@ -97,17 +99,19 @@ export class ContactUsComponent{
         delete formData.phone;
         await this.eCardService.postEnquiry(formData).toPromise();
         this.toastrService.success('Thanks For Reaching Out!');
-        this.enquiryLoader = false;
+        this.contactLoader = false;
         this.contactForm.reset({
           titleId: this.titles[0]['id'],
           countryId: this.countries[0]['id']
         });
+        this.disableClose
+          ? this.router.navigate(['/'])
+          : this.matDialog.closeAll();
       } else {
         console.log('Contact form invalid.');
       }
     } catch (e) {
-      this.enquiryLoader = false;
-      console.error(e);
+      this.contactLoader = false;
       this.toastrService.error(e.error.responseMessage, 'Api Error.');
     }
   }
