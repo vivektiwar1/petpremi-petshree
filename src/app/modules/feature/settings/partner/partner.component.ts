@@ -183,43 +183,14 @@ console.log(this.countryList)
     let selectedClinicCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     const selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     this.clinicForm = this.formBuilder.group({
-      name: [formData.clinicName ? formData.clinicName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
-      address:['',Validators.compose([Validators.required])],
+      clinicName: [formData.clinicName ? formData.clinicName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
       clinicCountryId: [selectedClinicCountry?.id],
       clinicMobile: [null, Validators.compose([Validators.required, Validators.minLength(selectedCountry?.minLength || 10), Validators.maxLength(selectedCountry?.maxLength || 10)])],
       clinicAddress: [null, Validators.compose([WhiteSpaceValidator])],
-      country: [{id:selectedCountry?.id}],
-      state: [{}],
-      city: [{}],
-      pinCode: [{}],
-      businessTimings:[ [
-        {
-            "timeRange": [
-                {
-                    "fromHours": 12,
-                    "fromMinutes": 0,
-                    "toHours": 16,
-                    "toMinutes": 0,
-                    "displayOrder": 20
-                },
-                {
-                    "fromHours": 10,
-                    "fromMinutes": 0,
-                    "toHours": 17,
-                    "toMinutes": 0,
-                    "displayOrder": 10
-                }
-            ],
-            "days": [
-                {
-                    "id": 1
-                },
-                {
-                    "id": 2
-                }
-            ]
-        }
-    ]],
+      country: [selectedCountry?.id],
+      state: [],
+      city: [],
+      pinCode: [],
       schedule: this.formBuilder.array([this.createSchedule()])
     });
 
