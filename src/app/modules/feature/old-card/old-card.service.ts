@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 @Injectable()
-export class ECardService {
+export class OldCardService {
 
   private _navActive$: Subject<string> = new Subject();
 
@@ -20,9 +20,7 @@ export class ECardService {
   }
 
   private getApiUrl(url: string): string {
-    return url.includes('oauth2')
-          ? `${environment.apiBase}${url}`
-          : `${environment.apiBase}/service/api${url}`;
+    return `${environment.apiBase}/service/api${url}`;
   }
 
   getUserDetails(userName): Observable<any> {
@@ -75,34 +73,24 @@ export class ECardService {
 
     return this.http.post(this.getApiUrl('/crud'), apiData);
   }
-  
 
   getMediaFiles(userName, type) {
     const apiData = {
       commonParamHash: {
-        entityName: "UserDocument",
-        uiBean: "BNEUserDocument",
-        operation: "SEARCH",
-        "pagination": {
-          "pageNumber": 0,
-          "pageSize": 6
-        },
-        "sort": {
-            "ASC": [
-                "displayOrder"
-            ]
-        }
+        entityName: "PartnerDocument",
+        operation: "SEARCH"
       },
       objectHash: {
-        user_FK: {
+        partner_FK: {
           userName: userName
         },
-        documentType_FK: {
+        document_FK: {
           documentType: type
         }
       }
     };
-    return this.http.post(this.getApiUrl('/service/oauth2/api/crud'), apiData);
+
+    return this.http.post(this.getApiUrl('/crud'), apiData);
   }
 
   getImageLinks(userName, type, fileName = "") {

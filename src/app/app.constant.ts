@@ -23,7 +23,13 @@ export const NavMenu = [
         name: 'Enquiry',
         anchorId: 'enquiry',
         icon: 'assets/images/icons/chat.svg'
+    },
+    {
+        name: 'Appointment',
+        anchorId: 'appointment',
+        icon: 'assets/images/icons/chat.svg'
     }
+    
 ]
 
 export const ImagesPerPage = 6;

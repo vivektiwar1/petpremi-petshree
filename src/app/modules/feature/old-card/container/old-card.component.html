@@ -24,17 +24,11 @@
                     <app-videos [videos]="userDetails.videos"></app-videos>
                 </div>
 
-                <div class="bg-white mt-3 py-4 border-rounded" id="enquiry">
+                <div class="bg-white mt-3 mb-5 py-4 border-rounded" id="enquiry">
                     <app-header>Enquiry</app-header>
                     <app-enquiry [enquiryLoader]="apiInProgress.enquiryLoader" [enquiryForm]="enquiryForm"
                         [titles]="titles" [countries]="countries" (onSubmitEvent)="onSubmit()"></app-enquiry>
                 </div>
-                <div class="bg-white mt-3 mb-5 py-4 border-rounded" id="appointment">
-                    <app-header>Appointment</app-header>
-                    <app-appointment [userDetails]="userDetails"></app-appointment>
-                    <app-appointment [userDetails]="userDetails"></app-appointment>
-                </div>
-                
             </section>
 
         </div>

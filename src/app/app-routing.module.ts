@@ -53,6 +53,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/feature/e-card/e-card.module').then(m => m.ECardModule)
   },
   {
+    path: 'oldcard',
+    loadChildren: () => import('./modules/feature/old-card/old-card.module').then(m => m.OldCardModule)
+  },
+  {
     path: 'dashboard',
     loadChildren: () => import('./modules/feature/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
