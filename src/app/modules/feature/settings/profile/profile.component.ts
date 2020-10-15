@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, of, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { NumberOnlyValidator, WhiteSpaceValidator } from 'src/app/validators/common';
 import { ActivatePartnerComponent } from './activate-partner/activate-partner.component';
 import { ProfileService } from './profile.service';
@@ -15,7 +16,7 @@ import { ProfileService } from './profile.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
 
   personalForm: FormGroup;
   professionalForm: FormGroup;
@@ -57,15 +58,22 @@ export class ProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private matDialog: MatDialog,
     private lightbox: Lightbox,
+    private auth: AuthService,
     private profileService: ProfileService,
     private toastr: ToastrService
-  ) { }
+  ) {
+    this.auth.userData$.subscribe(async (res: any) => {
+      this.userId = res.id;
+      await this.getPersonalFormData();
+    });
+    this.loadProfile();
+   }
 
-  async ngOnInit(): Promise<void> {
+   async loadProfile(): Promise<void> {
     try {
       this.apiInProgress.page = true;
       [
-        this.userId,
+        // this.userId,
         this.titleList,
         this.genderList,
         this.countryList,
@@ -73,7 +81,7 @@ export class ProfileComponent implements OnInit {
         this.cityList,
         this.pinCodeList,
       ] = await Promise.all([
-        this.commonService.getUserId(),
+        // this.commonService.getUserId(),
         this.commonService.getTitleList(),
         this.commonService.getGenderList(),
         this.commonService.getCountryList(),
@@ -81,7 +89,6 @@ export class ProfileComponent implements OnInit {
         this.commonService.getCityList(),
         this.commonService.getPinCodeList(),
       ]);
-      await this.getPersonalFormData();
       // let response;
       // this.createPersonalForm(response?.content?.[0] || {});
       // this.createProfessionalForm();
