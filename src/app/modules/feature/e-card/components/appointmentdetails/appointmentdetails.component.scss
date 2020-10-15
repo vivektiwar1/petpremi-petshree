@@ -1,0 +1,72 @@
+@import "src/styles/variables";
+
+.heading {
+    color: $label-heading-color;
+    font-size: $font-size-16;
+}
+.circle{
+    border: 50%;
+}
+
+[type="file"] {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+}
+  
+[type="file"] + label {
+    background: #f1f1f1;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 100px;
+    color: rgb(14, 13, 13);
+    cursor: pointer;
+    display: inline-block;
+      font-family: 'Rubik', sans-serif;
+      font-size: inherit;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    outline: none;
+    padding: 1rem 50px;
+    position: relative;
+    transition: all 0.3s;
+    vertical-align: middle;
+    
+    // &:hover {
+    //   background-color: darken(#ebd7d0, 10%);
+    // }
+}
+.btn-2 {
+    background-color: #99c793;
+    border-radius: 50px;
+    overflow: hidden;
+    &::before {
+      color: #fff;
+      content: "\f382";
+      font-family: "Font Awesome 5 Pro";
+      font-size: 100%;
+      height: 100%;
+      right: 130%;
+      line-height: 3.3;
+      position: absolute;
+      top: 0px;
+      transition: all 0.3s;
+    }
+
+    // &:hover {
+    //   background-color: darken(#99c793, 30%);
+        
+    //   &::before {
+    //     right: 75%;
+    //   }
+    // }
+  }
+  .select{
+    border: #fff;
+    background-color: #fff;
+    width: 100%;
+    height: 50px;
+    border-radius: 15px;
+  }
+
