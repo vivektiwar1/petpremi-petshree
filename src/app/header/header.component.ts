@@ -6,6 +6,7 @@ import * as $ from 'jquery';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../../environments/environment';
 import {AuthService} from '../shared/services/auth.service';
+import { LangService } from '../shared/services/lang.service';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,7 @@ export class HeaderComponent{
   languageSwitcher = LANGUAGE_SWITCHER;
   api = environment.api;
   user: any;
+  langDetail:any;
   @Input() petSwitcher = true;
   @Output() petChanged = new EventEmitter();
   @ViewChild('petBlock') petBlock: ElementRef;
@@ -25,8 +27,16 @@ export class HeaderComponent{
   constructor(public store: AppStore,
               public translate: TranslateService,
               public service: AppService,
-              public auth: AuthService) {
+              public auth: AuthService,
+               private langService:LangService){
               this.auth.userData$.subscribe(data => this.user = data);
+
+  }
+
+  ngOnInit() {
+    this.auth.userData$.subscribe(data => this.user = data);
+     this.langService.langDetail().subscribe(res=>this.langDetail=res,err=>{console.log(err)})
+        console.log(this.langDetail)
   }
 
   /*ngAfterViewInit() {

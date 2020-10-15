@@ -86,6 +86,11 @@ const routes: Routes = [
     redirectTo: '404',
     pathMatch: 'full'
   },
+
+  {
+    path: 'find-and-book',
+    loadChildren: () => import('./modules/feature/find-and-book/find-and-book.module').then(m => m.FindAndBookModule),
+  },
   {
     path: '404',
     component: ErrorPageComponent
