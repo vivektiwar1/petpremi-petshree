@@ -46,12 +46,18 @@
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="email">Email</label>
                             <input class="form-control" id="email" formControlName="email"
-                                placeholder="Enter Email" (change)="searchUserName()">
+                                placeholder="Enter Email" >
                             <div class="error-message">
                                 <ng-container
-                                    *ngIf="getPartnerFormField('email').errors && getPartnerFormField('email').touched">
+                                *ngIf="getPartnerFormField('email').hasError('required') && getPartnerFormField('email').touched">
                                     <span>Email is required!</span>
                                 </ng-container>
+                                <ng-container
+                                *ngIf="getPartnerFormField('email').hasError('email')">
+                                 <span>Email is Invalid!</span>
+                                </ng-container>
+
+                                
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 form-group mb-0">
@@ -59,7 +65,9 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                      <div class="form-control">
-                                        <mat-select>
+                                        <mat-select >
+                                            <mat-option value="free">Free</mat-option> 
+
                                             <mat-option *ngFor="let country of countryList" [value]="country.id">
                                                 +{{country.code}}
                                             </mat-option>
@@ -94,9 +102,14 @@
                                 >
                             <div class="error-message">
                                 <ng-container
-                                    *ngIf="getPartnerFormField('fbLink').errors && getPartnerFormField('fbLink').touched">
+                                    *ngIf="getPartnerFormField('fbLink').hasError('required') && getPartnerFormField('fbLink').touched">
                                     <span>FaceBook Link is required!</span>
                                 </ng-container>
+                                <ng-container
+                                    *ngIf="getPartnerFormField('fbLink').hasError('pattern')">
+                                     <span>FaceBook Link is Invalid!</span>
+                            </ng-container>
+
                             </div>
                         </div>    
                         <div class="col-12 col-sm-6 form-group mb-0">
@@ -105,8 +118,13 @@
                                 placeholder="Enter Youtube Link">
                             <div class="error-message">
                                 <ng-container
-                                    *ngIf="getPartnerFormField('youtubeLink').errors && getPartnerFormField('youtubeLink').touched">
+                                    *ngIf="getPartnerFormField('youtubeLink').hasError('required') && getPartnerFormField('youtubeLink').touched">
                                     <span>Youtube Link is required!</span>
+                                </ng-container>
+
+                                <ng-container
+                                *ngIf="getPartnerFormField('youtubeLink').hasError('pattern')">
+                                 <span>Youtube Link is Invalid!</span>
                                 </ng-container>
                             </div>
                         </div>    
@@ -117,8 +135,13 @@
                                 >
                             <div class="error-message">
                                 <ng-container
-                                    *ngIf="getPartnerFormField('twitterLink').errors && getPartnerFormField('twitterLink').touched">
+                                    *ngIf="getPartnerFormField('twitterLink').hasError('required') && getPartnerFormField('twitterLink').touched">
                                     <span>Twitter Link is required!</span>
+                                </ng-container>
+
+                                <ng-container
+                                *ngIf="getPartnerFormField('twitterLink').hasError('pattern')">
+                                 <span>Twitter Link is Invalid!</span>
                                 </ng-container>
                             </div>
                         </div>
@@ -129,8 +152,13 @@
                                >
                             <div class="error-message">
                                 <ng-container
-                                    *ngIf="getPartnerFormField('instagramLink').errors && getPartnerFormField('instagramLink').touched">
+                                    *ngIf="getPartnerFormField('instagramLink').hasError('required') && getPartnerFormField('instagramLink').touched">
                                     <span>Twitter Link is required!</span>
+                                </ng-container>
+
+                                <ng-container
+                                *ngIf="getPartnerFormField('instagramLink').hasError('pattern')">
+                                 <span>Instagram Link is Invalid!</span>
                                 </ng-container>
                             </div>
                         </div>

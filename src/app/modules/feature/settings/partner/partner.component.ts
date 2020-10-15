@@ -102,6 +102,7 @@ export class PartnerComponent implements OnInit {
       const response = await this.profileService.getPersonalFormData(this.userId).toPromise();
       this.createClinicForm({});
       this.createPartnerForm({});
+      console.log(response)
     } catch (error) {
       this.toastr.error(`Something went wrong!`);
       console.log(error);
@@ -127,34 +128,38 @@ export class PartnerComponent implements OnInit {
   
   
   createPartnerForm(formData) {
-
+console.log(this.countryList)
     // formData = JSON.stringify(`{"clinicName":"lalalal","clinicCountryId":1,"clinicMobile":"5454542242","clinicAddress":"jhadhagjashdsajh","schedule":[{"scheduleDays":["sunday","monday","tuesday","wednesday"],"slots":[{"from":"12:00 AM","to":"12:00 AM"}]}]}`)
     let selectedPartnerCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
+    const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
     const selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     this.partnerForm = this.formBuilder.group({
       userName: [formData.partnerName ? formData.partnerName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
       businessName:[null,Validators.compose([Validators.required])],
-      email:[null,Validators.compose([Validators.required])],
+      email:[null,Validators.compose([Validators.required, Validators.email])],
       // partnerCountryId: [selectedPartnerCountry?.id],
       mobile: [, Validators.compose([Validators.required, Validators.minLength(selectedCountry?.minLength || 10), Validators.maxLength(selectedCountry?.maxLength || 10)])],
       address: [, Validators.compose([WhiteSpaceValidator])],
-      fbLink:[null,Validators.compose([Validators.required])],
-      youtubeLink:[null,Validators.compose([Validators.required])],
-      instagramLink:[null,Validators.compose([Validators.required])],
-      twitterLink:[null,Validators.compose([Validators.required])],
+      fbLink:[null,Validators.compose([Validators.required,Validators.pattern(reg)])],
+      youtubeLink:[null,Validators.compose([Validators.required,Validators.pattern(reg)])],
+      instagramLink:[null,Validators.compose([Validators.required,Validators.pattern(reg)])],
+      twitterLink:[null,Validators.compose([Validators.required,Validators.pattern(reg)])],
       country: [{id:selectedCountry?.id}],
 
       
     });
 
-    const countryControl = selectedPartnerCountry?.id;
+
+
+    // const countryControl =this.partnerForm.get('partnerCountryId') ;
+    // console.log(countryControl)
     const phoneControl = this.partnerForm.get('mobile') as FormControl;
 
-    countryControl.valueChanges.subscribe(countryCode => {
-      selectedPartnerCountry = this.countryList.find(country => country.id === countryCode);
-      phoneControl.setValidators([Validators.minLength(selectedCountry?.minLength), Validators.maxLength(selectedCountry?.maxLength)]);
-      phoneControl.updateValueAndValidity();
-    })
+    // countryControl.valueChanges.subscribe(countryCode => {
+    //   selectedPartnerCountry = this.countryList.find(country => country.id === countryCode);
+    //   phoneControl.setValidators([Validators.minLength(selectedCountry?.minLength), Validators.maxLength(selectedCountry?.maxLength)]);
+    //   phoneControl.updateValueAndValidity();
+    // })
 
     phoneControl.valueChanges.pipe(
       map(value => value && value.replace(/\D/g, '')),
@@ -178,14 +183,43 @@ export class PartnerComponent implements OnInit {
     let selectedClinicCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     const selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     this.clinicForm = this.formBuilder.group({
-      clinicName: [formData.clinicName ? formData.clinicName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
+      name: [formData.clinicName ? formData.clinicName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
+      address:['',Validators.compose([Validators.required])],
       clinicCountryId: [selectedClinicCountry?.id],
       clinicMobile: [null, Validators.compose([Validators.required, Validators.minLength(selectedCountry?.minLength || 10), Validators.maxLength(selectedCountry?.maxLength || 10)])],
       clinicAddress: [null, Validators.compose([WhiteSpaceValidator])],
-      country: [selectedCountry?.id],
-      state: [],
-      city: [],
-      pinCode: [],
+      country: [{id:selectedCountry?.id}],
+      state: [{}],
+      city: [{}],
+      pinCode: [{}],
+      businessTimings:[ [
+        {
+            "timeRange": [
+                {
+                    "fromHours": 12,
+                    "fromMinutes": 0,
+                    "toHours": 16,
+                    "toMinutes": 0,
+                    "displayOrder": 20
+                },
+                {
+                    "fromHours": 10,
+                    "fromMinutes": 0,
+                    "toHours": 17,
+                    "toMinutes": 0,
+                    "displayOrder": 10
+                }
+            ],
+            "days": [
+                {
+                    "id": 1
+                },
+                {
+                    "id": 2
+                }
+            ]
+        }
+    ]],
       schedule: this.formBuilder.array([this.createSchedule()])
     });
 
@@ -294,7 +328,7 @@ export class PartnerComponent implements OnInit {
 
   async onSubmit(formType) {
     if (this[formType].valid) {
-       // console.log(this[formType].value)
+       console.log(this[formType].value)
       // return;
       try {
         this.apiInProgress[formType] = true;
