@@ -80,21 +80,28 @@ export class ECardService {
   getMediaFiles(userName, type) {
     const apiData = {
       commonParamHash: {
-        entityName: "PartnerDocument",
-        operation: "SEARCH"
+        entityName: "UserDocument",
+        uiBean: "BNEUserDocument",
+        operation: "SEARCH",
+        "pagination": {
+          "pageNumber": 0,
+          "pageSize": 6
+        },
+        "sort": {
+            "ASC": [
+                "displayOrder"
+            ]
+        }
       },
       objectHash: {
-        partner_FK: {
+        user_FK: {
           userName: userName
         },
-        document_FK: {
+        documentType_FK: {
           documentType: type
         }
       }
     };
-    // console.log("api")
-    // console.log(apiData)
-
     return this.http.post(this.getApiUrl('/service/oauth2/api/crud'), apiData);
   }
 

@@ -91,9 +91,6 @@ export class ECardComponent implements OnDestroy {
       videos: await this.getVideos(),
     };
     this.apiInProgress.userDataLoader = false;
-    console.log("images");
-    
-    console.log(this.userDetails);
 
     this.createHideNavArray(this.userDetails);
   }
@@ -113,8 +110,8 @@ export class ECardComponent implements OnDestroy {
     return this.eCardService.getMediaFiles(this.userName, 'gallery' ).pipe(
       map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
         return {
-          src: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
-          thumb: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
+          src: item.image, 
+          thumb: item.image,
           caption: item.title
         }
       }))
@@ -126,7 +123,7 @@ export class ECardComponent implements OnDestroy {
     return await this.eCardService.getMediaFiles(this.userName, 'youtube').pipe(
       map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
         return {
-          videoId: item['fileName']
+          videoId: item.videoCode
         }
       }))
     ).toPromise()
