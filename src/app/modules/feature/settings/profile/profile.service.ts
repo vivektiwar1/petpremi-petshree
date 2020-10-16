@@ -16,28 +16,28 @@ export class ProfileService {
   validateUserName(userName, userId) {
     const apiData = {
       commonParamHash: {
-        entityName: "User",
-        uiBean: "BNECustomerProfile",
-        operation: "SEARCH",
+        entityName: 'User',
+        uiBean: 'BNECustomerProfile',
+        operation: 'SEARCH',
         pagination: {
           pageNumber: 0,
           pageSize: 10
         },
         sort: {
           DESC: [
-            "id"
+            'id'
           ]
         }
       },
       objectHash: {
-        "userName": userName
+        'userName': userName
       }
-    }
+    };
 
     return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/crud`, apiData).pipe(
       map((response: any) => {
         if (response.isError || (response.responseResult?.data?.content?.length && response.responseResult.data.content[0].id !== userId)) {
-          throwError('');
+          return false;
         } else {
           return true;
         }
@@ -49,33 +49,33 @@ export class ProfileService {
   getPersonalFormData(userId) {
     const apiData = {
       commonParamHash: {
-        entityName: "User",
-        uiBean: "BNECustomerProfile",
-        operation: "SEARCH",
+        entityName: 'User',
+        uiBean: 'BNECustomerProfile',
+        operation: 'SEARCH',
         pagination: {
           pageNumber: 0,
           pageSize: 10
         },
         sort: {
           DESC: [
-            "id"
+            'id'
           ]
         }
       },
       objectHash: {
         id: userId
       }
-    }
+    };
     return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/crud`, apiData).pipe(
       map((response: any) => {
         if (!response?.isError) {
-          return response?.responseResult?.data
+          return response?.responseResult?.data;
         } else {
           throw new Error(response?.responseError?.message || 'Something went wrong');
         }
       }),
       catchError((error) => {
-        return throwError(error)
+        return throwError(error);
       })
     );
   }
@@ -91,10 +91,10 @@ export class ProfileService {
   updateProfileDetails(formData, userId) {
     const apiData = {
       commonParamHash: {
-        entityName: "User",
-        uiBean: "BNECustomerProfile",
-        headerId: (userId || "").toString(),
-        operation: "UPDATE"
+        entityName: 'User',
+        uiBean: 'BNECustomerProfile',
+        headerId: (userId || '').toString(),
+        operation: 'UPDATE'
       },
       objectHash: {
         ...formData
@@ -104,41 +104,41 @@ export class ProfileService {
     return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/crud`, apiData).pipe(
       map((response: any) => {
         if (response?.isError !== true) {
-          return response?.responseResult?.data
+          return response?.responseResult?.data;
         } else {
           throw new Error(response?.responseError?.message || 'Something went wrong');
         }
       }),
       catchError((error) => {
-        return throwError(error)
+        return throwError(error);
       })
     );
   }
 
-  updatePartnerDetails(formData,partnerId){
+  updatePartnerDetails(formData, partnerId){
 
     const apiData = {
       commonParamHash: {
-        entityName: "Partner",
-        uiBean: "BNEPartnerCard",
-        headerId: (partnerId || "").toString(),
-        operation: "UPDATE"
+        entityName: 'Partner',
+        uiBean: 'BNEPartnerCard',
+        headerId: (partnerId || '').toString(),
+        operation: 'UPDATE'
       },
       objectHash: {
         ...formData
       }
     };
 
-    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData)
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
 
   }
 
   activatePartner(name: string, userId: number) {
     const apiData = {
       commonParamHash: {
-        entityName: "Partner",
-        uiBean: "BNEPartnerCard",
-        operation: "CREATE"
+        entityName: 'Partner',
+        uiBean: 'BNEPartnerCard',
+        operation: 'CREATE'
       },
       objectHash: {
         name,
@@ -147,35 +147,35 @@ export class ProfileService {
           id: userId
         }]
       }
-    }
+    };
 
     return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/crud`, apiData).pipe(
       map((response: any) => {
         if (response?.isError !== true) {
-          return response?.responseResult?.data
+          return response?.responseResult?.data;
         } else {
           throw new Error(response?.responseError?.message || 'Something went wrong');
         }
       }),
       catchError((error) => {
-        return throwError(error)
+        return throwError(error);
       })
     );
 
   }
 
   getPartnerDetails(partnerId){
-    const apiData={
-      "commonParamHash": {
-          "entityName": "Partner",
-          "uiBean": "BNEPartnerCard",
-          "operation": "SEARCH"
+    const apiData = {
+      'commonParamHash': {
+          'entityName': 'Partner',
+          'uiBean': 'BNEPartnerCard',
+          'operation': 'SEARCH'
       },
-      "objectHash": {
-          "id":partnerId
+      'objectHash': {
+          'id': partnerId
       }
-  }
-  return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData)
+  };
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
 
 
 
@@ -183,26 +183,26 @@ export class ProfileService {
 
 
   searchUserName(userName){
-    const  apiData={
-      "commonParamHash": {
-          "entityName": "Partner",
-          "uiBean": "BNEPartnerCard",
-          "operation": "SEARCH",
-          "pagination": {
-              "pageNumber": 0,
-              "pageSize": 2
+    const  apiData = {
+      'commonParamHash': {
+          'entityName': 'Partner',
+          'uiBean': 'BNEPartnerCard',
+          'operation': 'SEARCH',
+          'pagination': {
+              'pageNumber': 0,
+              'pageSize': 2
           },
-          "sort": {
-              "DESC": [
-                  "id"
+          'sort': {
+              'DESC': [
+                  'id'
               ]
           }
       },
-      "objectHash": {
-          "userName": userName
+      'objectHash': {
+          'userName': userName
       }
-  }
-  return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData)
+  };
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
 
   }
 
