@@ -17,6 +17,7 @@ export class CommonService {
   private pinCodeList: Array<any>;
   private titleList: Array<any>;
   private genderList: Array<any>;
+  private professionList: Array<any>;
   private documentType: Array<any>;
   private userId: any;
 
@@ -126,6 +127,42 @@ export class CommonService {
       return this.countryList;
     }
 
+  }
+
+  async getProfessionList() {
+    if (!this.professionList?.length) {
+      const apiData = {
+        commonParamHash: {
+          entityName: 'Profession',
+          uiBean: "BNEProfession" ,
+          operation: "SEARCH",
+          pagination: {
+            pageNumber: 0,
+            pageSize: 10
+          },
+          sort: {
+            ASC: [
+              "id"
+            ]
+          }
+        },
+        objectHash: {}
+      };
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.professionList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            name: item.name,
+            id: item.id,
+          }
+        });
+        return this.professionList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.professionList;
+    }
   }
 
   async getTitleList() {

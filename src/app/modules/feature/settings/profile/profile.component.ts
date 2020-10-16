@@ -27,7 +27,7 @@ export class ProfileComponent {
   stateList: Array<any>;
   cityList: Array<any>;
   pinCodeList: Array<any>;
-
+  professionList: Array<any>;
   userId: number;
   profilePicLink: string;
   coverPicLink: string;
@@ -127,9 +127,12 @@ export class ProfileComponent {
       title: [formData.title ? formData.title?.id : this.titleList?.[0]?.['id'], Validators.required],
       firstName: [formData.firstName ? formData.firstName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
       lastName: [formData.lastName ? formData.lastName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
-      userName: [formData.userName ? formData.userName : null, Validators.compose([Validators.required, WhiteSpaceValidator]), this.validateUsername.bind(this)],
+      userName: [formData.userName ? formData.userName : null, Validators.compose([Validators.required, WhiteSpaceValidator]),
+      this.validateUsername.bind(this)],
       country: [selectedCountry?.id],
-      mobile: [formData.mobile ? formData.mobile : null, Validators.compose([Validators.required, Validators.minLength(selectedCountry?.minLength || 10), Validators.maxLength(selectedCountry?.maxLength || 10)])],
+      mobile: [formData.mobile ? formData.mobile : null,
+        Validators.compose([Validators.required, Validators.minLength(selectedCountry?.minLength || 10),
+          Validators.maxLength(selectedCountry?.maxLength || 10)])],
       email: [formData.email ? formData.email : null, Validators.pattern(/^(\w+[\.-])*\w+@(\w+[\.-])*\w+(\.\w{2,7})+$/)],
       dob: [formData.dob ? new Date(formData.dob) : null],
       gender: [formData.gender ? formData.gender?.id : null],
@@ -154,8 +157,10 @@ export class ProfileComponent {
 
   }
 
-  createProfessionalForm(formData) {
+  async createProfessionalForm(formData) {
+    this.professionList = await this.commonService.getProfessionList();
     this.professionalForm = this.formBuilder.group({
+      profession: formData.professsion?.id || this.professionList[0].id,
       userExperience: [formData.userExperience ? formData.userExperience / 12 : null, Validators.compose([Validators.required, NumberOnlyValidator])],
       userCharges: [formData.userCharges ? formData.userCharges : null, Validators.compose([Validators.required, NumberOnlyValidator])],
       chargesSlotInMin: [formData.chargesSlotInMin ? formData.chargesSlotInMin : null, Validators.compose([Validators.required, NumberOnlyValidator])],
@@ -168,7 +173,7 @@ export class ProfileComponent {
         debounceTime(400),
         distinctUntilChanged(),
         switchMap(value => this.profileService.validateUserName(value, this.userId).pipe(
-          map((response: boolean) => response ? null : { alreadyTaken: true })
+          map(response => response ? control.setErrors(null) : control.setErrors({ alreadyTaken: true }))
         ))
       );
     } else {
@@ -213,6 +218,7 @@ export class ProfileComponent {
   }
 
   async onSubmit(formType) {
+    console.log(this.personalForm)
     if (this[formType].valid) {
       //   console.log(this[formType].value)
       // return;
@@ -226,6 +232,7 @@ export class ProfileComponent {
           ...this.modifyFormDataForBackend(formType, 'title'),
           ...this.modifyFormDataForBackend(formType, 'country'),
           ...this.modifyFormDataForBackend(formType, 'gender'),
+          ...this.modifyFormDataForBackend(formType, 'profession'),
         }, this.userId).toPromise();
         this.apiInProgress[formType] = false;
         this.toastr.success('Saved Successfully!');
