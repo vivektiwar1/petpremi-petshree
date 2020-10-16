@@ -115,6 +115,24 @@ export class ProfileService {
     );
   }
 
+  updatePartnerDetails(formData,partnerId){
+
+    const apiData = {
+      commonParamHash: {
+        entityName: "Partner",
+        uiBean: "BNEPartnerCard",
+        headerId: (partnerId || "").toString(),
+        operation: "UPDATE"
+      },
+      objectHash: {
+        ...formData
+      }
+    };
+
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData)
+
+  }
+
   activatePartner(name: string, userId: number) {
     const apiData = {
       commonParamHash: {
@@ -143,6 +161,48 @@ export class ProfileService {
         return throwError(error)
       })
     );
+
+  }
+
+  getPartnerDetails(partnerId){
+    const apiData={
+      "commonParamHash": {
+          "entityName": "Partner",
+          "uiBean": "BNEPartnerCard",
+          "operation": "SEARCH"
+      },
+      "objectHash": {
+          "id":partnerId
+      }
+  }
+  return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData)
+
+
+
+  }
+
+
+  searchUserName(userName){
+    const  apiData={
+      "commonParamHash": {
+          "entityName": "Partner",
+          "uiBean": "BNEPartnerCard",
+          "operation": "SEARCH",
+          "pagination": {
+              "pageNumber": 0,
+              "pageSize": 2
+          },
+          "sort": {
+              "DESC": [
+                  "id"
+              ]
+          }
+      },
+      "objectHash": {
+          "userName": userName
+      }
+  }
+  return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData)
 
   }
 

@@ -53,6 +53,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/feature/e-card/e-card.module').then(m => m.ECardModule)
   },
   {
+    path: 'oldcard',
+    loadChildren: () => import('./modules/feature/old-card/old-card.module').then(m => m.OldCardModule)
+  },
+  {
     path: 'dashboard',
     loadChildren: () => import('./modules/feature/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
@@ -81,6 +85,11 @@ const routes: Routes = [
     path: '**',
     redirectTo: '404',
     pathMatch: 'full'
+  },
+
+  {
+    path: 'find-and-book',
+    loadChildren: () => import('./modules/feature/find-and-book/find-and-book.module').then(m => m.FindAndBookModule),
   },
   {
     path: '404',

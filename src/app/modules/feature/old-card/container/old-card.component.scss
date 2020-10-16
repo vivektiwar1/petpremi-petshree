@@ -1,0 +1,21 @@
+@import "src/styles/variables";
+
+.background {
+    background: $color-primary $background-image no-repeat center/cover;
+    min-height: 100vh;
+    background-attachment: fixed;
+    margin-top: -70px;
+}
+
+.max-width {
+    width: 100%;
+    @media (min-width: $media-breakpoint-sm) {
+        width: $section-width;
+    }
+}
+
+@media (max-width: $media-breakpoint-sm) {
+    div.border-rounded:last-child {
+        margin-bottom: 4rem !important;
+    }
+}

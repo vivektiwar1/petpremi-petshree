@@ -1,0 +1,69 @@
+@import "src/styles/variables";
+
+.cover {
+    height: $cover-height;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: $cover-margin;
+    border-radius: $cover-border-radius;
+
+    .avatar {
+        border: $avatar-border solid $color-secondary;
+        position: relative;
+        top: $cover-margin-bottom;
+        background: $preloader;
+        overflow: hidden;
+    }
+}
+
+.about {
+    h4 {
+        color: $about-primary-heading;
+    }
+
+    h6 {
+        color: $color-secondary;
+        background: lighten($color-secondary, 40);
+        border-radius: $border-radius-8;
+        font-size: $font-size-14;
+    }
+}
+
+.details {
+    font-size: $font-size-18;
+    a {
+        text-decoration: none;
+        color: $black;
+    }
+}
+
+.social-networks {
+    div {
+        width: 75%;
+        @media (min-width: $media-breakpoint-sm) {
+            width: 50%;
+        }
+    }
+}
+
+.action {
+    a {
+        text-decoration: none;
+        color: $white;
+        line-height: 1.2;
+        border-radius: $border-radius-8;
+        @media (max-width: $media-breakpoint-sm) {
+            width: 130px;
+        }
+
+        &:first-child {
+            background: $action-green;
+            margin-right: 0.8rem;
+        }
+
+        &:last-child {
+            background: $action-blue;
+        }
+    }
+}

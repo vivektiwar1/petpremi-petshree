@@ -20,7 +20,9 @@ export class ECardService {
   }
 
   private getApiUrl(url: string): string {
-    return `${environment.apiBase}/service/api${url}`;
+    return url.includes('oauth2')
+          ? `${environment.apiBase}${url}`
+          : `${environment.apiBase}/service/api${url}`;
   }
 
   getUserDetails(userName): Observable<any> {
@@ -83,6 +85,7 @@ export class ECardService {
 
     return this.http.post(this.getApiUrl('/crud'), apiData);
   }
+  
 
   getWeightUnits() {
     const apiData = {
@@ -105,7 +108,7 @@ export class ECardService {
       }
     };
 
-    return this.http.post(`${environment.apiBase}/service/oauth2/api/crud`, apiData);
+    return this.http.post(this.getApiUrl('/service/oauth2/api/crud'), apiData);
   }
 
 
@@ -125,20 +128,29 @@ export class ECardService {
   getMediaFiles(userName, type) {
     const apiData = {
       commonParamHash: {
-        entityName: 'PartnerDocument',
-        operation: 'SEARCH'
+        entityName: "UserDocument",
+        uiBean: "BNEUserDocument",
+        operation: "SEARCH",
+        "pagination": {
+          "pageNumber": 0,
+          "pageSize": 6
+        },
+        "sort": {
+            "ASC": [
+                "displayOrder"
+            ]
+        }
       },
       objectHash: {
-        partner_FK: {
-          userName
+        user_FK: {
+          userName: userName
         },
-        document_FK: {
+        documentType_FK: {
           documentType: type
         }
       }
     };
-
-    return this.http.post(this.getApiUrl('/crud'), apiData);
+    return this.http.post(this.getApiUrl('/service/oauth2/api/crud'), apiData);
   }
 
   getImageLinks(userName, type, fileName = '') {
