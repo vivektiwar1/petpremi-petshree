@@ -67,7 +67,8 @@ export class ECardComponent implements OnDestroy {
     try {
       this.apiInProgress.userDataLoader = true;
       const response = await this.eCardService.getUserDetails(userName).toPromise();
-      const userDetails = response?.responseResult?.data?.content?.[0];
+      const userDetails = response;
+      console.log("userDetails");
       console.log(userDetails);
       if (!userDetails) {
         this.navigateToErrorPage();

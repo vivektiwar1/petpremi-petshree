@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngFor="let address of userDetails?.businessAddress">
     <div class="row p-sm-3">
         <div class="col-8 heading font-weight-medium">
             <h3>{{ userDetails?.name }}</h3>
@@ -8,12 +8,14 @@
         <div class="col-3 text-black font-weight-medium">105 pets helped</div>
     </div>
     <div class="p-sm-3" style="background-color: rgb(248, 248, 248);">
-        <p> Lorem ipusum dolorem isaretLorem ipusum dolorem isaretLorem ipusum dolorem
-            isaretLorem ipusum dolorem isaret.Lorem ipusum dolorem isaretLorem ipusum
-            dolorem isaretLorem ipusum dolorem isaretLorem ipusum dolorem isaret</p>
+        <p>{{userDetails?.bio}}</p>
     </div>
     <div class="row p-sm-3">
-        <div class="col-5 heading font-weight-medium">Clinic</div>
+        <div class="col-5 heading font-weight-medium">Clinic:
+            <div class="col-8 text-black font-weight-medium" >
+                {{ address?.businessAddress }}
+            </div>
+        </div>
         <div class="col-7 text-black font-weight-medium">Consultation Fees:</div>
     </div>
     <div class="row p-sm-3">
@@ -29,29 +31,4 @@
         </div>
         
     </div>
-
-
-    <ng-container *ngFor="let address of userDetails?.businessAddress">
-        <div class="row mt-3 p-sm-3">
-            <div class="col-4 heading font-weight-medium">Type: </div>
-            <div class="col-8 text-black font-weight-medium">
-                {{ address?.title }}
-            </div>
-        </div>
-        <div class="row mt-3 p-sm-3">
-            <div class="col-4 heading font-weight-medium">Business Address: </div>
-            <a class="col-8 text-black font-weight-medium" [href]="address?.businessAddressLink" target="_blank">
-                {{ address?.businessAddress }}
-            </a>
-        </div>
-        <div class="row mt-3 p-sm-3">
-            <div class="col-4 heading font-weight-medium">Timings: </div>
-            <div class="col-8 text-black font-weight-medium">
-                <ng-container *ngFor="let schedule of address?.timings">
-                    {{ schedule.days }}
-                    <div class="font-weight-regular" *ngFor="let time of schedule?.time">{{time}}</div>
-                </ng-container>
-            </div>
-        </div>
-    </ng-container>
 </div>

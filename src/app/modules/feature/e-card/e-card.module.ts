@@ -16,6 +16,8 @@ import { AppointmentComponent } from './components/appointment/appointment.compo
 import { AppointmenttimeComponent} from './components/appointmenttime/appointmenttime.component';
 import { ScrollActiveDirective } from './directives/scroll-active.directive';
 
+import { PetDetailsComponent } from './components/petdetails/petdetails.component';
+
 import { NgxPaginationModule } from 'ngx-pagination';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { LightboxModule } from 'ngx-lightbox';
@@ -42,7 +44,8 @@ import {ResponseInterceptor} from "../../../interceptors/response.interceptor";
     AppointmentComponent,
     AppointmentDetailsComponent,
     AppointmenttimeComponent,
-    ScrollActiveDirective
+    ScrollActiveDirective,
+    PetDetailsComponent
   ],
   imports: [
     CommonModule,
