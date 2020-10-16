@@ -188,10 +188,19 @@ console.log(this.countryList)
       clinicMobile: [null, Validators.compose([Validators.required, Validators.minLength(selectedCountry?.minLength || 10), Validators.maxLength(selectedCountry?.maxLength || 10)])],
       clinicAddress: [null, Validators.compose([WhiteSpaceValidator])],
       country: [selectedCountry?.id],
-      state: [],
-      city: [],
-      pinCode: [],
-      schedule: this.formBuilder.array([this.createSchedule()])
+      state: [{id:""}],
+      city: [{id:""}],
+      pinCode: [{id:""}],
+      businessTimings: this.formBuilder.array([this.createSchedule()]),
+      partnerContactNumbers:this.formBuilder.array([this.formBuilder.group({
+        id:[null],
+        country:this.createCountry(),
+        title:this.createTitle(),
+        mobile:[null],
+        firstName:[null],
+        lastName:[null]
+
+      })])
     });
 
     const countryControl = this.clinicForm.get('clinicCountryId');
@@ -210,13 +219,21 @@ console.log(this.countryList)
       takeUntil(this.destroy$)
     ).subscribe(value => phoneControl.setValue(value, { emitEvent: false }));
 
-    this.scheduleControl = this.clinicForm.get('schedule') as FormArray;
+    this.scheduleControl = this.clinicForm.get('businessTimings') as FormArray;
 
     // this.clinicForm.valueChanges.subscribe(value => console.log(value))
   }
 
+ createTitle(){
+   return this.formBuilder.group({id:[null]})
+ }
+ createCountry(){
+  return this.formBuilder.group({id:[null]})
+
+ }
+
   addSchedule() {
-    const control = this.clinicForm.get('schedule') as FormArray;
+    const control = this.clinicForm.get('businessTimings') as FormArray;
     control.push(this.createSchedule());
   }
 
@@ -226,8 +243,8 @@ console.log(this.countryList)
 
   createSchedule() {
     return this.formBuilder.group({
-      scheduleDays: [[], Validators.required],
-      slots: this.formBuilder.array([
+      days: [[]],
+      timeRange: this.formBuilder.array([
         this.createSlots()
       ])
     })
@@ -235,27 +252,27 @@ console.log(this.countryList)
 
   createSlots() {
     return this.formBuilder.group({
-      from: [null, Validators.required],
-      to: [null, Validators.required],
+      fromHours: [null, Validators.required],
+      toHours: [null, Validators.required],
     });
   }
 
   removeSchedule(scheduleIndex) {
-    const control = this.clinicForm.get('schedule') as FormArray;
+    const control = this.clinicForm.get('businessTimings') as FormArray;
     control.removeAt(scheduleIndex);
   }
 
   addSlots(index) {
-    ((this.scheduleList[index] as FormGroup).get('slots') as FormArray).push(this.createSlots());
+    ((this.scheduleList[index] as FormGroup).get('timeRange') as FormArray).push(this.createSlots());
   }
 
   removeSlots(scheduleIndex, slotIndex) {
-    const control = this.clinicForm.get(`schedule.${scheduleIndex}.slots`) as FormArray;
+    const control = this.clinicForm.get(`businessTimings.${scheduleIndex}.timeRange`) as FormArray;
     control.removeAt(slotIndex);
   }
 
   get scheduleList() {
-    return (this.clinicForm.get('schedule') as FormArray).controls;
+    return (this.clinicForm.get('businessTimings') as FormArray).controls;
   }
 
   getSlotsList(index = 0) {
@@ -265,16 +282,18 @@ console.log(this.countryList)
   selectWeekDays(day, selectionIndex) {
     const control = this.getScheduleDayControl(selectionIndex);
     control.markAsTouched();
-    const days = control?.value as Array<string>;
+    const days = control?.value as Array<any>;
     days.includes(day) ?
-      control.setValue(days.filter(item => item !== day)) :
+      control.setValue(days.filter(item => item!== day)) :
       days.push(day) && control.setValue(days);
     control.updateValueAndValidity();
     console.log(this.clinicForm);
+    console.log(this.scheduleList)
+    console.log(days)
   }
 
   getScheduleDayControl(index) {
-    return this.scheduleList[index].get('scheduleDays') as FormControl
+    return this.scheduleList[index].get('days') as FormControl
   }
 
   createPartnerAccount() {
@@ -388,6 +407,11 @@ async searchUserName(){
     console.log(error);
   }  
 }
+
+
+show(){
+  console.log(this.clinicForm.value)
+;}
   
 
 }
