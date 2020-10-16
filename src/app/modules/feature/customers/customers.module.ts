@@ -14,10 +14,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ClientDetailsComponent } from './client-details/client-details.component';
 import { PetDetailsComponent } from './pet-details/pet-details.component';
+import { ECardService } from '../e-card/e-card.service';
 
 
 @NgModule({
-  declarations: [CustomersComponent, ClientsComponent, PetsComponent, ClientDetailsComponent, PetDetailsComponent],
+  declarations: [
+    CustomersComponent,
+    ClientsComponent,
+    PetsComponent,
+    ClientDetailsComponent,
+    PetDetailsComponent
+  ],
   imports: [
     CommonModule,
     CustomersRoutingModule,
@@ -26,6 +33,7 @@ import { PetDetailsComponent } from './pet-details/pet-details.component';
     MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule
-  ]
+  ],
+  providers: [ECardService]
 })
 export class CustomersModule { }

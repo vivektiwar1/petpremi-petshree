@@ -1,37 +1,135 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { ClientsService } from 'src/app/modules/feature/customers/clients/clients.service';
+import { ECardService } from 'src/app/modules/feature/e-card/e-card.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-client',
   templateUrl: './add-client.component.html',
   styleUrls: ['./add-client.component.scss']
 })
-export class AddClientComponent implements OnInit {
-  addClientForm: FormGroup;
-  apiInProgress: boolean;
+export class AddClientComponent {
 
+  clientForm: FormGroup;
+  apiInProgress: boolean;
+  countries: Array<any>;
+  titles: Array<any>;
+  user: any;
+  genders: any = [];
+  destroy$: Subject<void> = new Subject();
   constructor(
     private formBuilder: FormBuilder,
-  ) { }
-
-  ngOnInit(): void {
+    private service: ClientsService,
+    private matDialog: MatDialog,
+    private auth: AuthService,
+    private toastrService: ToastrService,
+    private eCardService: ECardService
+  ) {
+    this.auth.userData$.subscribe(res => this.user = res);
     this.createForm();
   }
 
-  createForm() {
-    this.addClientForm = this.formBuilder.group({
-      clientName: ['', Validators.required],
-      clientPhone: ['', Validators.required],
-      name: ['', Validators.required],
-      type: ['', Validators.required],
-      breed: ['', Validators.required],
-      age: ['', Validators.required]
-    })
+  async createForm() {
+    const [titles, countries, genders] = await this.getData();
+    this.titles = ((titles as any)?.responseResult?.data?.content || []).map(item => {
+      return {
+        title: item.label && item.label.length ? item.label : item.title,
+        id: item.id
+      };
+    });
+    this.genders = ((genders as any)?.responseResult?.data?.content || []).map(item => {
+      return {
+        title: item.name,
+        image: item.image,
+        id: item.id
+      };
+    });
+    this.countries = ((countries as any)?.responseResult?.data?.content || []).map(item => {
+      return {
+        code: item.code,
+        name: item.name,
+        id: item.id,
+        minLength: item.fromLength,
+        maxLength: item.toLength
+      };
+    });
+
+    let selectedCountry = this.countries[0];
+
+    this.clientForm = this.formBuilder.group({
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      createdByPartnerId: this.user?.partnerId,
+      createdByUserId: this.user?.id,
+      activated: false,
+      genderId: [this.genders[0].id, Validators.required],
+      titleId: [this.titles[0].id],
+      email: [null, Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)])],
+      countryId: [selectedCountry.id, { updateOn: 'change' }],
+      phone: [null, {
+        validators: Validators.compose([Validators.minLength(selectedCountry.minLength), Validators.maxLength(selectedCountry.maxLength)]),
+        updateOn: 'change'
+      }],
+    });
+
+    const phoneControl = this.clientForm.get('phone') as FormControl;
+    const countryControl = this.clientForm.get('countryId');
+
+    countryControl.valueChanges.subscribe(countryCode => {
+      console.log(countryCode);
+      selectedCountry = this.countries.find(country => country.id === countryCode);
+      phoneControl.setValidators([Validators.minLength(selectedCountry.minLength), Validators.maxLength(selectedCountry.maxLength)]);
+      phoneControl.updateValueAndValidity();
+    });
+
+    phoneControl.valueChanges.pipe(
+      map(value => value && value.replace(/\D/g, '')),
+      map(value => value && value.replace(/^0/g, '')),
+      map(value => value?.slice(0, selectedCountry.maxLength)),
+      takeUntil(this.destroy$)
+    ).subscribe(value => {
+      value !== phoneControl.value && phoneControl.setValue(value);
+    });
+
   }
 
-  onSubmit() {
-    if (this.addClientForm.valid) {
+  getData() {
+    return Promise.all([
+      this.eCardService.getTitles().toPromise(),
+      this.eCardService.getCountries().toPromise(),
+      this.eCardService.getGenders().toPromise()
+    ]);
+  }
 
+  async onSubmit() {
+    try {
+      this.clientForm.markAllAsTouched();
+      if (this.clientForm.valid) {
+        this.apiInProgress = true;
+        const formData = {
+          ...this.clientForm.value,
+          mobile: this.clientForm.value.phone
+        };
+        delete formData.phone;
+        await this.service.postCustomer(formData).toPromise();
+        this.toastrService.success('Customer Added successfully!');
+        this.apiInProgress = false;
+        this.clientForm.reset({
+          titleId: this.titles[0].id,
+          countryId: this.countries[0].id
+        });
+        this.matDialog.closeAll();
+      } else {
+        console.log('Contact form invalid.');
+      }
+    } catch (e) {
+      this.apiInProgress = false;
+      this.toastrService.error(e.error.responseMessage, 'Api Error.');
     }
   }
 }

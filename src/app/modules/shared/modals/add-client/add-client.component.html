@@ -5,50 +5,73 @@
 
 
 <mat-dialog-content>
-    <form *ngIf="addClientForm" [formGroup]="addClientForm" class="no-outline" autocomplete="off">
+    <form *ngIf="clientForm" [formGroup]="clientForm" class="no-outline" autocomplete="off"
+    (ngSubmit)="onSubmit()">
 
         <div class="row">
             <div class="col-12 col-sm-6 form-group">
-                <label class="mb-0" for="clientName">Client Name</label>
-                <input class="form-control" id="clientName" formControlName="clientName"
-                    placeholder="Enter Client Name">
+                <label class="mb-0" for="firstName">First Name</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="form-control">
+                            <mat-select formControlName="titleId">
+                                <mat-option *ngFor="let item of titles" [value]="item.id">{{item.title}}</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <input class="form-control" id="firstName" formControlName="firstName"
+                        placeholder="Enter First Name">
+                </div>
             </div>
             <div class="col-12 col-sm-6 form-group">
-                <label class="mb-0" for="clientPhone">Client Phone</label>
-                <input class="form-control" id="clientPhone" formControlName="clientPhone"
-                    placeholder="Enter Pet Phone">
+                <label class="mb-0" for="lastName">Last Name</label>
+                <input class="form-control" id="lastName" formControlName="lastName"
+                    placeholder="Enter Last Name">
             </div>
+            
         </div>
 
         <div class="row">
             <div class="col-12 col-sm-6 form-group">
-                <label class="mb-0" for="name">Pet Name</label>
-                <input class="form-control" id="name" formControlName="name" placeholder="Enter Pet Name">
+                <label class="mb-0" for="phone">Phone</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="form-control">
+                            <mat-select formControlName="countryId">
+                                <mat-option *ngFor="let country of countries" [value]="country.id"> +{{country.code}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <input class="form-control" id="phone" formControlName="phone"
+                        placeholder="Enter Phone">
+                </div>
             </div>
             <div class="col-12 col-sm-6 form-group">
-                <input-dropdown label="Pet Type" name="type" placeholder="Select Pet Type"
-                    [parentFormGroup]="addClientForm"
-                    [selectionList]="[{name: 'Regular Visit', value: 'regular'}, {name: 'Emergency Visit', value: 'emergency'}]">
-                </input-dropdown>
+                <label class="mb-0" for="genderId">Gender</label>
+                <mat-select class="form-control" formControlName="genderId">
+                    <mat-option *ngFor="let item of genders" [value]="item.id">{{item.title}}</mat-option>
+                </mat-select>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12 col-sm-6 form-group">
-                <input-dropdown label="Pet Breed" name="breed" placeholder="Select Pet Breed"
-                    [parentFormGroup]="addClientForm"
-                    [selectionList]="[{name: 'Regular Visit', value: 'regular'}, {name: 'Emergency Visit', value: 'emergency'}]">
-                </input-dropdown>
-            </div>
-            <div class="col-12 col-sm-6 form-group">
-                <label class="mb-0" for="age">Pet Age</label>
-                <input class="form-control" id="age" formControlName="age" placeholder="Enter Pet Age">
+                <label class="mb-0" for="email">Email</label>
+                <input type="email" class="form-control" placeholder="Enter Email" id="email" formControlName="email"
+                [ngClass]="{error: clientForm.get('email').errors && clientForm.get('email').touched}">
+                <div class="error-message">
+                    <ng-container *ngIf="clientForm.get('email').errors && clientForm.get('email').touched">
+                        <span *ngIf="clientForm.get('email').hasError('required')">Email is required!</span>
+                        <span *ngIf="clientForm.get('email').hasError('pattern')">Email is invalid!</span>
+                    </ng-container>
+                </div>
             </div>
         </div>
+        <app-button class="mt-4" className="btn-warning" buttonText="ADD CLIENT"
+            [disabled]="(clientForm.invalid || apiInProgress)">
+        </app-button>
     </form>
 
-    <app-button class="mt-4" className="btn-warning" buttonText="ADD CLIENT"
-        [disabled]="(addClientForm.invalid || apiInProgress)" (buttonClicked)="onSubmit()">
-    </app-button>
+    
 
 </mat-dialog-content>

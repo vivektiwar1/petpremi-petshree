@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 @Injectable()
@@ -26,9 +26,9 @@ export class ECardService {
   getUserDetails(userName): Observable<any> {
     const apiData = {
       commonParamHash: {
-        entityName: "Partner",
-        uiBeanId: "ECardFlow",
-        operation: "SEARCH"
+        entityName: 'Partner',
+        uiBeanId: 'ECardFlow',
+        operation: 'SEARCH'
       },
       objectHash: {
         userName
@@ -49,8 +49,8 @@ export class ECardService {
   getCountries() {
     const apiData = {
       commonParamHash: {
-        entityName: "Country",
-        operation: "SEARCH"
+        entityName: 'Country',
+        operation: 'SEARCH'
       },
       objectHash: {
         status: true
@@ -60,29 +60,77 @@ export class ECardService {
     return this.http.post(this.getApiUrl('/crud'), apiData);
   }
 
-  getTitles() {
+  getGenders() {
     const apiData = {
       commonParamHash: {
-        entityName: "Title",
-        operation: "SEARCH"
+        entityName: 'Gender',
+        uiBean: 'BNEGender',
+        operation: 'SEARCH',
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+            ASC: [
+                'id'
+            ]
+        }
       },
       objectHash: {
         status: true
       }
     };
 
+    return this.http.post(this.getApiUrl('/crud'), apiData);
+  }
+
+  getWeightUnits() {
+    const apiData = {
+      commonParamHash: {
+        entityName: 'WeightUnit',
+        uiBean: 'BNEWeightUnit',
+        operation: 'SEARCH',
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+            ASC: [
+                'id'
+            ]
+        }
+      },
+      objectHash: {
+        status: true
+      }
+    };
+
+    return this.http.post(`${environment.apiBase}/service/oauth2/api/crud`, apiData);
+  }
+
+
+  getTitles() {
+    const apiData = {
+      commonParamHash: {
+        entityName: 'Title',
+        operation: 'SEARCH'
+      },
+      objectHash: {
+        status: true
+      }
+    };
     return this.http.post(this.getApiUrl('/crud'), apiData);
   }
 
   getMediaFiles(userName, type) {
     const apiData = {
       commonParamHash: {
-        entityName: "PartnerDocument",
-        operation: "SEARCH"
+        entityName: 'PartnerDocument',
+        operation: 'SEARCH'
       },
       objectHash: {
         partner_FK: {
-          userName: userName
+          userName
         },
         document_FK: {
           documentType: type
@@ -93,7 +141,7 @@ export class ECardService {
     return this.http.post(this.getApiUrl('/crud'), apiData);
   }
 
-  getImageLinks(userName, type, fileName = "") {
+  getImageLinks(userName, type, fileName = '') {
     return this.getApiUrl(`/assets/partner/e/card?userName=${userName}&asset=${type}&fileName=${fileName}`);
   }
 }

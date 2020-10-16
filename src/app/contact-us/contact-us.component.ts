@@ -50,10 +50,10 @@ export class ContactUsComponent{
     let selectedCountry = this.countries[0];
 
     this.contactForm = this.formBuilder.group({
-      titleId: [this.titles[0]['id']],
+      titleId: [this.titles[0].id],
       name: [null, Validators.required],
       email: [null, Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)])],
-      countryId: [selectedCountry['id'], { updateOn: 'change' }],
+      countryId: [selectedCountry.id, { updateOn: 'change' }],
       phone: [null, {
         validators: Validators.compose([Validators.minLength(selectedCountry['minLength']), Validators.maxLength(selectedCountry['maxLength'])]),
         updateOn: 'change'
