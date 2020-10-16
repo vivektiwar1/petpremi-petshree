@@ -26,25 +26,7 @@ export class ECardService {
   }
 
   getUserDetails(userName): Observable<any> {
-    // const apiData = {
-    //   commonParamHash: {
-    //     entityName: "User",
-    //     uiBean: "BNECustomerProfile",
-    //     operation: "SEARCH",
-    //     pagination: {
-    //         pageNumber: 0,
-    //         pageSize: 10
-    //     },
-    //     sort: {
-    //         DESC: [
-    //             "id"
-    //         ]
-    //     }
-    // },
-    // objectHash: {
-    //    userName: userName
-    // }
-    // };
+   
     return this.http.get(this.getApiUrl(`/e/card/details?userName=${userName}&partnerUserName=rahul`), {
       headers: {
         'Content-Type': 'application/json'

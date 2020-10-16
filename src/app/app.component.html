@@ -9,7 +9,7 @@
                     (mouseout)="!isDrawerStatePersistent && drawer.opened && drawer.close() && setDrawerState(false)">
                     <app-side-nav (onMouseOver)="!drawer.opened && drawer.open() && setDrawerState(false)"></app-side-nav>
                 </mat-drawer>
-
+                
                 <mat-drawer-content>
                     <button class="d-flex justify-content-center align-items-center" (click)="drawer.toggle(); setDrawerState(true)"
                         [ngClass]="{rotate: !drawer.opened}">
