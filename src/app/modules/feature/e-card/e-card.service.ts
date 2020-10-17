@@ -144,7 +144,7 @@ export class ECardService {
         }
       }
     };
-    return this.http.post(this.getApiUrl('/service/oauth2/api/crud'), apiData);
+    return this.http.post(this.getApiUrl('/crud'), apiData);
   }
 
   getImageLinks(userName, type, fileName = '') {
