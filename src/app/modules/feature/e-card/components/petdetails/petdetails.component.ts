@@ -12,4 +12,7 @@ export class PetDetailsComponent {
 
   ngOnInit(): void {
   }
+  showDiv() {
+    document.getElementById('petdetails').style.display = "block";
+ }
 }
