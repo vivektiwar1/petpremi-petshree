@@ -13,5 +13,8 @@ export class AppointmenttimeComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  showDiv() {
+    document.getElementById('appointmentdetails').style.display = "block";
+ }
 
 }

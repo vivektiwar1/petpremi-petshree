@@ -25,9 +25,9 @@ export class ECardService {
           : `${environment.apiBase}/service/api${url}`;
   }
 
-  getUserDetails(userName): Observable<any> {
+  getUserDetails(userName,partnerUserName): Observable<any> {
    
-    return this.http.get(this.getApiUrl(`/e/card/details?userName=${userName}&partnerUserName=rahul`), {
+    return this.http.get(this.getApiUrl(`/e/card/details?userName=${userName}&partnerUserName=${partnerUserName}`), {
       headers: {
         'Content-Type': 'application/json'
       }

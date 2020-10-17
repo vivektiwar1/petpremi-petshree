@@ -4,10 +4,15 @@ export const NavMenu = [
         anchorId: 'home',
         icon: 'assets/images/icons/home.svg'
     },
+    // {
+    //     name: 'About',
+    //     anchorId: 'about',
+    //     icon: 'assets/images/icons/work.svg'
+    // },
     {
-        name: 'About',
-        anchorId: 'about',
-        icon: 'assets/images/icons/work.svg'
+        name: 'Appointment',
+        anchorId: 'appointment',
+        icon: 'assets/images/icons/chat.svg'
     },
     {
         name: 'Gallery',
@@ -22,11 +27,6 @@ export const NavMenu = [
     {
         name: 'Enquiry',
         anchorId: 'enquiry',
-        icon: 'assets/images/icons/chat.svg'
-    },
-    {
-        name: 'Appointment',
-        anchorId: 'appointment',
         icon: 'assets/images/icons/chat.svg'
     }
     
