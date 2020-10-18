@@ -10,7 +10,7 @@ export const NavMenu = [
     //     icon: 'assets/images/icons/work.svg'
     // },
     {
-        name: 'Appointment',
+        name: 'Book',
         anchorId: 'appointment',
         icon: 'assets/images/icons/chat.svg'
     },

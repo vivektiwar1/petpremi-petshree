@@ -14,7 +14,16 @@ export class AppointmenttimeComponent implements OnInit {
   ngOnInit(): void {
   }
   showDiv() {
-    document.getElementById('appointmentdetails').style.display = "block";
- }
+    document.getElementById('appointmenttime').style.display = "none";
 
+    document.getElementById('appointmentdetails').style.display = "block";
+  }
+  back() {
+    document.getElementById('appointmenttime').style.display = "none";
+    document.getElementById('appointment').style.display = "block";
+    document.getElementById('home').style.display = "block";
+    document.getElementById('gallery').style.display = "block";
+    document.getElementById('videos').style.display = "block";
+    document.getElementById('enquiry').style.display = "block";
+  }
 }
