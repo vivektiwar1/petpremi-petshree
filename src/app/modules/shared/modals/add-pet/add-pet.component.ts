@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ClientsService } from 'src/app/modules/feature/customers/clients/clients.service';
 import { ECardService } from 'src/app/modules/feature/e-card/e-card.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { customZoomControl } from '../shared/map.util';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-add-pet',
@@ -13,6 +15,26 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./add-pet.component.scss']
 })
 export class AddPetComponent implements OnInit {
+
+  getPicture = false;
+  imageToCrop$ = new BehaviorSubject(null);
+  listeners = [];
+  @ViewChild('input') input: ElementRef<HTMLInputElement>;
+  @ViewChild('uploadRef') uploadRef: ElementRef<HTMLInputElement>;
+  selectedIndex = 0;
+  list = [
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+  ];
+  @ViewChild('resultContainer') resultContainer: ElementRef;
 
   addPetForm: FormGroup;
   apiInProgress: boolean;
@@ -29,7 +51,8 @@ export class AddPetComponent implements OnInit {
     private matDialog: MatDialog,
     private auth: AuthService,
     private toastrService: ToastrService,
-    private eCardService: ECardService
+    private eCardService: ECardService,
+    private e: ElementRef
   ) {
     this.auth.userData$.subscribe(res => this.user = res);
     this.getPetType();
@@ -39,6 +62,53 @@ export class AddPetComponent implements OnInit {
     this.createForm();
   }
 
+  capturePhoto(photo) {
+    this.searchImage(photo);
+  }
+
+  upload({files}: any) {
+    this.imageToCrop$.next(files[0]);
+    this.uploadRef.nativeElement.value = '';
+  }
+
+  croppedImage(image = null) {
+    if (image) {
+      this.searchImage(image);
+    }
+    this.imageToCrop$.next(null);
+  }
+
+  searchImage(item) {
+    this.list = [
+      item,
+      ...this.list
+    ];
+    this.scrollToResult();
+  }
+
+  searchPet(pet) {
+    console.log(pet);
+    this.scrollToResult();
+  }
+
+  showInfo(index) {
+    this.selectedIndex = index;
+  }
+
+  scrollToResult() {
+    const parent = $(window.innerWidth > 991 ? this.e.nativeElement : 'html, body');
+    parent.animate({
+      scrollTop: $(this.resultContainer.nativeElement).offset().top - parent.offset().top
+    }, 800);
+  }
+
+  customZoom(e) {
+    const c = document.createElement('div');
+    c.style.zIndex = '10';
+    this.listeners = customZoomControl(c, e);
+    e.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(c);
+  }
+  
   async createForm() {
     const [genders, units] = await this.getData();
 

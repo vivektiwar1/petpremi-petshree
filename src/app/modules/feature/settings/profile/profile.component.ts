@@ -62,11 +62,11 @@ export class ProfileComponent {
     private profileService: ProfileService,
     private toastr: ToastrService
   ) {
+    this.loadProfile();
     this.auth.userData$.subscribe(async (res: any) => {
       this.userId = res.id;
       await this.getPersonalFormData();
     });
-    this.loadProfile();
    }
 
    async loadProfile(): Promise<void> {
@@ -76,18 +76,12 @@ export class ProfileComponent {
         // this.userId,
         this.titleList,
         this.genderList,
-        this.countryList,
-        this.stateList,
-        this.cityList,
-        this.pinCodeList,
+        this.countryList
       ] = await Promise.all([
         // this.commonService.getUserId(),
         this.commonService.getTitleList(),
         this.commonService.getGenderList(),
-        this.commonService.getCountryList(),
-        this.commonService.getStateList(),
-        this.commonService.getCityList(),
-        this.commonService.getPinCodeList(),
+        this.commonService.getCountryList()
       ]);
       // let response;
       // this.createPersonalForm(response?.content?.[0] || {});
@@ -127,8 +121,7 @@ export class ProfileComponent {
       title: [formData.title ? formData.title?.id : this.titleList?.[0]?.['id'], Validators.required],
       firstName: [formData.firstName ? formData.firstName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
       lastName: [formData.lastName ? formData.lastName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
-      userName: [formData.userName ? formData.userName : null, Validators.compose([Validators.required, WhiteSpaceValidator]),
-      this.validateUsername.bind(this)],
+      userName: [formData.userName ? formData.userName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
       country: [selectedCountry?.id],
       mobile: [formData.mobile ? formData.mobile : null,
         Validators.compose([Validators.required, Validators.minLength(selectedCountry?.minLength || 10),
@@ -167,17 +160,18 @@ export class ProfileComponent {
     });
   }
 
-  validateUsername(control: AbstractControl): Observable<any> {
-    if (control.valueChanges && control.dirty) {
-      return control.valueChanges.pipe(
-        debounceTime(400),
-        distinctUntilChanged(),
-        switchMap(value => this.profileService.validateUserName(value, this.userId).pipe(
-          map(response => response ? control.setErrors(null) : control.setErrors({ alreadyTaken: true }))
-        ))
-      );
-    } else {
-      return of(null);
+  async validateUsername() {
+    try {
+      const userName = this.personalForm.get('userName').value;
+      const response = await this.profileService.validateUserName(userName, this.userId).toPromise();
+      console.log(response);
+      if (!response){
+        this.personalForm.controls.userName.setValue('');
+        this.toastr.error(`User Name already exists `);
+      }
+    } catch (error) {
+      this.toastr.error(`Something went wrong!`);
+      console.log(error);
     }
   }
 

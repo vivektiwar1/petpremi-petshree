@@ -57,6 +57,30 @@
                 <input class="form-control" type="date" id="birthDay" formControlName="birthDay" placeholder="Birth Date">
             </div>
         </div>
+        <div class="row">
+            <div class="col-12 col-md-12 form-group">
+                <div class="actions">
+                    <button>
+                      <input #uploadRef type="file" id="upload-input" accept="image/*" name="image" (change)="upload($event.target)"/>
+                      <label for="upload-input"></label>
+                      <img [src]="'/assets/icon/camera.png'" alt=""/>
+                      {{'breed.search.action.upload' | translate}}
+                    </button>
+                    <button (click)="getPicture = true;">
+                      <img [src]="'/assets/icon/photo.png'" alt=""/>
+                      {{'breed.search.action.photo' | translate}}
+                    </button>
+                  </div>
+                <app-get-picture *ngIf="getPicture" (closed)="getPicture = false;"
+                   (captured)="capturePhoto($event)"></app-get-picture>
+
+                <app-crop-picture *ngIf="(imageToCrop$ | async) as imageCrop" [image]="imageCrop"
+                                    (cropped)="croppedImage($event)" (cancel)="croppedImage()"></app-crop-picture>
+                <div class="content" #resultContainer>
+                    <div class="slickContainer" appImageSlick (slideActivated)="showInfo($event)" [list]="list"></div>
+                </div>
+            </div>
+        </div>
         <app-button class="mt-4" className="btn-warning" buttonText="ADD PET"
             [disabled]="(addPetForm.invalid || apiInProgress)" (buttonClicked)="onSubmit()">
         </app-button>

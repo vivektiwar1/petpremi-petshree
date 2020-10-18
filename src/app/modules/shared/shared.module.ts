@@ -33,12 +33,19 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule, MatSpinner } from "@angular/material/progress-spinner";
 import { InputDateRangeComponent } from './components/form-controls/input-date-range/input-date-range.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import {CGetPictureComponent} from './modals/shared/get-picture/get-picture.component';
+import {CCropPictureComponent} from './modals/shared/crop-picture/crop-picture.component';
+import { ImageSlickDirective } from './modals/shared/directives/image-slick.directive';
 
 @NgModule({
   declarations: [
     ButtonComponent,
     ErrorPageComponent,
     HeaderComponent,
+    CGetPictureComponent,
+    CCropPictureComponent,
+    ImageSlickDirective,
     SideNavComponent,
     TabNavComponent,
     InputDropdownComponent,
@@ -57,6 +64,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDatepickerModule,
     MatDialogModule,
     MatListModule,
+    TranslateModule.forChild(),
     MatIconModule,
     MatInputModule,
     MatNativeDateModule,

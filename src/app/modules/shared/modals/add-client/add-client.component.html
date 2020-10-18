@@ -20,7 +20,12 @@
                         </div>
                     </div>
                     <input class="form-control" id="firstName" formControlName="firstName"
-                        placeholder="Enter First Name">
+                        placeholder="Enter First Name" [ngClass]="{error: clientForm.get('firstName').errors && clientForm.get('firstName').touched}">
+                </div>
+                <div class="error-message">
+                    <ng-container *ngIf="clientForm.get('firstName').errors && clientForm.get('firstName').touched">
+                        <span *ngIf="clientForm.get('firstName').hasError('required')">First Name is required!</span>
+                    </ng-container>
                 </div>
             </div>
             <div class="col-12 col-sm-6 form-group">
@@ -44,7 +49,13 @@
                         </div>
                     </div>
                     <input class="form-control" id="phone" formControlName="phone"
-                        placeholder="Enter Phone">
+                        placeholder="Enter Phone"
+                        [ngClass]="{error: clientForm.get('phone').errors && clientForm.get('phone').touched}">
+                </div>
+                <div class="error-message">
+                    <ng-container *ngIf="clientForm.get('phone').errors && clientForm.get('phone').touched">
+                        <span>Phone number invalid!</span>
+                    </ng-container>
                 </div>
             </div>
             <div class="col-12 col-sm-6 form-group">
@@ -64,6 +75,30 @@
                         <span *ngIf="clientForm.get('email').hasError('required')">Email is required!</span>
                         <span *ngIf="clientForm.get('email').hasError('pattern')">Email is invalid!</span>
                     </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12 form-group">
+                <div class="actions">
+                    <button>
+                      <input #uploadRef type="file" id="upload-input" accept="image/*" name="image" (change)="upload($event.target)"/>
+                      <label for="upload-input"></label>
+                      <img [src]="'/assets/icon/camera.png'" alt=""/>
+                      {{'breed.search.action.upload' | translate}}
+                    </button>
+                    <button (click)="getPicture = true;">
+                      <img [src]="'/assets/icon/photo.png'" alt=""/>
+                      {{'breed.search.action.photo' | translate}}
+                    </button>
+                  </div>
+                <app-get-picture *ngIf="getPicture" (closed)="getPicture = false;"
+                   (captured)="capturePhoto($event)"></app-get-picture>
+
+                <app-crop-picture *ngIf="(imageToCrop$ | async) as imageCrop" [image]="imageCrop"
+                                    (cropped)="croppedImage($event)" (cancel)="croppedImage()"></app-crop-picture>
+                <div class="content" #resultContainer>
+                    <div class="slickContainer" appImageSlick (slideActivated)="showInfo($event)" [list]="list"></div>
                 </div>
             </div>
         </div>
