@@ -1,0 +1,23 @@
+<div class="content">
+  <mat-spinner class="spinner" *ngIf="loader$ | async" mode="indeterminate"></mat-spinner>
+  <div>
+    <img #imageContainer
+         *ngIf="(base64$ | async) as base64"
+         class="image"
+         [src]="base64"
+         (load)="imageLoaded($event)"
+         (error)="imageLoadError()"
+         alt=""/>
+  </div>
+  <div *ngIf="(error$ | async) as error" class="error">
+    {{error | translate}}
+  </div>
+  <div class="actions">
+    <div role="button" aria-label="close">
+      <img alt="close" [src]="'/assets/icon/cross.svg'" (click)="close()"/>
+    </div>
+    <div role="button" aria-label="done">
+      <img alt="close" [src]="'/assets/icon/tick.svg'" (click)="croppedIImage()"/>
+    </div>
+  </div>
+</div>

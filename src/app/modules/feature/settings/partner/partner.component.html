@@ -65,7 +65,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                      <div class="form-control">
-                                        <mat-select>
+                                        <mat-select formControlName="country">
 
                                             <mat-option *ngFor="let country of countryList" [value]="country.id">
                                                 +{{country.code}}
@@ -163,9 +163,10 @@
                         </div>
     
                         <div class="col-12 col-sm-6 form-group">
-                            <input-dropdown label="Country" name="country" placeholder="Select Country"
+                            <input-dropdown label="Country" name="countryName" placeholder="Select Country"
                                 [parentFormGroup]="partnerForm" [selectionList]="countryList">
                             </input-dropdown>
+                            
                         </div>
     
                       
@@ -198,39 +199,39 @@
                     </div> -->
                     <div class="row mt-3">
                         <div class="col-12 col-sm-6 form-group mb-0">
-                            <label class="mb-1" for="clinicName">Clinic Name</label>
-                            <input class="form-control" id="clinicName" formControlName="clinicName"
+                            <label class="mb-1" for="name">Clinic Name</label>
+                            <input class="form-control" id="name" formControlName="name"
                                 placeholder="Enter Clinic Name"
-                                [class.error]="getClinicFormField('clinicName').errors && getClinicFormField('clinicName').touched">
+                                [class.error]="getClinicFormField('name').errors && getClinicFormField('name').touched">
                             <div class="error-message">
                                 <ng-container
-                                    *ngIf="getClinicFormField('clinicName').errors && getClinicFormField('clinicName').touched">
+                                    *ngIf="getClinicFormField('name').errors && getClinicFormField('name').touched">
                                     <span>Clinic name is required!</span>
                                 </ng-container>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 form-group mb-0">
-                            <label class="mb-1" for="clinicPhone">Clinic Phone Number</label>
+                            <label class="mb-1" for="clinicMobile">Clinic Phone Number</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="form-control">
-                                        <mat-select formControlName="clinicCountryId">
+                                        <mat-select formControlName="country">
                                             <mat-option *ngFor="let country of countryList" [value]="country.id">
                                                 +{{country.code}}
                                             </mat-option>
                                         </mat-select>
                                     </div>
                                 </div>
-                                <input class="form-control" type="tel" id="clinicPhone" placeholder="Enter Clinic Phone"
-                                    formControlName="clinicMobile"
-                                    [class.error]="getClinicFormField('clinicMobile').errors && getClinicFormField('clinicMobile').touched">
+                                <input class="form-control" type="tel" id="clinicMobile" placeholder="Enter Clinic Phone"
+                                    formControlName="mobile"
+                                    [class.error]="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
                             </div>
                             <div class="error-message">
                                 <ng-container
-                                    *ngIf="getClinicFormField('clinicMobile').errors && getClinicFormField('clinicMobile').touched">
-                                    <span *ngIf="getClinicFormField('clinicMobile').hasError('minlength')">
+                                    *ngIf="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
+                                    <span *ngIf="getClinicFormField('mobile').hasError('minlength')">
                                         Phone number is invalid!</span>
-                                    <span *ngIf="getClinicFormField('clinicMobile').hasError('required')">
+                                    <span *ngIf="getClinicFormField('mobile').hasError('required')">
                                         Phone number is required!</span>
                                 </ng-container>
                             </div>
@@ -243,7 +244,7 @@
                         </div>
     
                         <div class="col-12 col-sm-6 form-group">
-                            <input-dropdown label="Country" name="country" placeholder="Select Country"
+                            <input-dropdown label="Country" name="countryName" placeholder="Select Country"
                                 [parentFormGroup]="clinicForm" [selectionList]="countryList">
                             </input-dropdown>
                         </div>
@@ -261,6 +262,12 @@
                         </div>
     
                         <div class="col-12 col-sm-6 form-group">
+                            <!-- <label class="mb-2" for="pinCode">Pin Code</label>
+                            <mat-select class="form-control" formControlName="pinCode" placeholder="Select Pin Code">
+                                <mat-option *ngFor="let pin of pinCodeList" [value]="pin.value">
+                                    {{pin.name}}
+                                </mat-option>
+                            </mat-select> -->
                             <input-dropdown label="Pin Code" name="pinCode" placeholder="Select Pin Code"
                                 [parentFormGroup]="clinicForm" [selectionList]="pinCodeList">
                             </input-dropdown>

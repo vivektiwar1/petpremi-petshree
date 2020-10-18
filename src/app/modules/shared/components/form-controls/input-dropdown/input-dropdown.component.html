@@ -3,7 +3,8 @@
     <mat-select class="custom-icon" [attr.id]="label ? name : ''" [formControl]="parentFormGroup.get(name)"
         (selectionChange)="onSelection($event)" [placeholder]="placeholder ? placeholder : ''" [attr.name]="name">
         <ng-content></ng-content>
-        <mat-option *ngFor="let item of selectionList" [value]="item.value || item.id"> {{item.name | titlecase}}
+        <mat-option *ngFor="let item of selectionList" [value]="item.value || item.id"> {{item.name}}
+            <!-- {{item.name | titlecase}} -->
         </mat-option>
     </mat-select>
 </div>
@@ -13,7 +14,7 @@
         (selectionChange)="onSelection($event)" [placeholder]="placeholder ? placeholder : ''"
         [attr.name]="label ? name : ''">
         <ng-content></ng-content>
-        <mat-option *ngFor="let item of selectionList" [value]="item.value || item.id"> {{item.name | titlecase}}
+        <mat-option *ngFor="let item of selectionList" [value]="item.value || item.id"> {{item.name}}
         </mat-option>
     </mat-select>
 </div>

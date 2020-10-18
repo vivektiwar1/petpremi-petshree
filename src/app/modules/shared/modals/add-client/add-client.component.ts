@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ClientsService } from 'src/app/modules/feature/customers/clients/clients.service';
 import { ECardService } from 'src/app/modules/feature/e-card/e-card.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import { customZoomControl } from 'src/app/breed-identification/shared/map.util';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-add-client',
@@ -15,6 +17,26 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AddClientComponent {
 
+  getPicture = false;
+  imageToCrop$ = new BehaviorSubject(null);
+  @ViewChild('input') input: ElementRef<HTMLInputElement>;
+  @ViewChild('uploadRef') uploadRef: ElementRef<HTMLInputElement>;
+  listeners = [];
+  selectedIndex = 0;
+  list = [
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/300x300',
+  ];
+  @ViewChild('resultContainer') resultContainer: ElementRef;
+
   clientForm: FormGroup;
   apiInProgress: boolean;
   countries: Array<any>;
@@ -22,18 +44,66 @@ export class AddClientComponent {
   user: any;
   genders: any = [];
   destroy$: Subject<void> = new Subject();
+
   constructor(
     private formBuilder: FormBuilder,
     private service: ClientsService,
     private matDialog: MatDialog,
     private auth: AuthService,
     private toastrService: ToastrService,
-    private eCardService: ECardService
+    private eCardService: ECardService,
+    private e: ElementRef
   ) {
     this.auth.userData$.subscribe(res => this.user = res);
     this.createForm();
   }
 
+  capturePhoto(photo) {
+    this.searchImage(photo);
+  }
+
+  upload({files}: any) {
+    this.imageToCrop$.next(files[0]);
+    this.uploadRef.nativeElement.value = '';
+  }
+
+  croppedImage(image = null) {
+    if (image) {
+      this.searchImage(image);
+    }
+    this.imageToCrop$.next(null);
+  }
+
+  searchImage(item) {
+    this.list = [
+      item,
+      ...this.list
+    ];
+    this.scrollToResult();
+  }
+
+  searchPet(pet) {
+    console.log(pet);
+    this.scrollToResult();
+  }
+
+  showInfo(index) {
+    this.selectedIndex = index;
+  }
+
+  scrollToResult() {
+    const parent = $(window.innerWidth > 991 ? this.e.nativeElement : 'html, body');
+    parent.animate({
+      scrollTop: $(this.resultContainer.nativeElement).offset().top - parent.offset().top
+    }, 800);
+  }
+
+  customZoom(e) {
+    const c = document.createElement('div');
+    c.style.zIndex = '10';
+    this.listeners = customZoomControl(c, e);
+    e.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(c);
+  }
   async createForm() {
     const [titles, countries, genders] = await this.getData();
     this.titles = ((titles as any)?.responseResult?.data?.content || []).map(item => {
@@ -63,7 +133,7 @@ export class AddClientComponent {
 
     this.clientForm = this.formBuilder.group({
       firstName: [null, Validators.required],
-      lastName: [null, Validators.required],
+      lastName: null,
       createdByPartnerId: this.user?.partnerId,
       createdByUserId: this.user?.id,
       activated: false,
@@ -81,7 +151,6 @@ export class AddClientComponent {
     const countryControl = this.clientForm.get('countryId');
 
     countryControl.valueChanges.subscribe(countryCode => {
-      console.log(countryCode);
       selectedCountry = this.countries.find(country => country.id === countryCode);
       phoneControl.setValidators([Validators.minLength(selectedCountry.minLength), Validators.maxLength(selectedCountry.maxLength)]);
       phoneControl.updateValueAndValidity();
@@ -92,9 +161,7 @@ export class AddClientComponent {
       map(value => value && value.replace(/^0/g, '')),
       map(value => value?.slice(0, selectedCountry.maxLength)),
       takeUntil(this.destroy$)
-    ).subscribe(value => {
-      value !== phoneControl.value && phoneControl.setValue(value);
-    });
+    ).subscribe(value => value !== phoneControl.value && phoneControl.setValue(value));
 
   }
 

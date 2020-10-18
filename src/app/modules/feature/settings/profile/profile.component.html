@@ -83,7 +83,7 @@
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="userName">Username</label>
                             <input class="form-control" id="userName" formControlName="userName"
-                                placeholder="Enter Username"
+                                placeholder="Enter Username" (change)="validateUsername()"
                                 [class.error]="getPersonalFormField('userName').errors && getPersonalFormField('userName').touched">
                             <div class="error-message">
                                 <ng-container
