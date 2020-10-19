@@ -11,24 +11,40 @@
         <p>{{userDetails?.bio}}</p>
     </div>
     <div class="row p-sm-3">
-        <div class="col-5 heading font-weight-medium">Clinic:
-            <div class="col-8 text-black font-weight-medium" >
-                {{ address?.businessAddress }}
+        <div class="col-3 heading font-weight-medium">
+            <mat-select placeholder="Clinic" >
+                  <mat-option value="clinic">Clinic</mat-option>
+                </mat-select>
+                
+        </div>
+        <div class="col-3 heading font-weight-medium">
+            <div class="row">
+            <div class="col-3 text-black font-weight-medium">
+
+                <a href="{{address?.businessAddressLink}}">
+                <img class="mr-4 mt-1" src="assets/icon/pin.png" width="18" height="18">
+               
+                </a>
+                
+            </div>
+            <div class="col-9 text-black font-weight-medium">
+                {{ address?.businessAddress }}                
             </div>
         </div>
-        <div class="col-7 text-black font-weight-medium">Consultation Fees:</div>
+        </div>
+        <div class="col-6 text-black font-weight-medium">Consultation Fees:</div>
     </div>
     <div class="row p-sm-3">
         <div class="col-6 text-blue font-weight-medium"> <button class="btn btn-outline-primary" (click)="showDiv()">
-            Book Clinic Visit
-        </button></div>
+                Book Clinic Visit
+            </button></div>
         <div class="col-6">
             <button class="btn btn-warning">
-                <!-- <img class="mr-4 mt-1" src="assets/images/icons/phone.svg" width="18" height="18"> -->
+                <!-- <img class="mr-4 mt-1" src="assets/icon/paw.png" width="18" height="18"> -->
                 Consult Online
-                <!-- <img class="mr-4 mt-1" src="assets/images/icons/phone.svg" width="18" height="18"> -->
+                <!-- <img class="mr-4 mt-1" src="assets/icon/paw.png" width="18" height="18"> -->
             </button>
         </div>
-        
+
     </div>
 </div>

@@ -1,6 +1,18 @@
 <div class="container-fluid" style="background-color: white; border-radius: 12px;">
-    <h2>Select Date And Time</h2>
+    <div class="row">
+        <div class="col-2">
+            <button class="btn btn-warning" (click)="back()">
+                Back
+            </button>
+        </div>
+        <div class="col-10">
+            <h2> Select Date And Time</h2>
+        </div>
+
+    </div>
+
     <div class="container-fluid">
+
         <div class="row p-3">
             <div class="col-8 heading font-weight-medium">
                 <p>Select A Date</p>
@@ -8,66 +20,67 @@
             <div class="col-3 text-black font-weight-medium">October</div>
         </div>
         <div class=" row p-sm-2" style="background-color:#ebebeb;">
-            <div class="col-sm-2 p-3  m-1 ml-2 bg-white" >
-                <input type="radio" class="" name="date" id="time" style="display: none;">
-                <label class="radio" for="time1">Mon</label>
-                <label class="radio" for="time1">11</label>
+            <div class="col-sm-2 p-3  m-1 ml-2 bg-white borders">
+                <input type="radio" class="radiobutton"   name="date" id="time"  >
+                <label class="radiolabel" for="time1">Mon</label>
+                <label class="radiolabel" for="time1">11</label>
             </div>
-            <div class="col-sm-2 p-3 m-1  bg-white" >
-                <input type="radio" class="" name="date" id="time2" style="display: none;">
-                <label class="radio" for="time2">Tue</label><br>
-                <label class="radio" for="time2">12</label>
+            <div class="col-sm-2 p-3 m-1  bg-white borders">
+                <input type="radio" class="radiobutton"   name="date" id="time2"  >
+                <label class="radiolabel" for="time2">Tue</label>
+                <label class="radiolabel" for="time2">12</label>
             </div>
-            <div class="col-sm-2 p-3  m-1  bg-white" >
-                <input type="radio" class="" name="date" id="time3" style="display: none;">
-                <label class="radio" for="time3">Wed</label>
-                <label class="radio" for="time3">13</label>
+            <div class="col-sm-2 p-3  m-1  bg-white borders">
+                <input type="radio" class="radiobutton"   name="date" id="time3"  >
+                <label class="radiolabel" for="time3">Wed</label>
+                <label class="radiolabel" for="time3">13</label>
             </div>
-            <div class="col-sm-2 p-3 m-1  bg-white"  for="date4">
-                <input type="radio" class="" name="date" id="date4" style="display: none;">
-                <label class="radio">Thu</label>
-                <label class="radio">14</label>
+            <div class="col-sm-2 p-3 m-1  bg-white borders" for="date4">
+                <input type="radio" class="radiobutton"   name="date" id="date4"  >
+                <label class="radiolabel "  for="time4">Thu</label>
+                <label class="radiolabel"  for="time4">14</label>
             </div>
-            <div class="col-sm-2 p-3 m-1  bg-white" >
-                <input type="radio" class="" name="date" id="time5" style="display: none;">
-                <label class="radio" for="rime5">Fri</label><br>
-                <label class="radio" for="rime5">15</label>
+            <div class="col-sm-2 p-3 m-1  bg-white borders" for="time5">
+                <input type="radio" class="radiobutton"   name="date" id="time5"  >
+                <label class="radiolabel" for="time5">Fri</label>
+                <label class="radiolabel" for="time5">15</label>
             </div>
 
         </div>
-
+    </div><br><br>
+    <div class="container-fluid">
         <div class="row">
             <div class="col-8 heading font-weight-medium">
                 <p>Select Time</p>
             </div>
-        </div>
+        </div><br>
         <div class="row p-3" style="background-color:#ebebeb;">
             <p class="p-3">Morning</p><br>
             <div class=" row ">
 
                 <div class="col ">
-                    <div class="bg-white">
-                    <input type="radio" class="" name="date" id="date1" style="display: none;">
-                    <label class="radio pad" for="date1">09:00Am</label>
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date1"  >
+                        <label class="radiolabel pad" for="date1">09:00Am</label>
                     </div>
                 </div>
-                <div class="col " >
-                    <div  class="bg-white">
-                    <input type="radio" class="" name="date" id="date2" style="display: none;">
-                    <label class="radio pad" for="date2">10:00Am</label>
+                <div class="col ">
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date2"  >
+                        <label class="radiolabel pad" for="date2">10:00Am</label>
                     </div>
                 </div>
-                <div class="col " >
-                    <div class="bg-white">
+                <div class="col ">
+                    <div class="bg-white borders">
 
-                    <input type="radio" class="" name="date" id="date3" style="display: none;">
-                    <label class="radio pad" for="date3">11:00Am</label>
+                        <input type="radio" class="radiobutton"   name="time" id="date3"  >
+                        <label class="radiolabel pad" for="date3">11:00Am</label>
                     </div>
                 </div>
                 <div class="col  ">
-                    <div class="bg-white">
-                    <input type="radio" class="" name="date" id="date4" style="display: none;">
-                    <label class="radio pad" for="date3">11:30Am</label>
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date4"  >
+                        <label class="radiolabel pad" for="date3">11:30Am</label>
                     </div>
                 </div>
             </div>
@@ -77,94 +90,94 @@
             <div class="row">
 
                 <div class="col p-3  ">
-                    <div class="bg-white">
-                    <input type="radio" class="" name="date" id="date1" style="display: none;">
-                    <label class="radio pad" for="time1">12:00Am</label>
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date1"  >
+                        <label class="radiolabel pad" for="time1">12:00Pm</label>
                     </div>
                 </div>
                 <div class="col  p-3 ">
-                    <div class="bg-white">
-                    <input type="radio" class="" name="date" id="date2" style="display: none;" />
-                    <label class="radio pad" for="time2">12:30Am</label>
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date2"   />
+                        <label class="radiolabel pad" for="time2">12:30Pm</label>
                     </div>
                 </div>
                 <div class="col p-3 ">
-                    <div class="" class="bg-white">
-                    <input type="radio" class="" name="date" id="date3" style="display: none;">
-                    <label class="radio pad" for="time33">01:00Am</label>
+                    <div   class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date3"  >
+                        <label class="radiolabel pad" for="time33">01:00Pm</label>
                     </div>
                 </div>
                 <div class="col p-3  ">
-                    <div class="" class="bg-white">
-                    <input type="radio" class="" name="date" id="date4" style="display: none;">
-                    <label class="radio pad" for="time43">01:30Am</label>
+                    <div   class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date4"  >
+                        <label class="radiolabel pad" for="time43">01:30Pm</label>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class=" row pl-3 pr-3" style="background-color:#ebebeb;">
             <div class="row">
 
-                <div class="col">
-                    <div class="bg-white">
-                    <input type="radio" class="" name="date" id="date1" style="display: none;">
-                    <label class="radio pad" for="date1">02:00pm</label>
+                <div class="col p-3  ">
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date1"  >
+                        <label class="radiolabel padd" for="time1">02:00Pm</label>
                     </div>
                 </div>
-                <div class="col " >
-                    <div  class="bg-white">
-                    <input type="radio" class="" name="date" id="date2" style="display: none;">
-                    <label class="radio pad" for="date2">02:30pm</label>
+                <div class="col  p-3 ">
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date2"   />
+                        <label class="radiolabel padd" for="time2">02:30Pm</label>
                     </div>
                 </div>
-                <div class="col " >
-                    <div class="bg-white">
+                <div class="col p-3 ">
+                    <div   class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date3"  >
+                        <label class="radiolabel padd" for="time33">03:00Pm</label>
+                    </div>
+                </div>
+                <div class="col p-3  ">
+                    <div   class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date4"  >
+                        <label class="radiolabel padd" for="time43">03:30Pm</label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                    <input type="radio" class="" name="date" id="date3" style="display: none;">
-                    <label class="radio pad" for="date3">03:00pm</label>
+    </div>
+    <div class="container-fluid">
+        <div class="row p-3" style="background-color:#ebebeb;">
+            <p class="pl-2 pb-4">Evening</p><br>
+            <div class="row ">
+
+                <div class="col ">
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date1"  >
+                        <label class="radiolabel padd" for="date1">05:00Pm</label>
+                    </div>
+                </div>
+                <div class="col ">
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date2"  >
+                        <label class="radiolabel padd" for="date2">05:30Pm</label>
+                    </div>
+                </div>
+                <div class="col ">
+                    <div class="bg-white borders">
+
+                        <input type="radio" class="radiobutton"   name="time" id="date3"  >
+                        <label class="radiolabel padd" for="date3">06:00Pm</label>
                     </div>
                 </div>
                 <div class="col  ">
-                    <div class="bg-white">
-                    <input type="radio" class="" name="date" id="date4" style="display: none;">
-                    <label class="radio pad" for="date3">02:30pm</label>
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton"   name="time" id="date4"  >
+                        <label class="radiolabel padd" for="date3">06:30Pm</label>
                     </div>
                 </div>
             </div>
-            
         </div>
-        <div class=" row p-3" style="background-color:#ebebeb;">
-            <p p-3>Evening</p><br><br>
-            <div class=" row ">
-
-                <div class="col ">
-                    <div class="bg-white">
-                    <input type="radio" class="" name="date" id="date1" style="display: none;">
-                    <label class="radio pad" for="date1">05:00pm</label>
-                    </div>
-                </div>
-                <div class="col " >
-                    <div  class="bg-white">
-                    <input type="radio" class="" name="time" id="date2" style="display: none;">
-                    <label class="radio pad" for="date2">05:30pm</label>
-                    </div>
-                </div>
-                <div class="col " >
-                    <div class="bg-white">
-
-                    <input type="radio" class="" name="time" id="date3" style="display: none;">
-                    <label class="radio pad" for="date3">06:00pm</label>
-                    </div>
-                </div>
-                <div class="col ">
-                    <div class="bg-white">
-                    <input type="radio" class="" name="time" id="t" style="display: none;">
-                    <label class="radio pad" for="date3">06:30pm</label>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
 </div>
 <div container-fluid class="p-3" style="background-color:transparent;">
     <div class="text-center" style="text-align: center;">
