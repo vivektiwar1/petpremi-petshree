@@ -5,8 +5,7 @@
 
 
 <mat-dialog-content>
-    <form *ngIf="clientForm" [formGroup]="clientForm" class="no-outline" autocomplete="off"
-    (ngSubmit)="onSubmit()">
+    <form *ngIf="clientForm" [formGroup]="clientForm" class="no-outline" autocomplete="off">
 
         <div class="row">
             <div class="col-12 col-sm-6 form-group">
@@ -97,16 +96,11 @@
 
                 <app-crop-picture *ngIf="(imageToCrop$ | async) as imageCrop" [image]="imageCrop"
                                     (cropped)="croppedImage($event)" (cancel)="croppedImage()"></app-crop-picture>
-                <div class="content" #resultContainer>
-                    <div class="slickContainer" appImageSlick (slideActivated)="showInfo($event)" [list]="list"></div>
-                </div>
+                <img *ngIf="image" [src]="image" max-height="300px" width="100%" />
             </div>
         </div>
-        <app-button class="mt-4" className="btn-warning" buttonText="ADD CLIENT"
-            [disabled]="(clientForm.invalid || apiInProgress)">
-        </app-button>
     </form>
-
-    
-
+    <app-button *ngIf="clientForm" (click)="onSubmit()" class="mt-4" className="btn-warning" buttonText="ADD CLIENT"
+        [disabled]="(clientForm.invalid || apiInProgress)">
+    </app-button>
 </mat-dialog-content>

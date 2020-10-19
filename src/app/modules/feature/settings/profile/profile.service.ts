@@ -80,12 +80,53 @@ export class ProfileService {
     );
   }
 
+  getPartnerFormData(partnerId) {
+    const apiData = {
+      commonParamHash: {
+        entityName: 'Partner',
+        uiBean: 'BNEPartnerCard',
+        operation: 'SEARCH'
+      },
+      objectHash: {
+        id: partnerId
+      }
+    };
+    return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/crud`, apiData).pipe(
+      map((response: any) => {
+        if (!response?.isError) {
+          return response?.responseResult?.data;
+        } else {
+          throw new Error(response?.responseError?.message || 'Something went wrong');
+        }
+      }),
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
+
   updateDisplayPicture(type: string, formData) {
     return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/user/${type !== 'Profile' ? type.toLowerCase() : 'uploadProfilePic'}`, formData);
   }
 
   uploadCertificates(formData) {
     return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/user/certificate`, formData);
+  }
+
+  updateClinicDetails(formData) {
+    return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/partner/address/update/create`, formData).pipe(
+      map((response: any) => {
+        console.log(response);
+        if (response?.isError !== true) {
+          return response?.responseResult?.data;
+        } else {
+          throw new Error(response?.responseError?.message || 'Something went wrong');
+        }
+      }),
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
   }
 
   updateProfileDetails(formData, userId) {

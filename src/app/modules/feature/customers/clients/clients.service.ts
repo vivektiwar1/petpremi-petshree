@@ -93,4 +93,8 @@ export class ClientsService {
       }
     });
   }
+
+  postCustomerImage(apiData) {
+    return this.http.post(`${environment.apiBase}/service/oauth2/api/user/uploadProfilePic`, apiData);
+  }
 }
