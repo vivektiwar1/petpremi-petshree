@@ -21,6 +21,10 @@ export class ECardComponent implements OnDestroy {
   activeLink$: Observable<string>;
   destroy$: Subject<void> = new Subject();
   userDetails: any;
+  weekDay: any;
+  appontmentReason: any;
+  appontmentType: any;
+  appontmentRepeat: any;
   enquiryForm: FormGroup;
   hiddenNavItems: Array<string> = [];
   titles: Array<any>;
@@ -57,6 +61,10 @@ export class ECardComponent implements OnDestroy {
       this.userDetails = null;
       userName ? this.init(userName) : this.navigateToErrorPage();
     })
+    this.getDay();
+    this.getAppointmentReason();
+    this.getAppointmentType();
+    this.getAppointmentRepeat();
   }
 
   async init(userName) {
@@ -80,7 +88,72 @@ export class ECardComponent implements OnDestroy {
       console.error(error);
     }
   }
+  async getDay() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response = await this.eCardService.getDay().toPromise();
+      this.weekDay = response.responseResult.data.content;
+      if (!this.weekDay) {
+        this.navigateToErrorPage();
+        return;
+      }
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
 
+  }
+
+  async getAppointmentReason() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response: any = await this.eCardService.getAppointmentReason().toPromise();
+      this.appontmentReason = response.responseResult.data.content;
+      if (!this.weekDay) {
+        this.navigateToErrorPage();
+        return;
+      }
+
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+
+  }
+
+  async getAppointmentRepeat() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response: any = await this.eCardService.getAppointmentRepeat().toPromise();
+      this.appontmentRepeat = response.responseResult.data.content;
+      if (!this.weekDay) {
+        this.navigateToErrorPage();
+        return;
+      }
+
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+
+  }
+
+  async getAppointmentType() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response: any = await this.eCardService.getAppointmentType().toPromise();
+      this.appontmentReason = response.responseResult.data.content;
+      if (!this.weekDay) {
+        this.navigateToErrorPage();
+        return;
+      }
+
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+
+  }
   async createUserDetails(userDetails) {
     this.createEnquiryForm();
     this.userDetails = {
@@ -188,7 +261,6 @@ export class ECardComponent implements OnDestroy {
   }
 
   async onSubmit() {
-
     try {
       this.enquiryForm.markAllAsTouched();
       if (this.enquiryForm.valid) {

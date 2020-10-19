@@ -17,35 +17,34 @@
             <div class="col-8 heading font-weight-medium">
                 <p>Select A Date</p>
             </div>
-            <div class="col-3 text-black font-weight-medium">October</div>
+            <div class="col-3 text-black font-weight-medium">{{this.monthName}}</div>
         </div>
+
         <div class=" row p-sm-2" style="background-color:#ebebeb;">
             <div class="col-sm-2 p-3  m-1 ml-2 bg-white borders">
-                <input type="radio" class="radiobutton"   name="date" id="time"  >
-                <label class="radiolabel" for="time1">Mon</label>
-                <label class="radiolabel" for="time1">11</label>
+                <input type="radio" class="radiobutton" name="date" id="date1">
+                <label class="radiolabel" for="date1">{{weekDay[this.dayName].name.slice(0,3)}}<br><b>{{this.currentDate}}</b></label>
             </div>
             <div class="col-sm-2 p-3 m-1  bg-white borders">
-                <input type="radio" class="radiobutton"   name="date" id="time2"  >
-                <label class="radiolabel" for="time2">Tue</label>
-                <label class="radiolabel" for="time2">12</label>
+                <input type="radio" class="radiobutton" name="date" id="date2">
+                <label class="radiolabel" for="date2">{{weekDay[this.dayName+1].name.slice(0,3)}}<br>
+                    <b>{{this.currentDate+1}}</b></label>
             </div>
             <div class="col-sm-2 p-3  m-1  bg-white borders">
-                <input type="radio" class="radiobutton"   name="date" id="time3"  >
-                <label class="radiolabel" for="time3">Wed</label>
-                <label class="radiolabel" for="time3">13</label>
+                <input type="radio" class="radiobutton" name="date" id="date3">
+                <label class="radiolabel" for="date3">{{weekDay[this.dayName+2].name.slice(0,3)}}<br>
+                    <b>{{this.currentDate+2}}</b></label>
             </div>
             <div class="col-sm-2 p-3 m-1  bg-white borders" for="date4">
-                <input type="radio" class="radiobutton"   name="date" id="date4"  >
-                <label class="radiolabel "  for="time4">Thu</label>
-                <label class="radiolabel"  for="time4">14</label>
+                <input type="radio" class="radiobutton" name="date" id="date4">
+                <label class="radiolabel " for="date4">{{weekDay[this.dayName+3].name.slice(0,3)}}<br>
+                    <b>{{this.currentDate+3}}</b></label>
             </div>
-            <div class="col-sm-2 p-3 m-1  bg-white borders" for="time5">
-                <input type="radio" class="radiobutton"   name="date" id="time5"  >
-                <label class="radiolabel" for="time5">Fri</label>
-                <label class="radiolabel" for="time5">15</label>
+            <div class="col-sm-2 p-3 m-1  bg-white borders" for="date5">
+                <input type="radio" class="radiobutton" name="date" id="date5">
+                <label class="radiolabel" for="date5">{{weekDay[this.dayName+4].name.slice(0,3)}}<br>
+                    <b>{{this.currentDate+4}}</b></label>
             </div>
-
         </div>
     </div><br><br>
     <div class="container-fluid">
@@ -60,27 +59,27 @@
 
                 <div class="col ">
                     <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date1"  >
-                        <label class="radiolabel pad" for="date1">09:00Am</label>
+                        <input type="radio" class="radiobutton" name="time" id="time1">
+                        <label class="radiolabel pad" for="time1">09:00Am</label>
                     </div>
                 </div>
                 <div class="col ">
                     <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date2"  >
-                        <label class="radiolabel pad" for="date2">10:00Am</label>
+                        <input type="radio" class="radiobutton" name="time" id="time2">
+                        <label class="radiolabel pad" for="time2">10:00Am</label>
                     </div>
                 </div>
                 <div class="col ">
                     <div class="bg-white borders">
 
-                        <input type="radio" class="radiobutton"   name="time" id="date3"  >
-                        <label class="radiolabel pad" for="date3">11:00Am</label>
+                        <input type="radio" class="radiobutton" name="time" id="time3">
+                        <label class="radiolabel pad" for="time3">11:00Am</label>
                     </div>
                 </div>
-                <div class="col  ">
+                <div class="col">
                     <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date4"  >
-                        <label class="radiolabel pad" for="date3">11:30Am</label>
+                        <input type="radio" class="radiobutton" name="time" id="time4">
+                        <label class="radiolabel pad" for="time4">11:30Am</label>
                     </div>
                 </div>
             </div>
@@ -91,26 +90,26 @@
 
                 <div class="col p-3  ">
                     <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date1"  >
-                        <label class="radiolabel pad" for="time1">12:00Pm</label>
+                        <input type="radio" class="radiobutton" name="time" id="time5">
+                        <label class="radiolabel pad" for="time5">12:00Pm</label>
                     </div>
                 </div>
                 <div class="col  p-3 ">
                     <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date2"   />
-                        <label class="radiolabel pad" for="time2">12:30Pm</label>
+                        <input type="radio" class="radiobutton" name="time" id="time6" />
+                        <label class="radiolabel pad" for="time6">12:30Pm</label>
                     </div>
                 </div>
                 <div class="col p-3 ">
-                    <div   class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date3"  >
-                        <label class="radiolabel pad" for="time33">01:00Pm</label>
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton" name="time" id="time7">
+                        <label class="radiolabel pad" for="time7">01:00Pm</label>
                     </div>
                 </div>
                 <div class="col p-3  ">
-                    <div   class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date4"  >
-                        <label class="radiolabel pad" for="time43">01:30Pm</label>
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton" name="time" id="time8">
+                        <label class="radiolabel pad" for="time8">01:30Pm</label>
                     </div>
                 </div>
             </div>
@@ -120,26 +119,26 @@
 
                 <div class="col p-3  ">
                     <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date1"  >
-                        <label class="radiolabel padd" for="time1">02:00Pm</label>
+                        <input type="radio" class="radiobutton" name="time" id="timea9">
+                        <label class="radiolabel padd" for="time9">02:00Pm</label>
                     </div>
                 </div>
                 <div class="col  p-3 ">
                     <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date2"   />
-                        <label class="radiolabel padd" for="time2">02:30Pm</label>
+                        <input type="radio" class="radiobutton" name="time" id="time10" />
+                        <label class="radiolabel padd" for="time10">02:30Pm</label>
                     </div>
                 </div>
                 <div class="col p-3 ">
-                    <div   class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date3"  >
-                        <label class="radiolabel padd" for="time33">03:00Pm</label>
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton" name="time" id="time11">
+                        <label class="radiolabel padd" for="time11">03:00Pm</label>
                     </div>
                 </div>
                 <div class="col p-3  ">
-                    <div   class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date4"  >
-                        <label class="radiolabel padd" for="time43">03:30Pm</label>
+                    <div class="bg-white borders">
+                        <input type="radio" class="radiobutton" name="time" id="time12">
+                        <label class="radiolabel padd" for="time12">03:30Pm</label>
                     </div>
                 </div>
             </div>
@@ -153,39 +152,38 @@
 
                 <div class="col ">
                     <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date1"  >
-                        <label class="radiolabel padd" for="date1">05:00Pm</label>
+                        <input type="radio" class="radiobutton" name="time" id="time13">
+                        <label class="radiolabel padd" for="time13">05:00Pm</label>
                     </div>
                 </div>
                 <div class="col ">
                     <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date2"  >
-                        <label class="radiolabel padd" for="date2">05:30Pm</label>
+                        <input type="radio" class="radiobutton" name="time" id="time14">
+                        <label class="radiolabel padd" for="time14">05:30Pm</label>
                     </div>
                 </div>
                 <div class="col ">
                     <div class="bg-white borders">
-
-                        <input type="radio" class="radiobutton"   name="time" id="date3"  >
-                        <label class="radiolabel padd" for="date3">06:00Pm</label>
+                        <input type="radio" class="radiobutton" name="time" id="time15">
+                        <label class="radiolabel padd" for="time15">06:00Pm</label>
                     </div>
                 </div>
-                <div class="col  ">
-                    <div class="bg-white borders">
-                        <input type="radio" class="radiobutton"   name="time" id="date4"  >
-                        <label class="radiolabel padd" for="date3">06:30Pm</label>
+                <div class="col">
+                    <div class="bg-white borders" for="time16">
+                        <input type="radio" class="radiobutton" name="time" id="time16">
+                        <label class="radiolabel padd" for="time16">06:30Pm</label>
                     </div>
                 </div>
             </div>
         </div>
-</div>
-<div container-fluid class="p-3" style="background-color:transparent;">
-    <div class="text-center" style="text-align: center;">
-        <button class="btn btn-warning" (click)="showDiv()">
-            <img class=" mt-1" src="assets/icon/black-paw.png" width="18" height="18">
-            Consult Online
-            <img class="mt-1" src="assets/icon/black-paw.png" width="18" height="18">
-        </button>
     </div>
+    <div container-fluid class="p-3" style="background-color:transparent;">
+        <div class="text-center" style="text-align: center;">
+            <button class="btn btn-warning" (click)="showDiv()">
+                <img class=" mt-1" src="assets/icon/black-paw.png" width="18" height="18">
+                Consult Online
+                <img class="mt-1" src="assets/icon/black-paw.png" width="18" height="18">
+            </button>
+        </div>
 
-</div>
+    </div>

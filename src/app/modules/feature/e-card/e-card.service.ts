@@ -21,18 +21,116 @@ export class ECardService {
 
   private getApiUrl(url: string): string {
     return url.includes('oauth2')
-          ? `${environment.apiBase}${url}`
-          : `${environment.apiBase}/service/api${url}`;
+      ? `${environment.apiBase}${url}`
+      : `${environment.apiBase}/service/api${url}`;
   }
 
-  getUserDetails(userName,partnerUserName): Observable<any> {
-   
+  getUserDetails(userName, partnerUserName): Observable<any> {
+
     return this.http.get(this.getApiUrl(`/e/card/details?userName=${userName}&partnerUserName=${partnerUserName}`), {
       headers: {
         'Content-Type': 'application/json'
       }
     });
   }
+
+  getDay(): Observable<any> {
+    const apiData = {
+      commonParamHash: {
+        entityName: "Day",
+        uiBean: "BNEDay",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+          ASC: [
+            "id"
+          ]
+        }
+      },
+      objectHash: {
+        status: true
+      }
+    };
+    return this.http.post(this.getApiUrl(`/crud`), apiData);
+  }
+  getAppointmentReason() {
+    const apiData = {
+      commonParamHash: {
+        entityName: "AppointmentReason",
+        uiBean: "BNEAppointmentReason",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+          DESC: [
+            "id"
+          ]
+        }
+      },
+      objectHash: {
+        active: true,
+        appointmentReason_LIKE: "tos"
+      }
+    }
+    return this.http.post(this.getApiUrl(`/crud`), apiData);
+
+  }
+
+  getAppointmentRepeat() {
+    const apiData = {
+      commonParamHash: {
+        entityName: "AppointmentRepeat",
+        uiBean: "BNEAppointmentRepeat",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+          DESC: [
+            "id"
+          ]
+        }
+      },
+      objectHash: {
+        active: true,
+        appointmentRepeat_LIKE: "tos"
+      }
+    }
+    return this.http.post(this.getApiUrl(`/crud`), apiData);
+
+  }
+
+  getAppointmentType() {
+    const apiData = {
+      commonParamHash: {
+        entityName: "AppointmentType",
+        uiBean: "BNEAppointmentType",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+          DESC: [
+            "id"
+          ]
+        }
+      },
+      objectHash: {
+        active: true,
+        appointmentType_LIKE: "de"
+      }
+    }
+    return this.http.post(this.getApiUrl(`/crud`), apiData);
+
+  }
+
 
   postEnquiry(apiData) {
     if (!apiData.phone) {
@@ -67,9 +165,9 @@ export class ECardService {
           pageSize: 10
         },
         sort: {
-            ASC: [
-                'id'
-            ]
+          ASC: [
+            'id'
+          ]
         }
       },
       objectHash: {
@@ -79,7 +177,7 @@ export class ECardService {
 
     return this.http.post(this.getApiUrl('/crud'), apiData);
   }
-  
+
 
   getWeightUnits() {
     const apiData = {
@@ -92,9 +190,9 @@ export class ECardService {
           pageSize: 10
         },
         sort: {
-            ASC: [
-                'id'
-            ]
+          ASC: [
+            'id'
+          ]
         }
       },
       objectHash: {
@@ -130,9 +228,9 @@ export class ECardService {
           pageSize: 6
         },
         sort: {
-            ASC: [
-                "displayOrder"
-            ]
+          ASC: [
+            "displayOrder"
+          ]
         }
       },
       objectHash: {

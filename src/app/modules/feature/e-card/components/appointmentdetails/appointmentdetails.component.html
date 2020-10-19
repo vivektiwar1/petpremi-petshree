@@ -35,8 +35,9 @@
                 </div>
             </div>
             <div class="col-12">
-                <select id="reason" name="reason" class="select">
-                    <option value="reason">Reason</option>
+                <select id="reason" name="reason" class="select" 
+                *ngFor="let type of appointmentReason">
+                    <option value="reason">{{type.id.name}}</option>
                 </select>
             </div>
         </div>
@@ -50,8 +51,9 @@
                 </div>
             </div>
             <div class="col-12">
-                <select id="reason" name="type" class="select">
-                    <option value="type">Type</option>
+                <select id="reason" name="type" class="select" 
+                 *ngFor="let type of appointmentReason">
+                    <option value="type">{{type}}</option>
                 </select>
             </div>
         </div>

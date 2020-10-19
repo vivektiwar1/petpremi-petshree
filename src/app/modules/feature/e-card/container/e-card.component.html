@@ -12,21 +12,19 @@
                     <app-header>Book Now</app-header>
                     <app-appointment [userDetails]="userDetails"></app-appointment>
                 </div>
-                <div class=" mt-3 mb-5 py-4 border-rounded" id="appointmenttime" style="background-color: transparent; display: none;">
-                    <app-appointmenttime ></app-appointmenttime>
+                <div class=" mt-3 mb-5 py-4 border-rounded" id="appointmenttime"
+                    style="background-color: transparent; display: none;">
+                    <app-appointmenttime [weekDay]="weekDay" [userDetails]="userDetails"></app-appointmenttime>
                 </div>
-                <div class="mt-3 py-4 border-rounded" id="appointmentdetails" style="background-color: transparent; display: none;" >
-                    <app-appointmentdetails ></app-appointmentdetails>
+                <div class="mt-3 py-4 border-rounded" id="appointmentdetails"
+                    style="background-color: transparent; display: none;">
+                    <app-appointmentdetails [appointmentReason]="appontmentReason"
+                        [appointmentRepeat]="appontmentRepeat" [appointmentType]="appontmentType"
+                        [userDetails]="userDetails"></app-appointmentdetails>
                 </div>
-                <div class="mt-3 py-4 border-rounded" id="petdetails" style="background-color: white; display: none;" >
+                <div class="mt-3 py-4 border-rounded" id="petdetails" style="background-color: white; display: none;">
                     <app-petdetails></app-petdetails>
                 </div>
-
-                <!-- <div class="bg-white mt-3 py-4 border-rounded" id="about">
-                    <app-header>About</app-header>
-                    <app-about [userDetails]="userDetails"></app-about>
-                </div> -->
-
                 <div *ngIf="userDetails?.images?.length" class="bg-white mt-3 py-4 border-rounded" id="gallery">
                     <app-header>Gallery</app-header>
                     <app-gallery [imageList]="userDetails.images"></app-gallery>
@@ -42,9 +40,9 @@
                     <app-enquiry [enquiryLoader]="apiInProgress.enquiryLoader" [enquiryForm]="enquiryForm"
                         [titles]="titles" [countries]="countries" (onSubmitEvent)="onSubmit()"></app-enquiry>
                 </div>
-                
-               
-                
+
+
+
             </section>
 
         </div>

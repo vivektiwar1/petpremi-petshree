@@ -6,7 +6,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./appointmentdetails.component.scss']
 })
 export class AppointmentDetailsComponent implements OnInit {
-
+  @Input() appointmentReason: any;
+  @Input() appointmentType: any;
+  @Input() appointmentRepeat: any;
   @Input() userDetails: any;
 
   constructor() { }
@@ -14,6 +16,7 @@ export class AppointmentDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
   showDiv() {
+    console.log(this.appointmentReason)
     document.getElementById('appointmentdetails').style.display = "none";
 
     document.getElementById('petdetails').style.display = "block";
