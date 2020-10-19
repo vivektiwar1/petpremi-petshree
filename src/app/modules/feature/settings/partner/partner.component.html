@@ -262,15 +262,64 @@
                         </div>
     
                         <div class="col-12 col-sm-6 form-group">
-                            <!-- <label class="mb-2" for="pinCode">Pin Code</label>
-                            <mat-select class="form-control" formControlName="pinCode" placeholder="Select Pin Code">
-                                <mat-option *ngFor="let pin of pinCodeList" [value]="pin.value">
-                                    {{pin.name}}
-                                </mat-option>
-                            </mat-select> -->
                             <input-dropdown label="Pin Code" name="pinCode" placeholder="Select Pin Code"
                                 [parentFormGroup]="clinicForm" [selectionList]="pinCodeList">
                             </input-dropdown>
+                        </div>
+                        <div class="col-12 d-flex justify-content-between align-items-center">
+                            <h6 class="title-color mb-0">Add Partner Details</h6>
+                        </div>
+                        <div class="col-12" formArrayName="partnerContactNumbers">
+                            <ng-container *ngFor="let partner of partnerContactsList; let partnerIndex = index">
+                                <div class="row" [formGroupName]="partnerIndex" [class.mt-3]="partnerIndex">
+                                    <div class="col-12 position-relative">
+                                        <div class="border rounded p-2">
+                                            <div class="row">
+                                                <div class="col-12 col-sm-4 form-group mb-0">
+                                                    <label class="mb-1" for="name">First Name</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="form-control">
+                                                                <mat-select formControlName="title">
+                                                                    <mat-option *ngFor="let item of titleList" [value]="item.id">{{item.title}}</mat-option>
+                                                                </mat-select>
+                                                            </div>
+                                                        </div>
+                                                        <input class="form-control" id="name" formControlName="firstName"
+                                                            placeholder="First Name"
+                                                            [class.error]="partner.get('firstName').errors && partner.get('firstName').touched">
+                                                    </div>
+                                                    <div class="error-message">
+                                                        <ng-container
+                                                            *ngIf="partner.get('firstName').errors && partner.get('firstName').touched">
+                                                            <span>Partner name is required!</span>
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-4 form-group mb-0">
+                                                    <label class="mb-1" for="name">Last Name</label>
+                                                    <input class="form-control" id="name" formControlName="lastName"
+                                                        placeholder="Last Name">
+                                                </div>
+                                                <div class="col-12 col-sm-4 form-group mb-0">
+                                                    <label class="mb-1" for="mobile">Mobile</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="form-control">
+                                                                <mat-select formControlName="country">
+                                                                    <mat-option *ngFor="let item of countryList" [value]="item.id">+{{item.code}}</mat-option>
+                                                                </mat-select>
+                                                            </div>
+                                                        </div>
+                                                        <input class="form-control" id="mobile" formControlName="mobile"
+                                                            placeholder="Phone Number">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
                         </div>
     
                         <div class="col-12 d-flex justify-content-between align-items-center">

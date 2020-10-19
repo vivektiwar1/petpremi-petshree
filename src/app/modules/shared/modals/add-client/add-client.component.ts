@@ -23,19 +23,20 @@ export class AddClientComponent {
   @ViewChild('uploadRef') uploadRef: ElementRef<HTMLInputElement>;
   listeners = [];
   selectedIndex = 0;
-  list = [
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-  ];
-  @ViewChild('resultContainer') resultContainer: ElementRef;
+  image: string;
+  // list = [];
+  //   'https://via.placeholder.com/300x300',
+  //   'https://via.placeholder.com/300x300',
+  //   'https://via.placeholder.com/300x300',
+  //   'https://via.placeholder.com/300x300',
+  //   'https://via.placeholder.com/300x300',
+  //   'https://via.placeholder.com/300x300',
+  //   'https://via.placeholder.com/300x300',
+  //   'https://via.placeholder.com/300x300',
+  //   'https://via.placeholder.com/300x300',
+  //   'https://via.placeholder.com/300x300',
+  // ];
+  // @ViewChild('resultContainer') resultContainer: ElementRef;
 
   clientForm: FormGroup;
   apiInProgress: boolean;
@@ -64,6 +65,7 @@ export class AddClientComponent {
 
   upload({files}: any) {
     this.imageToCrop$.next(files[0]);
+    console.log(this.imageToCrop$);
     this.uploadRef.nativeElement.value = '';
   }
 
@@ -75,28 +77,30 @@ export class AddClientComponent {
   }
 
   searchImage(item) {
-    this.list = [
-      item,
-      ...this.list
-    ];
-    this.scrollToResult();
+    // this.list = [
+    //   item,
+    //   ...this.list
+    // ];
+    this.image = item;
+    // console.log(this.list);
+    // this.scrollToResult();
   }
 
   searchPet(pet) {
     console.log(pet);
-    this.scrollToResult();
+    // this.scrollToResult();
   }
 
   showInfo(index) {
     this.selectedIndex = index;
   }
 
-  scrollToResult() {
-    const parent = $(window.innerWidth > 991 ? this.e.nativeElement : 'html, body');
-    parent.animate({
-      scrollTop: $(this.resultContainer.nativeElement).offset().top - parent.offset().top
-    }, 800);
-  }
+  // scrollToResult() {
+  //   const parent = $(window.innerWidth > 991 ? this.e.nativeElement : 'html, body');
+  //   parent.animate({
+  //     scrollTop: $(this.resultContainer.nativeElement).offset().top - parent.offset().top
+  //   }, 800);
+  // }
 
   customZoom(e) {
     const c = document.createElement('div');
@@ -104,6 +108,7 @@ export class AddClientComponent {
     this.listeners = customZoomControl(c, e);
     e.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(c);
   }
+
   async createForm() {
     const [titles, countries, genders] = await this.getData();
     this.titles = ((titles as any)?.responseResult?.data?.content || []).map(item => {
@@ -183,7 +188,12 @@ export class AddClientComponent {
           mobile: this.clientForm.value.phone
         };
         delete formData.phone;
-        await this.service.postCustomer(formData).toPromise();
+        const response: any = await this.service.postCustomer(formData).toPromise();
+        const ImageData = {
+          file: this.image,
+          randomKey: response?.randomKey
+        };
+        await this.service.postCustomerImage(ImageData).toPromise();
         this.toastrService.success('Customer Added successfully!');
         this.apiInProgress = false;
         this.clientForm.reset({
