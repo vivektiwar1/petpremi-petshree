@@ -184,10 +184,10 @@
     "userExistFP": "User already exists. Do you want to try Forgot Password?",
     "userExistSendOtp": "User already exists. Do you wish to proceed the activation process?",
     "userExist2SendOtp": "User already exists with different role. Do you wish to process the validation process?",
-    "signUpPartner": "Sign up as Partner",
-    "signUpCustomer": "Sign up as Customer",
-    "notCustomer": "Not a customer?",
-    "notPartner": "Not a partner?"
+    "signUpPartner": "Register Here",
+    "signUpCustomer": "Not a doctor?",
+    "notCustomer": "Are you a doctor?",
+    "notPartner": ""
   },
   "form": {
     "emailPhone": {
@@ -200,6 +200,10 @@
       "minLengthError": "Password should be at least 8 characters long",
       "maxLengthError": "Password should be at most 10 characters long",
       "patternError": "Password should have at least one uppercase letter, one lowercase letter, one number and one special character"
+    },
+    "username": {
+      "username": "Username",
+      "error": "Invalid Username"
     },
     "email": {
       "email": "Email",

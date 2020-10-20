@@ -238,16 +238,13 @@
         <div>
           <mat-form-field class="input2">
             <input matInput type="text" formControlName="username" autofocus
-                   [placeholder]="'form.emailPhone.emailPhone' | translate">
+                   [placeholder]="'form.username.username' | translate">
             <ng-container *ngIf="showUpdatedControlError('username')">
-              <mat-error *ngIf="formControl.username.errors.required">
-                {{'form.emailPhone.error' | translate}}
-              </mat-error>
               <mat-error *ngIf="formControl.username.errors.invalidPhone">
                 {{'form.mobile.error' | translate}}
               </mat-error>
-              <mat-error *ngIf="formControl.username.errors.email">
-                {{'form.email.error' | translate}}
+              <mat-error *ngIf="formControl.username.errors.required || formControl.username.errors.username">
+                {{'form.username.error' | translate}}
               </mat-error>
             </ng-container>
           </mat-form-field>
