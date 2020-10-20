@@ -13,6 +13,7 @@ export class CommonService {
   private httpSpy: HttpClient;
   private countryList: Array<any>;
   private stateList: Array<any>;
+  private dayList: Array<any>;
   private cityList: Array<any>;
   private pinCodeList: Array<any>;
   private titleList: Array<any>;
@@ -103,6 +104,29 @@ export class CommonService {
     } else {
       return this.userId;
     }
+  }
+
+  async getDaysList() {
+    if (!this.dayList?.length) {
+      const apiData = this.getSearchObject('Day');
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.dayList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            fullName: item.name,
+            name: item.shortCode,
+            id: item.id,
+            value: item.id
+          };
+        });
+        return this.dayList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.dayList;
+    }
+
   }
 
   async getCountryList() {

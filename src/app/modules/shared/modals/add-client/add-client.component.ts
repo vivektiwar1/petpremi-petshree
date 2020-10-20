@@ -65,7 +65,6 @@ export class AddClientComponent {
 
   upload({files}: any) {
     this.imageToCrop$.next(files[0]);
-    console.log(this.imageToCrop$);
     this.uploadRef.nativeElement.value = '';
   }
 
@@ -77,30 +76,16 @@ export class AddClientComponent {
   }
 
   searchImage(item) {
-    // this.list = [
-    //   item,
-    //   ...this.list
-    // ];
     this.image = item;
-    // console.log(this.list);
-    // this.scrollToResult();
   }
 
   searchPet(pet) {
     console.log(pet);
-    // this.scrollToResult();
   }
 
   showInfo(index) {
     this.selectedIndex = index;
   }
-
-  // scrollToResult() {
-  //   const parent = $(window.innerWidth > 991 ? this.e.nativeElement : 'html, body');
-  //   parent.animate({
-  //     scrollTop: $(this.resultContainer.nativeElement).offset().top - parent.offset().top
-  //   }, 800);
-  // }
 
   customZoom(e) {
     const c = document.createElement('div');
@@ -189,17 +174,19 @@ export class AddClientComponent {
         };
         delete formData.phone;
         const response: any = await this.service.postCustomer(formData).toPromise();
-        const ImageData = {
-          file: this.image,
-          randomKey: response?.randomKey
-        };
-        await this.service.postCustomerImage(ImageData).toPromise();
+        const ext = this.image.split(';')[0].split(':')[1].split('/')[1];
+        const data = new FormData();
+        const file = new File([this.service.imagetoblob(this.image)], `filenName.${ext}`);
+        data.append('file', file);
+        data.append('randomKey', response?.randomKey);
+        await this.service.postCustomerImage(data).toPromise();
         this.toastrService.success('Customer Added successfully!');
         this.apiInProgress = false;
         this.clientForm.reset({
           titleId: this.titles[0].id,
           countryId: this.countries[0].id
         });
+        this.image = null;
         this.matDialog.closeAll();
       } else {
         console.log('Contact form invalid.');

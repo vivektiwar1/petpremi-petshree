@@ -268,6 +268,9 @@
                         </div>
                         <div class="col-12 d-flex justify-content-between align-items-center">
                             <h6 class="title-color mb-0">Add Partner Details</h6>
+                            <button class="btn btn-effect text-warning no-outline px-0" (click)="addPartner()"
+                                [disabled]="clinicForm.get('partnerContactNumbers').invalid">+ ADD
+                                ANOTHER PARTNER</button>
                         </div>
                         <div class="col-12" formArrayName="partnerContactNumbers">
                             <ng-container *ngFor="let partner of partnerContactsList; let partnerIndex = index">
@@ -276,7 +279,31 @@
                                         <div class="border rounded p-2">
                                             <div class="row">
                                                 <div class="col-12 col-sm-4 form-group mb-0">
-                                                    <label class="mb-1" for="name">First Name</label>
+                                                    <label class="mb-1" for="mobile">Mobile</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="form-control">
+                                                                <mat-select formControlName="country">
+                                                                    <mat-option *ngFor="let item of countryList" [value]="item.id">+{{item.code}}</mat-option>
+                                                                </mat-select>
+                                                            </div>
+                                                        </div>
+                                                        <input class="form-control" id="mobile" formControlName="mobile"
+                                                            placeholder="Phone Number" (change)="validatePartnerNumber($event, partnerIndex)"
+                                                            [class.error]="partner.get('mobile').errors && partner.get('mobile').touched">
+                                                    </div>
+                                                    <div class="error-message">
+                                                        <ng-container
+                                                            *ngIf="partner.get('mobile').errors && partner.get('mobile').touched">
+                                                            <span *ngIf="partner.get('mobile').hasError('minlength')">
+                                                                Phone number is invalid!</span>
+                                                            <span *ngIf="partner.get('mobile').hasError('required')">
+                                                                Phone number is required!</span>
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-4 form-group mb-0">
+                                                    <label class="mb-1" for="firstName">First Name</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <div class="form-control">
@@ -285,7 +312,7 @@
                                                                 </mat-select>
                                                             </div>
                                                         </div>
-                                                        <input class="form-control" id="name" formControlName="firstName"
+                                                        <input class="form-control" id="firstName" formControlName="firstName"
                                                             placeholder="First Name"
                                                             [class.error]="partner.get('firstName').errors && partner.get('firstName').touched">
                                                     </div>
@@ -300,20 +327,6 @@
                                                     <label class="mb-1" for="name">Last Name</label>
                                                     <input class="form-control" id="name" formControlName="lastName"
                                                         placeholder="Last Name">
-                                                </div>
-                                                <div class="col-12 col-sm-4 form-group mb-0">
-                                                    <label class="mb-1" for="mobile">Mobile</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="form-control">
-                                                                <mat-select formControlName="country">
-                                                                    <mat-option *ngFor="let item of countryList" [value]="item.id">+{{item.code}}</mat-option>
-                                                                </mat-select>
-                                                            </div>
-                                                        </div>
-                                                        <input class="form-control" id="mobile" formControlName="mobile"
-                                                            placeholder="Phone Number">
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

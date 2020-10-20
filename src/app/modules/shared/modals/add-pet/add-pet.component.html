@@ -76,9 +76,7 @@
 
                 <app-crop-picture *ngIf="(imageToCrop$ | async) as imageCrop" [image]="imageCrop"
                                     (cropped)="croppedImage($event)" (cancel)="croppedImage()"></app-crop-picture>
-                <div class="content" #resultContainer>
-                    <div class="slickContainer" appImageSlick (slideActivated)="showInfo($event)" [list]="list"></div>
-                </div>
+                <img *ngIf="image" [src]="image" max-height="300px" width="100%" />
             </div>
         </div>
         <app-button class="mt-4" className="btn-warning" buttonText="ADD PET"
