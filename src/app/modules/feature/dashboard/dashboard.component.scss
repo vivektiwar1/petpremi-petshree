@@ -148,11 +148,11 @@ main {
     border-bottom: 1px solid #f2fafe;
 }
 .yellow-dot {
-    background: yellow;
-    border: 2px solid yellow;
+    background: #efac36;
+    border: 2px solid #efac36;
 }
 .bl-yellow {
-    border-left: 3px solid yellow;
+    border-left: 3px solid #efac36;
     border-bottom: 1px solid #f2fafe;
 }
 .pink-dot {
@@ -190,9 +190,45 @@ main {
 .carousel-control-prev-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2300375f' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
 }
-
 .carousel-control-next-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2300375f' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+.bg-blue {
+    background: #03375f;
+    border-radius: 16px;
+}
+.finish-setup {
+    text-transform: uppercase;
+    color: #efac36;
+}
+.get-started-btn {
+    text-decoration: none;
+    color: #fff;
+    background: #efac39;
+    padding: 8px 25px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    font-size: 12px;
+}
+.img-clinic-male-doc {
+    position: absolute;
+    left: 5%;
+    width: 180px;
+    top: -72px;
+}
+text.highcharts-credits {
+    display: none;
+}
+@media only screen and (max-width: 991px) {
+    .img-clinic-male-doc {
+        position: absolute;
+        left: 0px;
+        width: 150px;
+        top: -50px;
+    }
+    .m-offset-set {
+        padding-right: 15px;
+    }
 }
 @media only screen and (max-width: 767px) {
   .m-margin-btm {
@@ -203,6 +239,16 @@ main {
   }
   .m-show {
     display: block;
+  }
+  .m-offset-set {
+    margin-top: -75px;
+    padding: 15px;
+  }
+  .img-clinic-male-doc {
+    position: inherit;
+    left: 0px;
+    width: 100%;
+    top: -80px;
   }
 }
 

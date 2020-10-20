@@ -16,6 +16,7 @@ export class SplineComponent implements OnInit {
     yAxis: any;
     tooltip?: any;
     series: Array<any>;
+    credits: any;
   }
 
   constructor() { }
@@ -32,6 +33,7 @@ export class SplineComponent implements OnInit {
       yAxis: this.chartData.yAxis || { title: { text: null } },
       tooltip: this.chartData.tooltip || null,
       series: this.chartData.series,
+      credits: this.chartData.credits,
     })
   }
 

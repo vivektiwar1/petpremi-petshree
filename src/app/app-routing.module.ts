@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'contact-us',
-    loadChildren: () => import('./coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
+    loadChildren: () => import('./contact-us/contact-us.module').then(m => m.ContactUsModule),
   },
   {
     path: 'auth',
@@ -51,6 +51,10 @@ const routes: Routes = [
   {
     path: 'ecard',
     loadChildren: () => import('./modules/feature/e-card/e-card.module').then(m => m.ECardModule)
+  },
+  {
+    path: 'oldcard',
+    loadChildren: () => import('./modules/feature/old-card/old-card.module').then(m => m.OldCardModule)
   },
   {
     path: 'dashboard',
@@ -76,10 +80,16 @@ const routes: Routes = [
     path: 'terms',
     loadChildren: () => import('./terms/terms.module').then(m => m.TermsModule)
   },
+  { path: 'ecard-config', loadChildren: () => import('./modules/feature/ecard-details/ecard-details.module').then(m => m.EcardDetailsModule) },
   {
     path: '**',
     redirectTo: '404',
     pathMatch: 'full'
+  },
+
+  {
+    path: 'find-and-book',
+    loadChildren: () => import('./modules/feature/find-and-book/find-and-book.module').then(m => m.FindAndBookModule),
   },
   {
     path: '404',

@@ -1,0 +1,104 @@
+<div class="container-fluid bg-white" style="border-radius: 15px">
+  <div class="row">
+    <div class="col-2 p-sm-3">
+      <button class="btn btn-warning" (click)="back()">Back</button>
+    </div>
+    <div class="col-10 p-sm-3 text-center">
+      <div class="heading text-center font-weight-medium">
+        <h3>Pet Details</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row px-3">
+    <div class="col-12 p-sm-3">
+      <div class="heading font-weight-medium">
+        <h5>Pet Type</h5>
+      </div>
+    </div>
+    <div class="input-group select">
+      <input class="form-control" type="text" id="name" placeholder="Name" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 p-3">
+      <div class="heading font-weight-medium">
+        <h5>Pet Type</h5>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <select class="form-control form-control-lg" name="type" id="type">
+          <option value="reason">Pet Type</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 p-3">
+      <div class="heading font-weight-medium">
+        <h5>Pet Bread</h5>
+      </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <select class="form-control form-control-lg" id="bread" name="bread">
+                <option value="reason">Pet bread</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 p-3">
+      <div class="heading font-weight-medium">
+        <h5>Pet Age</h5>
+      </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <select class="form-control form-control-lg" id="age" name="age">
+              <option value="reason">Pet Age</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 p-3">
+      <div class="heading font-weight-medium">
+        <h5>Profile Picture</h5>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-6 text-right">
+          <input type="file" id="file" accept="image/*" />
+          <label for="file" class="btn-2"><img src="assets/img/fwd-images/photo(1).png" class="take-photo"/>Select Photo</label>
+        </div>
+        <div class="col-6 text-center">
+          <input type="file" id="file" accept="image/*" />
+          <label for="file" class="btn-2"><img src="assets/img/fwd-images/photo.png" class="take-photo"/>Take Photo</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="p-3 container-fluid" style="background-color: transparent">
+  <div class="col-12 text-center" style="text-align: center">
+    <div class="link">
+      <button class="btn btn-warning" (click)="showDiv()">Save</button>
+    </div>
+  </div>
+</div>

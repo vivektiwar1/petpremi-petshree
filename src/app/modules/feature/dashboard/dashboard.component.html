@@ -3,7 +3,7 @@
 	<div class="container-fluid px-0">
 		<div class="row px-0">
 			<div class="col-md-8 px-0 text-center">
-				<p class="pt-2">1:00 pm</p>
+				<p class="pt-2">{{(date$ | async) | date: 'hh:mm:ss aa'}}</p>
 			</div>
 			<div class="col-md-2 px-0 brdr-left text-center m-hide">
 				<a href="" class="add-customer-btn btn">+ Add Customer</a>
@@ -262,6 +262,20 @@
 			<div class="col-md-8 px-0 text-center">
 				<main>
 					<div class="container-fluid px-0">
+						<div class="row bg-blue no-gutters mb-4 mt-5 py-3">
+							<!-- <div class="col-md-4">
+								<img src="/assets/images/dashboard-img/clinic-male-doctor1.png" class="w-100 img-clinic-male-doc">
+							</div> -->
+							<div class="col-md-12 align-self-center pb-2">
+								<img src="/assets/images/dashboard-img/clinic-male-doctor11.png" class="img-clinic-male-doc">
+								<div class="offset-md-4 offset-lg-4 m-offset-set">
+									<h5 class="finish-setup my-2">Finish setup your clinic account</h5>
+									<p class="text-white mb-4">Invite all your customers to showcse your profile.</p>
+									<a href="" class="get-started-btn">get started</a>
+								</div>
+							</div>
+						</div>
+
 						<div class="row">
 							<div class="col-md-6 m-margin-btm">
 								<div class="card-details p-4 active-items-center shadow">
@@ -294,7 +308,11 @@
 									</div>
 									<div class="row">
 										<div class="col-12 text-center">
-											<img src="/assets/images/dashboard-img/Path_11471.png" class="w-100 img-height-fix">
+											<!-- <img src="/assets/images/dashboard-img/Path_11471.png" class="w-100 img-height-fix"> -->
+											<div>
+												<spline-chart [chartData]="this.chartData"></spline-chart>
+												<!-- <gauge-chart [chartData3]="this.chartData3"></gauge-chart> -->
+											</div>
 										</div>
 									</div>
 									<div class="row pt-3">
@@ -344,7 +362,11 @@
 									</div>
 									<div class="row">
 										<div class="col-12 text-center">
-											<img src="/assets/images/dashboard-img/dfghj.png" class="w-100 img-height-fix">
+											<!-- <img src="/assets/images/dashboard-img/dfghj.png" class="w-100 img-height-fix"> -->
+											<div>
+												<!-- <spline-chart [chartData]="this.chartData"></spline-chart> -->
+												<bar-chart [chartData2]="this.chartData2"></bar-chart>
+											</div>
 										</div>
 									</div>
 									<div class="row pt-3">
@@ -397,7 +419,11 @@
 									</div>
 									<div class="row">
 										<div class="col-12 text-center">
-											<img src="/assets/images/dashboard-img/Untitled_design.png" class="w-100 img-height-fix">
+											<!-- <img src="/assets/images/dashboard-img/Untitled_design.png" class="w-100 img-height-fix"> -->
+											<div>
+												<!-- <spline-chart [chartData]="this.chartData"></spline-chart> -->
+												<donut-chart [chartData1]="this.chartData1"></donut-chart>
+											</div>
 										</div>
 									</div>
 									<div class="row pt-3">
@@ -447,7 +473,10 @@
 									</div>
 									<div class="row">
 										<div class="col-12 text-center">
-											<img src="/assets/images/dashboard-img/Path_11472.png" class="w-100 img-height-fix">
+											<!-- <img src="/assets/images/dashboard-img/Path_11472.png" class="w-100 img-height-fix"> -->
+											<div>
+												<spline-chart [chartData]="this.chartData"></spline-chart>
+											</div>
 										</div>
 									</div>
 									<div class="row pt-3">
@@ -518,10 +547,10 @@
 					<div class="col-md-11">
 						<div class="container-fluid">
 							<div class="row py-3">
-								<div class="col-md-2 align-self-center pet-ben-left">
+								<div class="col-md-3 col-lg-2 align-self-center pet-ben-left">
 									<img src="/assets/img/dog.png" class="rounded-circle">
 								</div>
-								<div class="col-md-10 pet-ben-right">
+								<div class="col-md-9 col-lg-10 pet-ben-right">
 									<p>Ben</p>
 									<p class="fs-12">Online Consultation</p>
 								</div>
@@ -552,10 +581,10 @@
 					<div class="col-md-11">
 						<div class="container-fluid">
 							<div class="row py-3">
-								<div class="col-md-2 align-self-center pet-ben-left">
+								<div class="col-md-3 col-lg-2 align-self-center pet-ben-left">
 									<img src="/assets/img/dog.png" class="rounded-circle">
 								</div>
-								<div class="col-md-10 pet-ben-right">
+								<div class="col-md-9 col-lg-10 pet-ben-right">
 									<p>Ben</p>
 									<p class="fs-12">Online Consultation</p>
 								</div>
@@ -586,10 +615,10 @@
 					<div class="col-md-11">
 						<div class="container-fluid">
 							<div class="row py-3">
-								<div class="col-md-2 align-self-center pet-ben-left">
+								<div class="col-md-3 col-lg-2 align-self-center pet-ben-left">
 									<img src="/assets/img/dog.png" class="rounded-circle">
 								</div>
-								<div class="col-md-10 pet-ben-right">
+								<div class="col-md-9 col-lg-10 pet-ben-right">
 									<p>Ben</p>
 									<p class="fs-12">Online Consultation</p>
 								</div>
@@ -638,10 +667,10 @@
 					<div class="col-md-11">
 						<div class="container-fluid">
 							<div class="row py-3">
-								<div class="col-md-2 align-self-center pet-ben-left">
+								<div class="col-md-3 col-lg-2 align-self-center pet-ben-left">
 									<img src="/assets/img/dog.png" class="rounded-circle">
 								</div>
-								<div class="col-md-10 pet-ben-right">
+								<div class="col-md-9 col-lg-10 pet-ben-right">
 									<p>Ben</p>
 									<p class="fs-12">Online Consultation</p>
 								</div>
@@ -672,10 +701,10 @@
 					<div class="col-md-11">
 						<div class="container-fluid">
 							<div class="row py-3">
-								<div class="col-md-2 align-self-center pet-ben-left">
+								<div class="col-md-3 col-lg-2 align-self-center pet-ben-left">
 									<img src="/assets/img/dog.png" class="rounded-circle">
 								</div>
-								<div class="col-md-10 pet-ben-right">
+								<div class="col-md-9 col-lg-10 pet-ben-right">
 									<p>Ben</p>
 									<p class="fs-12">Online Consultation</p>
 								</div>
@@ -706,10 +735,10 @@
 					<div class="col-md-11">
 						<div class="container-fluid">
 							<div class="row py-3">
-								<div class="col-md-2 align-self-center pet-ben-left">
+								<div class="col-md-3 col-lg-2 align-self-center pet-ben-left">
 									<img src="/assets/img/dog.png" class="rounded-circle">
 								</div>
-								<div class="col-md-10 pet-ben-right">
+								<div class="col-md-9 col-lg-10 pet-ben-right">
 									<p>Ben</p>
 									<p class="fs-12">Online Consultation</p>
 								</div>

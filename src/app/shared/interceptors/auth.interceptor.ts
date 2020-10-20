@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const request = req.clone({
-      headers: req.headers.set('Authorization', this.store.state.isAuthenticated
+      headers: req.headers.set('Authorization', this.store.state.isAuthenticated && req.url.includes('oauth2')
         ? `Bearer ${this.store.state.token}`
         : `Basic ${environment.auth}`
       )

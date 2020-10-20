@@ -22,7 +22,7 @@ export class GalleryComponent implements OnInit {
     private authImage: AuthImagePipe
   ) { }
 
-  async ngOnInit() {
+  async ngOnInit() {   
     this.totalItems = this.imageList.length;
     this.galleryImages = await this.transformImageList() as Array<IAlbum>;
   }

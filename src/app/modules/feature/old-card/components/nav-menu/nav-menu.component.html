@@ -1,0 +1,7 @@
+<nav class="menu mt-sm-5 mr-0 mr-sm-2 align-self-sm-start d-flex flex-sm-column justify-content-start flex-1">
+    <a *ngFor="let item of navMenuItems" class="menu-item p-2 p-sm-3 flex-column align-items-center" [class.d-none]="hiddenNavItems.includes(item.anchorId)"
+    routerLink="." [fragment]="item.anchorId" [class.active]="(mergedActiveLink$ | async) === item.anchorId">
+        <img [src]="item.icon" [alt]="item.name" width="25" height="20">
+        <span>{{item.name}}</span>
+    </a>
+</nav>

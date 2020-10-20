@@ -4,10 +4,15 @@ export const NavMenu = [
         anchorId: 'home',
         icon: 'assets/images/icons/home.svg'
     },
+    // {
+    //     name: 'About',
+    //     anchorId: 'about',
+    //     icon: 'assets/images/icons/work.svg'
+    // },
     {
-        name: 'About',
-        anchorId: 'about',
-        icon: 'assets/images/icons/work.svg'
+        name: 'Book',
+        anchorId: 'appointment',
+        icon: 'assets/images/icons/chat.svg'
     },
     {
         name: 'Gallery',
@@ -24,6 +29,7 @@ export const NavMenu = [
         anchorId: 'enquiry',
         icon: 'assets/images/icons/chat.svg'
     }
+    
 ]
 
 export const ImagesPerPage = 6;
@@ -52,6 +58,8 @@ export const ClientDetailsTabLinks = [
 
 export const SettingsTabLinks = [
     { name: 'Profile', value: 'profile', active: true },
-    { name: 'Configuration', value: 'configuration', active: false },
-    { name: 'Ecard Media', value: 'ecard-media', active: false }
+    { name: 'Partner', value: 'partner', active: false},
+    { name: 'Timings', value: 'timings', active: false}
+    // { name: 'Customer Profile', value: 'customer-profile', active: false },
+    // { name: 'Ecard Media', value: 'ecard-media', active: false }
 ];

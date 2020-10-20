@@ -1,0 +1,60 @@
+@import "src/styles/variables";
+
+@mixin nav-border-lg {
+    border-top-right-radius: unset;
+    border-bottom-left-radius: $border-radius-8;
+}
+
+.menu {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    cursor: pointer;
+    z-index: 1;
+    background: $white;
+    border-top-left-radius: $border-radius-8;
+    border-top-right-radius: $border-radius-8;
+
+    &-item {
+        display: flex;
+        color: $nav-item-text;
+        transition: $transition-time all;
+        background: $white;
+        font-size: $font-size-14;
+        flex: 1;
+        text-decoration: none;
+
+        &:first-child {
+            border-top-left-radius: $border-radius-8;
+        }
+
+        &:last-child {
+            border-top-right-radius: $border-radius-8;
+            @media (min-width: $media-breakpoint-sm) {
+                @include nav-border-lg;
+            }
+        }
+
+        &.active {
+            background: $nav-item-active;
+            color: $white;
+            transition: $transition-time all ease-in;
+            img {
+                filter: brightness(0) invert(1);
+                transition: $transition-time all ease-in;
+            }
+        }
+    }
+
+    @media (min-width: $media-breakpoint-sm) {
+        position: sticky;
+        top: 50px;
+        width: unset;
+
+        &-item:not(:last-child) {
+            border-bottom: 1px solid $nav-item-border;
+        }
+
+        @include nav-border-lg;
+    }
+}

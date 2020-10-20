@@ -11,7 +11,12 @@ import { AboutComponent } from './components/about/about.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { VideosComponent } from './components/videos/videos.component';
 import { EnquiryComponent } from './components/enquiry/enquiry.component';
+import { AppointmentDetailsComponent } from './components/appointmentdetails/appointmentdetails.component';
+import { AppointmentComponent } from './components/appointment/appointment.component';
+import { AppointmenttimeComponent} from './components/appointmenttime/appointmenttime.component';
 import { ScrollActiveDirective } from './directives/scroll-active.directive';
+
+import { PetDetailsComponent } from './components/petdetails/petdetails.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { YouTubePlayerModule } from '@angular/youtube-player';
@@ -36,7 +41,11 @@ import {ResponseInterceptor} from "../../../interceptors/response.interceptor";
     GalleryComponent,
     VideosComponent,
     EnquiryComponent,
-    ScrollActiveDirective
+    AppointmentComponent,
+    AppointmentDetailsComponent,
+    AppointmenttimeComponent,
+    ScrollActiveDirective,
+    PetDetailsComponent
   ],
   imports: [
     CommonModule,

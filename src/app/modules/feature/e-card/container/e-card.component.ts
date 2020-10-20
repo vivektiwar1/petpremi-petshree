@@ -1,14 +1,15 @@
-import {Component, OnDestroy} from '@angular/core';
-import {ViewportScroller} from "@angular/common";
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, Subject} from 'rxjs';
-import {delay, map, takeUntil, tap} from "rxjs/operators";
+import { Component, OnDestroy } from '@angular/core';
+import { ViewportScroller } from "@angular/common";
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { delay, map, takeUntil, tap } from "rxjs/operators";
 
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ScrollOffset} from 'src/app/app.constant';
-import {ToastrService} from 'ngx-toastr';
-import {ECardService} from '../e-card.service';
-import {CommonService} from 'src/app/services/common.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { ScrollOffset } from 'src/app/app.constant';
+import { ToastrService } from 'ngx-toastr';
+import { ECardService } from '../e-card.service';
+import { ProfileService } from '../../settings/profile/profile.service'
+import { CommonService } from 'src/app/services/common.service';
 
 
 @Component({
@@ -21,11 +22,18 @@ export class ECardComponent implements OnDestroy {
   activeLink$: Observable<string>;
   destroy$: Subject<void> = new Subject();
   userDetails: any;
+  weekDay: any;
+  customer: any;
+  vets: any;
+  appontmentReason: any;
+  appontmentType: any;
+  appontmentRepeat: any;
   enquiryForm: FormGroup;
   hiddenNavItems: Array<string> = [];
   titles: Array<any>;
   countries: Array<any>;
   userName: string;
+  partnerUserName: string;
 
   apiInProgress = {
     userDataLoader: false,
@@ -35,6 +43,7 @@ export class ECardComponent implements OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private eCardService: ECardService,
+    private ProfileService:ProfileService,
     private commonService: CommonService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -49,13 +58,18 @@ export class ECardComponent implements OnDestroy {
       tap(fragment => this.viewportScroller.scrollToAnchor(fragment)),
       takeUntil(this.destroy$)
     );
-
+    this.partnerUserName = this.activatedRoute.snapshot.params.partnerUserName
     this.activatedRoute.params.pipe(
       takeUntil(this.destroy$)
     ).subscribe(({ userName }) => {
       this.userDetails = null;
       userName ? this.init(userName) : this.navigateToErrorPage();
     })
+    this.getDay();
+    this.getAppointmentReason();
+    this.getAppointmentType();
+    this.getAppointmentRepeat();
+    this.getCustomer();
   }
 
   async init(userName) {
@@ -66,9 +80,10 @@ export class ECardComponent implements OnDestroy {
   async getUserDetails(userName) {
     try {
       this.apiInProgress.userDataLoader = true;
-      const response = await this.eCardService.getUserDetails(userName).toPromise();
-      const userDetails = response?.responseResult?.data?.content?.[0];
-      console.log(userDetails);
+      const response = await this.eCardService.getUserDetails(userName, this.partnerUserName).toPromise();
+      const userDetails = response;
+      console.log("response")
+      console.log(response)
       if (!userDetails) {
         this.navigateToErrorPage();
         return;
@@ -79,8 +94,128 @@ export class ECardComponent implements OnDestroy {
       this.apiInProgress.userDataLoader = false;
       console.error(error);
     }
+
   }
 
+  async getCustomer() {
+    this.apiInProgress.userDataLoader = true;
+    const response: any = await this.eCardService.getCustomerDetails().toPromise();
+    const customerData = response.responseResult.data.content;
+
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response = await this.eCardService.getCustomer(customerData).toPromise();
+      this.customer = response;
+      console.log("response");
+      console.log(response);
+
+      if (!this.customer) {
+        this.navigateToErrorPage();
+        return;
+      }
+
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+  }
+  async getDay() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response = await this.eCardService.getDay().toPromise();
+      this.weekDay = response.responseResult.data.content;
+      if (!this.weekDay) {
+        this.navigateToErrorPage();
+        return;
+      }
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+
+  }
+
+  async getAppointmentReason() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response: any = await this.eCardService.getAppointmentReason().toPromise();
+      this.appontmentReason = response.responseResult.data.content;
+      if (!this.weekDay) {
+        this.navigateToErrorPage();
+        return;
+      }
+
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+
+  }
+  async getPartnerData(){
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response: any = await this.eCardService.getPartnerData().toPromise();
+      this.appontmentReason = response.responseResult.data.content;
+      if (!this.weekDay) {
+        this.navigateToErrorPage();
+        return;
+      }
+
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+  }
+
+  async getAppointmentRepeat() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response: any = await this.eCardService.getAppointmentRepeat().toPromise();
+      this.appontmentRepeat = response.responseResult.data.content;
+      if (!this.weekDay) {
+        this.navigateToErrorPage();
+        return;
+      }
+
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+
+  }
+
+  async getAppointmentType() {
+    try {
+
+      this.apiInProgress.userDataLoader = true;
+      const response: any = await this.eCardService.getAppointmentType().toPromise();
+      this.appontmentType = response.responseResult.data.content;
+      if (!this.weekDay) {
+        this.navigateToErrorPage();
+        return;
+      }
+
+    } catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+
+  }
+  async getVets(){
+    try{
+      this.apiInProgress.userDataLoader=true
+      const respose: any=await this.eCardService.getVets().toPromise();
+      this.vets=respose.responseResult.data.content;
+      if (!this.vets) {
+        this.navigateToErrorPage();
+        return;
+      }
+
+    } catch(error){
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+  }
   async createUserDetails(userDetails) {
     this.createEnquiryForm();
     this.userDetails = {
@@ -91,26 +226,39 @@ export class ECardComponent implements OnDestroy {
       videos: await this.getVideos(),
     };
     this.apiInProgress.userDataLoader = false;
+
     this.createHideNavArray(this.userDetails);
   }
 
+  // async getImages() {
+  //   return this.eCardService.getMediaFiles(this.userName, 'gallery' ).pipe(
+  //     map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
+  //       return {
+  //         src: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
+  //         thumb: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
+  //         caption: item.title
+  //       }
+  //     }))
+  //   ).toPromise();
+  // }
   async getImages() {
     return this.eCardService.getMediaFiles(this.userName, 'gallery').pipe(
       map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
         return {
-          src: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
-          thumb: this.eCardService.getImageLinks(this.userName, 'gallery', item.fileName),
+          src: item.image,
+          thumb: item.image,
           caption: item.title
         }
       }))
     ).toPromise();
   }
 
+
   async getVideos() {
     return await this.eCardService.getMediaFiles(this.userName, 'youtube').pipe(
       map((response: any) => (response?.responseResult?.data?.content || []).map(item => {
         return {
-          videoId: item['fileName']
+          videoId: item.videoCode
         }
       }))
     ).toPromise()
@@ -175,7 +323,6 @@ export class ECardComponent implements OnDestroy {
   }
 
   async onSubmit() {
-
     try {
       this.enquiryForm.markAllAsTouched();
       if (this.enquiryForm.valid) {

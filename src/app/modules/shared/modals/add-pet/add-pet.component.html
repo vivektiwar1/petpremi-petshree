@@ -5,36 +5,85 @@
 
 
 <mat-dialog-content>
-    <form [formGroup]="addPetForm" class="no-outline" autocomplete="off">
+    <form *ngIf="addPetForm" [formGroup]="addPetForm" class="no-outline" autocomplete="off">
         <div class="row">
             <div class="col-12 col-sm-6 form-group">
                 <label class="mb-0" for="name">Pet Name</label>
                 <input class="form-control" id="name" formControlName="name" placeholder="Enter Pet Name">
             </div>
             <div class="col-12 col-sm-6 form-group">
-                <input-dropdown label="Pet Type" name="type" placeholder="Select Pet Type"
+                <input-dropdown label="Pet Type" name="petTypeId" placeholder="Select Pet Type"
                     [parentFormGroup]="addPetForm"
-                    [selectionList]="[{name: 'Regular Visit', value: 'regular'}, {name: 'Emergency Visit', value: 'emergency'}]">
+                    [selectionList]="petTypes">
                 </input-dropdown>
+                
             </div>
         </div>
 
         <div class="row">
             <div class="col-12 col-sm-6 form-group">
-                <input-dropdown label="Pet Breed" name="breed" placeholder="Select Pet Breed"
+                <input-dropdown label="Pet Breed" name="petBreedId" placeholder="Select Breed"
                     [parentFormGroup]="addPetForm"
-                    [selectionList]="[{name: 'Regular Visit', value: 'regular'}, {name: 'Emergency Visit', value: 'emergency'}]">
+                    [selectionList]="breedTypes">
                 </input-dropdown>
             </div>
             <div class="col-12 col-sm-6 form-group">
-                <label class="mb-0" for="age">Pet Age</label>
-                <input class="form-control" id="age" formControlName="age" placeholder="Enter Pet Age">
+                <input-dropdown label="Gender" name="genderId" placeholder="Select Gender"
+                    [parentFormGroup]="addPetForm"
+                    [selectionList]="genders">
+                </input-dropdown>
             </div>
         </div>
+        <div class="row">
+            
+            <div class="col-12 col-sm-6 form-group">
+                <label class="mb-0" for="weightValue">Pet Weight</label>
+                <input class="form-control" id="weightValue" formControlName="weightValue" placeholder="Enter Weight">
+            </div>
+            <div class="col-12 col-sm-6 form-group">
+                <input-dropdown label="Unit" name="weightUnitId" placeholder="Select Unit"
+                    [parentFormGroup]="addPetForm"
+                    [selectionList]="units">
+                </input-dropdown>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-6 form-group">
+                <label class="mb-0" for="yearOld">Pet Age</label>
+                <input class="form-control" id="yearOld" formControlName="yearOld" placeholder="Year Old">
+            </div>
+            <div class="col-12 col-sm-6 form-group">
+                <label class="mb-0" for="birthDay">Pet Birth Date</label>
+                <input class="form-control" type="date" id="birthDay" formControlName="birthDay" placeholder="Birth Date">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12 form-group">
+                <div class="actions">
+                    <button>
+                      <input #uploadRef type="file" id="upload-input" accept="image/*" name="image" (change)="upload($event.target)"/>
+                      <label for="upload-input"></label>
+                      <img [src]="'/assets/icon/camera.png'" alt=""/>
+                      {{'breed.search.action.upload' | translate}}
+                    </button>
+                    <button (click)="getPicture = true;">
+                      <img [src]="'/assets/icon/photo.png'" alt=""/>
+                      {{'breed.search.action.photo' | translate}}
+                    </button>
+                  </div>
+                <app-get-picture *ngIf="getPicture" (closed)="getPicture = false;"
+                   (captured)="capturePhoto($event)"></app-get-picture>
+
+                <app-crop-picture *ngIf="(imageToCrop$ | async) as imageCrop" [image]="imageCrop"
+                                    (cropped)="croppedImage($event)" (cancel)="croppedImage()"></app-crop-picture>
+                <img *ngIf="image" [src]="image" max-height="300px" width="100%" />
+            </div>
+        </div>
+        <app-button class="mt-4" className="btn-warning" buttonText="ADD PET"
+            [disabled]="(addPetForm.invalid || apiInProgress)" (buttonClicked)="onSubmit()">
+        </app-button>
     </form>
 
-    <app-button class="mt-4" className="btn-warning" buttonText="ADD PET"
-        [disabled]="(addPetForm.invalid || apiInProgress)" (buttonClicked)="onSubmit()">
-    </app-button>
+    
 
 </mat-dialog-content>

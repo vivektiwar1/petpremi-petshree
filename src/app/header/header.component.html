@@ -18,7 +18,7 @@
               <div class="sub-menu" (click)="toggleProfile(profileMenu)">
                 <button>
                   <img [src]='user?.avatarURL || "/assets/icon/profile.png"' alt=""/>
-                  {{user?.userName}}
+                  {{user?.firstName}}
                 </button>
                 <ul class="sub-menu-items hide" #profileMenu>
                   <li>
@@ -37,7 +37,8 @@
             <ng-template #guest>
               <a routerLinkActive="active" [routerLink]="['/auth']">
                 <img [src]="'/assets/icon/profile.png'" alt=""/>
-                {{'common.links.signIn' | translate}}
+                {{'common.links.signIn' | translate}}/{{'common.links.signUp' | translate}}
+
               </a>
             </ng-template>
           </li>
@@ -76,6 +77,36 @@
                         [value]="translate.currentLang" [placeholder]="translate.currentLang">
               <mat-option *ngFor="let lang of translate.store.langs" [value]="lang">{{lang | uppercase}}</mat-option>
             </mat-select>
+          </li>
+
+
+          <li *ngIf="store.state$ | async as state;">
+            <ng-container *ngIf="state.isAuthenticated else guest;">
+              <div class="sub-menu" (click)="toggleProfile(profileMenu)">
+                <button>
+                  <img [src]='user.avatarURL || "/assets/icon/profile.png"' alt=""/>
+                  {{user.userName}}
+                </button>
+                <ul class="sub-menu-items hide" #profileMenu>
+                  <li>
+                    <a routerLinkActive="active" [routerLink]="['/profile']">
+                      {{'common.links.profile' | translate}}
+                    </a>
+                  </li>
+                  <li>
+                    <a (click)="auth.logout()" [routerLink]="['/']">
+                      {{'common.links.logout' | translate}}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+            <ng-template #guest>
+              <a routerLinkActive="active" [routerLink]="['/auth']">
+                <img [src]="'/assets/icon/profile.png'" alt=""/>
+                {{'common.links.signIn' | translate}}/{{'common.links.signUp' | translate}}
+              </a>
+            </ng-template>
           </li>
           <li *ngIf="petSwitcher && (store.state$ | async) as state;">
             <div class="pets" (click)="showPets()">

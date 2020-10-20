@@ -13,10 +13,12 @@ export class CommonService {
   private httpSpy: HttpClient;
   private countryList: Array<any>;
   private stateList: Array<any>;
+  private dayList: Array<any>;
   private cityList: Array<any>;
   private pinCodeList: Array<any>;
   private titleList: Array<any>;
   private genderList: Array<any>;
+  private professionList: Array<any>;
   private documentType: Array<any>;
   private userId: any;
 
@@ -47,26 +49,27 @@ export class CommonService {
     );
   }
 
-  private getSearchObject(searchKey: string) {
+  private getSearchObject(searchKey: string, objecthash?) {
     return {
       commonParamHash: {
         entityName: searchKey,
-        uiBean: "BNE" + searchKey,
-        operation: "SEARCH",
+        uiBean: 'BNE' + searchKey,
+        operation: 'SEARCH',
         pagination: {
           pageNumber: 0,
           pageSize: 10
         },
         sort: {
           ASC: [
-            "id"
+            'id'
           ]
         }
       },
       objectHash: {
-        status: true
+        status: true,
+        ...objecthash
       }
-    }
+    };
   }
 
   private dataRequest(apiData) {
@@ -77,7 +80,7 @@ export class CommonService {
     }).pipe(
       catchError(error => {
         const errorMessage = error?.error?.responseError?.message || error?.error?.responseMessage || 'Something went wrong';
-        throw new Error(`${errorMessage} Api => ${apiData?.commonParamHash?.entityName}`)
+        throw new Error(`${errorMessage} Api => ${apiData?.commonParamHash?.entityName}`);
       }),
       catchError(error => {
         console.error(error);
@@ -95,12 +98,35 @@ export class CommonService {
         }
       }).toPromise() as any;
       if (response?.id) {
-        this.userId = response?.id
+        this.userId = response?.id;
         return this.userId;
       }
     } else {
       return this.userId;
     }
+  }
+
+  async getDaysList() {
+    if (!this.dayList?.length) {
+      const apiData = this.getSearchObject('Day');
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.dayList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            fullName: item.name,
+            name: item.shortCode,
+            id: item.id,
+            value: item.id
+          };
+        });
+        return this.dayList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.dayList;
+    }
+
   }
 
   async getCountryList() {
@@ -116,7 +142,7 @@ export class CommonService {
             minLength: item.fromLength,
             maxLength: item.toLength,
             value: item.id
-          }
+          };
         });
         return this.countryList;
       } else {
@@ -128,6 +154,42 @@ export class CommonService {
 
   }
 
+  async getProfessionList() {
+    if (!this.professionList?.length) {
+      const apiData = {
+        commonParamHash: {
+          entityName: 'Profession',
+          uiBean: 'BNEProfession' ,
+          operation: 'SEARCH',
+          pagination: {
+            pageNumber: 0,
+            pageSize: 10
+          },
+          sort: {
+            ASC: [
+              'id'
+            ]
+          }
+        },
+        objectHash: {}
+      };
+      const response = await this.dataRequest(apiData);
+      if (!response.isError) {
+        this.professionList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
+          return {
+            name: item.name,
+            id: item.id,
+          };
+        });
+        return this.professionList;
+      } else {
+        return [];
+      }
+    } else {
+      return this.professionList;
+    }
+  }
+
   async getTitleList() {
     if (!this.titleList?.length) {
       const apiData = this.getSearchObject('Title');
@@ -137,7 +199,7 @@ export class CommonService {
           return {
             title: item.name,
             id: item.id,
-          }
+          };
         });
         return this.titleList;
       } else {
@@ -148,9 +210,13 @@ export class CommonService {
     }
   }
 
-  async getStateList() {
+  async getStateList(countryCode) {
     if (!this.stateList?.length) {
-      const apiData = this.getSearchObject('State');
+      const apiData = this.getSearchObject('State', {
+        country_FK: {
+            id: countryCode
+        }
+      });
       const response = await this.httpSpy.post(`${environment.apiBase}/service/api/crud`, apiData, {
         headers: {
           Authorization: `Basic ${window.btoa(environment.username + ':' + environment.password)}`
@@ -161,7 +227,7 @@ export class CommonService {
           return {
             name: item.name,
             value: item.id
-          }
+          };
         });
         return this.stateList;
       } else {
@@ -173,16 +239,20 @@ export class CommonService {
 
   }
 
-  async getCityList() {
+  async getCityList(stateCode) {
     if (!this.cityList?.length) {
-      const apiData = this.getSearchObject('City');
+      const apiData = this.getSearchObject('City', {
+        state_FK: {
+            id: stateCode
+        }
+      });
       const response = await this.dataRequest(apiData);
       if (!response.isError) {
         this.cityList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
           return {
             name: item.name,
             value: item.id
-          }
+          };
         });
         return this.cityList;
       } else {
@@ -194,16 +264,21 @@ export class CommonService {
 
   }
 
-  async getPinCodeList() {
+  async getPinCodeList(cityCode) {
     if (!this.pinCodeList?.length) {
-      const apiData = this.getSearchObject('PINCode');
+      const apiData = this.getSearchObject('PINCode', {
+        city_FK: {
+            id: cityCode
+        }
+      });
       const response = await this.dataRequest(apiData);
       if (!response.isError) {
         this.pinCodeList = (response.responseResult?.data?.content as Array<any> || []).map(item => {
           return {
-            name: item.name,
+            name: item.code,
+            desc: item.description,
             value: item.id
-          }
+          };
         });
         return this.pinCodeList;
       } else {
@@ -224,7 +299,7 @@ export class CommonService {
           return {
             name: item.name,
             value: item.id
-          }
+          };
         });
         return this.genderList;
       } else {
@@ -239,8 +314,8 @@ export class CommonService {
     if (!this.documentType?.length) {
       const apiData = {
         commonParamHash: {
-          entityName: "DocumentType",
-          operation: "READ"
+          entityName: 'DocumentType',
+          operation: 'READ'
         },
         objectHash: {
           status: true
@@ -254,7 +329,7 @@ export class CommonService {
             ...item,
             value: item.id,
             name: item.documentType
-          }
+          };
         });
         return this.documentType;
       } else {
