@@ -4,25 +4,24 @@
     color: $label-heading-color;
     font-size: $font-size-16;
 }
-
-
 .pad{
     padding: 6px;
 }
 .padd{
     padding: 4px;
 }
+.pad64{
+    padding: 6px 4px;
+}
 .radiobutton{
     display: none;
 }
-.radiobutton:checked + .borders {
-    box-shadow: 0 0 1px 1px #d8250d;
-    background-color: yellow;
-    color: yellow;
-
+.radiobutton:checked + label {
+    background-color: #FAAA00;
+    color: #fff;
+    border-radius: 10px;
 }
 .borders{
-
     border-radius: 10px;
 }
 .borders:hover {
@@ -36,10 +35,68 @@
     position: relative;
     z-index: 1;
     display: block;
-   
     // padding: 20px 5px;
+    margin-bottom: 0px;
     text-align: center;
     cursor: pointer;
-    -webkit-transition: color 0.25s ease-out 0s,border-color 0.25s ease-out 0s,background-color 0.25s ease-out 0s;
-    transition: color 0.25s ease-out 0s,border-color 0.25s ease-out 0s,background-color 0.25s ease-out 0s;
+}
+.link {
+    display: flex;
+    justify-content: center;
+    > button {
+        font-family: Noto Sans, sans-serif;
+        font-size: 14px;
+        padding: 10px 36px;
+        background-color: #FAAA00;
+        color: #fff;
+        text-decoration: none;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 3px 6px #00000029;
+        border-radius: 8px;
+        z-index: 6;
+        font-weight: bold;
+        &:hover {
+        &:after,
+        &:before {
+            content: url("/assets/img/white-paws.png");
+            transition: content 500ms ease;
+        }
+        }
+        &:after,
+        &:before {
+        content: url("/assets/img/brown-paws.png");
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        top: 50%;
+        transform: translate(0, -50%);
+        }
+        &:before {
+        left: 6px;
+        }
+        &:after {
+        right: 6px;
+        }
+        &:hover {
+        &:before,
+        &:after {
+            color: #fff;
+        }
+        }
+    }
+}
+.brdr-top {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.brdr-btm {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+.select-date {
+    font-weight: 600;
+}
+.f-500 {
+    font-weight: 500;
 }

@@ -7,8 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AppointmentComponent implements OnInit {
   @Input() userDetails: any;
+  @Input() customer:any;
+  @Input() vets:any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

@@ -1,72 +1,125 @@
 @import "src/styles/variables";
 
 .heading {
-    color: $label-heading-color;
-    font-size: $font-size-16;
+  color: $label-heading-color;
+  font-size: $font-size-16;
 }
-.circle{
-    border: 50%;
+.circle {
+  border: 50%;
 }
 
 [type="file"] {
-    height: 0;
-    overflow: hidden;
-    width: 0;
+  height: 0;
+  overflow: hidden;
+  width: 0;
 }
-  
+
 [type="file"] + label {
-    background: #f1f1f1;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 100px;
-    color: rgb(14, 13, 13);
-    cursor: pointer;
-    display: inline-block;
-      font-family: 'Rubik', sans-serif;
-      font-size: inherit;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    outline: none;
-    padding: 1rem 50px;
-    position: relative;
-    transition: all 0.3s;
-    vertical-align: middle;
-    
-    // &:hover {
-    //   background-color: darken(#ebd7d0, 10%);
-    // }
+  background: #f1f1f1;
+  border: none;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  color: rgb(14, 13, 13);
+  cursor: pointer;
+  display: inline-block;
+  font-size: inherit;
+  margin-bottom: 1rem;
+  outline: none;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
+  // &:hover::after {
+  //   background-color: darken(#ebd7d0, 10%);
+  // }
 }
 .btn-2 {
-    background-color: #99c793;
-    border-radius: 50px;
-    overflow: hidden;
-    &::before {
-      color: #fff;
-      content: "\f382";
-      font-family: "Font Awesome 5 Pro";
-      font-size: 100%;
-      height: 100%;
-      right: 130%;
-      line-height: 3.3;
-      position: absolute;
-      top: 0px;
-      transition: all 0.3s;
+  overflow: hidden;
+  &::before {
+    content: url("/assets/img/plus-icon.png");
+    height: 100%;
+    line-height: 3.3;
+    position: inherit;
+    top: 30%;
+    transition: all 0.3s;
+  }
+  // &:hover::after {
+  //   background-color: darken(#ebd7d0, 10%);
+  // }
+  // &:hover {
+  //   background-color: darken(#99c793, 30%);
+
+  //   &::before {
+  //     right: 75%;
+  //   }
+  // }
+}
+.select {
+  border: #fff;
+  background-color: #fff;
+  width: 100%;
+  height: 50px;
+  border-radius: 15px;
+}
+.link {
+  display: flex;
+  justify-content: center;
+  > button {
+    font-family: Noto Sans, sans-serif;
+    font-size: 14px;
+    padding: 10px 36px;
+    background-color: #faaa00;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 3px 6px #00000029;
+    border-radius: 8px;
+    z-index: 0;
+    font-weight: bold;
+    &:hover {
+      &:after,
+      &:before {
+        content: url("/assets/img/white-paws.png");
+        transition: content 500ms ease;
+      }
     }
-
-    // &:hover {
-    //   background-color: darken(#99c793, 30%);
-        
-    //   &::before {
-    //     right: 75%;
-    //   }
-    // }
+    &:after,
+    &:before {
+      content: url("/assets/img/brown-paws.png");
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+    &:before {
+      left: 6px;
+    }
+    &:after {
+      right: 6px;
+    }
+    &:hover {
+      &:before,
+      &:after {
+        color: #fff;
+      }
+    }
   }
-  .select{
-    border: #fff;
-    background-color: #fff;
-    width: 100%;
-    height: 50px;
-    border-radius: 15px;
-  }
-
+}
+.bx-shadow {
+  box-shadow: 0px 8px 7px -9px #888888;
+}
+img.verified-img {
+  width: 50%;
+  height: inherit;
+  margin-bottom: 5px;
+}
+.txt-verified {
+  color: #103464;
+  width: 55%;
+  font-size: 10px;
+  margin: 0 auto;
+  line-height: 1.2;
+  font-weight: 500;
+}
