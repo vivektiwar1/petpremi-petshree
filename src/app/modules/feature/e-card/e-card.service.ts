@@ -34,6 +34,111 @@ export class ECardService {
     });
   }
 
+  getPartnerData() {
+    const apiData = {
+      commonParamHash: {
+        entityName: "Partner",
+        uiBean: "BNEPartnerCard",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 1
+          },
+          sort: {
+            DESC: [
+                  "id"
+              ]
+          }
+      },
+      objectHash: {
+        userName: "rahul"
+      }
+  };
+  return this.http.post(this.getApiUrl(`/crud`), apiData);
+
+  }
+
+  getCustomerDetails() {
+    const data = JSON.parse(localStorage.getItem('userData'));
+    const apiData = {
+      commonParamHash: {
+        entityName: "User",
+        uiBean: "BNECustomerProfile",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+          DESC: [
+            "id"
+          ]
+        }
+      },
+      objectHash: {
+        id: data.id
+      }
+    }
+    return this.http.post(this.getApiUrl(`/crud`), apiData);
+
+  }
+  getCustomer(customerData) {
+    const data = JSON.parse(localStorage.getItem('userData'));
+
+    const apiData = {
+      commonParamHash: {
+        entityName: "User",
+        uiBean: "BNECustomer",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+          DESC: [
+          ]
+        }
+      },
+      objectHash: {
+        fullName_LIKE: customerData.firstName + customerData.lastName,
+        country_FK: {
+          id: 1
+        },
+        mobile_LIKE: customerData.mobile,
+        email_LIKE: customerData.email,
+        authorities_FK: {
+          name: "ROLE_CUSTOMER"
+        }
+      }
+    }
+    return this.http.post(this.getApiUrl(`/crud`), apiData);
+  }
+
+  getVets(){
+    const apiData={
+      commonParamHash: {
+        entityName: "User",
+        uiBean: "BNECustomer",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+          },
+          sort: {
+            DESC: [
+                  "id"
+              ]
+          }
+      },
+      objectHash: {
+        partners_FK:{"id":11},
+        profession_FK:{"id":1}
+      }
+  }
+  return this.http.post(this.getApiUrl(`/crud`), apiData);
+
+  }
+
   getDay(): Observable<any> {
     const apiData = {
       commonParamHash: {

@@ -10,13 +10,14 @@ export class AppointmentDetailsComponent implements OnInit {
   @Input() appointmentType: any;
   @Input() appointmentRepeat: any;
   @Input() userDetails: any;
+  
 
   constructor() { }
 
   ngOnInit(): void {
   }
   showDiv() {
-    console.log(this.appointmentReason)
+    console.log(this.appointmentType)
     document.getElementById('appointmentdetails').style.display = "none";
 
     document.getElementById('petdetails').style.display = "block";

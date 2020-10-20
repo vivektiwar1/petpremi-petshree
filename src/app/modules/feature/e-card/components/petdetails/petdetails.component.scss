@@ -1,3 +1,9 @@
+@import "src/styles/variables";
+
+.heading {
+  color: $label-heading-color;
+  font-size: $font-size-16;
+}
 [type="file"] {
   height: 0;
   overflow: hidden;
@@ -15,22 +21,72 @@
   font-weight: 500;
   margin-bottom: 1rem;
   outline: none;
-  padding: 1rem 50px;
+  padding: 10px 15px;
+  border: 1px solid #ced4da;
   position: relative;
   transition: all 0.3s;
   vertical-align: middle;
-
-.btn-2 {
-  background-color: #99c793;
-  border-radius: 50px;
-  overflow: hidden;
-}
-}
-
-.select{
-    // border: #dddddd;
-    background-color: #fff;
-    width: 100%;
-    height: 50px;
-    border-radius: 15px;
+  .btn-2 {
+    background-color: #99c793;
+    border-radius: 50px;
+    overflow: hidden;
   }
+}
+
+.select {
+  // border: #dddddd;
+  background-color: #fff;
+  width: 100%;
+  height: 50px;
+  border-radius: 15px;
+}
+.link {
+  display: flex;
+  justify-content: center;
+  > button {
+    font-family: Noto Sans, sans-serif;
+    font-size: 14px;
+    padding: 10px 36px;
+    background-color: #faaa00;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 3px 6px #00000029;
+    border-radius: 8px;
+    z-index: 6;
+    font-weight: bold;
+    &:hover {
+      &:after,
+      &:before {
+        content: url("/assets/img/white-paws.png");
+        transition: content 500ms ease;
+      }
+    }
+    &:after,
+    &:before {
+      content: url("/assets/img/brown-paws.png");
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+    &:before {
+      left: 6px;
+    }
+    &:after {
+      right: 6px;
+    }
+    &:hover {
+      &:before,
+      &:after {
+        color: #fff;
+      }
+    }
+  }
+}
+.take-photo {
+  width: 25px;
+  margin-right: 6px;
+}
