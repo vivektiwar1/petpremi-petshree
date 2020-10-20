@@ -48,16 +48,6 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     img1: `${this.getAssetId(this.currentForm)}-illustration.png`,
     bg1Col: this.getBgCol(this.currentForm),
   };
-  userTypes = [{
-    value: AUTH_USER_TYPE.CUSTOMER,
-    show: 'auth.types.customer'
-  }, {
-    value: AUTH_USER_TYPE.PARTNER,
-    show: 'auth.types.partner'
-  }, {
-    value: AUTH_USER_TYPE.ADMIN,
-    show: 'auth.types.admin'
-  }];
   userType = AUTH_USER_TYPE.CUSTOMER;
 
   loginForm = this.fb.group({
@@ -238,6 +228,14 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     }
   }
 
+  get notRole() {
+    return this.userType === AUTH_USER_TYPE.CUSTOMER ? 'auth.notCustomer' : 'auth.notPartner';
+  }
+
+  get signUpRole() {
+    return this.userType === AUTH_USER_TYPE.CUSTOMER ? 'auth.signUpPartner' : 'auth.signUpCustomer';
+  }
+
   getFormGroupControls(group) {
     return (this.formControl[group] as FormGroup).controls;
   }
@@ -379,6 +377,9 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   signIn() {
     this.resetForms();
     this.authFlow = this.signUpClient.SELF;
+    if (this.userType !== AUTH_USER_TYPE.CUSTOMER) {
+      this.changeUserType();
+    }
     return this.isModal
       ? this.changeForm(AuthFormTypes.LOGIN)
       : this.router.navigate(['/auth/sign-in']);
@@ -397,7 +398,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       username: '',
       password: '',
       grant_type: 'password',
-      user_type: this.userType,
+      user_type: AUTH_USER_TYPE.CUSTOMER,
       login_type: AUTH_SIGN_UP_CLIENT.SELF,
     });
     const title = this.getTitle();
@@ -858,8 +859,9 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     return genders && genders.length ? genders[index] : null;
   }
 
-  changeUserType(type) {
+  changeUserType() {
     if (this.enableUserType) {
+      const type = this.userType === AUTH_USER_TYPE.CUSTOMER ? AUTH_USER_TYPE.PARTNER : AUTH_USER_TYPE.CUSTOMER;
       this.userType = type;
       this.form.patchValue({
         user_type: type,

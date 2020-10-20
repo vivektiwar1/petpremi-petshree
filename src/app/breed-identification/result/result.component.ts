@@ -12,18 +12,6 @@ import $ from 'jquery';
 })
 export class ResultBreedComponent implements OnDestroy, OnInit {
   selectedIndex = 0;
-  list = [
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/300x300',
-  ];
   subscriptions: Subscription[];
   @ViewChild('resultContainer') resultContainer: ElementRef;
 
@@ -50,10 +38,10 @@ export class ResultBreedComponent implements OnDestroy, OnInit {
   }
 
   searchImage(item) {
-    this.list = [
+    this.service.breedList$.next([
       item,
-      ...this.list
-    ];
+      ...this.service.breedList$.value,
+    ]);
     this.scrollToResult();
   }
 

@@ -23,7 +23,8 @@ export class GetPictureComponent implements OnInit {
     if ('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({
         video: {
-          facingMode: 'user',
+          facingMode: 'environment',
+          aspectRatio: 1,
         }
       }).then((stream) => {
         (this.player.nativeElement as HTMLVideoElement).srcObject = stream;

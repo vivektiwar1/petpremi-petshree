@@ -20,22 +20,15 @@
         mode="indeterminate">
       </mat-spinner>
     </h1>
-    <div class="user-type">
-      <mat-select
-        [class.disabled]="!enableUserType"
-        [disabled]="!enableUserType"
-        (selectionChange)="changeUserType($event.value)"
-        [(value)]="userType">
-        <mat-option *ngFor="let type of userTypes" [value]="type.value">
-          {{type.show | translate}}
-        </mat-option>
-      </mat-select>
-    </div>
     <mat-error *ngIf="signUpLoadError$ | async" class="text-center mb-2">
       {{'auth.error.unknown' | translate}}
     </mat-error>
     <form novalidate autocomplete="off" [formGroup]="form" (submit)="submitForm()" [ngSwitch]="currentForm">
       <div *ngSwitchCase="formTypes.SIGN_UP_STAGE1">
+        <div class="user-type">
+          {{notRole | translate}}
+          <a (click)="changeUserType()">{{signUpRole | translate}}</a>
+        </div>
         <div class="d-flex align-items-center fullName">
           <mat-select *ngIf="service.countries$ | async as countries"
                       formControlName="countryIndex" class="title"
