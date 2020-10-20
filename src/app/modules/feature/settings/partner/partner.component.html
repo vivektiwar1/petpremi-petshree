@@ -189,260 +189,274 @@
         </div>
     </form>
 
-    <form *ngIf="clinicForm" class="no-outline" [formGroup]="clinicForm" autocomplete="off">
-        <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
-            [class.loader]="apiInProgress.clinicForm">
-            <div class="row py-3">
-                <div class="col-12">
-                    <h3 class="title-color">Clinic & Schedule Details</h3>
-                    <!-- <div class="row mt-2">
-                    </div> -->
-                    <div class="row mt-3">
-                        <div class="col-12 col-sm-6 form-group mb-0">
-                            <label class="mb-1" for="name">Clinic Name</label>
-                            <input class="form-control" id="name" formControlName="name"
-                                placeholder="Enter Clinic Name"
-                                [class.error]="getClinicFormField('name').errors && getClinicFormField('name').touched">
-                            <div class="error-message">
-                                <ng-container
-                                    *ngIf="getClinicFormField('name').errors && getClinicFormField('name').touched">
-                                    <span>Clinic name is required!</span>
-                                </ng-container>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 form-group mb-0">
-                            <label class="mb-1" for="clinicMobile">Clinic Phone Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="form-control">
-                                        <mat-select formControlName="country">
-                                            <mat-option *ngFor="let country of countryList" [value]="country.id">
-                                                +{{country.code}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </div>
-                                </div>
-                                <input class="form-control" type="tel" id="clinicMobile" placeholder="Enter Clinic Phone"
-                                    formControlName="mobile"
-                                    [class.error]="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
-                            </div>
-                            <div class="error-message">
-                                <ng-container
-                                    *ngIf="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
-                                    <span *ngIf="getClinicFormField('mobile').hasError('minlength')">
-                                        Phone number is invalid!</span>
-                                    <span *ngIf="getClinicFormField('mobile').hasError('required')">
-                                        Phone number is required!</span>
-                                </ng-container>
-                            </div>
-                        </div>
-                        <div class="col-12 form-group">
-                            <label class="mb-2" for="clinicAddress">Clinic Address</label>
-                            <textarea class="form-control custom-scrollbar textarea-min-height" type="text"
-                                id="clinicAddress" formControlName="clinicAddress" placeholder="Enter Clinic Address"
-                                rows="1" cdkTextareaAutosize #autosize="cdkTextareaAutosize"></textarea>
-                        </div>
-    
-                        <div class="col-12 col-sm-6 form-group">
-                            <input-dropdown label="Country" name="countryName" placeholder="Select Country"
-                                [parentFormGroup]="clinicForm" [selectionList]="countryList">
-                            </input-dropdown>
-                        </div>
-    
-                        <div class="col-12 col-sm-6 form-group">
-                            <input-dropdown label="State" name="state" placeholder="Select State"
-                                [parentFormGroup]="clinicForm" [selectionList]="stateList">
-                            </input-dropdown>
-                        </div>
-    
-                        <div class="col-12 col-sm-6 form-group">
-                            <input-dropdown label="City" name="city" placeholder="Select City"
-                                [parentFormGroup]="clinicForm" [selectionList]="cityList">
-                            </input-dropdown>
-                        </div>
-    
-                        <div class="col-12 col-sm-6 form-group">
-                            <input-dropdown label="Pin Code" name="pinCode" placeholder="Select Pin Code"
-                                [parentFormGroup]="clinicForm" [selectionList]="pinCodeList">
-                            </input-dropdown>
-                        </div>
-                        <div class="col-12 d-flex justify-content-between align-items-center">
-                            <h6 class="title-color mb-0">Add Partner Details</h6>
-                            <button class="btn btn-effect text-warning no-outline px-0" (click)="addPartner()"
-                                [disabled]="clinicForm.get('partnerContactNumbers').invalid">+ ADD
-                                ANOTHER PARTNER</button>
-                        </div>
-                        <div class="col-12" formArrayName="partnerContactNumbers">
-                            <ng-container *ngFor="let partner of partnerContactsList; let partnerIndex = index">
-                                <div class="row" [formGroupName]="partnerIndex" [class.mt-3]="partnerIndex">
-                                    <div class="col-12 position-relative">
-                                        <div class="border rounded p-2">
-                                            <div class="row">
-                                                <div class="col-12 col-sm-4 form-group mb-0">
-                                                    <label class="mb-1" for="mobile">Mobile</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="form-control">
-                                                                <mat-select formControlName="country">
-                                                                    <mat-option *ngFor="let item of countryList" [value]="item.id">+{{item.code}}</mat-option>
-                                                                </mat-select>
-                                                            </div>
-                                                        </div>
-                                                        <input class="form-control" id="mobile" formControlName="mobile"
-                                                            placeholder="Phone Number" (change)="validatePartnerNumber($event, partnerIndex)"
-                                                            [class.error]="partner.get('mobile').errors && partner.get('mobile').touched">
-                                                    </div>
-                                                    <div class="error-message">
-                                                        <ng-container
-                                                            *ngIf="partner.get('mobile').errors && partner.get('mobile').touched">
-                                                            <span *ngIf="partner.get('mobile').hasError('minlength')">
-                                                                Phone number is invalid!</span>
-                                                            <span *ngIf="partner.get('mobile').hasError('required')">
-                                                                Phone number is required!</span>
-                                                        </ng-container>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-4 form-group mb-0">
-                                                    <label class="mb-1" for="firstName">First Name</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="form-control">
-                                                                <mat-select formControlName="title">
-                                                                    <mat-option *ngFor="let item of titleList" [value]="item.id">{{item.title}}</mat-option>
-                                                                </mat-select>
-                                                            </div>
-                                                        </div>
-                                                        <input class="form-control" id="firstName" formControlName="firstName"
-                                                            placeholder="First Name"
-                                                            [class.error]="partner.get('firstName').errors && partner.get('firstName').touched">
-                                                    </div>
-                                                    <div class="error-message">
-                                                        <ng-container
-                                                            *ngIf="partner.get('firstName').errors && partner.get('firstName').touched">
-                                                            <span>Partner name is required!</span>
-                                                        </ng-container>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-4 form-group mb-0">
-                                                    <label class="mb-1" for="name">Last Name</label>
-                                                    <input class="form-control" id="name" formControlName="lastName"
-                                                        placeholder="Last Name">
-                                                </div>
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Clinic
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <form *ngIf="clinicForm" class="no-outline" [formGroup]="clinicForm" autocomplete="off">
+                        <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
+                            [class.loader]="apiInProgress.clinicForm">
+                            <div class="row py-3">
+                                <div class="col-12">
+                                    <h3 class="title-color">Clinic & Schedule Details</h3>
+                                    <div class="row mt-3">
+                                        <div class="col-12 col-sm-6 form-group mb-0">
+                                            <label class="mb-1" for="name">Clinic Name</label>
+                                            <input class="form-control" id="name" formControlName="name"
+                                                placeholder="Enter Clinic Name"
+                                                [class.error]="getClinicFormField('name').errors && getClinicFormField('name').touched">
+                                            <div class="error-message">
+                                                <ng-container
+                                                    *ngIf="getClinicFormField('name').errors && getClinicFormField('name').touched">
+                                                    <span>Clinic name is required!</span>
+                                                </ng-container>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
-    
-                        <div class="col-12 d-flex justify-content-between align-items-center">
-                            <h6 class="title-color mb-0">Add Schedule</h6>
-                            <button class="btn btn-effect text-warning no-outline px-0" (click)="addSchedule()"
-                                [disabled]="clinicForm.get('businessTimings').invalid">+ ADD
-                                ANOTHER SCHEDULE</button>
-                        </div>
-                        <div class="col-12" formArrayName="businessTimings">
-                            <ng-container *ngFor="let item of scheduleList; let scheduleIndex = index">
-                                <div class="row" [formGroupName]="scheduleIndex" [class.mt-3]="scheduleIndex">
-                                    <div class="col-12 position-relative">
-                                        <div class="border rounded p-2">
-                                            <div class="row">
-                                                <div class="col-12 col-md-6 form-group">
-                                                    <label class="mb-1" [for]="'name - ' + scheduleIndex">Schedule
-                                                        {{scheduleIndex + 1}}</label>z
-                                                    <mat-chip-list>
-                                                        <mat-chip *ngFor="let day of weekDays"
-                                                            (click)="selectWeekDays(day.value, scheduleIndex)"
-                                                            [class.chip-active]="getScheduleDayControl(scheduleIndex)?.value?.includes(day.value)">
-                                                            {{day.name}}
-                                                        </mat-chip>
-                                                    </mat-chip-list>
+                                        <div class="col-12 col-sm-6 form-group mb-0">
+                                            <label class="mb-1" for="clinicMobile">Clinic Phone Number</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="form-control">
+                                                        <mat-select formControlName="country">
+                                                            <mat-option *ngFor="let country of countryList" [value]="country.id">
+                                                                +{{country.code}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </div>
                                                 </div>
-                                                <div class="col-12 col-md-6" formArrayName="timeRange">
-                                                    <ng-container
-                                                        *ngFor="let item of clinicForm.get('businessTimings.' + scheduleIndex + '.timeRange')['controls']; let slotsIndex = index">
-                                                        <div class="row" [formGroupName]="slotsIndex"
-                                                            [class.mt-3]="slotsIndex">
-                                                            <div class="col-12 position-relative">
-                                                                <div class="border rounded p-2">
-                                                                    <div class="row">
-                                                                        <div class="col-12 col-sm-6 form-group">
-                                                                            <label class="mb-1"
-                                                                                [for]="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex">From</label>
-                                                                            <div class="position-relative">
-                                                                                <input class="form-control timer"
-                                                                                    id="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex"
-                                                                                    [ngxTimepicker]="toggleTimepicker"
-                                                                                    readonly formControlName="fromHours"
-                                                                                    placeholder="Select Time">
-                                                                                <ngx-material-timepicker-toggle
-                                                                                    class="position-absolute time-picker"
-                                                                                    [for]="toggleTimepicker">
-                                                                                </ngx-material-timepicker-toggle>
-                                                                                <ngx-material-timepicker
-                                                                                    #toggleTimepicker>
-                                                                                </ngx-material-timepicker>
+                                                <input class="form-control" type="tel" id="clinicMobile" placeholder="Enter Clinic Phone"
+                                                    formControlName="mobile"
+                                                    [class.error]="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
+                                            </div>
+                                            <div class="error-message">
+                                                <ng-container
+                                                    *ngIf="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
+                                                    <span *ngIf="getClinicFormField('mobile').hasError('minlength')">
+                                                        Phone number is invalid!</span>
+                                                    <span *ngIf="getClinicFormField('mobile').hasError('required')">
+                                                        Phone number is required!</span>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 form-group">
+                                            <label class="mb-2" for="clinicAddress">Clinic Address</label>
+                                            <textarea class="form-control custom-scrollbar textarea-min-height" type="text"
+                                                id="clinicAddress" formControlName="clinicAddress" placeholder="Enter Clinic Address"
+                                                rows="1" cdkTextareaAutosize #autosize="cdkTextareaAutosize"></textarea>
+                                        </div>
+                    
+                                        <div class="col-12 col-sm-6 form-group">
+                                            <input-dropdown label="Country" name="countryName" placeholder="Select Country"
+                                                [parentFormGroup]="clinicForm" [selectionList]="countryList">
+                                            </input-dropdown>
+                                        </div>
+                    
+                                        <div class="col-12 col-sm-6 form-group">
+                                            <input-dropdown label="State" name="state" placeholder="Select State"
+                                                [parentFormGroup]="clinicForm" [selectionList]="stateList">
+                                            </input-dropdown>
+                                        </div>
+                    
+                                        <div class="col-12 col-sm-6 form-group">
+                                            <input-dropdown label="City" name="city" placeholder="Select City"
+                                                [parentFormGroup]="clinicForm" [selectionList]="cityList">
+                                            </input-dropdown>
+                                        </div>
+                    
+                                        <div class="col-12 col-sm-6 form-group">
+                                            <input-dropdown label="Pin Code" name="pinCode" placeholder="Select Pin Code"
+                                                [parentFormGroup]="clinicForm" [selectionList]="pinCodeList">
+                                            </input-dropdown>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-between align-items-center">
+                                            <h6 class="title-color mb-0">Add Partner Details</h6>
+                                            <button class="btn btn-effect text-warning no-outline px-0" (click)="addPartner()"
+                                                [disabled]="clinicForm.get('partnerContactNumbers').invalid">+ ADD
+                                                ANOTHER PARTNER</button>
+                                        </div>
+                                        <div class="col-12" formArrayName="partnerContactNumbers">
+                                            <ng-container *ngFor="let partner of partnerContactsList; let partnerIndex = index">
+                                                <div class="row" [formGroupName]="partnerIndex" [class.mt-3]="partnerIndex">
+                                                    <div class="col-12 position-relative">
+                                                        <div class="border rounded p-2">
+                                                            <div class="row">
+                                                                <div class="col-12 col-sm-4 form-group mb-0">
+                                                                    <label class="mb-1" for="mobile">Mobile</label>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <div class="form-control">
+                                                                                <mat-select formControlName="country">
+                                                                                    <mat-option *ngFor="let item of countryList" [value]="item.id">+{{item.code}}</mat-option>
+                                                                                </mat-select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-12 col-sm-6 form-group">
-                                                                            <label class="mb-1"
-                                                                                [for]="'toHours - ' + scheduleIndex + ' - ' + slotsIndex">To</label>
-                                                                            <div class="position-relative">
-                                                                                <input class="form-control timer"
-                                                                                    id="'toHours - ' + scheduleIndex + ' - ' + slotsIndex"
-                                                                                    [ngxTimepicker]="toggleToTimepicker"
-                                                                                    readonly formControlName="toHours"
-                                                                                    placeholder="Select Time">
-                                                                                <ngx-material-timepicker-toggle
-                                                                                    class="position-absolute time-picker"
-                                                                                    [for]="toggleToTimepicker">
-                                                                                </ngx-material-timepicker-toggle>
-                                                                                <ngx-material-timepicker
-                                                                                    #toggleToTimepicker>
-                                                                                </ngx-material-timepicker>
-                                                                            </div>
-    
-                                                                        </div>
+                                                                        <input class="form-control" id="mobile" formControlName="mobile"
+                                                                            placeholder="Phone Number" (change)="validatePartnerNumber($event, partnerIndex)"
+                                                                            [class.error]="partner.get('mobile').errors && partner.get('mobile').touched">
                                                                     </div>
-                                                                    <mat-icon class="remove-slot small"
-                                                                        *ngIf="slotsIndex"
-                                                                        (click)="removeSlots(scheduleIndex, slotsIndex)">
-                                                                        close</mat-icon>
+                                                                    <div class="error-message">
+                                                                        <ng-container
+                                                                            *ngIf="partner.get('mobile').errors && partner.get('mobile').touched">
+                                                                            <span *ngIf="partner.get('mobile').hasError('minlength')">
+                                                                                Phone number is invalid!</span>
+                                                                            <span *ngIf="partner.get('mobile').hasError('required')">
+                                                                                Phone number is required!</span>
+                                                                        </ng-container>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 col-sm-4 form-group mb-0">
+                                                                    <label class="mb-1" for="firstName">First Name</label>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <div class="form-control">
+                                                                                <mat-select formControlName="title">
+                                                                                    <mat-option *ngFor="let item of titleList" [value]="item.id">{{item.title}}</mat-option>
+                                                                                </mat-select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <input class="form-control" id="firstName" formControlName="firstName"
+                                                                            placeholder="First Name"
+                                                                            [class.error]="partner.get('firstName').errors && partner.get('firstName').touched">
+                                                                    </div>
+                                                                    <div class="error-message">
+                                                                        <ng-container
+                                                                            *ngIf="partner.get('firstName').errors && partner.get('firstName').touched">
+                                                                            <span>Partner name is required!</span>
+                                                                        </ng-container>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 col-sm-4 form-group mb-0">
+                                                                    <label class="mb-1" for="name">Last Name</label>
+                                                                    <input class="form-control" id="name" formControlName="lastName"
+                                                                        placeholder="Last Name">
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </ng-container>
-                                                    <div class="col-12">
-                                                        <div class="text-right">
-                                                            <button class="btn btn-effect text-warning no-outline px-0"
-                                                                (click)="addSlots(scheduleIndex)"
-                                                                [disabled]="clinicForm.get('businessTimings.' + scheduleIndex + '.timeRange').invalid">+
-                                                                ADD ANOTHER SLOT</button>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </ng-container>
                                         </div>
-                                        <mat-icon class="remove-schedule small" *ngIf="scheduleIndex"
-                                            (click)="removeSchedule(scheduleIndex)">close</mat-icon>
+                    
+                                        <div class="col-12 d-flex justify-content-between align-items-center">
+                                            <h6 class="title-color mb-0">Add Schedule</h6>
+                                            <button class="btn btn-effect text-warning no-outline px-0" (click)="addSchedule()"
+                                                [disabled]="clinicForm.get('businessTimings').invalid">+ ADD
+                                                ANOTHER SCHEDULE</button>
+                                        </div>
+                                        <div class="col-12" formArrayName="businessTimings">
+                                            <ng-container *ngFor="let item of scheduleList; let scheduleIndex = index">
+                                                <div class="row" [formGroupName]="scheduleIndex" [class.mt-3]="scheduleIndex">
+                                                    <div class="col-12 position-relative">
+                                                        <div class="border rounded p-2">
+                                                            <div class="row">
+                                                                <div class="col-12 col-md-6 form-group">
+                                                                    <label class="mb-1" [for]="'name - ' + scheduleIndex">Schedule
+                                                                        {{scheduleIndex + 1}}</label>z
+                                                                    <mat-chip-list>
+                                                                        <mat-chip *ngFor="let day of weekDays"
+                                                                            (click)="selectWeekDays(day.value, scheduleIndex)"
+                                                                            [class.chip-active]="getScheduleDayControl(scheduleIndex)?.value?.includes(day.value)">
+                                                                            {{day.name}}
+                                                                        </mat-chip>
+                                                                    </mat-chip-list>
+                                                                </div>
+                                                                <div class="col-12 col-md-6" formArrayName="timeRange">
+                                                                    <ng-container
+                                                                        *ngFor="let item of clinicForm.get('businessTimings.' + scheduleIndex + '.timeRange')['controls']; let slotsIndex = index">
+                                                                        <div class="row" [formGroupName]="slotsIndex"
+                                                                            [class.mt-3]="slotsIndex">
+                                                                            <div class="col-12 position-relative">
+                                                                                <div class="border rounded p-2">
+                                                                                    <div class="row">
+                                                                                        <div class="col-12 col-sm-6 form-group">
+                                                                                            <label class="mb-1"
+                                                                                                [for]="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex">From</label>
+                                                                                            <div class="position-relative">
+                                                                                                <input class="form-control timer"
+                                                                                                    id="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex"
+                                                                                                    [ngxTimepicker]="toggleTimepicker"
+                                                                                                    readonly formControlName="fromHours"
+                                                                                                    placeholder="Select Time">
+                                                                                                <ngx-material-timepicker-toggle
+                                                                                                    class="position-absolute time-picker"
+                                                                                                    [for]="toggleTimepicker">
+                                                                                                </ngx-material-timepicker-toggle>
+                                                                                                <ngx-material-timepicker
+                                                                                                    #toggleTimepicker>
+                                                                                                </ngx-material-timepicker>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-12 col-sm-6 form-group">
+                                                                                            <label class="mb-1"
+                                                                                                [for]="'toHours - ' + scheduleIndex + ' - ' + slotsIndex">To</label>
+                                                                                            <div class="position-relative">
+                                                                                                <input class="form-control timer"
+                                                                                                    id="'toHours - ' + scheduleIndex + ' - ' + slotsIndex"
+                                                                                                    [ngxTimepicker]="toggleToTimepicker"
+                                                                                                    readonly formControlName="toHours"
+                                                                                                    placeholder="Select Time">
+                                                                                                <ngx-material-timepicker-toggle
+                                                                                                    class="position-absolute time-picker"
+                                                                                                    [for]="toggleToTimepicker">
+                                                                                                </ngx-material-timepicker-toggle>
+                                                                                                <ngx-material-timepicker
+                                                                                                    #toggleToTimepicker>
+                                                                                                </ngx-material-timepicker>
+                                                                                            </div>
+                    
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <mat-icon class="remove-slot small"
+                                                                                        *ngIf="slotsIndex"
+                                                                                        (click)="removeSlots(scheduleIndex, slotsIndex)">
+                                                                                        close</mat-icon>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                    <div class="col-12">
+                                                                        <div class="text-right">
+                                                                            <button class="btn btn-effect text-warning no-outline px-0"
+                                                                                (click)="addSlots(scheduleIndex)"
+                                                                                [disabled]="clinicForm.get('businessTimings.' + scheduleIndex + '.timeRange').invalid">+
+                                                                                ADD ANOTHER SLOT</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <mat-icon class="remove-schedule small" *ngIf="scheduleIndex"
+                                                            (click)="removeSchedule(scheduleIndex)">close</mat-icon>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="col-12 mt-3 text-right">
+                                            <app-button className="btn-warning btn-large" buttonText="Save"
+                                                (buttonClicked)="onSubmit('clinicForm')"
+                                                [disabled]="clinicForm.invalid || clinicForm.pristine">
+                                            </app-button>
+                                        </div>
                                     </div>
                                 </div>
-                            </ng-container>
+                            </div>
+                            <div *ngIf="apiInProgress.clinicForm" class="loader-wrapper">
+                                <mat-spinner diameter="60"></mat-spinner>
+                            </div>
                         </div>
-                        <div class="col-12 mt-3 text-right">
-                            <app-button className="btn-warning btn-large" buttonText="Save"
-                                (buttonClicked)="onSubmit('clinicForm')"
-                                [disabled]="clinicForm.invalid || clinicForm.pristine">
-                            </app-button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-            <div *ngIf="apiInProgress.clinicForm" class="loader-wrapper">
-                <mat-spinner diameter="60"></mat-spinner>
-            </div>
         </div>
-    </form>
+    </div>
+        
 </ng-container>
 
 <ng-template #loading>

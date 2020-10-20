@@ -118,8 +118,6 @@ export class PartnerComponent implements OnInit {
     }
   }
 
-
-
   createPartnerForm(formData) {
 
     const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
@@ -165,8 +163,6 @@ export class PartnerComponent implements OnInit {
 
   }
 
-
-
   getPartnerFormField(key: string) {
     return this.partnerForm.get(key) as FormControl;
   }
@@ -174,25 +170,26 @@ export class PartnerComponent implements OnInit {
   createClinicForm(formData) {
     let selectedClinicCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
+    // this.clinicForm = this.partnerDetails?.partnerAddresses.map(res => {
     this.clinicForm = this.formBuilder.group({
-      partnerId: this.partnerDetails.id,
-      isPartner: true,
-      displayOrder: 1,
-      latitude: 28.535517,
-      longitude: 77.391029,
-      name: [formData.clinicName ? formData.clinicName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
-      mobile: [null, Validators.compose([Validators.required,
-        Validators.minLength(selectedCountry?.minLength || 10),
-        Validators.maxLength(selectedCountry?.maxLength || 10)])],
-      clinicAddress: [null, Validators.compose([WhiteSpaceValidator])],
-      countryName: selectedClinicCountry?.id,
-      country: [selectedCountry?.id],
-      state: [null, Validators.required],
-      city: [null, Validators.required],
-      pinCode: [null, Validators.required],
-      businessTimings: this.formBuilder.array([this.createSchedule()]),
-      partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails()])
-    });
+        partnerId: this.partnerDetails.id,
+        isPartner: true,
+        displayOrder: 1,
+        latitude: 28.535517,
+        longitude: 77.391029,
+        name: [formData.clinicName ? formData.clinicName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
+        mobile: [null, Validators.compose([Validators.required,
+          Validators.minLength(selectedCountry?.minLength || 10),
+          Validators.maxLength(selectedCountry?.maxLength || 10)])],
+        clinicAddress: [null, Validators.compose([WhiteSpaceValidator])],
+        countryName: selectedClinicCountry?.id,
+        country: [selectedCountry?.id],
+        state: [null, Validators.required],
+        city: [null, Validators.required],
+        pinCode: [null, Validators.required],
+        businessTimings: this.formBuilder.array([this.createSchedule()]),
+        partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails()])
+      });
 
     const countryControl = this.clinicForm.get('country');
     const stateControl = this.clinicForm.get('state');
@@ -230,8 +227,8 @@ export class PartnerComponent implements OnInit {
       map(value => value && value.slice(0, selectedCountry.maxLength)),
       takeUntil(this.destroy$)
     ).subscribe(value => phoneControl.setValue(value, { emitEvent: false }));
-
-    this.scheduleControl = this.clinicForm.get('businessTimings') as FormArray;
+    // });
+      // this.scheduleControl = this.clinicForm.get('businessTimings') as FormArray;
   }
 
   createPartnerDetails() {
@@ -265,22 +262,23 @@ export class PartnerComponent implements OnInit {
     }
   }
 
- createTitle(){
-   return this.formBuilder.group({id: [null]});
- }
- createCountry(){
-  return this.formBuilder.group({id: [null]});
+  createTitle(){
+    return this.formBuilder.group({id: [null]});
+  }
 
- }
+  createCountry(){
+    return this.formBuilder.group({id: [null]});
+
+  }
 
   addSchedule() {
     const control = this.clinicForm.get('businessTimings') as FormArray;
-    control.push(this.createPartnerDetails());
+    control.push(this.createSchedule());
   }
 
   addPartner() {
     const control = this.clinicForm.get('partnerContactNumbers') as FormArray;
-    control.push(this.createSchedule());
+    control.push(this.createPartnerDetails());
   }
 
   getClinicFormField(key: string) {
