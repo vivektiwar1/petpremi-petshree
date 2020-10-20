@@ -23,7 +23,7 @@
                         [userDetails]="userDetails"></app-appointmentdetails>
                 </div>
                 <div class="mt-3 py-4 border-rounded" id="petdetails" style="background-color: white; display: none;">
-                    <app-petdetails></app-petdetails>
+                    <app-petdetails [petTypes]="petTypes"  [breedTypes]="breedTypes"></app-petdetails>
                 </div>
                 <div *ngIf="userDetails?.images?.length" class="bg-white mt-3 py-4 border-rounded" id="gallery">
                     <app-header>Gallery</app-header>

@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 @Injectable()
 export class ECardService {
+ 
 
   private _navActive$: Subject<string> = new Subject();
 
@@ -43,18 +44,18 @@ export class ECardService {
         pagination: {
           pageNumber: 0,
           pageSize: 1
-          },
-          sort: {
-            DESC: [
-                  "id"
-              ]
-          }
+        },
+        sort: {
+          DESC: [
+            "id"
+          ]
+        }
       },
       objectHash: {
         userName: "rahul"
       }
-  };
-  return this.http.post(this.getApiUrl(`/crud`), apiData);
+    };
+    return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
 
@@ -114,8 +115,8 @@ export class ECardService {
     return this.http.post(this.getApiUrl(`/crud`), apiData);
   }
 
-  getVets(){
-    const apiData={
+  getVets() {
+    const apiData = {
       commonParamHash: {
         entityName: "User",
         uiBean: "BNECustomer",
@@ -123,21 +124,72 @@ export class ECardService {
         pagination: {
           pageNumber: 0,
           pageSize: 10
-          },
-          sort: {
-            DESC: [
-                  "id"
-              ]
-          }
+        },
+        sort: {
+          DESC: [
+            "id"
+          ]
+        }
       },
       objectHash: {
-        partners_FK:{"id":11},
-        profession_FK:{"id":1}
+        partners_FK: { "id": 11 },
+        profession_FK: { "id": 1 }
       }
-  }
-  return this.http.post(this.getApiUrl(`/crud`), apiData);
+    }
+    return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
+ 
+
+
+  getBreedType(typeId?, pageSize = 10, pageNumber = 0, sort?) {
+    const apiData = {
+      commonParamHash: {
+        entityName: 'PetBreed',
+        uiBean: 'BNEPetBreed',
+        operation: 'SEARCH',
+        pagination: {
+          pageNumber,
+          pageSize
+        },
+        sort: {
+          ASC: [
+              'id'
+          ]
+      }
+      },
+      objectHash: {
+            petType_FK: {
+            id: typeId
+        }
+  }
+    };
+    return this.http.post(`${environment.apiBase}/service/api/crud`, apiData);
+  }
+
+  getPetType(pageSize = 10, pageNumber = 0, sort?, searchHash?) {
+    const apiData = {
+      commonParamHash: {
+        entityName: 'PetType',
+        uiBean: 'BNEPetType',
+        operation: 'SEARCH',
+        pagination: {
+          pageNumber,
+          pageSize
+        },
+        sort: {
+          ASC: [
+              'id'
+          ]
+      }
+      },
+      objectHash: {
+        status: true
+      }
+    };
+    return this.http.post(`${environment.apiBase}/service/api/crud`, apiData);
+  }
+
 
   getDay(): Observable<any> {
     const apiData = {

@@ -25,6 +25,12 @@ export class ECardComponent implements OnDestroy {
   weekDay: any;
   customer: any;
   vets: any;
+  addPetForm: FormGroup;
+  breedTypes: any;
+  petTypes: any;
+  user: any;
+  units: Array<any>;
+  genders: any;
   appontmentReason: any;
   appontmentType: any;
   appontmentRepeat: any;
@@ -43,7 +49,7 @@ export class ECardComponent implements OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private eCardService: ECardService,
-    private ProfileService:ProfileService,
+    private ProfileService: ProfileService,
     private commonService: CommonService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -70,11 +76,86 @@ export class ECardComponent implements OnDestroy {
     this.getAppointmentType();
     this.getAppointmentRepeat();
     this.getCustomer();
+    this.getPetType();
+
   }
 
   async init(userName) {
     this.userName = userName;
     await this.getUserDetails(userName);
+    this.createForm();
+  }
+
+  async createForm() {
+    const [genders, units] = await this.getData();
+
+    this.genders = ((genders as any)?.responseResult?.data?.content || []).map(item => {
+      return {
+        name: item.name,
+        image: item.image,
+        id: item.id
+      };
+    });
+    this.units = ((units as any)?.responseResult?.data?.content || []).map(item => {
+      return {
+        name: item.name,
+        desc: item.description,
+        id: item.id
+      };
+    });
+    this.addPetForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      petTypeId: ['', Validators.required],
+      petBreedId: ['', Validators.required],
+      genderId: this.genders[0].id,
+      weightValue: null,
+      weightUnitId: this.units[0].id,
+      birthDay: [null, Validators.required],
+      yearOld: [null, Validators.required],
+      userName: this.user?.firstName,
+      customerId: this.user?.id,
+      partnerId: this.user?.partnerId,
+    });
+
+    const petTypeControl = this.addPetForm.get('petTypeId') as FormControl;
+
+    console.log(petTypeControl)
+    petTypeControl.valueChanges.subscribe(typeId => {
+      console.log("hello");
+      console.log(typeId);
+      this.getBreedType(typeId);
+    });
+  }
+  async getBreedType(petTypeId?) {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response = await this.eCardService.getBreedType(petTypeId).toPromise() as any;
+
+      if (!response.isError) {
+        this.breedTypes = response?.responseResult?.data.content;
+        return
+      } else {
+        console.error(new Error(response?.responseError?.message));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getPetType() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response = await this.eCardService.getPetType().toPromise() as any;
+
+      if (!response.isError) {
+        this.petTypes = response?.responseResult?.data.content;
+        return
+      } else {
+        console.error(new Error(response?.responseError?.message));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getUserDetails(userName) {
@@ -82,8 +163,6 @@ export class ECardComponent implements OnDestroy {
       this.apiInProgress.userDataLoader = true;
       const response = await this.eCardService.getUserDetails(userName, this.partnerUserName).toPromise();
       const userDetails = response;
-      console.log("response")
-      console.log(response)
       if (!userDetails) {
         this.navigateToErrorPage();
         return;
@@ -106,8 +185,6 @@ export class ECardComponent implements OnDestroy {
       this.apiInProgress.userDataLoader = true;
       const response = await this.eCardService.getCustomer(customerData).toPromise();
       this.customer = response;
-      console.log("response");
-      console.log(response);
 
       if (!this.customer) {
         this.navigateToErrorPage();
@@ -151,7 +228,8 @@ export class ECardComponent implements OnDestroy {
     }
 
   }
-  async getPartnerData(){
+
+  async getPartnerData() {
     try {
       this.apiInProgress.userDataLoader = true;
       const response: any = await this.eCardService.getPartnerData().toPromise();
@@ -201,17 +279,17 @@ export class ECardComponent implements OnDestroy {
     }
 
   }
-  async getVets(){
-    try{
-      this.apiInProgress.userDataLoader=true
-      const respose: any=await this.eCardService.getVets().toPromise();
-      this.vets=respose.responseResult.data.content;
+  async getVets() {
+    try {
+      this.apiInProgress.userDataLoader = true
+      const respose: any = await this.eCardService.getVets().toPromise();
+      this.vets = respose.responseResult.data.content;
       if (!this.vets) {
         this.navigateToErrorPage();
         return;
       }
 
-    } catch(error){
+    } catch (error) {
       this.apiInProgress.userDataLoader = false;
       console.error(error);
     }

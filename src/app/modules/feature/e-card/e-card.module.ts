@@ -30,6 +30,7 @@ import { ECardService } from './e-card.service';
 import { AuthImagePipe } from 'src/app/pipes/auth-image.pipe';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ResponseInterceptor} from "../../../interceptors/response.interceptor";
+import { InputDropdownComponent } from '../../shared/components/form-controls/input-dropdown/input-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {ResponseInterceptor} from "../../../interceptors/response.interceptor";
     HeaderComponent,
     HomeComponent,
     AboutComponent,
+    InputDropdownComponent,
     GalleryComponent,
     VideosComponent,
     EnquiryComponent,

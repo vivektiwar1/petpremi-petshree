@@ -18,7 +18,8 @@
         </div>
         <div class="row">
             <div class="col-12 text-center bx-shadow">
-                <input type="file" id="file" accept="image/*" />
+                <!-- <input type="" id="file" accept="image/*" /> -->
+                <button id="file" (click)="showDiv()">+</button>
                 <label for="file" class="btn-2"></label>
                 <p class="pb-3">Add New Pet</p>
             </div>
@@ -85,7 +86,7 @@
 <div class="container-fluid p-3" style="background-color:transparent;">
     <div class=" col-12 text-center">
         <div class="link">
-            <button class="btn btn-warning" (click)="showDiv()">
+            <button class="btn btn-warning">
                 Confirm
             </button>
         </div>
