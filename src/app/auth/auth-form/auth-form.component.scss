@@ -65,15 +65,10 @@
       text-align: center;
       margin: 5px 0 48px;
 
-      mat-select {
-        width: 150px;
-        border: 1px solid $Primary;
-        padding: 3px;
-        border-radius: 5px;
-
-        &.disabled {
-          border: 1px solid #eee;
-        }
+      a {
+        color: #EFAC36;
+        cursor: pointer;
+        white-space: nowrap;
       }
     }
 

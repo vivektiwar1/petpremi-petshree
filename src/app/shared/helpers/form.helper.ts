@@ -33,11 +33,14 @@ export class CustomValidators {
     const username = FC.value;
     if (username) {
       if (FieldRegEx.NUMBER.test(username)) {
-        if (!FieldRegEx.PHONE.test(username) || username.length <= 8) {
+        if (!FieldRegEx.PHONE.test(username)) {
           return {invalidPhone: true};
         }
       } else {
-        return Validators.email(FC);
+        if (CustomValidators.hasWhiteSpace(FC.value)) {
+          return {username: true};
+        }
+        return null;
       }
     }
     return Validators.required(FC);
@@ -76,6 +79,10 @@ export class CustomValidators {
       }
       return null;
     };
+  }
+
+  static hasWhiteSpace(s) {
+    return /\s/g.test(s);
   }
 }
 
