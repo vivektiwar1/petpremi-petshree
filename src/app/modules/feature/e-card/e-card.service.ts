@@ -162,7 +162,7 @@ export class ECardService {
         status: true
       }
   }
-    return this.http.post(this.getApiUrl(`/service/oauth2/api/crud`), apiData);
+    return this.http.post(this.getApiUrl(`/crud`), apiData);
   }
 
   getPetType(pageSize = 10, pageNumber = 0, sort?, searchHash?) {
@@ -355,7 +355,7 @@ export class ECardService {
       }
     };
 
-    return this.http.post(this.getApiUrl('/service/oauth2/api/crud'), apiData);
+    return this.http.post(this.getApiUrl('/crud'), apiData);
   }
 
 

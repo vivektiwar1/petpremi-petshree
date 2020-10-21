@@ -1,101 +1,158 @@
 <form *ngIf="addPetForm" [formGroup]="addPetForm" class="no-outline" autocomplete="off" (ngSubmit)="onFormSubmit()">
 
-<div class="container-fluid bg-white" style="border-radius: 15px">
-  <div class="row">
-    <div class="col-2 p-sm-3">
-      <button class="btn btn-warning" (click)="back()">Back</button>
-    </div>
-    <div class="col-10 p-sm-3 text-center">
-      <div class="heading text-center font-weight-medium">
-        <h3>Pet Details</h3>
+  <div class="container-fluid bg-white" style="border-radius: 15px">
+    <div class="row">
+      <div class="col-2 p-sm-3">
+        <button class="btn btn-warning" (click)="back()">Back</button>
+      </div>
+      <div class="col-10 p-sm-3 text-center">
+        <div class="heading text-center font-weight-medium">
+          <h3>Pet Details</h3>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="container-fluid">
-  <div class="row px-3">
-    <div class="col-12 p-sm-3">
-      <div class="heading font-weight-medium">
-        <h5>Pet Name</h5>
+  <div class="container-fluid">
+    <div class="row px-3">
+      <div class="col-12 p-sm-3">
+        <div class="heading font-weight-medium">
+          <h5>Pet Name</h5>
+        </div>
+      </div>
+      <div class="input-group select">
+        <input class="form-control" id="name" formControlName="name" placeholder="Enter Pet Name">
       </div>
     </div>
-    <div class="input-group select">
-      <input class="form-control" formControlName="petname" type="text" id="name" placeholder="Name" />
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 p-3">
-      <div class="heading font-weight-medium">
-        <h5>Pet Type</h5>
+    <div class="row">
+      <div class="col-12 p-3">
+        <div class="heading font-weight-medium">
+          <h5>Pet Type</h5>
+        </div>
       </div>
-    </div>
-    <div class="col-12">
-      <div class="form-group">
-        <mat-select class="form-control form-control-lg" name="type" id="type"
-        formControlName="pettypes" placeholder="Pet Types">
-          <mat-option  *ngFor="let type of petTypes;" [value]="type.name">{{type.name}}</mat-option>
-        </mat-select>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 p-3">
-      <div class="heading font-weight-medium">
-        <h5>Pet Breed</h5>
-      </div>
-    </div>
-    <div class="col-12">
+      <div class="col-12">
         <div class="form-group">
-            <mat-select class="form-control form-control-lg" id="breed" name="breed"
-            formControlName="petbreed" placeholder="Pet Types">
-                <mat-option value="reason" *ngFor="let breed of breedTypes;" 
-                [value]="breed.name">{{breed.name}}</mat-option>
-            </mat-select>
+          <mat-select class="form-control form-control-lg" name="petTypeId" id="type" formControlName="petTypeId"
+            placeholder="Pet Types">
+            <mat-option *ngFor="let type of petTypes;" [value]="type.id">{{type.name}}</mat-option>
+          </mat-select>
         </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 p-3">
-      <div class="heading font-weight-medium">
-        <h5>Pet Age</h5>
       </div>
     </div>
-    <div class="col-12">
-        <div class="form-group" >
-            <mat-select class="form-control form-control-lg" id="age" name="age" formControlName="petage">
-              <mat-option>Pet Age</mat-option>
-              <mat-option [value]="1">1</mat-option>
-              <mat-option [value]="2">2</mat-option>
-              <mat-option [value]="3">3</mat-option>
-            </mat-select>
+    <div class="row">
+      <div class="col-12 p-3">
+        <div class="heading font-weight-medium">
+          <h5>Pet Breed</h5>
         </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 p-3">
-      <div class="heading font-weight-medium">
-        <h5>Profile Picture</h5>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <mat-select class="form-control form-control-lg" id="breed" name="petBreedId" formControlName="petBreedId"
+            placeholder="Pet Types">
+            <mat-option value="reason" *ngFor="let breed of breedTypes;" [value]="breed.id">{{breed.name}}</mat-option>
+          </mat-select>
+        </div>
       </div>
     </div>
-    <div class="col-12">
+
+    <div class="row">
+      <div class="col-12 p-3">
+        <div class="heading font-weight-medium">
+          <h5>Pet Gender</h5>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <mat-select class="form-control form-control-lg" id="genderid" name="gender" formControlName="petgender"
+            placeholder="Pet Types">
+            <mat-option value="gender" *ngFor="let gender of genders;" [value]="gender.id">{{gender.name}}</mat-option>
+          </mat-select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 p-3">
+        <div class="heading font-weight-medium">
+          <h5>Pet Weight</h5>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <mat-select class="form-control form-control-lg" id="weight" name="weightUnitId"
+            formControlName="weightUnitId" placeholder="Pet Weight">
+            <mat-option value="unit" *ngFor="let unit of units;" [value]="unit.id">{{unit.name}}</mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="form-group">
+          <input class="form-control" id="weightValue" formControlName="weightValue" placeholder="Enter Weight">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 p-3">
+        <div class="heading font-weight-medium">
+          <h5>Pet Age</h5>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <input class="form-control" id="yearOld" formControlName="yearOld" placeholder="Year Old">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 p-3">
+        <div class="heading font-weight-medium">
+          <h5>Pet Birth Date</h5>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <input class="form-control" type="date" id="birthDay" formControlName="birthDay" placeholder="Birth Date">
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
       <div class="row">
-        <div class="col-6 text-right">
-          <input type="file" id="file" accept="image/*" />
-          <label for="file" class="btn-2"><img src="assets/img/fwd-images/photo(1).png" class="take-photo"/>Select Photo</label>
+        <div class="col-6 form-group">
+          <button style="width: inherit;">
+            <input #uploadRef type="file" id="upload-input" accept="image/*" name="image"
+              (change)="upload($event.target)">
+            <label for="upload-input">
+              <img [src]="'/assets/icon/camera.png'" alt="">
+              {{'breed.search.action.upload' | translate}}
+            </label>
+          </button>
         </div>
-        <div class="col-6 text-center">
-          <input type="file" id="file" accept="image/*" />
-          <label for="file" class="btn-2"><img src="assets/img/fwd-images/photo.png" class="take-photo"/>Take Photo</label>
+        <div class="col-6 form-group">
+          <button (click)="getPicture = true;">
+            <img [src]="'/assets/icon/photo.png'" alt="">
+            {{'breed.search.action.photo' | translate}}
+          </button>
         </div>
+        <app-get-picture *ngIf="getPicture" (closed)="getPicture = false;" (captured)="capturePhoto($event)">
+        </app-get-picture>
+
+        <app-crop-picture *ngIf="(imageToCrop$ | async) as imageCrop" [image]="imageCrop"
+          (cropped)="croppedImage($event)" (cancel)="croppedImage()"></app-crop-picture>
+        <img *ngIf="image" [src]="image" max-height="300px" width="100%" />
+      </div>
+    </div>
+
+
+  </div>
+  <div class="p-3 container-fluid" style="background-color: transparent">
+    <div class="col-12 text-center" style="text-align: center">
+      <div class="link">
+        <app-button class="mt-4" className="btn-warning" buttonText="ADD PET"
+          [disabled]="(addPetForm.invalid || apiInProgress)" (buttonClicked)="onSubmit()">
+        </app-button>
       </div>
     </div>
   </div>
-</div>
-<div class="p-3 container-fluid" style="background-color: transparent">
-  <div class="col-12 text-center" style="text-align: center">
-    <div class="link">
-      <button class="btn btn-warning" (click)="save()">Save</button>
-    </div>
-  </div>
-</div>
 </form>
+
+
+

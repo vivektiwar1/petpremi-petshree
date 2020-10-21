@@ -14,6 +14,8 @@ export class HomeComponent {
 
   ngOnInit() {
     this.createvCard();
+    console.log(this.userDetails);
+    
   }
 
   createvCard() {

@@ -22,6 +22,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { LightboxModule } from 'ngx-lightbox';
 import { NgxVcardModule } from "ngx-vcard";
+import { MatProgressSpinnerModule, MatSpinner } from "@angular/material/progress-spinner";
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,13 +32,21 @@ import { AuthImagePipe } from 'src/app/pipes/auth-image.pipe';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ResponseInterceptor} from "../../../interceptors/response.interceptor";
 import { InputDropdownComponent } from '../../shared/components/form-controls/input-dropdown/input-dropdown.component';
+import {CGetPictureComponent} from '../e-card/components/get-picture/get-picture.component';
+import {CCropPictureComponent} from '../e-card/components/crop-picture/crop-picture.component';
+import { ButtonComponent } from '../e-card/components/button/button.component';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @NgModule({
   declarations: [
     ECardComponent,
     NavMenuComponent,
     HeaderComponent,
+    ButtonComponent,
     HomeComponent,
+    CGetPictureComponent,
+    CCropPictureComponent,
     AboutComponent,
     GalleryComponent,
     VideosComponent,
@@ -52,6 +61,8 @@ import { InputDropdownComponent } from '../../shared/components/form-controls/in
     CommonModule,
     ECardRoutingModule,
     MatSelectModule,
+    TranslateModule.forChild(),
+    MatProgressSpinnerModule,
     MatFormFieldModule,
     PipesModule,
     ReactiveFormsModule,

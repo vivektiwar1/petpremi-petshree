@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-appointment',
@@ -10,11 +11,12 @@ export class AppointmentComponent implements OnInit {
   @Input() customer:any;
   @Input() vets:any;
 
-  constructor() {}
+  constructor( private auth:AuthService) {}
 
   ngOnInit(): void {
   }
   showDiv() {
+    this.auth.checkAndLogin().then(() => true);
     document.getElementById('appointmenttime').style.display = "block";
     document.getElementById('appointment').style.display = "none";
     document.getElementById('home').style.display = "none";

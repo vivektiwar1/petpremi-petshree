@@ -1,0 +1,29 @@
+@import "src/styles/variables";
+
+:host {
+    display: block;
+}
+
+.btn {
+    border-radius: $border-radius-8;
+
+    &:disabled {
+        cursor: not-allowed;
+        pointer-events: unset;
+    }
+}
+
+.btn-warning {
+    background-color: $color-secondary;
+    border-color: $color-secondary;
+    color: $white;
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active,
+    &:not(:disabled):visited,
+    &:not(:disabled):focus {
+        background-color: darken($color-secondary, 8);
+        border-color: darken($color-secondary, 8);
+        color: $white;
+    }
+}

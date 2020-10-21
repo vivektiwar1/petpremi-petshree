@@ -216,7 +216,7 @@ export class ECardComponent implements OnDestroy {
       this.apiInProgress.userDataLoader = true;
       const response: any = await this.eCardService.getAppointmentReason().toPromise();
       this.appontmentReason = response.responseResult.data.content;
-      if (!this.weekDay) {
+      if (!this.appontmentReason) {
         this.navigateToErrorPage();
         return;
       }
@@ -249,7 +249,7 @@ export class ECardComponent implements OnDestroy {
       this.apiInProgress.userDataLoader = true;
       const response: any = await this.eCardService.getAppointmentRepeat().toPromise();
       this.appontmentRepeat = response.responseResult.data.content;
-      if (!this.weekDay) {
+      if (!this.appontmentRepeat) {
         this.navigateToErrorPage();
         return;
       }
@@ -267,7 +267,7 @@ export class ECardComponent implements OnDestroy {
       this.apiInProgress.userDataLoader = true;
       const response: any = await this.eCardService.getAppointmentType().toPromise();
       this.appontmentType = response.responseResult.data.content;
-      if (!this.weekDay) {
+      if (!this.appontmentType) {
         this.navigateToErrorPage();
         return;
       }

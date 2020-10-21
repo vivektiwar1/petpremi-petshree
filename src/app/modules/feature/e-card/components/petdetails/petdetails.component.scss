@@ -4,13 +4,13 @@
   color: $label-heading-color;
   font-size: $font-size-16;
 }
-[type="file"] {
+#upload-input {
   height: 0;
   overflow: hidden;
   width: 0;
 }
 
-[type="file"] + label {
+#upload-input + label {
   background: #fffefe;
   border-radius: 5px;
   color: rgb(0, 0, 0);

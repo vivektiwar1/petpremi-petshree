@@ -28,6 +28,11 @@ export const NavMenu = [
         name: 'Enquiry',
         anchorId: 'enquiry',
         icon: 'assets/images/icons/chat.svg'
+    },
+    {
+        name:'User',
+        anchorId:'user',
+        icon:'assests/icon/profile.png'
     }
     
 ]
@@ -63,3 +68,4 @@ export const SettingsTabLinks = [
     // { name: 'Customer Profile', value: 'customer-profile', active: false },
     // { name: 'Ecard Media', value: 'ecard-media', active: false }
 ];
+
