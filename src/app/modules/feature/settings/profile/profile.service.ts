@@ -30,7 +30,7 @@ export class ProfileService {
         }
       },
       objectHash: {
-        'userName': userName
+        userName
       }
     };
 
@@ -207,13 +207,13 @@ export class ProfileService {
 
   getPartnerDetails(partnerId){
     const apiData = {
-      'commonParamHash': {
-          'entityName': 'Partner',
-          'uiBean': 'BNEPartnerCard',
-          'operation': 'SEARCH'
+      commonParamHash: {
+          entityName: 'Partner',
+          uiBean: 'BNEPartnerCard',
+          operation: 'SEARCH'
       },
-      'objectHash': {
-          'id': partnerId
+      objectHash: {
+          id: partnerId
       }
   };
     return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
@@ -225,23 +225,47 @@ export class ProfileService {
 
   searchUserName(userName){
     const  apiData = {
-      'commonParamHash': {
-          'entityName': 'Partner',
-          'uiBean': 'BNEPartnerCard',
-          'operation': 'SEARCH',
-          'pagination': {
-              'pageNumber': 0,
-              'pageSize': 2
+      commonParamHash: {
+          entityName: 'Partner',
+          uiBean: 'BNEPartnerCard',
+          operation: 'SEARCH',
+          pagination: {
+              pageNumber: 0,
+              pageSize: 2
           },
-          'sort': {
-              'DESC': [
+          sort: {
+              DESC: [
                   'id'
               ]
           }
       },
-      'objectHash': {
-          'userName': userName
+      objectHash: {
+          userName
       }
+  };
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
+
+  }
+
+  searchPartnerByNumber(mobile){
+    const  apiData = {
+      commonParamHash: {
+        entityName: 'PartnerContactNumber',
+        uiBean: 'BNEPartnerContactNumber',
+        operation: 'SEARCH',
+        pagination: {
+            pageNumber: 0,
+            pageSize: 5
+        },
+        sort: {
+            DESC: [
+                'id'
+            ]
+        }
+    },
+    objectHash: {
+        mobile_LIKE: mobile
+    }
   };
     return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
 

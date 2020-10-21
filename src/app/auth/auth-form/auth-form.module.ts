@@ -10,6 +10,7 @@ import {AuthFormComponent} from './auth-form.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {AlertModalModule} from '../../shared/modals/alert-modal/alert-modal.module';
 import {ConfirmModalModule} from '../../shared/modals/confirm-modal/confirm-modal.module';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {ConfirmModalModule} from '../../shared/modals/confirm-modal/confirm-moda
     MatRadioModule,
     AlertModalModule,
     ConfirmModalModule,
+    MatDialogModule,
   ],
   declarations: [
     AuthFormComponent,

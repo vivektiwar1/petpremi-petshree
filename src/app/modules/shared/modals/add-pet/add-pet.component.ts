@@ -41,6 +41,7 @@ export class AddPetComponent implements OnInit {
   breedTypes: any;
   petTypes: any;
   user: any;
+  image: string;
   units: Array<any>;
   genders: any;
   destroy$: Subject<void> = new Subject();
@@ -79,27 +80,15 @@ export class AddPetComponent implements OnInit {
   }
 
   searchImage(item) {
-    this.list = [
-      item,
-      ...this.list
-    ];
-    this.scrollToResult();
+    this.image = item;
   }
 
   searchPet(pet) {
     console.log(pet);
-    this.scrollToResult();
   }
 
   showInfo(index) {
     this.selectedIndex = index;
-  }
-
-  scrollToResult() {
-    const parent = $(window.innerWidth > 991 ? this.e.nativeElement : 'html, body');
-    parent.animate({
-      scrollTop: $(this.resultContainer.nativeElement).offset().top - parent.offset().top
-    }, 800);
   }
 
   customZoom(e) {
@@ -157,7 +146,13 @@ export class AddPetComponent implements OnInit {
           mobile: this.addPetForm.value.phone
         };
         delete formData.phone;
-        await this.service.postPet(formData).toPromise();
+        const response: any = await this.service.postPet(formData).toPromise();
+        const ext = this.image.split(';')[0].split(':')[1].split('/')[1];
+        const data = new FormData();
+        const file = new File([this.service.imagetoblob(this.image)], `filenName.${ext}`);
+        data.append('file', file);
+        data.append('randomKey', response?.randomKey);
+        await this.service.postPetImage(data).toPromise();
         this.toastrService.success('Pet Added successfully!');
         this.apiInProgress = false;
         this.addPetForm.reset({

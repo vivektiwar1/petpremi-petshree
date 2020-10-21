@@ -87,6 +87,9 @@ export class ProfileComponent {
       // this.createPersonalForm(response?.content?.[0] || {});
       // this.createProfessionalForm();
       // this.createClinicForm({});
+      if (this.userId) {
+        await this.getPersonalFormData();
+      }
       this.apiInProgress.page = false;
     } catch (error) {
       this.apiInProgress.page = false;
