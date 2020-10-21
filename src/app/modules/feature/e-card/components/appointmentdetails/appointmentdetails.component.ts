@@ -17,10 +17,12 @@ export class AppointmentDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
   showDiv() {
-    console.log(this.appointmentType)
     document.getElementById('appointmentdetails').style.display = "none";
 
     document.getElementById('petdetails').style.display = "block";
+    setTimeout(function(){
+      window.scroll(0, 0);
+    }, 100);
   }
   back() {
     document.getElementById('appointmenttime').style.display = "block";

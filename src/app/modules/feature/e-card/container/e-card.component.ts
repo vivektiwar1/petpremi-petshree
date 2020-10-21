@@ -77,13 +77,13 @@ export class ECardComponent implements OnDestroy {
     this.getAppointmentRepeat();
     this.getCustomer();
     this.getPetType();
+    this.getBreedType();
 
   }
 
   async init(userName) {
     this.userName = userName;
     await this.getUserDetails(userName);
-    this.createForm();
   }
 
   async createForm() {
@@ -118,21 +118,20 @@ export class ECardComponent implements OnDestroy {
     });
 
     const petTypeControl = this.addPetForm.get('petTypeId') as FormControl;
-
-    console.log(petTypeControl)
     petTypeControl.valueChanges.subscribe(typeId => {
-      console.log("hello");
-      console.log(typeId);
-      this.getBreedType(typeId);
+      
+      
     });
   }
-  async getBreedType(petTypeId?) {
+  async getBreedType() {
     try {
       this.apiInProgress.userDataLoader = true;
-      const response = await this.eCardService.getBreedType(petTypeId).toPromise() as any;
+      const response = await this.eCardService.getBreedType().toPromise() as any;
 
       if (!response.isError) {
-        this.breedTypes = response?.responseResult?.data.content;
+        this.breedTypes = response.responseResult.data.content;
+        console.log(response.responseResult.data.content);
+        
         return
       } else {
         console.error(new Error(response?.responseError?.message));

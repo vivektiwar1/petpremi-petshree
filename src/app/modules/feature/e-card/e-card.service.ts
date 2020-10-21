@@ -145,26 +145,24 @@ export class ECardService {
   getBreedType(typeId?, pageSize = 10, pageNumber = 0, sort?) {
     const apiData = {
       commonParamHash: {
-        entityName: 'PetBreed',
-        uiBean: 'BNEPetBreed',
-        operation: 'SEARCH',
+        entityName: "PetBreed",
+        uiBean: "BNEPetBreed",
+        operation: "SEARCH",
         pagination: {
-          pageNumber,
-          pageSize
-        },
-        sort: {
-          ASC: [
-              'id'
-          ]
-      }
+          pageNumber: 0,
+          pageSize: 10
+          },
+          sort: {
+            ASC: [
+                  "id"
+              ]
+          }
       },
       objectHash: {
-            petType_FK: {
-            id: typeId
-        }
+        status: true
+      }
   }
-    };
-    return this.http.post(`${environment.apiBase}/service/api/crud`, apiData);
+    return this.http.post(this.getApiUrl(`/service/oauth2/api/crud`), apiData);
   }
 
   getPetType(pageSize = 10, pageNumber = 0, sort?, searchHash?) {

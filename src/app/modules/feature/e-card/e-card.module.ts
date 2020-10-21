@@ -39,7 +39,6 @@ import { InputDropdownComponent } from '../../shared/components/form-controls/in
     HeaderComponent,
     HomeComponent,
     AboutComponent,
-    InputDropdownComponent,
     GalleryComponent,
     VideosComponent,
     EnquiryComponent,

@@ -30,6 +30,9 @@ export class AppointmenttimeComponent implements OnInit {
   showDiv() {
     document.getElementById('appointmenttime').style.display = "none";
     document.getElementById('appointmentdetails').style.display = "block";
+    setTimeout(function(){
+      window.scroll(0, 0);
+    }, 100);
   }
   back() {
     document.getElementById('appointmenttime').style.display = "none";

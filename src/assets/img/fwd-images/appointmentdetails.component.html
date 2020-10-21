@@ -18,8 +18,7 @@
         </div>
         <div class="row">
             <div class="col-12 text-center bx-shadow">
-                <!-- <input type="" id="file" accept="image/*" /> -->
-                <button id="file" class="button" (click)="showDiv()">+</button>
+                <input type="file" id="file" accept="image/*" />
                 <label for="file" class="btn-2"></label>
                 <p class="pb-3">Add New Pet</p>
             </div>
@@ -35,7 +34,10 @@
             <div class="col-12 px-0">
                 <div class="form-group px-1">
                     <select class="form-control form-control-lg bx-shadow" id="reason" name="reason">
-                        <option value="reason"  *ngFor="let type of appointmentReason;">{{type.name}}</option>
+                      <option>Select Reason</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
                     </select>
                 </div>
             </div>
@@ -51,9 +53,11 @@
             </div>
             <div class="col-12 px-0">
                 <div class="form-group px-1">
-                    <select class="form-control form-control-lg bx-shadow" id="type-of-app" name="type-of-app"
-                        >
-                        <option *ngFor="let type of appointmentType;">{{type.name}}</option>
+                    <select class="form-control form-control-lg bx-shadow" id="type-of-app" name="type-of-app">
+                      <option>Clinic Visit</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
                     </select>
                 </div>
             </div>
@@ -61,7 +65,7 @@
 
     </div><br>
 </div>
-<div class="container-fluid mt-3 bg-white" style="border-radius: 15px;">
+<div  class="container-fluid mt-3 bg-white" style="border-radius: 15px;">
     <div class="row">
         <div class="col-12 text-center p-3 heading">
             <h3 class="">Petshree Assurance</h3>
@@ -69,11 +73,11 @@
     </div>
     <div class="row text-center py-3">
         <div class="col">
-            <img src="assets/img/fwd-images/Doctor_Consultation1.png" class="verified-img">
+            <img src="assets/img/fwd-images/Doctor_Consultation.png" class="verified-img">
             <p class="txt-verified">Verified Doctors</p>
         </div>
         <div class="col">
-            <img src="assets/img/fwd-images/lock1.png" class="verified-img">
+            <img src="assets/img/fwd-images/lock.png" class="verified-img">
             <p class="txt-verified">100% Privacy Protection</p>
         </div>
         <div class="col">
@@ -85,7 +89,7 @@
 <div class="container-fluid p-3" style="background-color:transparent;">
     <div class=" col-12 text-center">
         <div class="link">
-            <button class="btn btn-warning">
+            <button class="btn btn-warning" (click)="showDiv()">
                 Confirm
             </button>
         </div>

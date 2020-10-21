@@ -111,7 +111,7 @@
   box-shadow: 0px 8px 7px -9px #888888;
 }
 img.verified-img {
-  width: 50%;
+  width: 40%;
   height: inherit;
   margin-bottom: 5px;
 }
@@ -123,3 +123,17 @@ img.verified-img {
   line-height: 1.2;
   font-weight: 500;
 }
+
+  .button {
+    background-color:#ececec;
+    border: none;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 40px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
