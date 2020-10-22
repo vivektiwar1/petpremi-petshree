@@ -1,4 +1,4 @@
-<form *ngIf="addPetForm" [formGroup]="addPetForm" class="no-outline" autocomplete="off" (ngSubmit)="onFormSubmit()">
+<form *ngIf="addPetForm" [formGroup]="addPetForm" class="no-outline" autocomplete="off">
 
   <div class="container-fluid bg-white" style="border-radius: 15px">
     <div class="row">
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="input-group select">
-        <input class="form-control" id="name" formControlName="name" placeholder="Enter Pet Name">
+        <input class="form-control form-control-lg" id="name" formControlName="name" placeholder="Enter Pet Name">
       </div>
     </div>
     <div class="row">
@@ -62,7 +62,7 @@
       </div>
       <div class="col-12">
         <div class="form-group">
-          <mat-select class="form-control form-control-lg" id="genderid" name="gender" formControlName="petgender"
+          <mat-select class="form-control form-control-lg" id="genderid" name="gender" formControlName="genderId"
             placeholder="Pet Types">
             <mat-option value="gender" *ngFor="let gender of genders;" [value]="gender.id">{{gender.name}}</mat-option>
           </mat-select>
@@ -85,7 +85,8 @@
       </div>
       <div class="col-9">
         <div class="form-group">
-          <input class="form-control" id="weightValue" formControlName="weightValue" placeholder="Enter Weight">
+          <input class="form-control form-control-lg" id="weightValue" formControlName="weightValue"
+            placeholder="Enter Weight">
         </div>
       </div>
     </div>
@@ -97,7 +98,7 @@
       </div>
       <div class="col-12">
         <div class="form-group">
-          <input class="form-control" id="yearOld" formControlName="yearOld" placeholder="Year Old">
+          <input class="form-control form-control-lg" id="yearOld" formControlName="yearOld" placeholder="Year Old">
         </div>
       </div>
     </div>
@@ -109,7 +110,8 @@
       </div>
       <div class="col-12">
         <div class="form-group">
-          <input class="form-control" type="date" id="birthDay" formControlName="birthDay" placeholder="Birth Date">
+          <input class="form-control form-control-lg" type="date" id="birthDay" formControlName="birthDay"
+            placeholder="Birth Date">
         </div>
       </div>
     </div>
@@ -117,27 +119,30 @@
     <div class="actions">
       <div class="row">
         <div class="col-6 form-group">
-          <button style="width: inherit;">
+          <button class="btn-upload">
             <input #uploadRef type="file" id="upload-input" accept="image/*" name="image"
               (change)="upload($event.target)">
             <label for="upload-input">
-              <img [src]="'/assets/icon/camera.png'" alt="">
+              <img [src]="'/assets/icon/camera.png'" alt="" class="img-take-photo">
               {{'breed.search.action.upload' | translate}}
             </label>
           </button>
         </div>
         <div class="col-6 form-group">
-          <button (click)="getPicture = true;">
-            <img [src]="'/assets/icon/photo.png'" alt="">
-            {{'breed.search.action.photo' | translate}}
+          <button (click)="getPicture = true;" class="btn-upload">
+            <img [src]="'/assets/icon/photo.png'" alt="" class="img-take-photo">
+            <span class="take-photo"> {{'breed.search.action.photo' | translate}}</span>
           </button>
         </div>
-        <app-get-picture *ngIf="getPicture" (closed)="getPicture = false;" (captured)="capturePhoto($event)">
-        </app-get-picture>
-
-        <app-crop-picture *ngIf="(imageToCrop$ | async) as imageCrop" [image]="imageCrop"
-          (cropped)="croppedImage($event)" (cancel)="croppedImage()"></app-crop-picture>
-        <img *ngIf="image" [src]="image" max-height="300px" width="100%" />
+        <div class="col-12">
+          <app-get-picture *ngIf="getPicture" (closed)="getPicture = false;" (captured)="capturePhoto($event)">
+          </app-get-picture>
+        </div>
+        <div class="col-12">
+          <app-crop-picture *ngIf="(imageToCrop$ | async) as imageCrop" [image]="imageCrop"
+            (cropped)="croppedImage($event)" (cancel)="croppedImage()"></app-crop-picture>
+          <img *ngIf="image" [src]="image" max-height="300px" width="100%" />
+        </div>
       </div>
     </div>
 
@@ -153,6 +158,3 @@
     </div>
   </div>
 </form>
-
-
-

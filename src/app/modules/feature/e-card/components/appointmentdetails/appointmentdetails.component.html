@@ -17,11 +17,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 text-center bx-shadow">
+            <div class="col-3 text-center bx-shadow">
+                <figure class="cover d-flex justify-content-center align-items-end">
+                    <img [src]="userDetails?.imageURL" class="avatar rounded-circle" width="100%"
+                        height="auto">
+                </figure>
+            </div>
+            <div class="col-3 text-center bx-shadow">
                 <!-- <input type="" id="file" accept="image/*" /> -->
-                <button id="file" class="button" (click)="showDiv()">+</button>
-                <label for="file" class="btn-2"></label>
-                <p class="pb-3">Add New Pet</p>
+                <button id="file" class="button" (click)="showDiv()"><span>+</span></button>
+                <!-- <label for="file" class="btn-2"></label> -->
+                <p class="pb-3 mt-2 add-new-pet">Add New Pet</p>
             </div>
         </div>
     </div>
@@ -35,7 +41,7 @@
             <div class="col-12 px-0">
                 <div class="form-group px-1">
                     <select class="form-control form-control-lg bx-shadow" id="reason" name="reason">
-                        <option value="reason"  *ngFor="let type of appointmentReason;">{{type.name}}</option>
+                        <option value="reason" *ngFor="let type of appointmentReason;">{{type.name}}</option>
                     </select>
                 </div>
             </div>
@@ -51,8 +57,7 @@
             </div>
             <div class="col-12 px-0">
                 <div class="form-group px-1">
-                    <select class="form-control form-control-lg bx-shadow" id="type-of-app" name="type-of-app"
-                        >
+                    <select class="form-control form-control-lg bx-shadow" id="type-of-app" name="type-of-app">
                         <option *ngFor="let type of appointmentType;">{{type.name}}</option>
                     </select>
                 </div>

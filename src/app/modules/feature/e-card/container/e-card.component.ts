@@ -3,13 +3,16 @@ import { ViewportScroller } from "@angular/common";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { delay, map, takeUntil, tap } from "rxjs/operators";
-
+import * as $ from 'jquery';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ScrollOffset } from 'src/app/app.constant';
 import { ToastrService } from 'ngx-toastr';
 import { ECardService } from '../e-card.service';
 import { ProfileService } from '../../settings/profile/profile.service'
 import { CommonService } from 'src/app/services/common.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { LangService } from 'src/app/shared/services/lang.service';
+import { AppStore } from 'src/app/app.store';
 
 
 @Component({
@@ -40,6 +43,7 @@ export class ECardComponent implements OnDestroy {
   countries: Array<any>;
   userName: string;
   partnerUserName: string;
+  langDetail:any;
 
   apiInProgress = {
     userDataLoader: false,
@@ -47,6 +51,7 @@ export class ECardComponent implements OnDestroy {
   };
 
   constructor(
+    public store: AppStore,
     private activatedRoute: ActivatedRoute,
     private eCardService: ECardService,
     private ProfileService: ProfileService,
@@ -54,8 +59,11 @@ export class ECardComponent implements OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router,
     private toastrService: ToastrService,
-    private viewportScroller: ViewportScroller
+    private viewportScroller: ViewportScroller,
+    public auth: AuthService,
+    private langService:LangService
   ) {
+    this.auth.userData$.subscribe(data => this.user = data);
     this.commonService.hideDashboardNavs();
     this.activeLink$ = this.activatedRoute.fragment.pipe(
       delay(300),
@@ -78,12 +86,15 @@ export class ECardComponent implements OnDestroy {
     this.getCustomer();
     this.getPetType();
     this.getBreedType();
-
   }
 
   async init(userName) {
     this.userName = userName;
     await this.getUserDetails(userName);
+
+    this.auth.userData$.subscribe(data => this.user = data);
+     this.langService.langDetail().subscribe(res=>this.langDetail=res,err=>{})
+        // console.log(this.langDetail)
   }
 
   async createForm() {
@@ -130,8 +141,6 @@ export class ECardComponent implements OnDestroy {
 
       if (!response.isError) {
         this.breedTypes = response.responseResult.data.content;
-        console.log(response.responseResult.data.content);
-        
         return
       } else {
         console.error(new Error(response?.responseError?.message));
@@ -428,6 +437,7 @@ export class ECardComponent implements OnDestroy {
     (!response['images'] || response['images'] && !response['images'].length) && this.hiddenNavItems.push('gallery');
     (!response['videos'] || response['videos'] && !response['videos'].length) && this.hiddenNavItems.push('videos');
   }
+ 
 
   navigateToErrorPage() {
     this.router.navigate(['/404'], {
@@ -438,4 +448,5 @@ export class ECardComponent implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
   }
+
 }

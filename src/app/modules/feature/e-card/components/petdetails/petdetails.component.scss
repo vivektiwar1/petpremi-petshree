@@ -1,5 +1,4 @@
 @import "src/styles/variables";
-
 .heading {
   color: $label-heading-color;
   font-size: $font-size-16;
@@ -8,33 +7,23 @@
   height: 0;
   overflow: hidden;
   width: 0;
+  margin-top: -2px;
 }
-
 #upload-input + label {
-  background: #fffefe;
-  border-radius: 5px;
-  color: rgb(0, 0, 0);
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Rubik", sans-serif;
-  font-size: inherit;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  outline: none;
-  padding: 10px 15px;
-  border: 1px solid #ced4da;
-  position: relative;
-  transition: all 0.3s;
-  vertical-align: middle;
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Rubik", sans-serif;
+    font-size: inherit;
+    font-weight: 500;
+    margin-bottom: 0px;
   .btn-2 {
     background-color: #99c793;
     border-radius: 50px;
     overflow: hidden;
   }
 }
-
 .select {
-  // border: #dddddd;
   background-color: #fff;
   width: 100%;
   height: 50px;
@@ -89,4 +78,21 @@
 .take-photo {
   width: 25px;
   margin-right: 6px;
+}
+.btn-upload {
+  width: 100%;
+  border: 1px solid #ced4da;
+  background: #fff;
+  padding: 6px 0px;
+  border-radius: 4px;
+}
+.take-photo {
+  font-family: "Rubik", sans-serif;
+  font-size: inherit;
+  font-weight: 500;
+}
+.img-take-photo {
+  height: 16px;
+  margin-top: -2px;
+  margin-right: 10px;
 }

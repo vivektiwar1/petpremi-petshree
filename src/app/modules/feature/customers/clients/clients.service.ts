@@ -103,7 +103,6 @@ export class ClientsService {
   }
 
   b64toBlob(b64Data, contentType, sliceSize = 0) {
-    console.log(b64Data, contentType);
     contentType = contentType || '';
     sliceSize = sliceSize || 512;
 
@@ -122,8 +121,6 @@ export class ClientsService {
 
         byteArrays.push(byteArray);
     }
-    console.log(byteArrays);
-
     return new Blob(byteArrays, {type: contentType});
 }
 

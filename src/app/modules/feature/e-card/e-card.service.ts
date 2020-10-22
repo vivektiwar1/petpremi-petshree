@@ -228,8 +228,7 @@ export class ECardService {
         }
       },
       objectHash: {
-        active: true,
-        appointmentReason_LIKE: "tos"
+        active: true
       }
     }
     return this.http.post(this.getApiUrl(`/crud`), apiData);
@@ -278,8 +277,7 @@ export class ECardService {
         }
       },
       objectHash: {
-        active: true,
-        appointmentType_LIKE: "de"
+        active: true
       }
     }
     return this.http.post(this.getApiUrl(`/crud`), apiData);

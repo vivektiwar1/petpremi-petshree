@@ -1,14 +1,11 @@
+const image = JSON.parse(localStorage.getItem('userData'));
+
 export const NavMenu = [
     {
         name: 'Home',
         anchorId: 'home',
         icon: 'assets/images/icons/home.svg'
     },
-    // {
-    //     name: 'About',
-    //     anchorId: 'about',
-    //     icon: 'assets/images/icons/work.svg'
-    // },
     {
         name: 'Book',
         anchorId: 'appointment',
@@ -28,14 +25,21 @@ export const NavMenu = [
         name: 'Enquiry',
         anchorId: 'enquiry',
         icon: 'assets/images/icons/chat.svg'
-    },
-    {
-        name:'User',
-        anchorId:'user',
-        icon:'assests/icon/profile.png'
     }
-    
+
 ]
+export const User = [
+    {
+        name: image?.userName || 'Signin',
+        anchorId: 'user',
+        icon: image?.avatarURL || 'assets/icon/profile.png'
+    }
+
+]
+
+
+
+
 
 export const ImagesPerPage = 6;
 export const VideosPerPage = 3;
@@ -63,8 +67,8 @@ export const ClientDetailsTabLinks = [
 
 export const SettingsTabLinks = [
     { name: 'Profile', value: 'profile', active: true },
-    { name: 'Partner', value: 'partner', active: false},
-    { name: 'Timings', value: 'timings', active: false}
+    { name: 'Partner', value: 'partner', active: false },
+    { name: 'Timings', value: 'timings', active: false }
     // { name: 'Customer Profile', value: 'customer-profile', active: false },
     // { name: 'Ecard Media', value: 'ecard-media', active: false }
 ];

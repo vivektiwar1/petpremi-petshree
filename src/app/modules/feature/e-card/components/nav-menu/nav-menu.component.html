@@ -1,7 +1,45 @@
 <nav class="menu mt-sm-5 mr-0 mr-sm-2 align-self-sm-start d-flex flex-sm-column justify-content-start flex-1">
-    <a *ngFor="let item of navMenuItems" class="menu-item p-2 p-sm-3 flex-column align-items-center" [class.d-none]="hiddenNavItems.includes(item.anchorId)"
-    routerLink="." [fragment]="item.anchorId" [class.active]="(mergedActiveLink$ | async) === item.anchorId">
+    <a *ngFor="let item of navMenuItems" class="menu-item p-2 p-sm-3 flex-column align-items-center"
+        [class.d-none]="hiddenNavItems.includes(item.anchorId)" routerLink="." [fragment]="item.anchorId"
+        [class.active]="(mergedActiveLink$ | async) === item.anchorId">
         <img [src]="item.icon" [alt]="item.name" width="25" height="20">
         <span>{{item.name}}</span>
     </a>
+    <a *ngFor="let item of navMenuUser" class="menu-item p-2 p-sm-3 flex-column align-items-center"
+        [class.d-none]="hiddenNavItems.includes(item.anchorId)" routerLink="." [fragment]="item.anchorId"
+        [class.active]="(mergedActiveLink$ | async) === item.anchorId">
+        <img [src]="item.icon" [alt]="item.name" width="25" height="20">
+        <span>{{item.name}}</span>
+    </a>
+
+    <div class="mt-sm-5 mr-0 mr-sm-2 align-self-sm-start d-flex flex-sm-column justify-content-start flex-1 hide" >
+        <li *ngIf="store.state$ | async as state;">
+            <ng-container *ngIf="state.isAuthenticated else guest;">
+                <div class="sub-menu" (click)="toggleProfile(profileMenu)">
+    
+                    <ul class="sub-menu-items" #profileMenu>
+                        <li>
+                            <a routerLinkActive="active" [routerLink]="['/profile']">
+                                {{'common.links.profile' | translate}}
+                            </a>
+                        </li>
+                        <li>
+                            <a (click)="auth.logout()" [routerLink]="['/']">
+                                {{'common.links.logout' | translate}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </ng-container>
+            <ng-template #guest>
+                <a routerLinkActive="active" [routerLink]="['/auth']">
+                    <img [src]="'/assets/icon/profile.png'" alt="" />
+                    {{'common.links.signIn' | translate}}/{{'common.links.signUp' | translate}}
+                </a>
+            </ng-template>
+        </li>
+    </div>
 </nav>
+
+
+

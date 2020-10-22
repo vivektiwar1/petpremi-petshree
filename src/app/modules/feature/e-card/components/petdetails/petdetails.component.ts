@@ -52,7 +52,6 @@ export class PetDetailsComponent {
   destroy$: Subject<void> = new Subject();
 
   constructor(
-    private router:Router,
     private formBuilder: FormBuilder,
     private service: ClientsService,
     private matDialog: MatDialog,
@@ -156,6 +155,7 @@ export class PetDetailsComponent {
         this.apiInProgress = true;
         const formData = {
           ...this.addPetForm.value,
+          userName:this.addPetForm.value.name,
           mobile: this.addPetForm.value.phone
         };
         delete formData.phone;
@@ -165,6 +165,7 @@ export class PetDetailsComponent {
         const file = new File([this.service.imagetoblob(this.image)], `filenName.${ext}`);
         data.append('file', file);
         data.append('randomKey', response?.randomKey);
+        console.log(response?.randomKey)
         await this.service.postPetImage(data).toPromise();
         this.toastrService.success('Pet Added successfully!');
         this.apiInProgress = false;

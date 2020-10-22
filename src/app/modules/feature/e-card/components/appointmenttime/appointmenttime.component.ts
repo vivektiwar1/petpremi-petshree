@@ -38,8 +38,10 @@ export class AppointmenttimeComponent implements OnInit {
     document.getElementById('appointmenttime').style.display = "none";
     document.getElementById('appointment').style.display = "block";
     document.getElementById('home').style.display = "block";
-    document.getElementById('gallery').style.display = "block";
-    document.getElementById('videos').style.display = "block";
+    if( document.getElementById('gallery') && document.getElementById('videos')){
+      document.getElementById('gallery').style.display = "block";
+      document.getElementById('videos').style.display = "block";
+    }
     document.getElementById('enquiry').style.display = "block";
   }
 

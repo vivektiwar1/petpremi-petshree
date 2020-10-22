@@ -127,13 +127,21 @@ img.verified-img {
   .button {
     background-color:#ececec;
     border: none;
-    padding: 20px;
+    // padding: 20px;
+    width: 100%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 40px;
-    margin: 4px 2px;
+    font-size: 60px;
+    /* margin: 4px 2px; */
     cursor: pointer;
     border-radius: 50%;
+  }
+  #file span{
+    color: #c6c6c6;
+  }
+  .add-new-pet {
+      font-size: 12px;
+      font-weight: 500;
   }
 
