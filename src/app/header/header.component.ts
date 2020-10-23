@@ -36,7 +36,6 @@ export class HeaderComponent{
   ngOnInit() {
     this.auth.userData$.subscribe(data => this.user = data);
      this.langService.langDetail().subscribe(res=>this.langDetail=res,err=>{console.log(err)})
-        console.log(this.langDetail)
   }
 
   /*ngAfterViewInit() {

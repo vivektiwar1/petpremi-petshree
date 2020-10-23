@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 @Injectable()
 export class ECardService {
- 
+
 
   private _navActive$: Subject<string> = new Subject();
 
@@ -139,7 +139,7 @@ export class ECardService {
     return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
- 
+
 
 
   getBreedType(typeId?, pageSize = 10, pageNumber = 0, sort?) {
@@ -151,17 +151,17 @@ export class ECardService {
         pagination: {
           pageNumber: 0,
           pageSize: 10
-          },
-          sort: {
-            ASC: [
-                  "id"
-              ]
-          }
+        },
+        sort: {
+          ASC: [
+            "id"
+          ]
+        }
       },
       objectHash: {
         status: true
       }
-  }
+    }
     return this.http.post(this.getApiUrl(`/crud`), apiData);
   }
 
@@ -177,9 +177,9 @@ export class ECardService {
         },
         sort: {
           ASC: [
-              'id'
+            'id'
           ]
-      }
+        }
       },
       objectHash: {
         status: true
@@ -234,6 +234,30 @@ export class ECardService {
     return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
+  getPetDetails() {
+    const apiData = {
+
+      commonParamHash: {
+        entityName: "User",
+        uiBean: "BNECustomer",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+          DESC: [
+          ]
+        }
+      },
+      objectHash: {
+
+        userName: "aniket"
+      }
+    }
+    return this.http.post(`${environment.apiBase}/service/api/crud`, apiData);
+
+  }
 
   getAppointmentRepeat() {
     const apiData = {
@@ -253,7 +277,6 @@ export class ECardService {
       },
       objectHash: {
         active: true,
-        appointmentRepeat_LIKE: "tos"
       }
     }
     return this.http.post(this.getApiUrl(`/crud`), apiData);
@@ -262,6 +285,7 @@ export class ECardService {
 
   getAppointmentType() {
     const apiData = {
+
       commonParamHash: {
         entityName: "AppointmentType",
         uiBean: "BNEAppointmentType",

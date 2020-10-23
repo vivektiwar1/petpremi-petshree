@@ -1,3 +1,4 @@
+
 <div class="container-fluid brdr-top" style="background-color: white;">
     <div class="row py-3">
         <div class="col-2">
@@ -16,6 +17,7 @@
         <div class="col-3 text-black font-weight-medium">{{this.monthName}}</div>
     </div>
 </div>
+
 <div class="container-fluid" style="background-color: #ebebeb;">
     <div class="row p-2 no-gutters">
         <div class="col pr-2">
@@ -35,7 +37,7 @@
         <div class="col pr-2">
             <div class="bg-white borders">
                 <input type="radio" class="radiobutton" name="date" id="date3">
-                <label class="radiolabel py-3" for="date3">{{weekDay[this.dayName+2].name.slice(0,3)}}<br>
+                <label class="radiolabel py-3" for="date3">{{weekDay[this.dayName].name.slice(0,3)}}<br>
                     <b>{{this.currentDate+2}}</b></label>
             </div>
         </div>

@@ -37,6 +37,7 @@ export class ECardComponent implements OnDestroy {
   appontmentReason: any;
   appontmentType: any;
   appontmentRepeat: any;
+  petDetails:any;
   enquiryForm: FormGroup;
   hiddenNavItems: Array<string> = [];
   titles: Array<any>;
@@ -86,6 +87,7 @@ export class ECardComponent implements OnDestroy {
     this.getCustomer();
     this.getPetType();
     this.getBreedType();
+    this.getPetDetails();
   }
 
   async init(userName) {
@@ -94,7 +96,6 @@ export class ECardComponent implements OnDestroy {
 
     this.auth.userData$.subscribe(data => this.user = data);
      this.langService.langDetail().subscribe(res=>this.langDetail=res,err=>{})
-        // console.log(this.langDetail)
   }
 
   async createForm() {
@@ -141,6 +142,22 @@ export class ECardComponent implements OnDestroy {
 
       if (!response.isError) {
         this.breedTypes = response.responseResult.data.content;
+        return
+      } else {
+        console.error(new Error(response?.responseError?.message));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async getPetDetails() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response: any = await this.eCardService. getPetDetails().toPromise();
+
+      if (!response.isError) {
+        this.petDetails = response?.responseResult?.data?.content;
+        
         return
       } else {
         console.error(new Error(response?.responseError?.message));

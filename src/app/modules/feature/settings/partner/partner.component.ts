@@ -181,7 +181,7 @@ export class PartnerComponent implements OnInit {
         mobile: [null, Validators.compose([Validators.required,
           Validators.minLength(selectedCountry?.minLength || 10),
           Validators.maxLength(selectedCountry?.maxLength || 10)])],
-        clinicAddress: [null, Validators.compose([WhiteSpaceValidator])],
+        clinicAddress: ['null', Validators.compose([WhiteSpaceValidator])],
         countryName: selectedClinicCountry?.id,
         country: [selectedCountry?.id],
         state: [null, Validators.required],

@@ -16,6 +16,7 @@ import { LangService } from 'src/app/shared/services/lang.service';
 export class NavMenuComponent implements OnInit{
   readonly navMenuItems = NavMenu;
   readonly navMenuUser = User;
+  isShow :Boolean=false;
   @Input() activeLink$: Observable<string>;
   @Input() hiddenNavItems: Array<string>;
 
@@ -37,4 +38,10 @@ export class NavMenuComponent implements OnInit{
   toggleProfile(element: HTMLUListElement) {
     $(element).toggleClass('hide');
   }
+
+  toggleShow() {
+
+    this.isShow = ! this.isShow;
+    
+    }
 }

@@ -18,10 +18,15 @@ const routes: Routes = [
     path: 'breed-identification',
     loadChildren: () => import('./breed-identification/breed-identification.module').then(m => m.BreedIdentificationModule),
   },
+  // {
+  //   path: 'profile',
+  //   canLoad: [AuthGuard],
+  //   loadChildren: () => import('./coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
+  // },
   {
-    path: 'profile',
+    path: 'settings',
     canLoad: [AuthGuard],
-    loadChildren: () => import('./coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
+    loadChildren: () => import('../app/modules/feature/settings/settings.module').then(m => m.SettingsModule),
   },
   {
     path: 'life-with-pets',
