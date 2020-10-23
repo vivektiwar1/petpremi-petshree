@@ -16,17 +16,31 @@
                 <hr class="btm-line">
             </div>
         </div>
-        <div class="row">
-            <div class="col-3 text-center bx-shadow">
-                <figure class="cover d-flex justify-content-center align-items-end">
-                    <img [src]="petDetails?.imageURL" class="avatar rounded-circle" width="100%"
-                        height="auto">
-                </figure>
+        <div class="row" *ngFor="let pet of petDetails;">
+
+            <div class="col-12 appointments-nav position-relative">
+
+                <div class="row py-3 flex-nowrap overflow-scroll-hidden">
+                    <!-- <div class="navigate-cards prev" (click)="scrollBack(upcomingAppointment)">
+                        <mat-icon>keyboard_arrow_left</mat-icon>
+                    </div> -->
+                    <div class="col-3 text-center bx-shadow " *ngFor="let petImage of pet.pets" #upcomingAppointment>
+                        <figure class="cover d-flex justify-content-center align-items-end">
+                            <img [src]="petImage.image" class="avatar rounded-circle" width="100%" height="auto">
+                        </figure>
+                    </div>
+                    <div class="col-3 text-center bx-shadow">
+                        <button id="file" class="button" (click)="showDiv()"><span>+</span></button>
+                        <p class="pb-3 mt-2 add-new-pet">Add New Pet</p>
+                    </div>
+                    <!-- <div class="navigate-cards next" (click)="scrollForward(upcomingAppointment)">
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                    </div> -->
+                </div>
+
             </div>
-            <div class="col-3 text-center bx-shadow">
-                <button id="file" class="button" (click)="showDiv()"><span>+</span></button>
-                <p class="pb-3 mt-2 add-new-pet">Add New Pet</p>
-            </div>
+
+
         </div>
     </div>
     <div class="container-fluid">

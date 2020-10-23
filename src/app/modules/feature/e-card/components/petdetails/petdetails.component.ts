@@ -140,7 +140,6 @@ export class PetDetailsComponent {
       customerId: this.user?.id,
       partnerId: this.user?.partnerId,
     });
-
     const petTypeControl = this.addPetForm.get('petTypeId') as FormControl;
 
     petTypeControl.valueChanges.subscribe(typeId => {
@@ -186,8 +185,6 @@ export class PetDetailsComponent {
 
   async getBreedType(petTypeId?) {
     try {
-
-      console.log(petTypeId);
       this.apiInProgress = true;
       const response = await this.service.getBreedType(petTypeId).toPromise() as any;
       this.apiInProgress = false;

@@ -36,6 +36,8 @@ import {CGetPictureComponent} from '../e-card/components/get-picture/get-picture
 import {CCropPictureComponent} from '../e-card/components/crop-picture/crop-picture.component';
 import { ButtonComponent } from '../e-card/components/button/button.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon'
+
 
 
 @NgModule({
@@ -69,7 +71,8 @@ import { TranslateModule } from '@ngx-translate/core';
     NgxPaginationModule,
     NgxVcardModule,
     LightboxModule,
-    YouTubePlayerModule
+    YouTubePlayerModule,
+    MatIconModule
   ],
   providers: [
     AuthImagePipe,

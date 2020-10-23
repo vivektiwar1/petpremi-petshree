@@ -27,13 +27,10 @@ export class AppointmentComponent implements OnInit {
       })
       this.addDetails.get('clinic').valueChanges.subscribe(data => {
         this.clinicId=data
-        console.log(data)
       })
     }
 
   ngOnInit(): void {
-    console.log(this.userDetails);
-    
     
   }
   showDiv() {
@@ -48,7 +45,6 @@ export class AppointmentComponent implements OnInit {
       document.getElementById('videos').style.display = "none";
     }
     document.getElementById('enquiry').style.display = "none";
-    document.getElementById('user').style.display = "none";
     
  }
  

@@ -155,12 +155,10 @@ export class ECardComponent implements OnDestroy {
       this.apiInProgress.userDataLoader = true;
       const response: any = await this.eCardService. getPetDetails().toPromise();
 
-      if (!response.isError) {
-        this.petDetails = response?.responseResult?.data?.content;
-        
-        return
-      } else {
-        console.error(new Error(response?.responseError?.message));
+      this.petDetails = response?.responseResult?.data?.content;
+      if (!this.petDetails) {
+        this.navigateToErrorPage();
+        return;
       }
     } catch (error) {
       console.log(error);

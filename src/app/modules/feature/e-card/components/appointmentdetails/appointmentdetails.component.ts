@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-appointmentdetails',
@@ -12,22 +13,36 @@ export class AppointmentDetailsComponent implements OnInit {
   @Input() appointmentRepeat: any;
   @Input() userDetails: any;
   
-
-  constructor() { 
+  constructor(
+    private matDialog: MatDialog
+  ) {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
   }
   showDiv() {
     document.getElementById('appointmentdetails').style.display = "none";
-
     document.getElementById('petdetails').style.display = "block";
-    setTimeout(function(){
-      window.scroll(0, 0);
-    }, 100);
   }
   back() {
     document.getElementById('appointmenttime').style.display = "block";
     document.getElementById('appointmentdetails').style.display = "none";
+  }
+
+  scrollBack(element: HTMLDivElement) {
+    element.scrollTo({
+      top: 0,
+      left: element.scrollLeft - (element.firstElementChild as HTMLDivElement).offsetWidth,
+      behavior: 'smooth'
+    });
+  }
+  
+  scrollForward(element: HTMLElement) {
+    element.scrollTo({
+      top: 0,
+      left: element.scrollLeft + (element.firstElementChild as HTMLDivElement).offsetWidth,
+      behavior: 'smooth'
+    });
   }
 }

@@ -24,7 +24,7 @@ export class AuthService {
       this.userData$.next(JSON.parse(localStorage.getItem('userData')));
     }
   }
-
+  
   checkAndLogin(config: AuthModalConfig = new AuthModalConfig()): Promise<any> {
     if (this.dialogOpened) {
       return this.dialogOpened;

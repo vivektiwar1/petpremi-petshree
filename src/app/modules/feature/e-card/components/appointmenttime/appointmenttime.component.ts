@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-appointmenttime',
@@ -11,9 +13,15 @@ export class AppointmenttimeComponent implements OnInit {
   month: string[] = [];
   monthName: any;
   dayName: any;
+  Date:any;
+  Time:any;
   currentDate: any;
   @Input() userDetails: any;
-  constructor() {
+  AddDateTime: FormGroup;
+  private time:FormControl
+  constructor(
+    private formBuilder: FormBuilder,
+  ) {
     this.date = new Date();
     this.month = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -21,16 +29,30 @@ export class AppointmenttimeComponent implements OnInit {
     this.dayName = this.date.getDay();
     this.currentDate = this.date.getUTCDate();
     this.monthName = this.month[this.date.getMonth()]
+
+    this.AddDateTime= this.formBuilder.group({
+      date: ['', Validators.required],
+      time: ['', Validators.required],
+
+    })
+    this.AddDateTime.get('date').valueChanges.subscribe(data => {
+      this.Date=data
+    })
+    this.AddDateTime.get('time').valueChanges.subscribe(data => {
+      this.Time=data
+    })
+   
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
   }
   showDiv() {
     document.getElementById('appointmenttime').style.display = "none";
     document.getElementById('appointmentdetails').style.display = "block";
-    setTimeout(function () {
-      window.scroll(0, 0);
-    }, 100);
+    // setTimeout(function () {
+    //   window.scroll(0, 0);
+    // }, 100);
   }
   back() {
     document.getElementById('appointmenttime').style.display = "none";
