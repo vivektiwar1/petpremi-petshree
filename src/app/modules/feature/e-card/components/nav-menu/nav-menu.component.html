@@ -19,7 +19,7 @@
     
                     <ul class="sub-menu-items" #profileMenu>
                         <li>
-                            <a routerLinkActive="active" [routerLink]="['/settings']">
+                            <a routerLinkActive="active"  [routerLink]="['/customers/clients/'+data.id]">
                                 {{'common.links.profile' | translate}}
                             </a>
                         </li>
@@ -32,10 +32,7 @@
                 </div>
             </ng-container>
             <ng-template #guest>
-                <a routerLinkActive="active" [routerLink]="['/auth']">
-                    <img [src]="'/assets/icon/profile.png'" alt="" />
-                    {{'common.links.signIn' | translate}}/{{'common.links.signUp' | translate}}
-                </a>
+                <a (Click)="login()">SignIn</a>
             </ng-template>
         </li>
     </div>

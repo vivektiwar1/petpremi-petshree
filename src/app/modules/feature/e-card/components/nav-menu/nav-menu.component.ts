@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavMenu,User } from "src/app/app.constant";
+import { NavMenu, User } from "src/app/app.constant";
 import { Observable, merge } from 'rxjs';
 import { ECardService } from '../../e-card.service';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -13,10 +13,11 @@ import { LangService } from 'src/app/shared/services/lang.service';
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss']
 })
-export class NavMenuComponent implements OnInit{
+export class NavMenuComponent implements OnInit {
   readonly navMenuItems = NavMenu;
   readonly navMenuUser = User;
-  isShow :Boolean=false;
+  isShow: Boolean = false;
+  data:any;
   @Input() activeLink$: Observable<string>;
   @Input() hiddenNavItems: Array<string>;
 
@@ -25,7 +26,10 @@ export class NavMenuComponent implements OnInit{
   constructor(private eCardService: ECardService,
     public store: AppStore,
     public auth: AuthService,
-    private langService:LangService) {}
+    private langService: LangService) { 
+      this.data=JSON.parse(localStorage.getItem('userData'))
+      console.log(this.data)
+    }
 
   ngOnInit() {
     this.mergedActiveLink$ = merge(
@@ -40,8 +44,12 @@ export class NavMenuComponent implements OnInit{
   }
 
   toggleShow() {
+    this.auth.checkAndLogin().then(() => this.auth.getUserProfile());
+    this.isShow = !this.isShow;
 
-    this.isShow = ! this.isShow;
-    
-    }
+  }
+  login() {
+    console.log("hello")
+   
+  }
 }
