@@ -14,7 +14,7 @@
 
     <div *ngIf="isShow" class="mt-sm-5 mr-0 mr-sm-2 align-self-sm-start d-flex flex-sm-column justify-content-start flex-1" >
         <li *ngIf="store.state$ | async as state;">
-            <ng-container *ngIf="state.isAuthenticated else guest;">
+            <ng-container *ngIf="state.isAuthenticated">
                 <div class="sub-menu" (click)="toggleProfile(profileMenu)">
     
                     <ul class="sub-menu-items" #profileMenu>
@@ -24,16 +24,14 @@
                             </a>
                         </li>
                         <li>
-                            <a (click)="auth.logout()" [routerLink]="['/']">
+                            <a (click)="auth.logout()">
                                 {{'common.links.logout' | translate}}
                             </a>
                         </li>
                     </ul>
                 </div>
             </ng-container>
-            <ng-template #guest>
-                <a (Click)="login()">SignIn</a>
-            </ng-template>
+            
         </li>
     </div>
 </nav>

@@ -22,9 +22,9 @@
         <div class="row p-2 no-gutters">
             <div class="col pr-2" *ngFor="let day of aryDates">
                 <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="date" [value]="this.currentDate" id="{{day.Date}}"
-                        formControlName="date" checked>
-                    <label class="radiolabel py-3" for="date1">{{day.Day.slice(0,3)}}<br>
+                    <input type="radio" class="radiobutton" name="date" [value]="day.Date" id="{{day.Date}}"
+                        formControlName="date">
+                    <label class="radiolabel py-3" for="{{day.Date}}">{{day.Day.slice(0,3)}}<br>
                         <b>{{day.Date}}</b></label>
                 </div>
             </div>
