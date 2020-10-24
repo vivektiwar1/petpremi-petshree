@@ -19,8 +19,8 @@ export class AppointmenttimeComponent implements OnInit {
   @Input() userDetails: any;
   AddDateTime: FormGroup;
 
-  startDate:any;
-  aryDates:any;
+  startDate: any;
+  aryDates: any;
   private time: FormControl
   constructor(
     private formBuilder: FormBuilder,
@@ -48,15 +48,12 @@ export class AppointmenttimeComponent implements OnInit {
     })
 
     this.startDate = new Date();
- this.aryDates = this.GetDates(this.startDate, 4);
-console.log(this.aryDates);
-
-
+    this.aryDates = this.GetDates(this.startDate, 4);
   }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    
+
   }
   showDiv() {
     document.getElementById('appointmenttime').style.display = "none";
@@ -82,40 +79,16 @@ console.log(this.aryDates);
     for (var i = 0; i <= daysToAdd; i++) {
       var currentDate = new Date();
       currentDate.setDate(startDate.getDate() + i);
-      aryDates.push({"Day":this.DayAsString(currentDate.getDay()) , "Date" : currentDate.getDate() });
+      aryDates.push({ "Day": this.Days(currentDate.getDay()), "Date": currentDate.getDate() });
     }
 
     return aryDates;
   }
 
-  MonthAsString(monthIndex) {
-    var d = new Date();
-    var month = new Array();
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "June";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
 
-    return month[monthIndex];
-  }
-
-  DayAsString(dayIndex) {
+  Days(dayIndex) {
     var weekdays = new Array(7);
-    weekdays[0] = "Sunday";
-    weekdays[1] = "Monday";
-    weekdays[2] = "Tuesday";
-    weekdays[3] = "Wednesday";
-    weekdays[4] = "Thursday";
-    weekdays[5] = "Friday";
-    weekdays[6] = "Saturday";
+    weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"];
 
     return weekdays[dayIndex];
   }
