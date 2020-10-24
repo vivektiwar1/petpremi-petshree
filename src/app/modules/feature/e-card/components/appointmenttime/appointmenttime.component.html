@@ -20,19 +20,19 @@
 
     <div class="container-fluid" style="background-color: #ebebeb;">
         <div class="row p-2 no-gutters">
-            <div class="col pr-2">
+            <div class="col pr-2" *ngFor="let day of aryDates">
                 <div class="bg-white borders">
                     <input type="radio" class="radiobutton" name="date" [value]="this.currentDate" id="date1"
                         formControlName="date" checked>
-                    <label class="radiolabel py-3" for="date1">{{weekDay[this.dayName].name.slice(0,3)}}<br>
-                        <b>{{this.currentDate}}</b></label>
+                    <label class="radiolabel py-3" for="date1">{{day.Day.slice(0,3)}}<br>
+                        <b>{{day.Date}}</b></label>
                 </div>
             </div>
-            <div class="col pr-2">
+            <!-- <div class="col pr-2">
                 <div class="bg-white borders">
                     <input type="radio" class="radiobutton" name="date" [value]="this.currentDate+1" id="date2"
                         formControlName="date">
-                    <label class="radiolabel py-3" for="date2">{{weekDay[this.dayName+1].name.slice(0,3)}}<br>
+                    <label class="radiolabel py-3" for="date2">{{weekDay[this.dayName].name.slice(0,3)}}<br>
                         <b>{{this.currentDate+1}}</b></label>
                 </div>
             </div>
@@ -46,7 +46,7 @@
             </div>
             <div class="col pr-2">
                 <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="date" [value]="this.currentDate+3" id="date4"
+                    <input type="radio" class="radiobutton" name="date" *ngIf="this.dayName+2<=7;  " [value]="this.currentDate+3" id="date4"
                         formControlName="date">
                     <label class="radiolabel py-3" for="date4">{{weekDay[this.dayName].name.slice(0,3)}}<br>
                         <b>{{this.currentDate+3}}</b></label>
@@ -59,7 +59,7 @@
                     <label class="radiolabel py-3" for="date5">{{weekDay[this.dayName].name.slice(0,3)}}<br>
                         <b>{{this.currentDate+4}}</b></label>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="row px-3 pb-3">
             <div class="col-12">
