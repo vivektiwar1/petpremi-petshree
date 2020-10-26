@@ -37,6 +37,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import {CGetPictureComponent} from './modals/shared/get-picture/get-picture.component';
 import {CCropPictureComponent} from './modals/shared/crop-picture/crop-picture.component';
 import { ImageSlickDirective } from './modals/shared/directives/image-slick.directive';
+import { ECardModule } from '../feature/e-card/e-card.module';
+import { ECardService } from '../feature/e-card/e-card.service';
 
 @NgModule({
   declarations: [
@@ -99,6 +101,9 @@ import { ImageSlickDirective } from './modals/shared/directives/image-slick.dire
     TabNavComponent,
     TabNavWrapperComponent,
     TableComponent
+  ],
+  providers:[
+    ECardService
   ]
 })
 export class SharedModule { }

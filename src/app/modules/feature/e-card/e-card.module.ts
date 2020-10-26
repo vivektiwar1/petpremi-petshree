@@ -34,9 +34,11 @@ import {ResponseInterceptor} from "../../../interceptors/response.interceptor";
 import { InputDropdownComponent } from '../../shared/components/form-controls/input-dropdown/input-dropdown.component';
 import {CGetPictureComponent} from '../e-card/components/get-picture/get-picture.component';
 import {CCropPictureComponent} from '../e-card/components/crop-picture/crop-picture.component';
-import { ButtonComponent } from '../e-card/components/button/button.component';
+// import { ButtonComponent } from '../e-card/components/button/button.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon'
+import { ClientDetailsComponent } from '../e-card/components/client-details/client-details.component';
+import { SharedModule } from '../../shared/shared.module';
 
 
 
@@ -45,7 +47,7 @@ import { MatIconModule } from '@angular/material/icon'
     ECardComponent,
     NavMenuComponent,
     HeaderComponent,
-    ButtonComponent,
+    // ButtonComponent,
     HomeComponent,
     CGetPictureComponent,
     CCropPictureComponent,
@@ -57,7 +59,9 @@ import { MatIconModule } from '@angular/material/icon'
     AppointmentDetailsComponent,
     AppointmenttimeComponent,
     ScrollActiveDirective,
-    PetDetailsComponent
+    PetDetailsComponent,
+    ClientDetailsComponent
+    
   ],
   imports: [
     CommonModule,
@@ -72,7 +76,9 @@ import { MatIconModule } from '@angular/material/icon'
     NgxVcardModule,
     LightboxModule,
     YouTubePlayerModule,
-    MatIconModule
+    MatIconModule,
+    SharedModule
+    
   ],
   providers: [
     AuthImagePipe,

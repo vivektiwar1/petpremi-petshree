@@ -17,7 +17,7 @@ export class NavMenuComponent implements OnInit {
   readonly navMenuItems = NavMenu;
   readonly navMenuUser = User;
   isShow: Boolean = false;
-  data:any;
+  data: any;
   @Input() activeLink$: Observable<string>;
   @Input() hiddenNavItems: Array<string>;
 
@@ -26,10 +26,9 @@ export class NavMenuComponent implements OnInit {
   constructor(private eCardService: ECardService,
     public store: AppStore,
     public auth: AuthService,
-    private langService: LangService) { 
-      this.data=JSON.parse(localStorage.getItem('userData'))
-      console.log(this.data)
-    }
+    private langService: LangService) {
+    this.data = JSON.parse(localStorage.getItem('userData'))
+  }
 
   ngOnInit() {
     this.mergedActiveLink$ = merge(
@@ -47,9 +46,5 @@ export class NavMenuComponent implements OnInit {
     this.auth.checkAndLogin().then(() => this.auth.getUserProfile());
     this.isShow = !this.isShow;
 
-  }
-  login() {
-    console.log("hello")
-   
   }
 }

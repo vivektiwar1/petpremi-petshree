@@ -1,0 +1,63 @@
+@import "src/styles/variables";
+.mt-m5{
+    margin-top: -70px;
+}
+.size{
+    height: 50px;
+    width: 50px;
+}
+
+.card-details {
+    background: $white;
+
+    img {
+        width: 50px;
+    }
+
+    border-radius: $border-radius-18;
+}
+
+.owner {
+    .details {
+        .name {
+            color: $dialog-title-color;
+        }
+
+        .relation {
+            font-size: $font-size-14;
+            line-height: $font-size-14 * 1.5;
+        }
+
+        .info {
+            line-height: $font-size-14 * 1.5;
+            label {
+                color: $dialog-title-color;
+                font-size: $font-size-14;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.pets {
+    border-radius: $border-radius-28;
+    border: 1px solid #D3E6F4;
+
+    .first-block {
+        padding-bottom: 1rem;
+        border-bottom: 2px solid $background-color;
+    }
+
+    .second-block {
+        padding-top: 1rem;
+    }
+
+    .info {
+        line-height: $font-size-14 * 1.5;
+        label {
+            color: $dialog-title-color;
+            font-size: $font-size-14;
+            margin: 0;
+        }
+    }
+}

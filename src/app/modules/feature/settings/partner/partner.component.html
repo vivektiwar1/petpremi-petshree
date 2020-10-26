@@ -205,7 +205,13 @@
                             [class.loader]="apiInProgress.clinicForm">
                             <div class="row py-3">
                                 <div class="col-12">
-                                    <h3 class="title-color">Clinic & Schedule Details</h3>
+                                    
+                                    <div class="row d-flex justify-content-between align-items-center">
+                                        <h3 class="title-color">Clinic & Schedule Details</h3>
+                                        <button class="btn btn-effect text-warning no-outline px-0" (click)="addPartner()"
+                                            [disabled]="clinicForm.get('partnerContactNumbers').invalid">+ ADD
+                                            ANOTHER CLINIC</button>
+                                    </div>
                                     <div class="row mt-3">
                                         <div class="col-12 col-sm-6 form-group mb-0">
                                             <label class="mb-1" for="name">Clinic Name</label>
@@ -220,9 +226,9 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 form-group mb-0">
-                                            <label class="mb-1" for="clinicMobile">Clinic Phone Number</label>
+                                            <label class="mb-1" for="clinicMobile">Display </label>
                                             <div class="input-group">
-                                                <div class="input-group-prepend">
+                                                <!-- <div class="input-group-prepend">
                                                     <div class="form-control">
                                                         <mat-select formControlName="country">
                                                             <mat-option *ngFor="let country of countryList" [value]="country.id">
@@ -233,8 +239,11 @@
                                                 </div>
                                                 <input class="form-control" type="tel" id="clinicMobile" placeholder="Enter Clinic Phone"
                                                     formControlName="mobile"
-                                                    [class.error]="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
-                                            </div>
+                                                    [class.error]="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched"> -->
+                                                    <textarea class="form-control custom-scrollbar textarea-min-height" type="text"
+                                                    id="address" formControlName="address" placeholder="Enter Display"
+                                                    rows="1" cdkTextareaAutosize #autosize="cdkTextareaAutosize"></textarea>
+                                                </div>
                                             <div class="error-message">
                                                 <ng-container
                                                     *ngIf="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
@@ -274,6 +283,16 @@
                                             <input-dropdown label="Pin Code" name="pinCode" placeholder="Select Pin Code"
                                                 [parentFormGroup]="clinicForm" [selectionList]="pinCodeList">
                                             </input-dropdown>
+                                        </div>
+                                        <div class="col-12 col-sm-6 form-group mb-0">
+                                            <label class="mb-1" for="name">Lattitude</label>
+                                            <input class="form-control" id="lattitude" formControlName="name"
+                                                placeholder="Lattitude">
+                                        </div>
+                                        <div class="col-12 col-sm-6 form-group mb-0">
+                                            <label class="mb-1" for="name">Longitude</label>
+                                            <input class="form-control" id="longitude" formControlName="name"
+                                                placeholder="Longitude">
                                         </div>
                                         <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h6 class="title-color mb-0">Add Partner Details</h6>

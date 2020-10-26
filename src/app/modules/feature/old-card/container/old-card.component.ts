@@ -41,7 +41,6 @@ export class OldCardComponent implements OnDestroy {
     private toastrService: ToastrService,
     private viewportScroller: ViewportScroller
   ) {
-    console.log("working")
     this.commonService.hideDashboardNavs();
     this.activeLink$ = this.activatedRoute.fragment.pipe(
       delay(300),
@@ -65,7 +64,6 @@ export class OldCardComponent implements OnDestroy {
   }
 
   async getUserDetails(userName) {
-    console.log("oldcard "+userName)
     try {
       this.apiInProgress.userDataLoader = true;
       const response = await this.oldCardService.getUserDetails(userName).toPromise();

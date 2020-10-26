@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-appointmentdetails',
@@ -12,10 +13,30 @@ export class AppointmentDetailsComponent implements OnInit {
   @Input() appointmentType: any;
   @Input() appointmentRepeat: any;
   @Input() userDetails: any;
+  @Input() bookAppointment: any;
+  Details:FormGroup;
+  reason:any;
+  type:any;
+  petId:any;
+  petName:any;
   
   constructor(
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private formBuilder: FormBuilder,
   ) {
+    this.Details=this.formBuilder.group({
+      reason:['',Validators.required],
+      type:['',Validators.required]
+    })
+
+    this.Details.get('reason').valueChanges.subscribe(data=>{
+      this.reason=data;
+    })
+
+    this.Details.get('type').valueChanges.subscribe(data=>{
+      this.type=data
+    })
+
   }
 
   ngOnInit(): void {
@@ -44,5 +65,10 @@ export class AppointmentDetailsComponent implements OnInit {
       left: element.scrollLeft + (element.firstElementChild as HTMLDivElement).offsetWidth,
       behavior: 'smooth'
     });
+  }
+  petDetail(petImage){
+    this.petId=petImage.id
+    this.petName=petImage.name
+    
   }
 }

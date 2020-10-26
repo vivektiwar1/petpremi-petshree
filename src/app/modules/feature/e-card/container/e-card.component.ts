@@ -37,6 +37,7 @@ export class ECardComponent implements OnDestroy {
   appontmentReason: any;
   appontmentType: any;
   appontmentRepeat: any;
+  bookAppointment:any;
   petDetails:any;
   enquiryForm: FormGroup;
   hiddenNavItems: Array<string> = [];
@@ -141,7 +142,7 @@ export class ECardComponent implements OnDestroy {
       const response = await this.eCardService.getBreedType().toPromise() as any;
 
       if (!response.isError) {
-        this.breedTypes = response.responseResult.data.content;
+        this.breedTypes = response?.responseResult?.data?.content;
         return
       } else {
         console.error(new Error(response?.responseError?.message));
@@ -202,7 +203,7 @@ export class ECardComponent implements OnDestroy {
   async getCustomer() {
     this.apiInProgress.userDataLoader = true;
     const response: any = await this.eCardService.getCustomerDetails().toPromise();
-    const customerData = response.responseResult.data.content;
+    const customerData = response?.responseResult?.data?.content;
 
     try {
       this.apiInProgress.userDataLoader = true;
@@ -223,7 +224,7 @@ export class ECardComponent implements OnDestroy {
     try {
       this.apiInProgress.userDataLoader = true;
       const response = await this.eCardService.getDay().toPromise();
-      this.weekDay = response.responseResult.data.content;
+      this.weekDay = response?.responseResult?.data?.content;
       if (!this.weekDay) {
         this.navigateToErrorPage();
         return;
@@ -239,7 +240,7 @@ export class ECardComponent implements OnDestroy {
     try {
       this.apiInProgress.userDataLoader = true;
       const response: any = await this.eCardService.getAppointmentReason().toPromise();
-      this.appontmentReason = response.responseResult.data.content;
+      this.appontmentReason = response?.responseResult?.data?.content;
       if (!this.appontmentReason) {
         this.navigateToErrorPage();
         return;
@@ -251,12 +252,27 @@ export class ECardComponent implements OnDestroy {
     }
 
   }
+  async bookAppointments(){
+    try{
+      this.apiInProgress.userDataLoader=true;
+      const response: any =await this.eCardService.bookAppointments().toPromise();
+      this.bookAppointment=response?.responseResult?.data?.content;
+      if(!this.bookAppointment){
+        this.navigateToErrorPage();
+        return;
+      }
+
+    }catch (error) {
+      this.apiInProgress.userDataLoader = false;
+      console.error(error);
+    }
+  }
 
   async getPartnerData() {
     try {
       this.apiInProgress.userDataLoader = true;
       const response: any = await this.eCardService.getPartnerData().toPromise();
-      this.appontmentReason = response.responseResult.data.content;
+      this.appontmentReason = response?.responseResult?.data?.content;
       if (!this.weekDay) {
         this.navigateToErrorPage();
         return;
@@ -268,11 +284,13 @@ export class ECardComponent implements OnDestroy {
     }
   }
 
+  
+
   async getAppointmentRepeat() {
     try {
       this.apiInProgress.userDataLoader = true;
       const response: any = await this.eCardService.getAppointmentRepeat().toPromise();
-      this.appontmentRepeat = response.responseResult.data.content;
+      this.appontmentRepeat = response?.responseResult?.data?.content;
       if (!this.appontmentRepeat) {
         this.navigateToErrorPage();
         return;
@@ -290,7 +308,7 @@ export class ECardComponent implements OnDestroy {
 
       this.apiInProgress.userDataLoader = true;
       const response: any = await this.eCardService.getAppointmentType().toPromise();
-      this.appontmentType = response.responseResult.data.content;
+      this.appontmentType = response?.responseResult?.data?.content;
       if (!this.appontmentType) {
         this.navigateToErrorPage();
         return;

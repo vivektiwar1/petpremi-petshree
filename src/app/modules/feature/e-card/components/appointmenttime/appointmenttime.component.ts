@@ -21,7 +21,6 @@ export class AppointmenttimeComponent implements OnInit {
 
   startDate: any;
   aryDates: any;
-  private time: FormControl
   constructor(
     private formBuilder: FormBuilder,
   ) {

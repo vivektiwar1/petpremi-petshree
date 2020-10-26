@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ECardService } from '../modules/feature/e-card/e-card.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './contact-us.component.html',
   styleUrls: ['./contact-us.component.scss']
 })
-export class ContactUsComponent{
+export class ContactUsComponent {
 
   disableClose: boolean;
   countries: Array<any>;
@@ -21,10 +21,10 @@ export class ContactUsComponent{
   destroy$: Subject<void> = new Subject();
   contactLoader = false;
   constructor(private router: Router,
-              private formBuilder: FormBuilder,
-              private matDialog: MatDialog,
-              private toastrService: ToastrService,
-              private eCardService: ECardService) {
+    private formBuilder: FormBuilder,
+    private matDialog: MatDialog,
+    private toastrService: ToastrService,
+    private eCardService: ECardService) {
     this.disableClose = this.router.url === '/contact-us';
     this.createForm();
   }
@@ -51,14 +51,14 @@ export class ContactUsComponent{
 
     this.contactForm = this.formBuilder.group({
       titleId: [this.titles[0].id],
-      name: [null, Validators.required],
-      email: [null, Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)])],
+      name: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)])],
       countryId: [selectedCountry.id, { updateOn: 'change' }],
-      phone: [null, {
+      phone: ['', {
         validators: Validators.compose([Validators.minLength(selectedCountry['minLength']), Validators.maxLength(selectedCountry['maxLength'])]),
         updateOn: 'change'
       }],
-      message: [null, Validators.required]
+      message: ['', Validators.required]
     }, { updateOn: 'submit' });
 
     const phoneControl = this.contactForm.get('phone') as FormControl;
@@ -89,6 +89,8 @@ export class ContactUsComponent{
 
   async onSubmit() {
     try {
+      console.log(this.contactForm.value)
+      
       this.contactForm.markAllAsTouched();
       if (this.contactForm.valid) {
         this.contactLoader = true;

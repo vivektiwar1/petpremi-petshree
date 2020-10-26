@@ -58,6 +58,24 @@ export class ECardService {
     return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
+  bookAppointments() {
+    const apiData = {
+      appointmentReasonId: 1,
+      appointmentReasonOthers: "no reason",
+      appointmentTypeId: 1,
+      attendantId: 1,
+      partnerId: 1,
+      petId: 1,
+      clinicId: 1,
+      customerId: 1,
+      occurrence: 1,
+      appointmentRepeatId: 1,
+      date: "2020-10-16",
+      fromTime: "7:00:12 Pm",
+      toTime: "8:30:12 Pm"
+    }
+    return this.http.post(`${environment.apiBase}/service/api/crud`, apiData);
+  }
 
   getCustomerDetails() {
     const data = JSON.parse(localStorage.getItem('userData'));
@@ -77,7 +95,7 @@ export class ECardService {
         }
       },
       objectHash: {
-        id: data.id
+        id: data?.id
       }
     }
     return this.http.post(this.getApiUrl(`/crud`), apiData);
