@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <form  *ngIf="partnerForm" class="no-outline" [formGroup]="partnerForm" autocomplete="off">
+    <form *ngIf="partnerForm" class="no-outline" [formGroup]="partnerForm" autocomplete="off">
         <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
             [class.loader]="apiInProgress.partnerForm">
             <div class="row py-3">
@@ -21,8 +21,7 @@
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="businessName">Business Name</label>
                             <input class="form-control" id="businessName" formControlName="businessName"
-                                placeholder="Enter Business Name"
-                               >
+                                placeholder="Enter Business Name">
                             <div class="error-message">
                                 <ng-container
                                     *ngIf="getPartnerFormField('businessName').errors && getPartnerFormField('businessName').touched">
@@ -33,49 +32,46 @@
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="userName">User Name</label>
                             <input class="form-control" id="userName" formControlName="userName"
-                                placeholder="Enter User Name" (change)="searchUserName()"> 
+                                placeholder="Enter User Name" (change)="searchUserName()">
                             <div class="error-message">
                                 <ng-container
                                     *ngIf="getPartnerFormField('userName').errors && getPartnerFormField('userName').touched">
                                     <span>User name is required</span>
                                 </ng-container>
-                            
+
                             </div>
-                        
+
                         </div>
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="email">Email</label>
-                            <input class="form-control" id="email" formControlName="email"
-                                placeholder="Enter Email" >
+                            <input class="form-control" id="email" formControlName="email" placeholder="Enter Email">
                             <div class="error-message">
                                 <ng-container
-                                *ngIf="getPartnerFormField('email').hasError('required') && getPartnerFormField('email').touched">
+                                    *ngIf="getPartnerFormField('email').hasError('required') && getPartnerFormField('email').touched">
                                     <span>Email is required!</span>
                                 </ng-container>
-                                <ng-container
-                                *ngIf="getPartnerFormField('email').hasError('email')">
-                                 <span>Email is Invalid!</span>
+                                <ng-container *ngIf="getPartnerFormField('email').hasError('email')">
+                                    <span>Email is Invalid!</span>
                                 </ng-container>
 
-                                
+
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="mobile">Partner Phone Number</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                     <div class="form-control">
+                                    <div class="form-control">
                                         <mat-select formControlName="country">
 
                                             <mat-option *ngFor="let country of countryList" [value]="country.id">
                                                 +{{country.code}}
                                             </mat-option>
                                         </mat-select>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <input class="form-control" type="tel" id="mobile" placeholder="Enter Partner Phone"
-                                    formControlName="mobile"
-                                    >
+                                    formControlName="mobile">
                             </div>
                             <div class="error-message">
                                 <ng-container
@@ -89,28 +85,26 @@
                         </div>
                         <div class="col-12 form-group">
                             <label class="mb-2" for="address">Partner Address</label>
-                            <textarea class="form-control custom-scrollbar textarea-min-height" type="text"
-                                id="address" formControlName="address" placeholder="Enter Partner Address"
-                                rows="1" cdkTextareaAutosize #autosize="cdkTextareaAutosize"></textarea>
+                            <textarea class="form-control custom-scrollbar textarea-min-height" type="text" id="address"
+                                formControlName="address" placeholder="Enter Partner Address" rows="1"
+                                cdkTextareaAutosize #autosize="cdkTextareaAutosize"></textarea>
                         </div>
 
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="fbLink">FaceBook Link</label>
                             <input class="form-control" id="fbLink" formControlName="fbLink"
-                                placeholder="Enter FaceBook Link"
-                                >
+                                placeholder="Enter FaceBook Link">
                             <div class="error-message">
                                 <ng-container
                                     *ngIf="getPartnerFormField('fbLink').hasError('required') && getPartnerFormField('fbLink').touched">
                                     <span>FaceBook Link is required!</span>
                                 </ng-container>
-                                <ng-container
-                                    *ngIf="getPartnerFormField('fbLink').hasError('pattern')">
-                                     <span>FaceBook Link is Invalid!</span>
-                            </ng-container>
+                                <ng-container *ngIf="getPartnerFormField('fbLink').hasError('pattern')">
+                                    <span>FaceBook Link is Invalid!</span>
+                                </ng-container>
 
                             </div>
-                        </div>    
+                        </div>
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="youtubeLink">Youtube Link</label>
                             <input class="form-control" id="youtubeLink" formControlName="youtubeLink"
@@ -121,59 +115,48 @@
                                     <span>Youtube Link is required!</span>
                                 </ng-container>
 
-                                <ng-container
-                                *ngIf="getPartnerFormField('youtubeLink').hasError('pattern')">
-                                 <span>Youtube Link is Invalid!</span>
+                                <ng-container *ngIf="getPartnerFormField('youtubeLink').hasError('pattern')">
+                                    <span>Youtube Link is Invalid!</span>
                                 </ng-container>
                             </div>
-                        </div>    
+                        </div>
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="twitterLink">Twitter Link</label>
                             <input class="form-control" id="twitterLink" formControlName="twitterLink"
-                                placeholder="Enter Twitter Link"
-                                >
+                                placeholder="Enter Twitter Link">
                             <div class="error-message">
                                 <ng-container
                                     *ngIf="getPartnerFormField('twitterLink').hasError('required') && getPartnerFormField('twitterLink').touched">
                                     <span>Twitter Link is required!</span>
                                 </ng-container>
 
-                                <ng-container
-                                *ngIf="getPartnerFormField('twitterLink').hasError('pattern')">
-                                 <span>Twitter Link is Invalid!</span>
+                                <ng-container *ngIf="getPartnerFormField('twitterLink').hasError('pattern')">
+                                    <span>Twitter Link is Invalid!</span>
                                 </ng-container>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 form-group mb-0">
                             <label class="mb-1" for="instagramLink">Instagram Link</label>
                             <input class="form-control" id="instagramLink" formControlName="instagramLink"
-                                placeholder="Enter Twitter Link"
-                               >
+                                placeholder="Enter Twitter Link">
                             <div class="error-message">
                                 <ng-container
                                     *ngIf="getPartnerFormField('instagramLink').hasError('required') && getPartnerFormField('instagramLink').touched">
                                     <span>Twitter Link is required!</span>
                                 </ng-container>
 
-                                <ng-container
-                                *ngIf="getPartnerFormField('instagramLink').hasError('pattern')">
-                                 <span>Instagram Link is Invalid!</span>
+                                <ng-container *ngIf="getPartnerFormField('instagramLink').hasError('pattern')">
+                                    <span>Instagram Link is Invalid!</span>
                                 </ng-container>
                             </div>
                         </div>
-    
+
                         <div class="col-12 col-sm-6 form-group">
                             <input-dropdown label="Country" name="countryName" placeholder="Select Country"
                                 [parentFormGroup]="partnerForm" [selectionList]="countryList">
                             </input-dropdown>
-                            
+
                         </div>
-    
-                      
-    
-    
-                        
-                       
                         <div class="col-12 mt-3 text-right">
                             <app-button className="btn-warning btn-large" buttonText="Save"
                                 (buttonClicked)="onSubmitPartner('partnerForm')"
@@ -189,35 +172,38 @@
         </div>
     </form>
 
-    <div class="accordion" id="accordionExample">
-        <div class="card">
+    <div class="accordion" id="accordionExample" >
+        <div class="card"  *ngFor="let clinic of clinic;">
             <div class="card-header" id="headingOne">
                 <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Clinic
+                    <button class="btn btn-link" type="button" data-toggle="collapse" attr.data-target="#a{{clinic?.id}}"
+                        aria-expanded="true" attr.aria-controls={{clinic?.id}} >
+                        {{clinic?.name}}
                     </button>
                 </h2>
             </div>
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div id="a{{clinic?.id}}"  class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                     <form *ngIf="clinicForm" class="no-outline" [formGroup]="clinicForm" autocomplete="off">
                         <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
                             [class.loader]="apiInProgress.clinicForm">
                             <div class="row py-3">
                                 <div class="col-12">
-                                    
+
                                     <div class="row d-flex justify-content-between align-items-center">
                                         <h3 class="title-color">Clinic & Schedule Details</h3>
-                                        <button class="btn btn-effect text-warning no-outline px-0" (click)="addPartner()"
+                                        <button class="btn btn-effect text-warning no-outline px-0"
+                                            (click)="addPartner()"
                                             [disabled]="clinicForm.get('partnerContactNumbers').invalid">+ ADD
                                             ANOTHER CLINIC</button>
                                     </div>
+                                    
                                     <div class="row mt-3">
                                         <div class="col-12 col-sm-6 form-group mb-0">
                                             <label class="mb-1" for="name">Clinic Name</label>
-                                            <input class="form-control" id="name" formControlName="name"
+                                            <input class="form-control" value="aniket" id="name1" formControlName="name"
                                                 placeholder="Enter Clinic Name"
-                                                [class.error]="getClinicFormField('name').errors && getClinicFormField('name').touched">
+                                                >
                                             <div class="error-message">
                                                 <ng-container
                                                     *ngIf="getClinicFormField('name').errors && getClinicFormField('name').touched">
@@ -226,7 +212,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 form-group mb-0">
-                                            <label class="mb-1" for="clinicMobile">Display </label>
+                                            <label class="mb-1" for="clinicMobile">Display Order</label>
                                             <div class="input-group">
                                                 <!-- <div class="input-group-prepend">
                                                     <div class="form-control">
@@ -240,10 +226,11 @@
                                                 <input class="form-control" type="tel" id="clinicMobile" placeholder="Enter Clinic Phone"
                                                     formControlName="mobile"
                                                     [class.error]="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched"> -->
-                                                    <textarea class="form-control custom-scrollbar textarea-min-height" type="text"
-                                                    id="address" formControlName="address" placeholder="Enter Display"
-                                                    rows="1" cdkTextareaAutosize #autosize="cdkTextareaAutosize"></textarea>
-                                                </div>
+                                                <textarea class="form-control custom-scrollbar textarea-min-height"
+                                                    type="text" id="displayorder" formControlName="displayOrder"
+                                                    placeholder="Enter Display Order" rows="1" cdkTextareaAutosize
+                                                    #autosize="cdkTextareaAutosize" ></textarea>
+                                            </div>
                                             <div class="error-message">
                                                 <ng-container
                                                     *ngIf="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
@@ -256,53 +243,59 @@
                                         </div>
                                         <div class="col-12 form-group">
                                             <label class="mb-2" for="clinicAddress">Clinic Address</label>
-                                            <textarea class="form-control custom-scrollbar textarea-min-height" type="text"
-                                                id="clinicAddress" formControlName="clinicAddress" placeholder="Enter Clinic Address"
-                                                rows="1" cdkTextareaAutosize #autosize="cdkTextareaAutosize"></textarea>
+                                            <textarea class="form-control custom-scrollbar textarea-min-height"
+                                                type="text" id="clinicAddress" formControlName="clinicAddress"
+                                                placeholder="Enter Clinic Address" rows="1" cdkTextareaAutosize
+                                                #autosize="cdkTextareaAutosize"></textarea>
                                         </div>
-                    
+
                                         <div class="col-12 col-sm-6 form-group">
-                                            <input-dropdown label="Country" name="countryName" placeholder="Select Country"
-                                                [parentFormGroup]="clinicForm" [selectionList]="countryList">
+                                            <input-dropdown label="Country" name="countryName"
+                                                placeholder="Select Country" [parentFormGroup]="clinicForm"
+                                                [selectionList]="countryList">
                                             </input-dropdown>
                                         </div>
-                    
+
                                         <div class="col-12 col-sm-6 form-group">
                                             <input-dropdown label="State" name="state" placeholder="Select State"
                                                 [parentFormGroup]="clinicForm" [selectionList]="stateList">
                                             </input-dropdown>
                                         </div>
-                    
+
                                         <div class="col-12 col-sm-6 form-group">
                                             <input-dropdown label="City" name="city" placeholder="Select City"
                                                 [parentFormGroup]="clinicForm" [selectionList]="cityList">
                                             </input-dropdown>
                                         </div>
-                    
+
                                         <div class="col-12 col-sm-6 form-group">
-                                            <input-dropdown label="Pin Code" name="pinCode" placeholder="Select Pin Code"
-                                                [parentFormGroup]="clinicForm" [selectionList]="pinCodeList">
+                                            <input-dropdown label="Pin Code" name="pinCode"
+                                                placeholder="Select Pin Code" [parentFormGroup]="clinicForm"
+                                                [selectionList]="pinCodeList">
                                             </input-dropdown>
                                         </div>
                                         <div class="col-12 col-sm-6 form-group mb-0">
-                                            <label class="mb-1" for="name">Lattitude</label>
-                                            <input class="form-control" id="lattitude" formControlName="name"
-                                                placeholder="Lattitude">
+                                            <label class="mb-1" for="name">Latitude</label>
+                                            <input class="form-control" id="latitude" formControlName="latitude"
+                                                placeholder="Latitude">
                                         </div>
                                         <div class="col-12 col-sm-6 form-group mb-0">
                                             <label class="mb-1" for="name">Longitude</label>
-                                            <input class="form-control" id="longitude" formControlName="name"
+                                            <input class="form-control" id="longitude" formControlName="longitude"
                                                 placeholder="Longitude">
                                         </div>
                                         <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h6 class="title-color mb-0">Add Partner Details</h6>
-                                            <button class="btn btn-effect text-warning no-outline px-0" (click)="addPartner()"
+                                            <button class="btn btn-effect text-warning no-outline px-0"
+                                                (click)="addPartner()"
                                                 [disabled]="clinicForm.get('partnerContactNumbers').invalid">+ ADD
                                                 ANOTHER PARTNER</button>
                                         </div>
                                         <div class="col-12" formArrayName="partnerContactNumbers">
-                                            <ng-container *ngFor="let partner of partnerContactsList; let partnerIndex = index">
-                                                <div class="row" [formGroupName]="partnerIndex" [class.mt-3]="partnerIndex">
+                                            <ng-container
+                                                *ngFor="let partner of partnerContactsList; let partnerIndex = index">
+                                                <div class="row" [formGroupName]="partnerIndex"
+                                                    [class.mt-3]="partnerIndex">
                                                     <div class="col-12 position-relative">
                                                         <div class="border rounded p-2">
                                                             <div class="row">
@@ -312,35 +305,48 @@
                                                                         <div class="input-group-prepend">
                                                                             <div class="form-control">
                                                                                 <mat-select formControlName="country">
-                                                                                    <mat-option *ngFor="let item of countryList" [value]="item.id">+{{item.code}}</mat-option>
+                                                                                    <mat-option
+                                                                                        *ngFor="let item of countryList"
+                                                                                        [value]="item.id">
+                                                                                        +{{item.code}}</mat-option>
                                                                                 </mat-select>
                                                                             </div>
                                                                         </div>
-                                                                        <input class="form-control" id="mobile" formControlName="mobile"
-                                                                            placeholder="Phone Number" (change)="validatePartnerNumber($event, partnerIndex)"
+                                                                        <input class="form-control" id="mobile"
+                                                                            formControlName="mobile"
+                                                                            
+                                                                            placeholder="Phone Number"
+                                                                            (change)="validatePartnerNumber($event, partnerIndex)"
                                                                             [class.error]="partner.get('mobile').errors && partner.get('mobile').touched">
                                                                     </div>
                                                                     <div class="error-message">
                                                                         <ng-container
                                                                             *ngIf="partner.get('mobile').errors && partner.get('mobile').touched">
-                                                                            <span *ngIf="partner.get('mobile').hasError('minlength')">
+                                                                            <span
+                                                                                *ngIf="partner.get('mobile').hasError('minlength')">
                                                                                 Phone number is invalid!</span>
-                                                                            <span *ngIf="partner.get('mobile').hasError('required')">
+                                                                            <span
+                                                                                *ngIf="partner.get('mobile').hasError('required')">
                                                                                 Phone number is required!</span>
                                                                         </ng-container>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-12 col-sm-4 form-group mb-0">
-                                                                    <label class="mb-1" for="firstName">First Name</label>
+                                                                    <label class="mb-1" for="firstName">First
+                                                                        Name</label>
                                                                     <div class="input-group">
                                                                         <div class="input-group-prepend">
                                                                             <div class="form-control">
                                                                                 <mat-select formControlName="title">
-                                                                                    <mat-option *ngFor="let item of titleList" [value]="item.id">{{item.title}}</mat-option>
+                                                                                    <mat-option
+                                                                                        *ngFor="let item of titleList"
+                                                                                        [value]="item.id">
+                                                                                        {{item.title}}</mat-option>
                                                                                 </mat-select>
                                                                             </div>
                                                                         </div>
-                                                                        <input class="form-control" id="firstName" formControlName="firstName"
+                                                                        <input class="form-control" id="firstName"
+                                                                            formControlName="firstName"
                                                                             placeholder="First Name"
                                                                             [class.error]="partner.get('firstName').errors && partner.get('firstName').touched">
                                                                     </div>
@@ -353,7 +359,8 @@
                                                                 </div>
                                                                 <div class="col-12 col-sm-4 form-group mb-0">
                                                                     <label class="mb-1" for="name">Last Name</label>
-                                                                    <input class="form-control" id="name" formControlName="lastName"
+                                                                    <input class="form-control" id="name"
+                                                                        formControlName="lastName"
                                                                         placeholder="Last Name">
                                                                 </div>
                                                             </div>
@@ -362,21 +369,24 @@
                                                 </div>
                                             </ng-container>
                                         </div>
-                    
+
                                         <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h6 class="title-color mb-0">Add Schedule</h6>
-                                            <button class="btn btn-effect text-warning no-outline px-0" (click)="addSchedule()"
+                                            <button class="btn btn-effect text-warning no-outline px-0"
+                                                (click)="addSchedule()"
                                                 [disabled]="clinicForm.get('businessTimings').invalid">+ ADD
                                                 ANOTHER SCHEDULE</button>
                                         </div>
                                         <div class="col-12" formArrayName="businessTimings">
                                             <ng-container *ngFor="let item of scheduleList; let scheduleIndex = index">
-                                                <div class="row" [formGroupName]="scheduleIndex" [class.mt-3]="scheduleIndex">
+                                                <div class="row" [formGroupName]="scheduleIndex"
+                                                    [class.mt-3]="scheduleIndex">
                                                     <div class="col-12 position-relative">
                                                         <div class="border rounded p-2">
                                                             <div class="row">
                                                                 <div class="col-12 col-md-6 form-group">
-                                                                    <label class="mb-1" [for]="'name - ' + scheduleIndex">Schedule
+                                                                    <label class="mb-1"
+                                                                        [for]="'name - ' + scheduleIndex">Schedule
                                                                         {{scheduleIndex + 1}}</label>z
                                                                     <mat-chip-list>
                                                                         <mat-chip *ngFor="let day of weekDays"
@@ -394,14 +404,18 @@
                                                                             <div class="col-12 position-relative">
                                                                                 <div class="border rounded p-2">
                                                                                     <div class="row">
-                                                                                        <div class="col-12 col-sm-6 form-group">
+                                                                                        <div
+                                                                                            class="col-12 col-sm-6 form-group">
                                                                                             <label class="mb-1"
                                                                                                 [for]="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex">From</label>
-                                                                                            <div class="position-relative">
-                                                                                                <input class="form-control timer"
+                                                                                            <div
+                                                                                                class="position-relative">
+                                                                                                <input
+                                                                                                    class="form-control timer"
                                                                                                     id="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex"
                                                                                                     [ngxTimepicker]="toggleTimepicker"
-                                                                                                    readonly formControlName="fromHours"
+                                                                                                    readonly
+                                                                                                    formControlName="fromHours"
                                                                                                     placeholder="Select Time">
                                                                                                 <ngx-material-timepicker-toggle
                                                                                                     class="position-absolute time-picker"
@@ -412,14 +426,18 @@
                                                                                                 </ngx-material-timepicker>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="col-12 col-sm-6 form-group">
+                                                                                        <div
+                                                                                            class="col-12 col-sm-6 form-group">
                                                                                             <label class="mb-1"
                                                                                                 [for]="'toHours - ' + scheduleIndex + ' - ' + slotsIndex">To</label>
-                                                                                            <div class="position-relative">
-                                                                                                <input class="form-control timer"
+                                                                                            <div
+                                                                                                class="position-relative">
+                                                                                                <input
+                                                                                                    class="form-control timer"
                                                                                                     id="'toHours - ' + scheduleIndex + ' - ' + slotsIndex"
                                                                                                     [ngxTimepicker]="toggleToTimepicker"
-                                                                                                    readonly formControlName="toHours"
+                                                                                                    readonly
+                                                                                                    formControlName="toHours"
                                                                                                     placeholder="Select Time">
                                                                                                 <ngx-material-timepicker-toggle
                                                                                                     class="position-absolute time-picker"
@@ -429,7 +447,7 @@
                                                                                                     #toggleToTimepicker>
                                                                                                 </ngx-material-timepicker>
                                                                                             </div>
-                    
+
                                                                                         </div>
                                                                                     </div>
                                                                                     <mat-icon class="remove-slot small"
@@ -442,7 +460,8 @@
                                                                     </ng-container>
                                                                     <div class="col-12">
                                                                         <div class="text-right">
-                                                                            <button class="btn btn-effect text-warning no-outline px-0"
+                                                                            <button
+                                                                                class="btn btn-effect text-warning no-outline px-0"
                                                                                 (click)="addSlots(scheduleIndex)"
                                                                                 [disabled]="clinicForm.get('businessTimings.' + scheduleIndex + '.timeRange').invalid">+
                                                                                 ADD ANOTHER SLOT</button>
@@ -475,7 +494,6 @@
             </div>
         </div>
     </div>
-        
 </ng-container>
 
 <ng-template #loading>

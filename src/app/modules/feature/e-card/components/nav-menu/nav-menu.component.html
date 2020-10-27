@@ -12,7 +12,7 @@
         <span>{{item.name}}</span>
     </a>
 
-    <div *ngIf="isShow" class="mt-sm-5 mr-0 mr-sm-2 align-self-sm-start d-flex flex-sm-column justify-content-start flex-1" >
+    <div *ngIf="isShow" class="mr-0 mr-sm-2 align-self-sm-start d-flex flex-sm-column justify-content-start flex-1" >
         <li *ngIf="store.state$ | async as state;">
             <ng-container *ngIf="state.isAuthenticated">
                 <div class="sub-menu" (click)="toggleProfile(profileMenu)">

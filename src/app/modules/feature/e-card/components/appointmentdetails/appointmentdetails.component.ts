@@ -40,7 +40,6 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
   }
   showDiv() {
     document.getElementById('appointmentdetails').style.display = "none";

@@ -51,15 +51,13 @@ export class AppointmenttimeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-
   }
   showDiv() {
     document.getElementById('appointmenttime').style.display = "none";
     document.getElementById('appointmentdetails').style.display = "block";
-    // setTimeout(function () {
-    //   window.scroll(0, 0);
-    // }, 100);
+    setTimeout(function () {
+      window.scroll(0, 0);
+    }, 100);
   }
   back() {
     document.getElementById('appointmenttime').style.display = "none";
