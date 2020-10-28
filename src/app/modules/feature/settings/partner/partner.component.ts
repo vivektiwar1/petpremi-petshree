@@ -54,11 +54,13 @@ export class PartnerComponent implements OnInit {
   stateList: Array<any>;
   cityList: Array<any>;
   clinic: Array<any> = [];
+  clinicData: Array<any> = [];
   pinCodeList: Array<any>;
   canCreatePartner: boolean;
   weekDays: Array<any>;
   userName: any;
   data: any;
+  index: any=0;
   constructor(
     private service: AuthService,
     private commonService: CommonService,
@@ -124,11 +126,14 @@ export class PartnerComponent implements OnInit {
       this.partnerForm.controls.countryName.setValue(this.partnerDetails.country?.id);
       this.partnerForm.controls.userName.setValue(this.partnerDetails.userName);
       this.partnerForm.controls.address.setValue(this.partnerDetails.address);
+     
       for (var i = 0; i <= this.partnerDetails.partnerAddresses.length - 1; i++) {
-        let data = await this.createClinicForm(this.partnerDetails.partnerAddresses[i])
-         this.clinic.push(data);
+         this.clinic.push(this.partnerDetails.partnerAddresses[i]);
+        // this.clinic.push(this.createClinicForm(this.partnerDetails.partnerAddresses[i]));
+        // console.log(this.partnerDetails.partnerAddresses[i]);
       }
-      console.log(this.clinic);
+      this.createClinicForm(this.clinic)
+      // console.log(this.clinicData)
     } catch (error) {
       this.toastr.error(`Something went wrong!`);
       console.log(error);
@@ -137,7 +142,7 @@ export class PartnerComponent implements OnInit {
 
   createPartnerForm(formData) {
     const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
-    let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
+    let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[1]) as any;
     this.partnerForm = this.formBuilder.group({
       userName: [formData.partnerName ? formData.partnerName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
       businessName: [null, Validators.compose([Validators.required])],
@@ -184,6 +189,7 @@ export class PartnerComponent implements OnInit {
   }
 
   createClinicForm(formData) {
+    // this.index=0;
     console.log(formData)
     let selectedClinicCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     let selectedClinicState = (this.stateList?.find(item => item.id === formData.state?.id) || this.stateList?.[0]) as any;
@@ -192,13 +198,14 @@ export class PartnerComponent implements OnInit {
     let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     // this.clinicForm = this.partnerDetails?.partnerAddresses.map(res => {
     this.clinicForm = this.formBuilder.group({
-      partnerId: formData.partnerId,
+      partnerId:  this.partnerDetails.id,
       isPartner: true,
       displayOrder: 1,
-      latitude: [formData.latitude ? formData.latitude : '', Validators.compose([WhiteSpaceValidator])],
-      longitude: [formData.longitude ? formData.longitude : '', Validators.compose([WhiteSpaceValidator])],
-      name: [formData.name ? formData.name : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
-      mobile: [formData.mobile ? formData.mobile : '', Validators.compose([Validators.required,
+      name: [formData[this.index].name ? formData[this.index].name : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
+      latitude: [formData[this.index].latitude ? formData[this.index].latitude : '', Validators.compose([WhiteSpaceValidator])],
+      longitude: [formData[this.index].longitude ? formData[this.index].longitude : '', Validators.compose([WhiteSpaceValidator])],
+      
+      mobile: [formData[this.index].mobile ? formData[this.index].mobile : '', Validators.compose([Validators.required,
       Validators.minLength(selectedCountry?.minLength || 10),
       Validators.maxLength(selectedCountry?.maxLength || 10)])],
       clinicAddress: ['', Validators.compose([WhiteSpaceValidator])],
@@ -248,6 +255,7 @@ export class PartnerComponent implements OnInit {
     ).subscribe(value => phoneControl.setValue(value, { emitEvent: false }));
     // });
     // this.scheduleControl = this.clinicForm.get('businessTimings') as FormArray;
+
   }
 
   createPartnerDetails() {
