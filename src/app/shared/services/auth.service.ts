@@ -62,6 +62,18 @@ export class AuthService {
       return data;
     }));
   }
+  signInAdmin(objectHash) {
+    return this.dataService.http.post(`${environment.api}service/oauth/token`,
+      objectHash,
+    ).pipe(map((data: any) => {
+      if (data?.access_token) {
+        const { access_token, refresh_token, expires_in } = data;
+        this.app.setAuthToken(access_token, refresh_token, expires_in);
+      }
+      return data;
+    }));
+  }
+
 
   getUserProfile(params: any = {}) {
     if (this.app.state.isAuthenticated) {

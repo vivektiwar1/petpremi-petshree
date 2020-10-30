@@ -7,6 +7,7 @@ export enum AuthFormTypes {
   VERIFY_DETAILS,           // same as sign up stage 1, only user is already verified along with user details
   CHANGE_PASSWORD,
   FORGOT_PASSWORD,
+  ADMIN,
 }
 
 export const LoginConstants = {

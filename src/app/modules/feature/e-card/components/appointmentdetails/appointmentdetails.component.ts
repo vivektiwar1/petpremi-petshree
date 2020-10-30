@@ -41,6 +41,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   showDiv() {
     document.getElementById('appointmentdetails').style.display = "none";
     document.getElementById('petdetails').style.display = "block";
@@ -49,22 +50,7 @@ export class AppointmentDetailsComponent implements OnInit {
     document.getElementById('appointmenttime').style.display = "block";
     document.getElementById('appointmentdetails').style.display = "none";
   }
-
-  scrollBack(element: HTMLDivElement) {
-    element.scrollTo({
-      top: 0,
-      left: element.scrollLeft - (element.firstElementChild as HTMLDivElement).offsetWidth,
-      behavior: 'smooth'
-    });
-  }
-  
-  scrollForward(element: HTMLElement) {
-    element.scrollTo({
-      top: 0,
-      left: element.scrollLeft + (element.firstElementChild as HTMLDivElement).offsetWidth,
-      behavior: 'smooth'
-    });
-  }
+ 
   petDetail(petImage){
     this.petId=petImage.id
     this.petName=petImage.name

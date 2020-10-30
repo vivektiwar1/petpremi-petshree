@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -16,11 +16,13 @@ import { ProfileService } from '../profile/profile.service';
 @Component({
   selector: 'app-partner',
   templateUrl: './partner.component.html',
-  styleUrls: ['./partner.component.scss']
+  styleUrls: ['./partner.component.scss'],
+
 })
 export class PartnerComponent implements OnInit {
-
+  @Input() clinicIndex: any;
   clinicForm: FormGroup;
+  clinicData: FormGroup;
   partnerForm: FormGroup;
   scheduleControl: FormArray;
   slotsControl: FormArray;
@@ -28,10 +30,10 @@ export class PartnerComponent implements OnInit {
   partnerDetails: any;
   userDetails: any;
 
-
   apiInProgress = {
     page: false,
     clinicForm: false,
+    clinicData: false,
     partnerForm: false
   };
 
@@ -53,14 +55,16 @@ export class PartnerComponent implements OnInit {
   countryList: Array<any>;
   stateList: Array<any>;
   cityList: Array<any>;
-  clinic: Array<any> = [];
-  clinicData: Array<any> = [];
+  clinic: FormArray;
   pinCodeList: Array<any>;
   canCreatePartner: boolean;
   weekDays: Array<any>;
+  schedule: Array<any> = [];
   userName: any;
   data: any;
-  index: any=0;
+  index: any;
+  IndexNumber: any;
+
   constructor(
     private service: AuthService,
     private commonService: CommonService,
@@ -86,18 +90,20 @@ export class PartnerComponent implements OnInit {
         this.genderList,
         this.countryList,
         this.weekDays,
-        this.stateList
+        this.stateList,
+        this.cityList,
       ] = await Promise.all([
         this.commonService.getUserId(),
         this.commonService.getTitleList(),
         this.commonService.getGenderList(),
         this.commonService.getCountryList(),
         this.commonService.getDaysList(),
-        this.commonService.getStateList(1)
+        this.commonService.getStateList(1),
+        this.commonService.getCityList(1)
       ]);
       this.createPartnerForm({});
       await this.getPartnerDetails();
-      // this.createClinicForm({});
+      this.createClinicFormData({});
       this.apiInProgress.page = false;
     } catch (error) {
       this.apiInProgress.page = false;
@@ -126,14 +132,11 @@ export class PartnerComponent implements OnInit {
       this.partnerForm.controls.countryName.setValue(this.partnerDetails.country?.id);
       this.partnerForm.controls.userName.setValue(this.partnerDetails.userName);
       this.partnerForm.controls.address.setValue(this.partnerDetails.address);
-     
+      const dataClinic: any = [];
       for (var i = 0; i <= this.partnerDetails.partnerAddresses.length - 1; i++) {
-         this.clinic.push(this.partnerDetails.partnerAddresses[i]);
-        // this.clinic.push(this.createClinicForm(this.partnerDetails.partnerAddresses[i]));
-        // console.log(this.partnerDetails.partnerAddresses[i]);
+        dataClinic.push(this.createClinicForm(this.partnerDetails.partnerAddresses[i]));
       }
-      this.createClinicForm(this.clinic)
-      // console.log(this.clinicData)
+      this.clinic = dataClinic;
     } catch (error) {
       this.toastr.error(`Something went wrong!`);
       console.log(error);
@@ -181,7 +184,6 @@ export class PartnerComponent implements OnInit {
       takeUntil(this.destroy$)
     ).subscribe(value => phoneControl.setValue(value, { emitEvent: false }));
 
-
   }
 
   getPartnerFormField(key: string) {
@@ -189,23 +191,22 @@ export class PartnerComponent implements OnInit {
   }
 
   createClinicForm(formData) {
-    // this.index=0;
-    console.log(formData)
     let selectedClinicCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     let selectedClinicState = (this.stateList?.find(item => item.id === formData.state?.id) || this.stateList?.[0]) as any;
     let selectedClinicCity = (this.cityList?.find(item => item.id === formData.city?.id) || this.cityList?.[0]) as any;
     let selectedClinicPinCode = (this.pinCodeList?.find(item => item.id === formData.pinCode?.id) || this.pinCodeList?.[0]) as any;
     let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     // this.clinicForm = this.partnerDetails?.partnerAddresses.map(res => {
-    this.clinicForm = this.formBuilder.group({
-      partnerId:  this.partnerDetails.id,
+    let clinicForm = this.formBuilder.group({
+      // this.clinicForm = this.formBuilder.group({
+      partnerId: this.partnerDetails.id,
+      id: formData.id,
       isPartner: true,
       displayOrder: 1,
-      name: [formData[this.index].name ? formData[this.index].name : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
-      latitude: [formData[this.index].latitude ? formData[this.index].latitude : '', Validators.compose([WhiteSpaceValidator])],
-      longitude: [formData[this.index].longitude ? formData[this.index].longitude : '', Validators.compose([WhiteSpaceValidator])],
-      
-      mobile: [formData[this.index].mobile ? formData[this.index].mobile : '', Validators.compose([Validators.required,
+      name: [formData.name ? formData.name : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
+      latitude: [formData.latitude ? formData.latitude : '', Validators.compose([WhiteSpaceValidator])],
+      longitude: [formData.longitude ? formData.longitude : '', Validators.compose([WhiteSpaceValidator])],
+      mobile: [formData.mobile ? formData.mobile : '', Validators.compose([Validators.required,
       Validators.minLength(selectedCountry?.minLength || 10),
       Validators.maxLength(selectedCountry?.maxLength || 10)])],
       clinicAddress: ['', Validators.compose([WhiteSpaceValidator])],
@@ -217,11 +218,13 @@ export class PartnerComponent implements OnInit {
       businessTimings: this.formBuilder.array([this.createSchedule()]),
       partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails()])
     });
-    const countryControl = this.clinicForm.get('country');
-    const stateControl = this.clinicForm.get('state');
-    const cityControl = this.clinicForm.get('city');
-    const countryNameControl = this.clinicForm.get('countryName');
-    const phoneControl = this.clinicForm.get('mobile') as FormControl;
+
+
+    const countryControl = clinicForm.get('country');
+    const stateControl = clinicForm.get('state');
+    const cityControl = clinicForm.get('city');
+    const countryNameControl = clinicForm.get('countryName');
+    const phoneControl = clinicForm.get('mobile') as FormControl;
 
     countryNameControl.valueChanges.subscribe(async countryCode => {
       selectedCountry = this.countryList.find(country => country.id === countryCode);
@@ -254,9 +257,80 @@ export class PartnerComponent implements OnInit {
       takeUntil(this.destroy$)
     ).subscribe(value => phoneControl.setValue(value, { emitEvent: false }));
     // });
-    // this.scheduleControl = this.clinicForm.get('businessTimings') as FormArray;
+    this.scheduleControl = clinicForm.get('businessTimings') as FormArray;
 
+    return clinicForm;
   }
+
+  createClinicFormData(formData) {
+    let selectedClinicCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
+    let selectedClinicState = (this.stateList?.find(item => item.id === formData.state?.id) || this.stateList?.[0]) as any;
+    let selectedClinicCity = (this.cityList?.find(item => item.id === formData.city?.id) || this.cityList?.[0]) as any;
+    let selectedClinicPinCode = (this.pinCodeList?.find(item => item.id === formData.pinCode?.id) || this.pinCodeList?.[0]) as any;
+    let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
+    // this.clinicForm = this.partnerDetails?.partnerAddresses.map(res => {
+    this.clinicData = this.formBuilder.group({
+      partnerId: this.partnerDetails.id,
+      id: formData.id,
+      isPartner: true,
+      displayOrder: 1,
+      name: ['', Validators.compose([Validators.required, WhiteSpaceValidator])],
+      latitude: ['', Validators.compose([WhiteSpaceValidator])],
+      longitude: ['', Validators.compose([WhiteSpaceValidator])],
+      mobile: ['', Validators.compose([Validators.required,
+      Validators.minLength(selectedCountry?.minLength || 10),
+      Validators.maxLength(selectedCountry?.maxLength || 10)])],
+      clinicAddress: ['', Validators.compose([WhiteSpaceValidator])],
+      countryName: selectedClinicCountry?.id,
+      country: [selectedCountry?.id],
+      state: selectedClinicState?.id,
+      city: selectedClinicCity?.id,
+      pinCode: selectedClinicPinCode?.id,
+      businessTimings: this.formBuilder.array([this.createSchedule()]),
+      partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails()])
+    });
+
+
+    const countryControl = this.clinicData.get('country');
+    const stateControl = this.clinicData.get('state');
+    const cityControl = this.clinicData.get('city');
+    const countryNameControl = this.clinicData.get('countryName');
+    const phoneControl = this.clinicData.get('mobile') as FormControl;
+
+    countryNameControl.valueChanges.subscribe(async countryCode => {
+      selectedCountry = this.countryList.find(country => country.id === countryCode);
+      countryControl.setValue(countryCode, { emitEvent: false });
+      this.stateList = await this.commonService.getStateList(countryCode);
+    });
+
+    stateControl.valueChanges.subscribe(async stateCode => {
+      this.cityList = await this.commonService.getCityList(stateCode);
+    });
+
+    cityControl.valueChanges.subscribe(async cityCode => {
+      this.pinCodeList = await this.commonService.getPinCodeList(cityCode);
+    });
+
+    countryControl.valueChanges.subscribe(async countryCode => {
+      selectedClinicCountry = this.countryList.find(country => country.id === countryCode);
+      selectedCountry = this.countryList.find(country => country.id === countryCode);
+      countryNameControl.setValue(countryCode, { emitEvent: false });
+      countryControl.setValue(countryCode, { emitEvent: false });
+      this.stateList = await this.commonService.getStateList(countryCode);
+      phoneControl.setValidators([Validators.minLength(selectedCountry?.minLength), Validators.maxLength(selectedCountry?.maxLength)]);
+      phoneControl.updateValueAndValidity();
+    });
+
+    phoneControl.valueChanges.pipe(
+      map(value => value && value.replace(/\D/g, '')),
+      map(value => value && value.replace(/^0/g, '')),
+      map(value => value && value.slice(0, selectedCountry.maxLength)),
+      takeUntil(this.destroy$)
+    ).subscribe(value => phoneControl.setValue(value, { emitEvent: false }));
+    // });
+    this.scheduleControl = this.clinicData.get('businessTimings') as FormArray;
+  }
+
 
   createPartnerDetails() {
     return this.formBuilder.group({
@@ -297,18 +371,18 @@ export class PartnerComponent implements OnInit {
 
   }
 
-  addSchedule() {
-    const control = this.clinicForm.get('businessTimings') as FormArray;
+  addSchedule(index) {
+    const control = this.clinic[index].get('businessTimings') as FormArray;
     control.push(this.createSchedule());
   }
   addClinic() {
-
+    const control = this.clinic as FormArray;
+    control.push(this.createClinicForm(this.clinic));
   }
-  addPartner() {
-    const control = this.clinicForm.get('partnerContactNumbers') as FormArray;
+  addPartner(index) {
+    const control = this.clinic[index].get('partnerContactNumbers') as FormArray;
     control.push(this.createPartnerDetails());
   }
-
 
   getClinicFormField(key: string) {
     return this.clinicForm.get(key) as FormControl;
@@ -331,7 +405,7 @@ export class PartnerComponent implements OnInit {
   }
 
   removeSchedule(scheduleIndex) {
-    const control = this.clinicForm.get('businessTimings') as FormArray;
+    const control = this.clinicData.get('businessTimings') as FormArray;
     control.removeAt(scheduleIndex);
   }
 
@@ -340,16 +414,30 @@ export class PartnerComponent implements OnInit {
   }
 
   removeSlots(scheduleIndex, slotIndex) {
-    const control = this.clinicForm.get(`businessTimings.${scheduleIndex}.timeRange`) as FormArray;
+    const control = this.clinicData.get(`businessTimings.${scheduleIndex}.timeRange`) as FormArray;
     control.removeAt(slotIndex);
   }
-
-  get scheduleList() {
-    return (this.clinicForm.get('businessTimings') as FormArray).controls;
+  getPartner() {
+    this.scheduleList
   }
 
+  getscheduleList(index) {
+    this.IndexNumber = index;
+    return this.scheduleList
+  }
+  getpartnerContactsList(index) {
+    this.IndexNumber = index;
+    return this.partnerContactsList
+  }
+
+  get clinicList() {
+    return (this.clinic as FormArray).controls;
+  }
+  get scheduleList() {
+    return (this.clinic[this.IndexNumber].get('businessTimings') as FormArray).controls;
+  }
   get partnerContactsList() {
-    return (this.clinicForm.get('partnerContactNumbers') as FormArray).controls;
+    return (this.clinic[this.IndexNumber].get('partnerContactNumbers') as FormArray).controls;
   }
 
   getSlotsList(index = 0) {
@@ -392,7 +480,6 @@ export class PartnerComponent implements OnInit {
   }
 
   timeRangeModify(Timings) {
-    console.log(Timings);
     const newTimings = Timings;
     Timings.map((data, slot) => {
       const days = [];
@@ -400,6 +487,7 @@ export class PartnerComponent implements OnInit {
         days.push({ id: day });
       });
       const timeRanges = data.timeRange;
+      console.log(timeRanges)
       const newRanges = [];
       timeRanges.map(time => {
         const slotData = {
@@ -446,7 +534,7 @@ export class PartnerComponent implements OnInit {
       ...this.modifyFormDataForBackend(formType, 'country'),
       ...this.modifyFormDataForBackend(formType, 'city'),
       ...this.modifyFormDataForBackend(formType, 'pinCode'),
-      ...this.timeRangeModify(this[formType].value.businessTimings),
+      // ...this.timeRangeModify(this[formType].value.businessTimings),
       ...this.modifyPartnerFormData(this[formType].value.partnerContactNumbers)
     };
     delete apiData.countryName;
@@ -461,7 +549,7 @@ export class PartnerComponent implements OnInit {
         this.toastr.error(`Something went wrong!`);
         this.apiInProgress[formType] = false;
       }
-    }
+    } 
   }
 
   async onSubmitPartner(formType) {
@@ -545,8 +633,7 @@ export class PartnerComponent implements OnInit {
 
 
   show() {
-    console.log(this.clinicForm.value)
-      ;
+    console.log(this.clinicData.value);
   }
 
 

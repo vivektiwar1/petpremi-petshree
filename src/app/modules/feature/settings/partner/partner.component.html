@@ -172,66 +172,50 @@
         </div>
     </form>
 
-    <div class="accordion" id="accordionExample" >
-        <div class="card"  *ngFor="let clinicData of clinic;">
+    <div class="accordion" id="accordionExample">
+        <div class="card" *ngFor="let clinicData of clinic; let clinicIndex=index;">
             <div class="card-header" id="headingOne">
                 <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" attr.data-target="#clinix_{{clinicData?.id}}"
-                        aria-expanded="false" attr.aria-controls={{clinicData?.id}} >
-                        {{clinicData?.name}}
+                    <button class="btn btn-link" type="button" data-toggle="collapse"
+                        attr.data-target="#clinic_{{clinicData?.value?.id}}" aria-expanded="false"
+                        attr.aria-controls="{{clinicData?.value?.id}}">
+                        {{clinicData?.value?.name ? clinicData?.value?.name : "Add New"}}
                     </button>
                 </h2>
             </div>
-            <div id="clinic_{{clinicData?.id}}"  class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div id="clinic_{{clinicData?.value?.id}}" class="collapse" aria-labelledby="headingOne"
+                data-parent="#accordionExample">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <button class="btn btn-effect text-warning no-outline px-0" (click)="addClinic()">
+                        + ADD ANOTHER CLINIC
+                    </button>
+                </div>
                 <div class="card-body">
-                    <form *ngIf="clinicForm" class="no-outline" [formGroup]="clinicForm" autocomplete="off">
+                    <form class="no-outline" [formGroup]="clinicData" autocomplete="off">
                         <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
-                            [class.loader]="apiInProgress.clinicForm">
+                            [class.loader]="apiInProgress.clinicData">
                             <div class="row py-3">
                                 <div class="col-12">
-
-                                    <div class="row d-flex justify-content-between align-items-center">
-                                        <h3 class="title-color">Clinic & Schedule Details</h3>
-                                        <button class="btn btn-effect text-warning no-outline px-0"
-                                            (click)="addPartner()"
-                                            [disabled]="clinicForm.get('partnerContactNumbers').invalid">+ ADD
-                                            ANOTHER CLINIC</button>
-                                    </div>
-                                    
+                                    <h3 class="title-color">Clinic & Schedule Details</h3>
                                     <div class="row mt-3">
                                         <div class="col-12 col-sm-6 form-group mb-0">
                                             <label class="mb-1" for="name">Clinic Name</label>
                                             <input class="form-control" id="name1" formControlName="name"
-                                                placeholder="Enter Clinic Name" value="{{clinicData?.name}}"
-                                                >
-                                            <div class="error-message">
+                                                placeholder="Enter Clinic Name">
+                                            <!-- <div class="error-message">
                                                 <ng-container
                                                     *ngIf="getClinicFormField('name').errors && getClinicFormField('name').touched">
                                                     <span>Clinic name is required!</span>
                                                 </ng-container>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="col-12 col-sm-6 form-group mb-0">
                                             <label class="mb-1" for="clinicMobile">Display Order</label>
                                             <div class="input-group">
-                                                <!-- <div class="input-group-prepend">
-                                                    <div class="form-control">
-                                                        <mat-select formControlName="country">
-                                                            <mat-option *ngFor="let country of countryList" [value]="country.id">
-                                                                +{{country.code}}
-                                                            </mat-option>
-                                                        </mat-select>
-                                                    </div>
-                                                </div>
-                                                <input class="form-control" type="tel" id="clinicMobile" placeholder="Enter Clinic Phone"
-                                                    formControlName="mobile"
-                                                    [class.error]="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched"> -->
-                                                <textarea class="form-control custom-scrollbar textarea-min-height"
-                                                    type="text" id="displayorder" formControlName="displayOrder"
-                                                    placeholder="Enter Display Order" rows="1" cdkTextareaAutosize
-                                                    #autosize="cdkTextareaAutosize" ></textarea>
+                                                <input class="form-control" id="displayOrder"
+                                                    formControlName="displayOrder" placeholder="Enter Clinic Name">
                                             </div>
-                                            <div class="error-message">
+                                            <!-- <div class="error-message">
                                                 <ng-container
                                                     *ngIf="getClinicFormField('mobile').errors && getClinicFormField('mobile').touched">
                                                     <span *ngIf="getClinicFormField('mobile').hasError('minlength')">
@@ -239,7 +223,7 @@
                                                     <span *ngIf="getClinicFormField('mobile').hasError('required')">
                                                         Phone number is required!</span>
                                                 </ng-container>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="col-12 form-group">
                                             <label class="mb-2" for="clinicAddress">Clinic Address</label>
@@ -251,26 +235,26 @@
 
                                         <div class="col-12 col-sm-6 form-group">
                                             <input-dropdown label="Country" name="countryName"
-                                                placeholder="Select Country" [parentFormGroup]="clinicForm"
+                                                placeholder="Select Country" [parentFormGroup]="clinicData"
                                                 [selectionList]="countryList">
                                             </input-dropdown>
                                         </div>
 
                                         <div class="col-12 col-sm-6 form-group">
                                             <input-dropdown label="State" name="state" placeholder="Select State"
-                                                [parentFormGroup]="clinicForm" [selectionList]="stateList">
+                                                [parentFormGroup]="clinicData" [selectionList]="stateList">
                                             </input-dropdown>
                                         </div>
 
                                         <div class="col-12 col-sm-6 form-group">
                                             <input-dropdown label="City" name="city" placeholder="Select City"
-                                                [parentFormGroup]="clinicForm" [selectionList]="cityList">
+                                                [parentFormGroup]="clinicData" [selectionList]="cityList">
                                             </input-dropdown>
                                         </div>
 
                                         <div class="col-12 col-sm-6 form-group">
                                             <input-dropdown label="Pin Code" name="pinCode"
-                                                placeholder="Select Pin Code" [parentFormGroup]="clinicForm"
+                                                placeholder="Select Pin Code" [parentFormGroup]="clinicData"
                                                 [selectionList]="pinCodeList">
                                             </input-dropdown>
                                         </div>
@@ -287,13 +271,13 @@
                                         <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h6 class="title-color mb-0">Add Partner Details</h6>
                                             <button class="btn btn-effect text-warning no-outline px-0"
-                                                (click)="addPartner()"
-                                                [disabled]="clinicForm.get('partnerContactNumbers').invalid">+ ADD
+                                                (click)="addPartner(clinicIndex)"
+                                                [disabled]="clinicData.get('partnerContactNumbers').invalid">+ ADD
                                                 ANOTHER PARTNER</button>
                                         </div>
                                         <div class="col-12" formArrayName="partnerContactNumbers">
                                             <ng-container
-                                                *ngFor="let partner of partnerContactsList; let partnerIndex = index">
+                                                *ngFor="let partner of getpartnerContactsList(clinicIndex); let partnerIndex = index">
                                                 <div class="row" [formGroupName]="partnerIndex"
                                                     [class.mt-3]="partnerIndex">
                                                     <div class="col-12 position-relative">
@@ -314,7 +298,6 @@
                                                                         </div>
                                                                         <input class="form-control" id="mobile"
                                                                             formControlName="mobile"
-                                                                            
                                                                             placeholder="Phone Number"
                                                                             (change)="validatePartnerNumber($event, partnerIndex)"
                                                                             [class.error]="partner.get('mobile').errors && partner.get('mobile').touched">
@@ -373,21 +356,21 @@
                                         <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h6 class="title-color mb-0">Add Schedule</h6>
                                             <button class="btn btn-effect text-warning no-outline px-0"
-                                                (click)="addSchedule()"
-                                                [disabled]="clinicForm.get('businessTimings').invalid">+ ADD
+                                                (click)="addSchedule(clinicIndex)"
+                                                [disabled]="clinicData.get('businessTimings').invalid">+ ADD
                                                 ANOTHER SCHEDULE</button>
                                         </div>
                                         <div class="col-12" formArrayName="businessTimings">
-                                            <ng-container *ngFor="let item of scheduleList; let scheduleIndex = index">
+                                            <ng-container
+                                                *ngFor="let item of getscheduleList(clinicIndex); let scheduleIndex = index">
                                                 <div class="row" [formGroupName]="scheduleIndex"
                                                     [class.mt-3]="scheduleIndex">
                                                     <div class="col-12 position-relative">
                                                         <div class="border rounded p-2">
                                                             <div class="row">
                                                                 <div class="col-12 col-md-6 form-group">
-                                                                    <label class="mb-1"
-                                                                        [for]="'name - ' + scheduleIndex">Schedule
-                                                                        {{scheduleIndex + 1}}</label>z
+                                                                    <label class="mb-1" [for]="'name - ' + scheduleIndex">Schedule
+                                                                        {{scheduleIndex + 1}}</label>
                                                                     <mat-chip-list>
                                                                         <mat-chip *ngFor="let day of weekDays"
                                                                             (click)="selectWeekDays(day.value, scheduleIndex)"
@@ -398,7 +381,7 @@
                                                                 </div>
                                                                 <div class="col-12 col-md-6" formArrayName="timeRange">
                                                                     <ng-container
-                                                                        *ngFor="let item of clinicForm.get('businessTimings.' + scheduleIndex + '.timeRange')['controls']; let slotsIndex = index">
+                                                                        *ngFor="let item of clinicData.get('businessTimings.' + scheduleIndex + '.timeRange')['controls']; let slotsIndex = index">
                                                                         <div class="row" [formGroupName]="slotsIndex"
                                                                             [class.mt-3]="slotsIndex">
                                                                             <div class="col-12 position-relative">
@@ -463,7 +446,7 @@
                                                                             <button
                                                                                 class="btn btn-effect text-warning no-outline px-0"
                                                                                 (click)="addSlots(scheduleIndex)"
-                                                                                [disabled]="clinicForm.get('businessTimings.' + scheduleIndex + '.timeRange').invalid">+
+                                                                                [disabled]="clinicData.get('businessTimings.' + scheduleIndex + '.timeRange').invalid">+
                                                                                 ADD ANOTHER SLOT</button>
                                                                         </div>
                                                                     </div>
@@ -478,14 +461,14 @@
                                         </div>
                                         <div class="col-12 mt-3 text-right">
                                             <app-button className="btn-warning btn-large" buttonText="Save"
-                                                (buttonClicked)="onSubmit('clinicForm')"
-                                                [disabled]="clinicForm.invalid || clinicForm.pristine">
+                                                (buttonClicked)="onSubmit('clinicData')"
+                                                >
                                             </app-button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div *ngIf="apiInProgress.clinicForm" class="loader-wrapper">
+                            <div *ngIf="apiInProgress.clinicData" class="loader-wrapper">
                                 <mat-spinner diameter="60"></mat-spinner>
                             </div>
                         </div>

@@ -11,21 +11,21 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {BehaviorSubject, merge, Observable, of, Subscription} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
-import {catchError, switchMap} from 'rxjs/operators';
-import {MatDialog} from '@angular/material/dialog';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject, merge, Observable, of, Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { catchError, switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 import $ from 'jquery';
 import * as momentTz from 'moment-timezone';
-import {AuthService} from '../../shared/services/auth.service';
-import {AUTH_SIGN_UP_CLIENT, AUTH_USER_TYPE, AuthErrors, AuthFormTypes, LoginConstants} from './auth.constants';
-import {CustomValidators, PWD_VALIDATORS, validateAllFormFields} from '../../shared/helpers/form.helper';
-import {SocialLoginHelper} from './social-login.helper';
-import {AlertModalComponent} from '../../shared/modals/alert-modal/alert-modal.component';
-import {environment} from '../../../environments/environment';
-import {ConfirmModalComponent, ConfirmModalData} from '../../shared/modals/confirm-modal/confirm-modal.component';
+import { AuthService } from '../../shared/services/auth.service';
+import { AUTH_SIGN_UP_CLIENT, AUTH_USER_TYPE, AuthErrors, AuthFormTypes, LoginConstants } from './auth.constants';
+import { CustomValidators, PWD_VALIDATORS, validateAllFormFields } from '../../shared/helpers/form.helper';
+import { SocialLoginHelper } from './social-login.helper';
+import { AlertModalComponent } from '../../shared/modals/alert-modal/alert-modal.component';
+import { environment } from '../../../environments/environment';
+import { ConfirmModalComponent, ConfirmModalData } from '../../shared/modals/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-auth-form',
@@ -55,6 +55,16 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     password: ['', [Validators.required]],
     grant_type: 'password',
     user_type: this.userType,
+    login_type: AUTH_SIGN_UP_CLIENT.SELF,
+  }, {
+    updateOn: 'blur',
+  });
+
+  adminForm = this.fb.group({
+    username: ['', [Validators.required, CustomValidators.userNameValidator]],
+    password: ['', [Validators.required]],
+    grant_type: 'password',
+    user_type: AUTH_USER_TYPE.ADMIN,
     login_type: AUTH_SIGN_UP_CLIENT.SELF,
   }, {
     updateOn: 'blur',
@@ -159,18 +169,21 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   @ViewChild('formBlock') formBlock: ElementRef;
   user: any;
   constructor(private fb: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              public service: AuthService,
-              private translate: TranslateService,
-              private cd: ChangeDetectorRef,
-              private dialog: MatDialog) {
+    private route: ActivatedRoute,
+    private router: Router,
+    public service: AuthService,
+    private translate: TranslateService,
+    private cd: ChangeDetectorRef,
+    private dialog: MatDialog) {
     super();
     this.service.userData$.subscribe(data => this.user = data);
   }
 
   get isLoginForm() {
     return this.currentForm === AuthFormTypes.LOGIN;
+  }
+  get isAdminLogin() {
+    return this.currentForm === AuthFormTypes.ADMIN;
   }
 
   get isSignUpForm() {
@@ -208,9 +221,12 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
         return this.changePasswordForm;
       case AuthFormTypes.VERIFY_DETAILS:
         return this.userDetailsForm;
+      case AuthFormTypes.ADMIN:
+        return this.adminForm;
       case AuthFormTypes.LOGIN:
       default:
         return this.loginForm;
+
     }
   }
 
@@ -253,6 +269,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
     this.subscriptions = [
       merge(
         this.loginForm.valueChanges,
+        this.adminForm.valueChanges,
         this.signUpForm.valueChanges,
         this.changePasswordForm.valueChanges,
         this.verifyOtpForm.valueChanges,
@@ -343,8 +360,11 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
 
   getFormTitle(type) {
     switch (type) {
-      case AuthFormTypes.LOGIN:
-        return 'signIn';
+     
+        case AuthFormTypes.ADMIN:
+        return 'admin';
+        case AuthFormTypes.LOGIN:
+          return 'signIn';
       case AuthFormTypes.FORGOT_PASSWORD:
         return 'fp';
       case AuthFormTypes.SIGN_UP_STAGE2:
@@ -385,6 +405,17 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       ? this.changeForm(AuthFormTypes.LOGIN)
       : this.router.navigate(['/auth/sign-in']);
   }
+  signInAdmin() {
+    console.log("hello")
+    this.resetForms();
+    this.authFlow = this.signUpClient.SELF;
+    if (this.userType !== AUTH_USER_TYPE.ADMIN) {
+      this.changeUserType();
+    }
+    return this.isModal
+      ? this.changeForm(AuthFormTypes.ADMIN)
+      : this.router.navigate(['/auth/admin']);
+  }
 
   signUp() {
     this.resetForms();
@@ -400,6 +431,13 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       password: '',
       grant_type: 'password',
       user_type: AUTH_USER_TYPE.CUSTOMER,
+      login_type: AUTH_SIGN_UP_CLIENT.SELF,
+    });
+    this.adminForm.reset({
+      username: '',
+      password: '',
+      grant_type: 'password',
+      user_type: AUTH_USER_TYPE.ADMIN,
       login_type: AUTH_SIGN_UP_CLIENT.SELF,
     });
     const title = this.getTitle();
@@ -465,7 +503,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
         this.authFlow = signUpBy;
         return this.validateIdentifierFromServer(info.email, true, true)
           .toPromise()
-          .then(({error, activated}) => {
+          .then(({ error, activated }) => {
             const title = this.getTitle();
             const country = this.getCountry();
             const gender = this.getGender();
@@ -509,7 +547,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
                         let path = '/';
                         this.user.authorities.map(type => {
                           if (type.authorityId === 1 || type.authorityId === 3) {
-                              path = '/dashboard';
+                            path = '/dashboard';
                           }
                         });
                         this.router.navigate([path]);
@@ -601,7 +639,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
             let path = '/';
             this.user.authorities.map(type => {
               if (type.authorityId === 1 || type.authorityId === 3) {
-                  path = '/dashboard';
+                path = '/dashboard';
               }
             });
             this.router.navigate([path]);
@@ -668,7 +706,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
   }
 
   private sendInfoToServer(): Observable<any> {
-    const data = {...this.form.value};
+    const data = { ...this.form.value };
     delete data.confirmPassword;
     delete data.countryIndex;
     if (data.profileImage !== undefined && !data.profileImage) {
@@ -683,6 +721,14 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
           }
         }
         return this.service.signIn(formData);
+        case AuthFormTypes.ADMIN:
+        const formDataAdmin = new FormData();
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            formDataAdmin.append(key, data[key]);
+          }
+        }
+        return this.service.signInAdmin(formDataAdmin);
       case AuthFormTypes.SIGN_UP_STAGE1:
         return this.service.signUpStage1(data);
       case AuthFormTypes.SIGN_UP_STAGE2:
@@ -719,7 +765,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       }
       this.validateIdentifierFromServer(ctrl.value, this.currentForm !== AuthFormTypes.VERIFY_DETAILS)
         .toPromise()
-        .then(({error}) => {
+        .then(({ error }) => {
           if (error) {
             ctrl.markAsTouched();
           }
@@ -735,16 +781,16 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       userType: this.userType
     }).pipe(
       switchMap((data: any): any => {
-        const {activated, apiError, randomKey} = data || {};
+        const { activated, apiError, randomKey } = data || {};
         if (apiError) {
-          return of({error: data});
+          return of({ error: data });
         }
         let userExistError = null;
         if (!data || (activated !== undefined && activated)) {
-          userExistError = {error: {userExist: true}, activated};
+          userExistError = { error: { userExist: true }, activated };
         }
         if (activated !== undefined && !activated && (!randomKey || !validate)) {
-          userExistError = {error: {userExist: true}};
+          userExistError = { error: { userExist: true } };
         }
         if (userExistError) {
           if (social) {
@@ -781,13 +827,13 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
         return observable.pipe(
           switchMap((id: any): any => {
             if (id && id.apiError) {
-              return of({error: id});
+              return of({ error: id });
             }
             if (id && !id.randomKey) {
-              return of({error: null});
+              return of({ error: null });
             } else {
               if (!validate) {
-                return of({error: {userExistDiffType: true}});
+                return of({ error: { userExistDiffType: true } });
               }
               return Promise.all([
                 this.translate.get('auth.' + ((activated !== undefined && !activated)
@@ -812,7 +858,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
                       return this.service.sendOtp({
                         randomKey: id.randomKey,
                         timeZone: momentTz.tz.guess(),
-                      }).pipe(catchError(() => of({apiError: true})))
+                      }).pipe(catchError(() => of({ apiError: true })))
                         .toPromise()
                         .then((info: any) => {
                           if (!info.apiError) {
@@ -841,13 +887,13 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
                                 })
                               );
                             const error = id && activated !== undefined && !activated ? 'userExist' : 'userExistDiffType';
-                            return {error: {[error]: true}, activated};
+                            return { error: { [error]: true }, activated };
                           }
                           return info;
                         });
                     }
                     const error1 = id && activated !== undefined && !activated ? 'userExist' : 'userExistDiffType';
-                    return {error: {[error1]: true}, activated};
+                    return { error: { [error1]: true }, activated };
                   });
               });
             }

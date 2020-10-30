@@ -34,6 +34,13 @@ import {AuthFormComponent} from './auth-form/auth-form.component';
         //   },
         //   component: AuthFormComponent,
       }, {
+        path: 'admin',
+        data: {
+          formType: AuthFormTypes.ADMIN,
+        },
+        component: AuthFormComponent,
+      },
+       {
         path: '**',
         redirectTo: 'sign-in'
       }],

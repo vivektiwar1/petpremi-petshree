@@ -234,7 +234,38 @@
           </mat-radio-group>
         </ng-container>
       </div>
+
+      <div *ngSwitchCase="formTypes.ADMIN">
+        <div>
+          <mat-form-field class="input2">
+              <input matInput type="text" formControlName="username" autofocus
+              [placeholder]="'form.username.username' | translate">
+              <ng-container *ngIf="showUpdatedControlError('username')">
+                <mat-error *ngIf="formControl.username.errors.invalidPhone">
+                  {{'form.mobile.error' | translate}}
+                </mat-error>
+                <mat-error *ngIf="formControl.username.errors.required || formControl.username.errors.username">
+                  {{'form.username.error' | translate}}
+                </mat-error>
+              </ng-container>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="input2">
+            <input matInput type="password" formControlName="password"
+                   [placeholder]="'form.password.password' | translate">
+            <mat-error *ngIf="showUpdatedControlError('password')">
+              {{'form.password.error' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
       <div *ngSwitchDefault>
+        <div class="user-type">
+          {{notRole | translate}}
+          <a (click)="changeUserType()">{{signUpRole | translate}}</a>
+        </div>
         <div>
           <mat-form-field class="input2">
             <input matInput type="text" formControlName="username" autofocus

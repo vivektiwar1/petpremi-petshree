@@ -1,4 +1,4 @@
-import { Input, Output, EventEmitter } from '@angular/core';
+import { Input} from '@angular/core';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -12,8 +12,9 @@ export class AppointmentComponent implements OnInit {
   @Input() userDetails: any;
   @Input() customer: any;
   @Input() vets: any;
-  addDetails: FormGroup;
   private pet: FormControl;
+  addDetails: FormGroup;
+  
   clinic: any;
   clinicId: any;
 
@@ -35,6 +36,8 @@ export class AppointmentComponent implements OnInit {
   }
   showDiv() {
     this.auth.checkAndLogin().then(() => this.auth.getUserProfile());
+    var x_top: any = document.getElementsByClassName("cdk-global-scrollblock");
+    x_top[0].style.top = "auto";
 
     document.getElementById('appointmenttime').style.display = "block";
     document.getElementById('appointment').style.display = "none";
@@ -44,8 +47,7 @@ export class AppointmentComponent implements OnInit {
       document.getElementById('videos').style.display = "none";
     }
     document.getElementById('enquiry').style.display = "none";
-    // var x_top: any = document.getElementsByClassName("cdk-global-scrollblock");
-    // x_top[0].style.top = "auto";
+
 
   }
 
