@@ -1,41 +1,46 @@
 @import "src/styles/variables";
+@import "src/styles/common";
 
 .cover {
-    height: $cover-height;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    margin: $cover-margin;
-    border-radius: $cover-border-radius;
+  height: $cover-height;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: $cover-margin;
+  border-radius: $cover-border-radius;
 
-    .avatar {
-        border: $avatar-border solid $color-secondary;
-        position: relative;
-        top: $cover-margin-bottom;
-        background: $preloader;
-        overflow: hidden;
-    }
+  .avatar {
+    border: $avatar-border solid $color-secondary;
+    position: relative;
+    top: $cover-margin-bottom;
+    background: $preloader;
+    overflow: hidden;
+  }
 }
 
 .about {
-    h4 {
-        color: $about-primary-heading;
-    }
+  h4 {
+    color: $about-primary-heading;
+    font-family: $font;
+  }
 
-    h6 {
-        color: $color-secondary;
-        background: lighten($color-secondary, 40);
-        border-radius: $border-radius-8;
-        font-size: $font-size-14;
-    }
+  h6 {
+    color: $color-secondary;
+    background: lighten($color-secondary, 40);
+    border-radius: $border-radius-8;
+    font-size: $font-size-14;
+    font-family: $font;
+  }
 }
 
 .details {
   font-size: $font-size-16;
-    a {
-        text-decoration: none;
-        color: $black;
-    }
+  font-family: $font;
+
+  a {
+    text-decoration: none;
+    color: $black;
+  }
 
   p {
     font-size: $font-size-16;
@@ -43,12 +48,12 @@
 }
 
 .social-networks {
-    div {
-        width: 75%;
-        @media (min-width: $media-breakpoint-sm) {
-            width: 50%;
-        }
+  div {
+    width: 75%;
+    @media (min-width: $media-breakpoint-sm) {
+      width: 50%;
     }
+  }
 }
 
 .social-networks-icon {
@@ -67,129 +72,27 @@
   }*/
 }
 
-.link {
-  display: flex;
-  justify-content: center;
 
-  > button {
-    font-family: Noto Sans, sans-serif;
-    font-size: 14px;
-    padding: 12px 36px;
-    background-color: #EFAC36;
-    color: #fff;
-    text-decoration: none;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 3px 6px #00000029;
-    border-radius: 8px;
-    z-index: 6;
-    font-weight: bold;
-
-    &:hover {
-      &:after,
-      &:before {
-        content: url("/assets/img/white-paws.png");
-        transition: content 500ms ease;
-      }
-    }
-
-    &:after,
-    &:before {
-      content: url("/assets/img/brown-paws.png");
-      position: absolute;
-      height: 20px;
-      width: 20px;
-      top: 50%;
-      transform: translate(0, -50%);
-    }
-
-    &:before {
-      left: 6px;
-    }
-
-    &:after {
-      right: 6px;
-    }
-
-    &:hover {
-      &:before,
-      &:after {
-        color: #fff;
-      }
-    }
-  }
-}
 
 .action {
-    a {
-        text-decoration: none;
-        color: $white;
-        line-height: 1.2;
-        border-radius: $border-radius-8;
-        @media (max-width: $media-breakpoint-sm) {
-            width: 130px;
-        }
-
-        &:first-child {
-            background: $action-green;
-            margin-right: 0.8rem;
-        }
-
-        &:last-child {
-            background: $action-blue;
-        }
-    }
-}
-
-.link-secondary {
-  display: flex;
-  justify-content: center;
-
-  > button {
-    font-family: Noto Sans, sans-serif;
-    font-size: 14px;
-    padding: 12px 36px;
-    background-color: lighten($color-secondary, 40);
-    color: #EFAC36;
+  a {
     text-decoration: none;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 3px 6px #00000029;
-    border-radius: 8px;
-    z-index: 6;
-    font-weight: bold;
-
-    &:hover {
-      &:after,
-      &:before {
-        content: url("/assets/img/amber-paws.png");
-        transition: content 500ms ease;
-      }
+    color: $white;
+    line-height: 1.2;
+    border-radius: $border-radius-8;
+    @media (max-width: $media-breakpoint-sm) {
+      width: 130px;
     }
 
-    &:after,
-    &:before {
-      content: url("/assets/img/brown-paws.png");
-      position: absolute;
-      height: 20px;
-      width: 20px;
-      top: 50%;
-      transform: translate(0, -50%);
+    &:first-child {
+      background: $action-green;
+      margin-right: 0.8rem;
     }
 
-    &:before {
-      left: 6px;
-    }
-
-    &:after {
-      right: 6px;
-    }
-
-    &:hover {
-      &:before,
-      &:after {
-        color: #fff;
-      }
+    &:last-child {
+      background: $action-blue;
     }
   }
 }
+
+

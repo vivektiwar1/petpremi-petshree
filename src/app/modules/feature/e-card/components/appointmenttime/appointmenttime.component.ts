@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ECardService} from "../../e-card.service";
 
 
 @Component({
@@ -23,6 +24,7 @@ export class AppointmenttimeComponent implements OnInit {
   aryDates: any;
   constructor(
     private formBuilder: FormBuilder,
+    private eCardService: ECardService
   ) {
     this.date = new Date();
 
@@ -32,25 +34,26 @@ export class AppointmenttimeComponent implements OnInit {
     this.dayName = this.date.getDay();
 
     this.currentDate = this.date.getUTCDate();
-    this.monthName = this.month[this.date.getMonth()]
+    this.monthName = this.month[this.date.getMonth()];
 
     this.AddDateTime = this.formBuilder.group({
       date: ['', Validators.required],
       time: ['', Validators.required],
 
-    })
+    });
     this.AddDateTime.get('date').valueChanges.subscribe(data => {
       this.Date = data
-    })
+    });
     this.AddDateTime.get('time').valueChanges.subscribe(data => {
       this.Time = data
-    })
+    });
 
     this.startDate = new Date();
     this.aryDates = this.GetDates(this.startDate, 4);
   }
 
   ngOnInit(): void {
+    this.eCardService.scrollTop();
   }
   showDiv() {
     document.getElementById('appointmenttime').style.display = "none";

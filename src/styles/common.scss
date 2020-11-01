@@ -1,0 +1,113 @@
+.heading-ecard {
+  color: $label-heading-color;
+  font-size: 21px;
+  font-weight: 500;
+  font-family: $font;
+}
+
+.link-secondary {
+  display: flex;
+  justify-content: center;
+
+  > button {
+    font-family: $font;
+    font-size: 14px;
+    padding: 12px 36px;
+    background-color: lighten($color-secondary, 40);
+    color: #EFAC36;
+    text-decoration: none;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 3px 6px #00000029;
+    border-radius: 8px;
+    z-index: 6;
+    font-weight: normal;
+
+    &:hover {
+      &:after,
+      &:before {
+        content: url("/assets/img/amber-paws.png");
+        transition: content 500ms ease;
+      }
+    }
+
+    &:after,
+    &:before {
+      content: url("/assets/img/brown-paws.png");
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+
+    &:before {
+      left: 6px;
+    }
+
+    &:after {
+      right: 6px;
+    }
+
+    &:hover {
+      &:before,
+      &:after {
+        color: #fff;
+      }
+    }
+  }
+}
+
+
+.link-primary {
+  display: flex;
+  justify-content: center;
+
+  > button {
+    font-family: $font;
+    font-size: 14px;
+    padding: 12px 36px;
+    background-color: #EFAC36;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 3px 6px #00000029;
+    border-radius: 8px;
+    z-index: 6;
+    font-weight: normal;
+
+    &:hover {
+      &:after,
+      &:before {
+        content: url("/assets/img/white-paws.png");
+        transition: content 500ms ease;
+      }
+    }
+
+    &:after,
+    &:before {
+      content: url("/assets/img/brown-paws.png");
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+
+    &:before {
+      left: 6px;
+    }
+
+    &:after {
+      right: 6px;
+    }
+
+    &:hover {
+      &:before,
+      &:after {
+        color: #fff;
+      }
+    }
+  }
+}

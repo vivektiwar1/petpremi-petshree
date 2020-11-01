@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { VCard } from "ngx-vcard";
-import { version } from 'process';
+import {Component, Input} from '@angular/core';
+import {VCard} from "ngx-vcard";
+import {ECardService} from "../../e-card.service";
 
 @Component({
   selector: 'app-home',
@@ -15,6 +15,14 @@ export class HomeComponent {
   ngOnInit() {
     this.createvCard();
     
+  }
+
+  constructor(private eCardService: ECardService) {
+
+  }
+
+  showDiv() {
+    this.eCardService.showDiv();
   }
 
   createvCard() {
