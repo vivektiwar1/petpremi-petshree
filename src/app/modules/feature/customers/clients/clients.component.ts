@@ -1,12 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AddClientComponent } from 'src/app/modules/shared/modals/add-client/add-client.component';
-import { MatDialog } from '@angular/material/dialog';
-import { DisplayedColumn } from 'src/app/models/displayedColumn.interface';
-import { ClientsService } from './clients.service';
-import { pageLimit as TableDataLimit } from 'src/app/app.constant';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommonService } from 'src/app/services/common.service';
-import { Router } from '@angular/router';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AddClientComponent} from 'src/app/modules/shared/modals/add-client/add-client.component';
+import {MatDialog} from '@angular/material/dialog';
+import {DisplayedColumn} from 'src/app/models/displayedColumn.interface';
+import {ClientsService} from './clients.service';
+import {pageLimit as TableDataLimit} from 'src/app/app.constant';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {CommonService} from 'src/app/services/common.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-clients',
@@ -16,12 +16,12 @@ import { Router } from '@angular/router';
 export class ClientsComponent implements OnInit {
 
   displayedColumn: Array<DisplayedColumn> = [
-    { name: 'Clients', fieldName: 'clients', type: 'figureCaption' },
-    { name: 'Pets', fieldName: 'pets', type: 'figureCaption' },
-    { name: 'Contact Number', fieldName: 'mobile', type: 'text' },
-    { name: 'Email', fieldName: 'email', type: 'text' },
-    { name: 'Last Visit', fieldName: 'lastVisit', type: 'dateTime' },
-    { name: '', fieldName: '', type: 'action' }
+    {name: 'Clients', fieldName: 'clients', type: 'figureCaption'},
+    {name: 'Pets', fieldName: 'pets', type: 'figureCaption'},
+    {name: 'Contact Number', fieldName: 'mobile', type: 'text'},
+    {name: 'Email', fieldName: 'email', type: 'text'},
+    {name: 'Last Visit', fieldName: 'lastVisit', type: 'dateTime'},
+    {name: '', fieldName: '', type: 'action'}
   ];
 
   actionItems = ['edit', 'delete'];
@@ -29,7 +29,7 @@ export class ClientsComponent implements OnInit {
   apiInProgress = {
     data: false,
     search: false
-  }
+  };
   tableDataLimit: number = TableDataLimit;
   searchForm: FormGroup;
   countries: any;
@@ -43,7 +43,8 @@ export class ClientsComponent implements OnInit {
     private commonService: CommonService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.createSearchForm();
@@ -92,7 +93,7 @@ export class ClientsComponent implements OnInit {
     })
   }
 
-  handleAction({ action, data }) {
+  handleAction({action, data}) {
     console.log(action);
     switch (action) {
       case 'tableAction':
@@ -108,11 +109,11 @@ export class ClientsComponent implements OnInit {
     if (this.searchForm.valid) {
 
       const searchHash = {
-        ...(this.searchForm.value.clientName ? { fullName_LIKE: this.searchForm.value.clientName } : {}),
-        ...(this.searchForm.value.petName ? { pets_FK: this.searchForm.value.petName } : {}),
-        ...(this.searchForm.value.email ? { email_LIKE: this.searchForm.value.email } : {}),
-        ...(this.searchForm.value.countryId ? { country_FK: this.searchForm.value.countryId } : {}),
-        ...(this.searchForm.value.mobile ? { mobile_LIKE: this.searchForm.value.mobile } : {}),
+        ...(this.searchForm.value.clientName ? {fullName_LIKE: this.searchForm.value.clientName} : {}),
+        ...(this.searchForm.value.petName ? {pets_FK: this.searchForm.value.petName} : {}),
+        ...(this.searchForm.value.email ? {email_LIKE: this.searchForm.value.email} : {}),
+        ...(this.searchForm.value.countryId ? {country_FK: this.searchForm.value.countryId} : {}),
+        ...(this.searchForm.value.mobile ? {mobile_LIKE: this.searchForm.value.mobile} : {}),
         ...(this.searchForm.value.lastVisit.startDate && this.searchForm.value.lastVisit.endDate ?
           {
             lastLogin_BETWEEN: [
@@ -120,11 +121,11 @@ export class ClientsComponent implements OnInit {
               this.searchForm.value.lastVisit.endDate
             ]
           } : {}),
-      }
+      };
 
       if (Object.keys(searchHash).length) {
         this.apiInProgress.search = true;
-        await this.getClientsList({ searchHash });
+        await this.getClientsList({searchHash});
         this.apiInProgress.search = false;
       }
     }

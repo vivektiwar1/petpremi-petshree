@@ -1,18 +1,17 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ViewportScroller } from "@angular/common";
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { delay, map, takeUntil, tap } from "rxjs/operators";
-import * as $ from 'jquery';
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ScrollOffset } from 'src/app/app.constant';
-import { ToastrService } from 'ngx-toastr';
-import { ECardService } from '../e-card.service';
-import { ProfileService } from '../../settings/profile/profile.service'
-import { CommonService } from 'src/app/services/common.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { LangService } from 'src/app/shared/services/lang.service';
-import { AppStore } from 'src/app/app.store';
+import {Component, OnDestroy} from '@angular/core';
+import {ViewportScroller} from "@angular/common";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable, Subject} from 'rxjs';
+import {delay, map, takeUntil, tap} from "rxjs/operators";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {ScrollOffset} from 'src/app/app.constant';
+import {ToastrService} from 'ngx-toastr';
+import {ECardService} from '../e-card.service';
+import {ProfileService} from '../../settings/profile/profile.service'
+import {CommonService} from 'src/app/services/common.service';
+import {AuthService} from 'src/app/shared/services/auth.service';
+import {LangService} from 'src/app/shared/services/lang.service';
+import {AppStore} from 'src/app/app.store';
 
 
 @Component({
@@ -37,15 +36,15 @@ export class ECardComponent implements OnDestroy {
   appontmentReason: any;
   appontmentType: any;
   appontmentRepeat: any;
-  bookAppointment:any;
-  petDetails:any;
+  bookAppointment: any;
+  petDetails: any;
   enquiryForm: FormGroup;
   hiddenNavItems: Array<string> = [];
   titles: Array<any>;
   countries: Array<any>;
   userName: string;
   partnerUserName: string;
-  langDetail:any;
+  langDetail: any;
 
   apiInProgress = {
     userDataLoader: false,
@@ -63,7 +62,7 @@ export class ECardComponent implements OnDestroy {
     private toastrService: ToastrService,
     private viewportScroller: ViewportScroller,
     public auth: AuthService,
-    private langService:LangService
+    private langService: LangService
   ) {
     this.auth.userData$.subscribe(data => this.user = data);
     this.commonService.hideDashboardNavs();
@@ -74,13 +73,13 @@ export class ECardComponent implements OnDestroy {
       tap(fragment => this.viewportScroller.scrollToAnchor(fragment)),
       takeUntil(this.destroy$)
     );
-    this.partnerUserName = this.activatedRoute.snapshot.params.partnerUserName
+    this.partnerUserName = this.activatedRoute.snapshot.params.partnerUserName;
     this.activatedRoute.params.pipe(
       takeUntil(this.destroy$)
-    ).subscribe(({ userName }) => {
+    ).subscribe(({userName}) => {
       this.userDetails = null;
       userName ? this.init(userName) : this.navigateToErrorPage();
-    })
+    });
     this.getDay();
     this.getAppointmentReason();
     this.getAppointmentType();
@@ -96,7 +95,8 @@ export class ECardComponent implements OnDestroy {
     await this.getUserDetails(userName);
 
     this.auth.userData$.subscribe(data => this.user = data);
-     this.langService.langDetail().subscribe(res=>this.langDetail=res,err=>{})
+    /*this.langService.langDetail().subscribe(res => this.langDetail = res, err => {
+    })*/
   }
 
   async createForm() {
@@ -132,10 +132,11 @@ export class ECardComponent implements OnDestroy {
 
     const petTypeControl = this.addPetForm.get('petTypeId') as FormControl;
     petTypeControl.valueChanges.subscribe(typeId => {
-      
-      
+
+
     });
   }
+
   async getBreedType() {
     try {
       this.apiInProgress.userDataLoader = true;
@@ -151,10 +152,11 @@ export class ECardComponent implements OnDestroy {
       console.log(error);
     }
   }
+
   async getPetDetails() {
     try {
       this.apiInProgress.userDataLoader = true;
-      const response: any = await this.eCardService. getPetDetails().toPromise();
+      const response: any = await this.eCardService.getPetDetails().toPromise();
 
       this.petDetails = response?.responseResult?.data?.content;
       if (!this.petDetails) {
@@ -185,7 +187,11 @@ export class ECardComponent implements OnDestroy {
   async getUserDetails(userName) {
     try {
       this.apiInProgress.userDataLoader = true;
-      const response = await this.eCardService.getUserDetails(userName, this.partnerUserName).toPromise();
+      let response;
+      if (this.partnerUserName) {
+        response = await this.eCardService.getUserDetails(userName, this.partnerUserName).toPromise();
+      } else
+        response = await this.eCardService.getUserDetail(userName).toPromise();
       const userDetails = response;
       if (!userDetails) {
         this.navigateToErrorPage();
@@ -220,6 +226,7 @@ export class ECardComponent implements OnDestroy {
       console.error(error);
     }
   }
+
   async getDay() {
     try {
       this.apiInProgress.userDataLoader = true;
@@ -252,17 +259,18 @@ export class ECardComponent implements OnDestroy {
     }
 
   }
-  async bookAppointments(){
-    try{
-      this.apiInProgress.userDataLoader=true;
-      const response: any =await this.eCardService.bookAppointments().toPromise();
-      this.bookAppointment=response?.responseResult?.data?.content;
-      if(!this.bookAppointment){
+
+  async bookAppointments() {
+    try {
+      this.apiInProgress.userDataLoader = true;
+      const response: any = await this.eCardService.bookAppointments().toPromise();
+      this.bookAppointment = response?.responseResult?.data?.content;
+      if (!this.bookAppointment) {
         this.navigateToErrorPage();
         return;
       }
 
-    }catch (error) {
+    } catch (error) {
       this.apiInProgress.userDataLoader = false;
       console.error(error);
     }
@@ -284,7 +292,6 @@ export class ECardComponent implements OnDestroy {
     }
   }
 
-  
 
   async getAppointmentRepeat() {
     try {
@@ -320,9 +327,10 @@ export class ECardComponent implements OnDestroy {
     }
 
   }
+
   async getVets() {
     try {
-      this.apiInProgress.userDataLoader = true
+      this.apiInProgress.userDataLoader = true;
       const respose: any = await this.eCardService.getVets().toPromise();
       this.vets = respose.responseResult.data.content;
       if (!this.vets) {
@@ -335,6 +343,7 @@ export class ECardComponent implements OnDestroy {
       console.error(error);
     }
   }
+
   async createUserDetails(userDetails) {
     this.createEnquiryForm();
     this.userDetails = {
@@ -407,13 +416,13 @@ export class ECardComponent implements OnDestroy {
       titleId: [this.titles[0]['id']],
       name: [null, Validators.required],
       email: [null, Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)])],
-      countryId: [selectedCountry['id'], { updateOn: 'change' }],
+      countryId: [selectedCountry['id'], {updateOn: 'change'}],
       phone: [null, {
         validators: Validators.compose([Validators.minLength(selectedCountry['minLength']), Validators.maxLength(selectedCountry['maxLength'])]),
         updateOn: 'change'
       }],
       message: [null, Validators.required]
-    }, { updateOn: 'submit' });
+    }, {updateOn: 'submit'});
 
     const phoneControl = this.enquiryForm.get('phone') as FormControl;
     const countryControl = this.enquiryForm.get('countryId');
@@ -470,7 +479,7 @@ export class ECardComponent implements OnDestroy {
     (!response['images'] || response['images'] && !response['images'].length) && this.hiddenNavItems.push('gallery');
     (!response['videos'] || response['videos'] && !response['videos'].length) && this.hiddenNavItems.push('videos');
   }
- 
+
 
   navigateToErrorPage() {
     this.router.navigate(['/404'], {

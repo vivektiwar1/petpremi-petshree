@@ -6,7 +6,7 @@ import * as $ from 'jquery';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../../environments/environment';
 import {AuthService} from '../shared/services/auth.service';
-import { LangService } from '../shared/services/lang.service';
+import {LangService} from '../shared/services/lang.service';
 
 @Component({
   selector: 'app-header',
@@ -35,7 +35,7 @@ export class HeaderComponent{
 
   ngOnInit() {
     this.auth.userData$.subscribe(data => this.user = data);
-     this.langService.langDetail().subscribe(res=>this.langDetail=res,err=>{console.log(err)})
+    // this.langService.langDetail().subscribe(res=>this.langDetail=res,err=>{console.log(err)})
   }
 
   /*ngAfterViewInit() {

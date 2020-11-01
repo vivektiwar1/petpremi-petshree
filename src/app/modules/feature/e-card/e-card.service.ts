@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
+import {environment} from 'src/environments/environment';
+
 @Injectable()
 export class ECardService {
 
@@ -29,6 +30,15 @@ export class ECardService {
   getUserDetails(userName, partnerUserName): Observable<any> {
 
     return this.http.get(this.getApiUrl(`/e/card/details?userName=${userName}&partnerUserName=${partnerUserName}`), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  getUserDetail(userName): Observable<any> {
+
+    return this.http.get(this.getApiUrl(`/e/card/details?userName=${userName}`), {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -73,7 +83,7 @@ export class ECardService {
       date: "2020-10-16",
       fromTime: "7:00:12 Pm",
       toTime: "8:30:12 Pm"
-    }
+    };
     return this.http.post(`${environment.apiBase}/service/api/crud`, apiData);
   }
 
@@ -97,7 +107,7 @@ export class ECardService {
       objectHash: {
         id: data?.id
       }
-    }
+    };
     return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
@@ -129,7 +139,7 @@ export class ECardService {
           name: "ROLE_CUSTOMER"
         }
       }
-    }
+    };
     return this.http.post(this.getApiUrl(`/crud`), apiData);
   }
 
@@ -153,7 +163,7 @@ export class ECardService {
         partners_FK: { "id": 11 },
         profession_FK: { "id": 1 }
       }
-    }
+    };
     return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
@@ -179,7 +189,7 @@ export class ECardService {
       objectHash: {
         status: true
       }
-    }
+    };
     return this.http.post(this.getApiUrl(`/crud`), apiData);
   }
 
@@ -248,7 +258,7 @@ export class ECardService {
       objectHash: {
         active: true
       }
-    }
+    };
     return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
@@ -272,7 +282,7 @@ export class ECardService {
 
         userName: "aniket"
       }
-    }
+    };
     return this.http.post(`${environment.apiBase}/service/api/crud`, apiData);
 
   }
@@ -296,7 +306,7 @@ export class ECardService {
       objectHash: {
         active: true,
       }
-    }
+    };
     return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
@@ -321,7 +331,7 @@ export class ECardService {
       objectHash: {
         active: true
       }
-    }
+    };
     return this.http.post(this.getApiUrl(`/crud`), apiData);
 
   }
