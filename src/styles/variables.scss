@@ -1,6 +1,8 @@
 // breakpoints
 $media-breakpoint-sm: 576px;
 $media-breakpoint-md: 768px;
+$media-breakpoint-lg: 992px;
+$media-breakpoint-xl: 1140px;
 
 // colors
 $color-primary: #00375f;
@@ -56,6 +58,9 @@ $action-blue: #1f52b2;
 
 // error page
 $error-page-background: #c1d3a9;
+
+$share-icon-height: 30px;
+$share-icon-width: 94px;
 
 // app component
 $header-height: 70px;

@@ -9,7 +9,7 @@
       <h4 class="font-weight-bold">
         {{userDetails?.name}}
       </h4>
-      <h6 class="p-2">
+      <h6 class="p-2 mt-2">
         {{userDetails?.profession}}
       </h6>
     </div>
@@ -19,6 +19,14 @@
         <img class="mr-4 mt-1" height="18" src="assets/images/icons/phone.svg" width="18">
         <span>{{userDetails.phone}}</span>
       </a>
+      <a *ngIf="userDetails.experience" class="d-flex" target="_blank">
+        <img class="mr-4 mt-1" height="18" src="assets/images/icons/work-amber.png" width="18">
+        <span>{{userDetails.experience}}</span>
+      </a>
+      <!-- <div *ngIf="userDetails?.userExperience" class="d-flex mt-2">
+         <img class="mr-4 mt-1" src="assets/img/fwd-images/like-new.png" width="18" height="18">
+         <span >{{userDetails?.userExperience }} pets helped</span>
+       </div>-->
       <a *ngIf="userDetails?.email" [href]="userDetails?.emailLink" class="d-flex mt-2" target="_blank">
         <img class="mr-4 mt-1" height="18" src="assets/images/icons/mail.svg" width="18">
         <span>{{userDetails.email}}</span>
@@ -44,9 +52,20 @@
        </a>
    </div>-->
 
-    <div class="row my-2 py-0 py-sm-0 text-center">
-      <div class="col-6 text-blue font-weight-medium">
-        <button class="btn btn-outline-primary">Book Clinic Visit</button>
+    <div class="social-networks mt-2 py-0 py-sm-0">
+      <div class="d-flex justify-content-center mx-auto">
+
+        <a *ngIf="userDetails.whatsShareLink" [href]="userDetails.whatsShareLink" target="_blank">
+          <img alt="WhatsAppShare" class="share-icon" src="assets/images/icons/whatsapp-share-button.svg">
+        </a>
+      </div>
+    </div>
+
+    <div class="row mt-3 text-center">
+      <div class="col-6">
+        <div class="link-secondary">
+          <button class="btn btn-warning">Book Clinic Visit</button>
+        </div>
       </div>
       <div class="col-6">
         <div class="link">
@@ -56,28 +75,27 @@
     </div>
 
 
-    <div class="social-networks my-2 py-0 py-sm-0">
+    <div class="social-networks mt-3">
       <div class="d-flex justify-content-between mx-auto">
         <a *ngIf="userDetails.fbLink" [href]="userDetails.fbLink" target="_blank">
-          <img alt="Facebook" src="assets/images/icons/facebookLogo.svg">
+          <img alt="Facebook" class="social-networks-icon" src="assets/images/icons/facebookLogo.svg">
         </a>
         <a *ngIf="userDetails.whatsAppLink" [href]="userDetails.whatsAppLink" target="_blank">
-          <img alt="WhatsApp" src="assets/images/icons/whatsappLogo.svg">
+          <img alt="WhatsApp" class="social-networks-icon" src="assets/images/icons/whatsappLogo.svg">
         </a>
         <a *ngIf="userDetails.youtubeLink" [href]="userDetails.youtubeLink" target="_blank">
-          <img alt="YouTube" src="assets/images/icons/youtubeLogo.svg">
+          <img alt="YouTube" class="social-networks-icon" src="assets/images/icons/youtubeLogo.svg">
         </a>
         <a *ngIf="userDetails.instagramLink" [href]="userDetails.instagramLink" target="_blank">
-          <img alt="Instagram" src="assets/images/icons/instagramLogo.svg">
+          <img alt="Instagram" class="social-networks-icon" src="assets/images/icons/instagramLogo.svg">
         </a>
         <a *ngIf="userDetails.twitterLink" [href]="userDetails.twitterLink" target="_blank">
-          <img alt="Twitter" src="assets/images/icons/twitterLogo.svg">
+          <img alt="Twitter" class="social-networks-icon" src="assets/images/icons/twitterLogo.svg">
         </a>
-        <a *ngIf="userDetails.whatsShareLink" [href]="userDetails.whatsShareLink" target="_blank">
-          <img alt="WhatsAppShare" src="assets/images/icons/whatsapp-share-button.svg">
-        </a>
+
       </div>
     </div>
+
 
   </section>
 </div>

@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { IAlbum, Lightbox } from 'ngx-lightbox';
-import { ToastrService } from 'ngx-toastr';
-import { Observable, of, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, first, map, switchMap, takeUntil } from 'rxjs/operators';
-import { CommonService } from 'src/app/services/common.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { NumberOnlyValidator, WhiteSpaceValidator } from 'src/app/validators/common';
-import { ActivatePartnerComponent } from './activate-partner/activate-partner.component';
-import { ProfileService } from './profile.service';
+import {Component} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {IAlbum, Lightbox} from 'ngx-lightbox';
+import {ToastrService} from 'ngx-toastr';
+import {Subject} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
+import {CommonService} from 'src/app/services/common.service';
+import {AuthService} from 'src/app/shared/services/auth.service';
+import {NumberOnlyValidator, WhiteSpaceValidator} from 'src/app/validators/common';
+import {ProfileService} from './profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -142,7 +141,7 @@ export class ProfileComponent {
       selectedCountry = this.countryList.find(country => country.id === countryCode);
       phoneControl.setValidators([Validators.minLength(selectedCountry?.minLength), Validators.maxLength(selectedCountry?.maxLength)]);
       phoneControl.updateValueAndValidity();
-    })
+    });
 
     phoneControl.valueChanges.pipe(
       map(value => value && value.replace(/\D/g, '')),
@@ -157,7 +156,7 @@ export class ProfileComponent {
     this.professionList = await this.commonService.getProfessionList();
     this.professionalForm = this.formBuilder.group({
       profession: formData.professsion?.id || this.professionList[0].id,
-      userExperience: [formData.userExperience ? formData.userExperience / 12 : null, Validators.compose([Validators.required, NumberOnlyValidator])],
+      userExperience: [formData.userExperience ? formData.userExperience : null, Validators.compose([Validators.required, NumberOnlyValidator])],
       userCharges: [formData.userCharges ? formData.userCharges : null, Validators.compose([Validators.required, NumberOnlyValidator])],
       chargesSlotInMin: [formData.chargesSlotInMin ? formData.chargesSlotInMin : null, Validators.compose([Validators.required, NumberOnlyValidator])],
     });
@@ -199,12 +198,12 @@ export class ProfileComponent {
           type === 'Cover' && (this.coverPicLink = response.image);
           type === 'Profile' && (this.profilePicLink = response.image);
           this.refreshImage(type);
-          console.log(response.image)
+          console.log(response.image);
           this.toastr.success(`${type} pic uploaded successfully!`);
         }
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       this.toastr.error(`${type} pic upload failed!`);
     }
   }
@@ -215,7 +214,7 @@ export class ProfileComponent {
   }
 
   async onSubmit(formType) {
-    console.log(this.personalForm)
+    console.log(this.personalForm);
     if (this[formType].valid) {
       //   console.log(this[formType].value)
       // return;
@@ -224,7 +223,7 @@ export class ProfileComponent {
         const response = await this.profileService.updateProfileDetails({
           ...this[formType].value,
           ...('userExperience' in this[formType].value ? {
-            userExperience: this[formType].value.userExperience ? this[formType].value.userExperience * 12 : null
+            userExperience: this[formType].value.userExperience ? this[formType].value.userExperience : null
           } : {}),
           ...this.modifyFormDataForBackend(formType, 'title'),
           ...this.modifyFormDataForBackend(formType, 'country'),

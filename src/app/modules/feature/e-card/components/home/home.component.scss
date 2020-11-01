@@ -31,11 +31,15 @@
 }
 
 .details {
-    font-size: $font-size-18;
+  font-size: $font-size-16;
     a {
         text-decoration: none;
         color: $black;
     }
+
+  p {
+    font-size: $font-size-16;
+  }
 }
 
 .social-networks {
@@ -47,6 +51,22 @@
     }
 }
 
+.social-networks-icon {
+  width: 22px;
+  height: 20px;
+}
+
+.share-icon {
+  height: $share-icon-height;
+  width: $share-icon-width;
+  /*@media (min-width: $media-breakpoint-sm) {
+    width: 50%;
+  }
+  @media (min-width: $media-breakpoint-sm) {
+    width: 50%;
+  }*/
+}
+
 .link {
   display: flex;
   justify-content: center;
@@ -54,8 +74,8 @@
   > button {
     font-family: Noto Sans, sans-serif;
     font-size: 14px;
-    padding: 10px 36px;
-    background-color: #FAAA00;
+    padding: 12px 36px;
+    background-color: #EFAC36;
     color: #fff;
     text-decoration: none;
     text-align: center;
@@ -119,4 +139,57 @@
             background: $action-blue;
         }
     }
+}
+
+.link-secondary {
+  display: flex;
+  justify-content: center;
+
+  > button {
+    font-family: Noto Sans, sans-serif;
+    font-size: 14px;
+    padding: 12px 36px;
+    background-color: lighten($color-secondary, 40);
+    color: #EFAC36;
+    text-decoration: none;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 3px 6px #00000029;
+    border-radius: 8px;
+    z-index: 6;
+    font-weight: bold;
+
+    &:hover {
+      &:after,
+      &:before {
+        content: url("/assets/img/amber-paws.png");
+        transition: content 500ms ease;
+      }
+    }
+
+    &:after,
+    &:before {
+      content: url("/assets/img/brown-paws.png");
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+
+    &:before {
+      left: 6px;
+    }
+
+    &:after {
+      right: 6px;
+    }
+
+    &:hover {
+      &:before,
+      &:after {
+        color: #fff;
+      }
+    }
+  }
 }

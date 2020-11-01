@@ -1,16 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { CommonService } from 'src/app/services/common.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { WhiteSpaceValidator } from 'src/app/validators/common';
-import { ECardService } from '../../e-card/e-card.service';
-import { ActivatePartnerComponent } from '../profile/activate-partner/activate-partner.component';
-import { ProfileService } from '../profile/profile.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {Subject} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
+import {CommonService} from 'src/app/services/common.service';
+import {AuthService} from 'src/app/shared/services/auth.service';
+import {WhiteSpaceValidator} from 'src/app/validators/common';
+import {ECardService} from '../../e-card/e-card.service';
+import {ActivatePartnerComponent} from '../profile/activate-partner/activate-partner.component';
+import {ProfileService} from '../profile/profile.service';
 
 
 @Component({
@@ -487,7 +487,7 @@ export class PartnerComponent implements OnInit {
         days.push({ id: day });
       });
       const timeRanges = data.timeRange;
-      console.log(timeRanges)
+      console.log(timeRanges);
       const newRanges = [];
       timeRanges.map(time => {
         const slotData = {
@@ -528,7 +528,7 @@ export class PartnerComponent implements OnInit {
     const apiData = {
       ...this[formType].value,
       ...('userExperience' in this[formType].value ? {
-        userExperience: this[formType].value.userExperience ? this[formType].value.userExperience * 12 : null
+        userExperience: this[formType].value.userExperience ? this[formType].value.userExperience : null
       } : {}),
       ...this.modifyFormDataForBackend(formType, 'state'),
       ...this.modifyFormDataForBackend(formType, 'country'),
