@@ -1,65 +1,83 @@
 <div class="container-fluid border-rounded overflow-hidden">
-    <figure class="cover d-flex justify-content-center align-items-end"
-        [style.backgroundImage]="'url(' + (userDetails?.coverURL | authImage | async) + ')' | sanitize: 'style'">
-        <img [src]="userDetails?.imageURL | authImage | async" class="avatar rounded-circle" width="140" height="140">
-    </figure>
+  <figure [style.backgroundImage]="'url(' + (userDetails?.coverURL) + ')' | sanitize: 'style'"
+          class="cover d-flex justify-content-center align-items-end">
+    <img [src]="userDetails?.imageURL" class="avatar rounded-circle" height="140" width="140">
+  </figure>
 
-    <section class="pt-3 px-3">
-        <div class="about d-flex align-items-center flex-column">
-            <h4 class="font-weight-bold">
-                {{userDetails?.name}}
-            </h4>
-            <h6 class="p-2">
-                {{userDetails?.profession}}
-            </h6>
-        </div>
+  <section class="pt-3 px-3">
+    <div class="about d-flex align-items-center flex-column">
+      <h4 class="font-weight-bold">
+        {{userDetails?.name}}
+      </h4>
+      <h6 class="p-2">
+        {{userDetails?.profession}}
+      </h6>
+    </div>
 
-      <div class="details mt-2 font-weight-medium">
-            <a *ngIf="userDetails.phone" class="d-flex" [href]="userDetails?.phoneLink" target="_blank">
-                <img class="mr-4 mt-1" src="assets/images/icons/phone.svg" width="18" height="18">
-                <span>{{userDetails.phone}}</span>
-            </a>
-            <a *ngIf="userDetails?.email" class="d-flex mt-2" [href]="userDetails?.emailLink" target="_blank">
-                <img class="mr-4 mt-1" src="assets/images/icons/mail.svg" width="18" height="18">
-                <span>{{userDetails.email}}</span>
-            </a>
-            <a *ngIf="userDetails?.whatsAppPhone" class="d-flex mt-2" [href]="userDetails?.whatsAppLink" target="_blank">
-                <img class="mr-4 mt-1" src="assets/images/icons/whatsapp.svg" width="18" height="18">
-                <span>{{userDetails.whatsAppPhone}}</span>
-            </a>
-            <a *ngIf="userDetails?.address" class="d-flex mt-2" [href]="userDetails?.addressLink" target="_blank">
-                <img class="mr-4 mt-1" src="assets/images/icons/location.svg" width="18" height="18">
-                <span>{{userDetails.address}}</span>
-            </a>
-        </div>
+    <div class="details mt-2 font-weight-medium">
+      <a *ngIf="userDetails.phone" [href]="userDetails?.phoneLink" class="d-flex" target="_blank">
+        <img class="mr-4 mt-1" height="18" src="assets/images/icons/phone.svg" width="18">
+        <span>{{userDetails.phone}}</span>
+      </a>
+      <a *ngIf="userDetails?.email" [href]="userDetails?.emailLink" class="d-flex mt-2" target="_blank">
+        <img class="mr-4 mt-1" height="18" src="assets/images/icons/mail.svg" width="18">
+        <span>{{userDetails.email}}</span>
+      </a>
+      <a *ngIf="userDetails?.whatsAppPhone" [href]="userDetails?.whatsAppLink" class="d-flex mt-2" target="_blank">
+        <img class="mr-4 mt-1" height="18" src="assets/images/icons/whatsapp.svg" width="18">
+        <span>{{userDetails.whatsAppPhone}}</span>
+      </a>
+      <a *ngIf="userDetails?.address" [href]="userDetails?.addressLink" class="d-flex mt-2" target="_blank">
+        <img class="mr-4 mt-1" height="18" src="assets/images/icons/location.svg" width="18">
+        <span>{{userDetails.address}}</span>
+      </a>
+    </div>
 
-        <div class="social-networks my-4 py-1 py-sm-3">
-            <div class="d-flex justify-content-between mx-auto">
-                <a *ngIf="userDetails.fbLink" [href]="userDetails.fbLink" target="_blank">
-                    <img src="assets/images/icons/facebookLogo.svg" alt="Facebook">
-                </a>
-                <a *ngIf="userDetails.whatsAppLink" [href]="userDetails.whatsAppLink" target="_blank">
-                    <img src="assets/images/icons/whatsappLogo.svg" alt="WhatsApp">
-                </a>
-                <a *ngIf="userDetails.youtubeLink" [href]="userDetails.youtubeLink" target="_blank">
-                    <img src="assets/images/icons/youtubeLogo.svg" alt="YouTube">
-                </a>
-                <a *ngIf="userDetails.instagramLink" [href]="userDetails.instagramLink" target="_blank">
-                    <img src="assets/images/icons/instagramLogo.svg" alt="Instagram">
-                </a>
-                <a *ngIf="userDetails.twitterLink" [href]="userDetails.twitterLink" target="_blank">
-                    <img src="assets/images/icons/twitterLogo.svg" alt="Twitter">
-                </a>
-            </div>
-        </div>
 
-        <div class="action pb-3 d-flex justify-content-center">
-            <a class="btn" [href]="userDetails?.whatsShareLink" target="_blank">
-                Share on Whatsapp
-            </a>
-            <a class="btn" [vcdDownloadVCard]="vCard">
-                Add to Phonebook
-            </a>
+    <!--        <div class="action pb-3 d-flex justify-content-center">-->
+    <!-- <div class="pb-3 d-flex justify-content-center">
+       <a class="btn btn-outline-primary" [href]="userDetails?.whatsShareLink" target="_blank">
+           Share on WhatsApp
+       </a>
+       <a class="btn btn-warning link" >
+           Book Appointment
+       </a>
+   </div>-->
+
+    <div class="row my-2 py-0 py-sm-0 text-center">
+      <div class="col-6 text-blue font-weight-medium">
+        <button class="btn btn-outline-primary">Book Clinic Visit</button>
+      </div>
+      <div class="col-6">
+        <div class="link">
+          <button class="btn btn-warning">Consult Online</button>
         </div>
-    </section>
+      </div>
+    </div>
+
+
+    <div class="social-networks my-2 py-0 py-sm-0">
+      <div class="d-flex justify-content-between mx-auto">
+        <a *ngIf="userDetails.fbLink" [href]="userDetails.fbLink" target="_blank">
+          <img alt="Facebook" src="assets/images/icons/facebookLogo.svg">
+        </a>
+        <a *ngIf="userDetails.whatsAppLink" [href]="userDetails.whatsAppLink" target="_blank">
+          <img alt="WhatsApp" src="assets/images/icons/whatsappLogo.svg">
+        </a>
+        <a *ngIf="userDetails.youtubeLink" [href]="userDetails.youtubeLink" target="_blank">
+          <img alt="YouTube" src="assets/images/icons/youtubeLogo.svg">
+        </a>
+        <a *ngIf="userDetails.instagramLink" [href]="userDetails.instagramLink" target="_blank">
+          <img alt="Instagram" src="assets/images/icons/instagramLogo.svg">
+        </a>
+        <a *ngIf="userDetails.twitterLink" [href]="userDetails.twitterLink" target="_blank">
+          <img alt="Twitter" src="assets/images/icons/twitterLogo.svg">
+        </a>
+        <a *ngIf="userDetails.whatsShareLink" [href]="userDetails.whatsShareLink" target="_blank">
+          <img alt="WhatsAppShare" src="assets/images/icons/whatsapp-share-button.svg">
+        </a>
+      </div>
+    </div>
+
+  </section>
 </div>
