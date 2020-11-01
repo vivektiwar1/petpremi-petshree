@@ -42,7 +42,7 @@ export class ECardService implements OnInit {
       x_top[0].style.top = "auto";
     }
     document.getElementById('appointmenttime').style.display = "block";
-    document.getElementById('appointment').style.display = "none";
+    // document.getElementById('appointment').style.display = "none";
     document.getElementById('home').style.display = "none";
     if (document.getElementById('gallery') && document.getElementById('videos')) {
       document.getElementById('gallery').style.display = "none";

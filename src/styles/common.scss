@@ -1,3 +1,18 @@
+.about-content {
+  h4 {
+    color: $about-primary-heading;
+    font-family: $font;
+  }
+
+  h6 {
+    color: $color-secondary;
+    background: lighten($color-secondary, 40);
+    border-radius: $border-radius-8;
+    font-size: $font-size-14;
+    font-family: $font;
+  }
+}
+
 .heading-ecard {
   color: $label-heading-color;
   font-size: 21px;

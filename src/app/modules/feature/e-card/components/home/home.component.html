@@ -15,14 +15,20 @@
     </div>
 
     <div class="details mt-2 font-weight-medium">
-      <a *ngIf="userDetails.phone" [href]="userDetails?.phoneLink" class="d-flex" target="_blank">
-        <img class="mr-4 mt-1" height="18" src="assets/images/icons/phone.svg" width="18">
-        <span>{{userDetails.phone}}</span>
-      </a>
-      <a *ngIf="userDetails.experience" class="d-flex" target="_blank">
+      <!-- <a *ngIf="userDetails.phone" [href]="userDetails?.phoneLink" class="d-flex" target="_blank">
+         <img class="mr-4 mt-1" height="18" src="assets/images/icons/phone.svg" width="18">
+         <span>{{userDetails.phone}}</span>
+       </a>-->
+      <a *ngIf="userDetails.experience" class="d-flex mt-2" target="_blank">
         <img class="mr-4 mt-1" height="18" src="assets/images/icons/work-amber.png" width="18">
         <span>{{userDetails.experience}}</span>
       </a>
+
+      <a *ngIf="userDetails.consultationFee" class="d-flex mt-2" target="_blank">
+        <img class="mr-4 mt-1" height="18" src="assets/images/icons/debit-card.png" width="18">
+        <span>{{userDetails.consultationFee}}</span>
+      </a>
+
       <!-- <div *ngIf="userDetails?.userExperience" class="d-flex mt-2">
          <img class="mr-4 mt-1" src="assets/img/fwd-images/like-new.png" width="18" height="18">
          <span >{{userDetails?.userExperience }} pets helped</span>

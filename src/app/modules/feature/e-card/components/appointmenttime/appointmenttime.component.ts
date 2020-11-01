@@ -64,7 +64,7 @@ export class AppointmenttimeComponent implements OnInit {
   }
   back() {
     document.getElementById('appointmenttime').style.display = "none";
-    document.getElementById('appointment').style.display = "block";
+    // document.getElementById('appointment').style.display = "block";
     document.getElementById('home').style.display = "block";
     if (document.getElementById('gallery') && document.getElementById('videos')) {
       document.getElementById('gallery').style.display = "block";
