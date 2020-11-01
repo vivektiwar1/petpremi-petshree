@@ -268,7 +268,7 @@
                                             <input class="form-control" id="longitude" formControlName="longitude"
                                                 placeholder="Longitude">
                                         </div>
-                                        <div class="col-12 d-flex justify-content-between align-items-center">
+                                        <!-- <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h6 class="title-color mb-0">Add Partner Details</h6>
                                             <button class="btn btn-effect text-warning no-outline px-0"
                                                 (click)="addPartner(clinicIndex)"
@@ -458,8 +458,9 @@
                                                     </div>
                                                 </div>
                                             </ng-container>
-                                        </div>
+                                        </div> -->
                                         <div class="col-12 mt-3 text-right">
+                                            <p>{{clinicData.value.name}}</p>
                                             <app-button className="btn-warning btn-large" buttonText="Save"
                                                 (buttonClicked)="onSubmit('clinicData')"
                                                 >

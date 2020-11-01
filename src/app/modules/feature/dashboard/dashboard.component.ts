@@ -3,6 +3,8 @@ import { timer, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common.service';
 import * as Highcharts from 'highcharts';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateAppointmentComponent } from '../../feature/appointments/appointment-dashboard/modals/create-appointment/create-appointment.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +24,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private commonService: CommonService,
+    private matDialog: MatDialog,
+
   ) {
     this.commonService.showDashboardNavs();
   }
@@ -251,6 +255,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     //   ]
     // }
 
+  }
+  createAppointment() {
+    console.log("working")
+    const dialog = this.matDialog.open(CreateAppointmentComponent, {
+      disableClose: true,
+      position: {
+        top: '0px',
+        right: '0px'
+      },
+      minHeight: '100vh',
+      hasBackdrop: true
+    });
   }
 
   ngOnDestroy() {
