@@ -36,8 +36,8 @@ export class AppointmentComponent implements OnInit {
   }
   showDiv() {
     this.auth.checkAndLogin().then(() => this.auth.getUserProfile());
-    var x_top: any = document.getElementsByClassName("cdk-global-scrollblock");
-    x_top[0].style.top = "auto";
+    // var x_top: any = document.getElementsByClassName("cdk-global-scrollblock");
+    // x_top[0].style.top = "auto";
 
     document.getElementById('appointmenttime').style.display = "block";
     document.getElementById('appointment').style.display = "none";
