@@ -1,193 +1,191 @@
 <form [formGroup]="AddDateTime" class="no-outline" autocomplete="off">
-    <div class="container-fluid brdr-top" style="background-color: white;">
-        <div class="row py-3">
-            <div class="col-2">
-                <a  (click)="back()">
-                    <img src="assets/icon/back.png" class="verified-img">
-                </a>
-            </div>
-            <div class="col-10 text-center heading">
-                <h3> Select Date And Time</h3>
-            </div>
-        </div>
-        <div class="row p-3">
-            <div class="col-8 font-weight-medium">
-                <p class="select-date">Select A Date</p>
-            </div>
-            <div class="col-3 text-black font-weight-medium">{{this.monthName}}</div>
-        </div>
+  <div class="container-fluid brdr-top" style="background-color: white;">
+    <div class="row">
+      <a (click)="back()" target="_blank">
+        <img class="verified-img" src="assets/icon/back.png">
+      </a>
     </div>
+    <div class="mt-2 py-0 py-sm-0">
+      <label class="d-flex justify-content-center mx-auto heading-ecard">Select Date & Time</label>
+    </div>
+    <div class="row p-3">
+      <div class="col-8 font-weight-medium">
+        <p class="select-date">Select a Date</p>
+      </div>
+      <div class="col-3 text-black font-weight-medium">{{this.monthName}}</div>
+    </div>
+  </div>
 
-    <div class="container-fluid" style="background-color: #ebebeb;">
-        <div class="row p-2 no-gutters">
-            <div class="col pr-2" *ngFor="let day of aryDates">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="date" [value]="day.Date" id="{{day.Date}}"
-                        formControlName="date">
-                    <label class="radiolabel py-3" for="{{day.Date}}">{{day.Day.slice(0,3)}}<br>
-                        <b>{{day.Date}}</b></label>
-                </div>
-            </div>
+  <div class="container-fluid" style="background-color: #ebebeb;">
+    <div class="row p-2 no-gutters">
+      <div *ngFor="let day of aryDates" class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="day.Date" class="radiobutton" formControlName="date" id="{{day.Date}}" name="date"
+                 type="radio">
+          <label class="radiolabel py-3" for="{{day.Date}}">{{day.Day.slice(0, 3)}}<br>
+            <b>{{day.Date}}</b></label>
         </div>
-        <div class="row px-3 pb-3">
-            <div class="col-12">
-                <p class="f-500">10 July, wednesday</p>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="row px-3 pb-3">
+      <div class="col-12">
+        <p class="f-500">10 July, wednesday</p>
+      </div>
+    </div>
+  </div>
 
-    <div class="container-fluid" style="background-color: white;">
-        <div class="row p-3">
-            <div class="col-12 font-weight-medium">
-                <p class="select-date">Select Time</p>
-            </div>
-        </div>
+  <div class="container-fluid" style="background-color: white;">
+    <div class="row p-3">
+      <div class="col-12 font-weight-medium">
+        <p class="select-date">Select Time</p>
+      </div>
     </div>
-    <div class="container-fluid brdr-btm pb-4" style="background-color: #ebebeb;">
-        <div class="row px-3">
-            <div class="col-12 pt-2">
-                <p class="pt-2">Morning</p>
-            </div>
-        </div>
-        <div class="row p-2 no-gutters">
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" id="time1" [value]="09-00"
-                        formControlName="time" checked>
-                    <label class="radiolabel pad heading" for="time1">09:00AM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" id="time2" [value]="10-00"
-                        formControlName="time">
-                    <label class="radiolabel pad heading" for="time2">10:00AM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" id="time3" [value]="11-00"
-                        formControlName="time">
-                    <label class="radiolabel pad heading" for="time3">11:00AM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" id="time4" [value]="11-30"
-                        formControlName="time">
-                    <label class="radiolabel pad heading" for="time4">11:30AM</label>
-                </div>
-            </div>
-        </div>
-        <div class="row px-3">
-            <div class="col-12 pt-3">
-                <p class="pt-2">Afternoon</p>
-            </div>
-        </div>
-        <div class="row p-2 no-gutters">
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" id="time5" [value]="12-00"
-                        formControlName="time">
-                    <label class="radiolabel pad heading" for="time5">12:00PM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" id="time6" [value]="12-30"
-                        formControlName="time" />
-                    <label class="radiolabel pad heading" for="time6">12:30PM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" id="time7" [value]="1-00"
-                        formControlName="time">
-                    <label class="radiolabel pad heading" for="time7">01:00PM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" id="time8" [value]="1-30"
-                        formControlName="time">
-                    <label class="radiolabel pad heading" for="time8">01:30PM</label>
-                </div>
-            </div>
-        </div>
-        <div class="row p-2 no-gutters">
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" [value]="2-00" id="time9"
-                        formControlName="time" />
-                    <label class="radiolabel pad heading" for="time9">02:00PM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" [value]="2-30" id="time10"
-                        formControlName="time" />
-                    <label class="radiolabel pad heading" for="time10">02:30PM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" [value]="3-00" id="time11"
-                        formControlName="time" />
-                    <label class="radiolabel pad heading" for="time11">03:00PM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" [value]="3-30" name="time" id="time12"
-                        formControlName="time" />
-                    <label class="radiolabel pad heading" for="time12">03:30PM</label>
-                </div>
-            </div>
-        </div>
-        <div class="row px-3">
-            <div class="col-12 pt-3">
-                <p class="pt-2">Evening</p>
-            </div>
-        </div>
-        <div class="row p-2 no-gutters">
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" [value]="05-00" name="time" id="time13"
-                        formControlName="time">
-                    <label class="radiolabel pad heading" for="time13">05:00PM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" name="time" id="time14" formControlName="time">
-                    <label class="radiolabel pad heading" for="time">05:30PM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" [value]="06-00" name="time" id="time15"
-                        formControlName="time">
-                    <label class="radiolabel pad heading" for="time15">06:00PM</label>
-                </div>
-            </div>
-            <div class="col pr-2">
-                <div class="bg-white borders">
-                    <input type="radio" class="radiobutton" [value]="06-30" name="time" id="time16"
-                        formControlName="time">
-                    <label class="radiolabel pad heading" for="time16">06:30PM</label>
-                </div>
-            </div>
-        </div>
+  </div>
+  <div class="container-fluid brdr-btm pb-4" style="background-color: #ebebeb;">
+    <div class="row px-3">
+      <div class="col-12 pt-2">
+        <p class="pt-2">Morning</p>
+      </div>
     </div>
-    <div container-fluid class="p-3" style="background-color:transparent;">
-        <div class="row">
-            <div class="col-12">
-                <div class="text-center link" style="text-align: center;">
-                    <button class="btn btn-warning" (click)="showDiv()">
-                        Confirm
-                    </button>
-                </div>
-            </div>
+    <div class="row p-2 no-gutters">
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="09-00" checked class="radiobutton" formControlName="time" id="time1"
+                 name="time" type="radio">
+          <label class="radiolabel pad heading" for="time1">09:00AM</label>
         </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="10-00" class="radiobutton" formControlName="time" id="time2" name="time"
+                 type="radio">
+          <label class="radiolabel pad heading" for="time2">10:00AM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="11-00" class="radiobutton" formControlName="time" id="time3" name="time"
+                 type="radio">
+          <label class="radiolabel pad heading" for="time3">11:00AM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="11-30" class="radiobutton" formControlName="time" id="time4" name="time"
+                 type="radio">
+          <label class="radiolabel pad heading" for="time4">11:30AM</label>
+        </div>
+      </div>
     </div>
+    <div class="row px-3">
+      <div class="col-12 pt-3">
+        <p class="pt-2">Afternoon</p>
+      </div>
+    </div>
+    <div class="row p-2 no-gutters">
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="12-00" class="radiobutton" formControlName="time" id="time5" name="time"
+                 type="radio">
+          <label class="radiolabel pad heading" for="time5">12:00PM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="12-30" class="radiobutton" formControlName="time" id="time6" name="time"
+                 type="radio"/>
+          <label class="radiolabel pad heading" for="time6">12:30PM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="1-00" class="radiobutton" formControlName="time" id="time7" name="time"
+                 type="radio">
+          <label class="radiolabel pad heading" for="time7">01:00PM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="1-30" class="radiobutton" formControlName="time" id="time8" name="time"
+                 type="radio">
+          <label class="radiolabel pad heading" for="time8">01:30PM</label>
+        </div>
+      </div>
+    </div>
+    <div class="row p-2 no-gutters">
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="2-00" class="radiobutton" formControlName="time" id="time9" name="time"
+                 type="radio"/>
+          <label class="radiolabel pad heading" for="time9">02:00PM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="2-30" class="radiobutton" formControlName="time" id="time10" name="time"
+                 type="radio"/>
+          <label class="radiolabel pad heading" for="time10">02:30PM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="3-00" class="radiobutton" formControlName="time" id="time11" name="time"
+                 type="radio"/>
+          <label class="radiolabel pad heading" for="time11">03:00PM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="3-30" class="radiobutton" formControlName="time" id="time12" name="time"
+                 type="radio"/>
+          <label class="radiolabel pad heading" for="time12">03:30PM</label>
+        </div>
+      </div>
+    </div>
+    <div class="row px-3">
+      <div class="col-12 pt-3">
+        <p class="pt-2">Evening</p>
+      </div>
+    </div>
+    <div class="row p-2 no-gutters">
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="05-00" class="radiobutton" formControlName="time" id="time13" name="time"
+                 type="radio">
+          <label class="radiolabel pad heading" for="time13">05:00PM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input class="radiobutton" formControlName="time" id="time14" name="time" type="radio">
+          <label class="radiolabel pad heading" for="time">05:30PM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="06-00" class="radiobutton" formControlName="time" id="time15" name="time"
+                 type="radio">
+          <label class="radiolabel pad heading" for="time15">06:00PM</label>
+        </div>
+      </div>
+      <div class="col pr-2">
+        <div class="bg-white borders">
+          <input [value]="06-30" class="radiobutton" formControlName="time" id="time16" name="time"
+                 type="radio">
+          <label class="radiolabel pad heading" for="time16">06:30PM</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-3" container-fluid style="background-color:transparent;">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-center link" style="text-align: center;">
+          <button (click)="showDiv()" class="btn btn-warning">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>

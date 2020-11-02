@@ -11,21 +11,21 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, merge, Observable, of, Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { catchError, switchMap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {BehaviorSubject, merge, Observable, of, Subscription} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {catchError, switchMap} from 'rxjs/operators';
+import {MatDialog} from '@angular/material/dialog';
 import $ from 'jquery';
 import * as momentTz from 'moment-timezone';
-import { AuthService } from '../../shared/services/auth.service';
-import { AUTH_SIGN_UP_CLIENT, AUTH_USER_TYPE, AuthErrors, AuthFormTypes, LoginConstants } from './auth.constants';
-import { CustomValidators, PWD_VALIDATORS, validateAllFormFields } from '../../shared/helpers/form.helper';
-import { SocialLoginHelper } from './social-login.helper';
-import { AlertModalComponent } from '../../shared/modals/alert-modal/alert-modal.component';
-import { environment } from '../../../environments/environment';
-import { ConfirmModalComponent, ConfirmModalData } from '../../shared/modals/confirm-modal/confirm-modal.component';
+import {AuthService} from '../../shared/services/auth.service';
+import {AUTH_SIGN_UP_CLIENT, AUTH_USER_TYPE, AuthErrors, AuthFormTypes, LoginConstants} from './auth.constants';
+import {CustomValidators, PWD_VALIDATORS, validateAllFormFields} from '../../shared/helpers/form.helper';
+import {SocialLoginHelper} from './social-login.helper';
+import {AlertModalComponent} from '../../shared/modals/alert-modal/alert-modal.component';
+import {environment} from '../../../environments/environment';
+import {ConfirmModalComponent, ConfirmModalData} from '../../shared/modals/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-auth-form',
@@ -406,7 +406,7 @@ export class AuthFormComponent extends SocialLoginHelper implements AfterViewIni
       : this.router.navigate(['/auth/sign-in']);
   }
   signInAdmin() {
-    console.log("hello")
+    // console.log("hello")
     this.resetForms();
     this.authFlow = this.signUpClient.SELF;
     if (this.userType !== AUTH_USER_TYPE.ADMIN) {

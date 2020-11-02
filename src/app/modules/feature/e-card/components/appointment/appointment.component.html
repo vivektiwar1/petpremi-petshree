@@ -1,57 +1,81 @@
 <form [formGroup]="addDetails" class="no-outline" autocomplete="off">
-    <div class="container-fluid">
-        <div class="row p-sm-3">
-            <div class="col-8 heading font-weight-medium">
-                <h4><b>{{userDetails?.name }}</b></h4>
-                <p>{{userDetails?.userExperience}}years of experiance</p>
-            </div>
-            <div class="col-4 text-black font-weight-medium txt-img-green pr-0 text-center">
-                <img class="mt-1" src="assets/img/fwd-images/like.png" width="18" height="18">
-                <p class="text-left">{{userDetails?.userExperience }} pets helped</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="p-sm-3" style="background-color: rgb(248, 248, 248);">
-                    <p>{{userDetails?.bio}}</p>
-                </div>
-            </div>
-        </div>
-        <div class="row py-3 no-gutters">
-            <div class="col-2 col-md-2 heading font-weight-medium" >
-                <mat-select placeholder="Clinic" formControlName="clinic">
-                    <mat-option *ngFor="let address of userDetails?.businessAddress" id="clinic"
-                        [value]="address?.id" >{{address?.title }}
-                    </mat-option>
-                </mat-select>
-            </div>
-            <div class="col-4 col-md-4 heading font-weight-medium">
-                <div class="row no-gutters" *ngFor="let address of userDetails?.businessAddress">
-                    <div class="col-1 col-md-3 text-black font-weight-medium text-center" *ngIf="address.id==clinicId">
-                        <a href="{{userDetails?.businessAddress?.businessAddressLink}}">
-                            <img class="" src="assets/icon/pin.png" width="18" height="18">
-                        </a>
-                    </div>
-                    <div class="col-11 col-md-9 text-black font-weight-medium pr-2" *ngIf="address.id==clinicId">
-                        <p title="{{ userDetails?.businessAddress?.businessAddress }}" class="address-txt">
-                            {{ userDetails?.businessAddress?.businessAddress }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-6 text-black font-weight-medium">Consultation
-                Fees:&emsp;&#x20B9;<span>{{userDetails?.userCharges}}</span></div>
-        </div>
-        <div class="row p-sm-3 text-center">
-            <div class="col-6 text-blue font-weight-medium">
-                <button class="btn btn-outline-primary" (click)="showDiv()">
-                    Book Clinic Visit
-                </button>
-            </div>
-            <div class="col-6">
-                <div class="link">
-                    <button class="btn btn-warning">Consult Online</button>
-                </div>
-            </div>
-        </div>
+  <div class="container-fluid">
+    <div class="row p-sm-3">
+      <div class="col-8 heading font-weight-medium">
+        <h4><b>{{userDetails?.name }}</b></h4>
+        <p>{{userDetails?.userExperience}}years of experiance</p>
+      </div>
+      <div class="col-4 text-black font-weight-medium txt-img-green pr-0 text-center">
+        <img class="mt-1" height="18" src="assets/img/fwd-images/like.png" width="18">
+        <p class="text-left">{{userDetails?.userExperience }} pets helped</p>
+      </div>
     </div>
+
+    <div class="about-content d-flex align-items-baseline flex-column m-1">
+      <h4 class="font-weight-bold">
+        {{userDetails?.name}}
+      </h4>
+      <h6 class="">
+        {{userDetails?.experience}}
+      </h6>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="p-sm-3" style="background-color: rgb(248, 248, 248);">
+          <p>{{userDetails?.bio}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row py-3 no-gutters">
+      <div class="col-2 col-md-2 heading font-weight-medium">
+        <mat-select formControlName="clinic" placeholder="Clinic">
+          <mat-option *ngFor="let address of userDetails?.businessAddress" [value]="address?.id"
+                      id="clinic">{{address?.title }}
+          </mat-option>
+        </mat-select>
+      </div>
+      <div class="col-4 col-md-4 heading font-weight-medium">
+        <div *ngFor="let address of userDetails?.businessAddress" class="row no-gutters">
+          <div *ngIf="address.id==clinicId" class="col-1 col-md-3 text-black font-weight-medium text-center">
+            <a href="{{userDetails?.businessAddress?.businessAddressLink}}">
+              <img class="" height="18" src="assets/icon/pin.png" width="18">
+            </a>
+          </div>
+          <div *ngIf="address.id==clinicId" class="col-11 col-md-9 text-black font-weight-medium pr-2">
+            <p class="address-txt" title="{{ userDetails?.businessAddress?.businessAddress }}">
+              {{ userDetails?.businessAddress?.businessAddress }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-6 text-black font-weight-medium">Consultation
+        Fees:&emsp;&#x20B9;<span>{{userDetails?.userCharges}}</span></div>
+    </div>
+
+
+    <!--<div class="row p-sm-3 text-center">
+      <div class="col-6 link-secondary">
+        <button class="btn btn-outline-primary" (click)="showDiv()">Book Clinic Visit</button>
+      </div>
+      <div class="col-6">
+        <div class="link-primary">
+          <button class="btn btn-warning">Consult Online</button>
+        </div>
+      </div>
+    </div>-->
+
+    <div class="row mt-3 text-center">
+      <div class="col-6">
+        <div class="link-secondary">
+          <button (click)="showDiv()" class="btn btn-warning">Book Clinic Visit</button>
+        </div>
+      </div>
+      <div class="col-6">
+        <div (click)="showDiv()" class="link-primary">
+          <button class="btn btn-warning">Consult Online</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </form>

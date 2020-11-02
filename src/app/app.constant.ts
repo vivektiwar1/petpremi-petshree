@@ -6,11 +6,11 @@ export const NavMenu = [
         anchorId: 'home',
         icon: 'assets/images/icons/home.svg'
     },
-    {
-        name: 'Book',
-        anchorId: 'appointment',
-        icon: 'assets/images/icons/chat.svg'
-    },
+  /*{
+      name: 'Book',
+      anchorId: 'appointment',
+      icon: 'assets/images/icons/chat.svg'
+  },*/
     {
         name: 'Gallery',
         anchorId: 'gallery',
@@ -27,7 +27,7 @@ export const NavMenu = [
         icon: 'assets/images/icons/chat.svg'
     }
 
-]
+];
 export const User = [
     {
         name: image?.userName || 'Signin',
@@ -35,7 +35,7 @@ export const User = [
         icon: image?.avatarURL || 'assets/icon/profile.png'
     }
 
-]
+];
 
 
 

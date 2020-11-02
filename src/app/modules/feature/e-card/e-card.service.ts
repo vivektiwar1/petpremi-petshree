@@ -1,20 +1,64 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import {environment} from 'src/environments/environment';
+import {AuthService} from "../../../shared/services/auth.service";
+import $ from 'jquery';
 
 @Injectable()
-export class ECardService {
+export class ECardService implements OnInit {
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    // private renderer: Renderer2
+  ) {
+  }
 
+  /*  scrollEvent = new Subject<boolean>();
+    @ViewChild('scrollTopElement') scrollTopElement: ElementRef;
+    ngOnInit(): void {
+      this.scrollEvent.pipe(debounceTime(1)).subscribe(() => this.setPosition());
+    }
+
+    setPosition(): void {
+      if (this.scrollTopElement) {
+        if (window.pageYOffset < (0.3 * window.innerHeight)) {
+          this.renderer.addClass(this.scrollTopElement.nativeElement, 'hide');
+        } else {
+          this.renderer.removeClass(this.scrollTopElement.nativeElement, 'hide');
+        }
+      }
+    }*/
 
   private _navActive$: Subject<string> = new Subject();
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  ngOnInit(): void {
+  }
+
+  showDiv() {
+    this.auth.checkAndLogin().then(() => this.auth.getUserProfile());
+    var x_top: any = document.getElementsByClassName("cdk-global-scrollblock");
+    if (x_top[0]) {
+      x_top[0].style.top = "auto";
+    }
+    document.getElementById('appointmenttime').style.display = "block";
+    // document.getElementById('appointment').style.display = "none";
+    document.getElementById('home').style.display = "none";
+    if (document.getElementById('gallery') && document.getElementById('videos')) {
+      document.getElementById('gallery').style.display = "none";
+      document.getElementById('videos').style.display = "none";
+    }
+    document.getElementById('enquiry').style.display = "none";
+
+
+  }
 
   getActiveNav(): Observable<string> {
     return this._navActive$.asObservable();
+  }
+
+  scrollTop() {
+    $('html, body').animate({scrollTop: 0}, 0);
   }
 
   setNavActive(anchorId: string) {
