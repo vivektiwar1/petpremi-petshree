@@ -1,18 +1,20 @@
 <form [formGroup]="AddDateTime" class="no-outline" autocomplete="off">
   <div class="container-fluid brdr-top" style="background-color: white;">
     <div class="row">
-      <a (click)="back()" target="_blank">
-        <img class="verified-img" src="assets/icon/back.png">
-      </a>
-    </div>
-    <div class="mt-2 py-0 py-sm-0">
-      <label class="d-flex justify-content-center mx-auto heading-ecard">Select Date & Time</label>
+      <div class="col-1 mt-4 py-0 py-sm-0">
+        <a (click)="back()" target="_blank">
+          <img class="verified-img m-2 mt-2" src="assets/icon/back.png">
+        </a>
+      </div>
+      <div class="col-11 mt-4 py-0 py-sm-0">
+        <label class="d-flex justify-content-center mx-auto heading-ecard">Select Date & Time</label>
+      </div>
     </div>
     <div class="row p-3">
       <div class="col-8 font-weight-medium">
         <p class="select-date">Select a Date</p>
       </div>
-      <div class="col-3 text-black font-weight-medium">{{this.monthName}}</div>
+      <div class="col-4 d-flex justify-content-center mx-auto font-weight-medium">{{this.monthName}}</div>
     </div>
   </div>
 
@@ -29,6 +31,8 @@
     </div>
     <div class="row px-3 pb-3">
       <div class="col-12">
+        <!--<input-date label="Date" name="date" (change)="validateDate();"
+                    [parentFormGroup]="AddDateTime" [minDate]="null" placeholder="Date"></input-date>-->
         <p class="f-500">10 July, wednesday</p>
       </div>
     </div>

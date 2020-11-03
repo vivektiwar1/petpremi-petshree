@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ECardService} from "../../e-card.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -24,7 +25,8 @@ export class AppointmenttimeComponent implements OnInit {
   aryDates: any;
   constructor(
     private formBuilder: FormBuilder,
-    private eCardService: ECardService
+    private eCardService: ECardService,
+    private toastr: ToastrService
   ) {
     this.date = new Date();
 
@@ -91,6 +93,21 @@ export class AppointmenttimeComponent implements OnInit {
     weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"];
 
     return weekdays[dayIndex];
+  }
+
+  validateDate() {
+    try {
+      const userName = this.AddDateTime.get('date').value;
+
+      console.log("rahul is great" + userName);
+      /* if (!response){
+         this.AddDateTime.controls.userName.setValue('');
+         this.toastr.error(`User Name already exists `);
+       }*/
+    } catch (error) {
+      this.toastr.error(`Something went wrong!`);
+      console.log(error);
+    }
   }
 
 }
