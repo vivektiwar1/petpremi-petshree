@@ -6,6 +6,7 @@ import { SettingsComponent } from './settings.component';
 import { SharedModule } from '../../shared/shared.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatChipsModule } from "@angular/material/chips";
 import { ActivatePartnerComponent } from './profile/activate-partner/activate-partner.component';
@@ -13,6 +14,7 @@ import { LightboxModule } from 'ngx-lightbox';
 import { ProfileComponent } from './profile/profile.component';
 import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
 import { PartnerComponent } from './partner/partner.component';
+import { TimingComponent } from './timing/timing.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { PartnerComponent } from './partner/partner.component';
     ProfileComponent,
     CustomerProfileComponent,
     ActivatePartnerComponent,
+    TimingComponent,
     PartnerComponent
   ],
   imports: [
@@ -29,7 +32,9 @@ import { PartnerComponent } from './partner/partner.component';
     MatChipsModule,
     NgxMaterialTimepickerModule,
     LightboxModule,
-    PipesModule
+    PipesModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SettingsModule { }

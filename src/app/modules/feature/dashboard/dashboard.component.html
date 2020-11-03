@@ -9,7 +9,7 @@
 				<a href="" class="add-customer-btn btn">+ Add Customer</a>
 			</div>
 			<div class="col-md-2 px-0 brdr-left text-center m-hide">
-				<a href="" class="add-customer-btn">+ Add Appointment</a>
+				<a class="add-customer-btn" (click)="createAppointment()">+ Add Appointment</a>
 			</div>
 		</div>
 	</div>
@@ -27,7 +27,7 @@
 			<div class="carousel-item">
 				<div class="py-5">
 					<div class="py-4 text-center">
-						<a (click)="createAppointment()" class="add-customer-btn">+ Add Appointment</a>
+						<a href=""  class="add-customer-btn">+ Add Appointment</a>
 					</div>
 				</div>
 			</div>
@@ -65,7 +65,7 @@
 							</div>
 						</div>
 					</div>
-				</div>   
+				</div>
 			</div>
 			<div class="carousel-item">
 				<div class="row no-gutters custom-border bottom bl-red">
@@ -101,7 +101,7 @@
 							</div>
 						</div>
 					</div>
-				</div>   
+				</div>
 			</div>
 			<div class="carousel-item">
 				<div class="row no-gutters custom-border bottom bl-blue">
@@ -137,7 +137,7 @@
 							</div>
 						</div>
 					</div>
-				</div>   
+				</div>
 			</div>
 			<div class="carousel-item">
 				<div class="row no-gutters custom-border bottom bl-pink">
@@ -267,7 +267,8 @@
 								<img src="/assets/images/dashboard-img/clinic-male-doctor1.png" class="w-100 img-clinic-male-doc">
 							</div> -->
 							<div class="col-md-12 align-self-center pb-2">
-								<img src="/assets/images/dashboard-img/clinic-male-doctor11.png" class="img-clinic-male-doc">
+								<img src="/assets/images/dashboard-img/clinic-male-doctor11.png"
+									class="img-clinic-male-doc">
 								<div class="offset-md-4 offset-lg-4 m-offset-set">
 									<h5 class="finish-setup my-2">Finish setup your clinic account</h5>
 									<p class="text-white mb-4">Invite all your customers to showcse your profile.</p>
@@ -289,12 +290,14 @@
 													id="navbarSupportedContent">
 													<ul class="navbar-nav">
 														<li class="nav-item align-self-lg-center dropdown">
-															<a class="nav-link text-blue" id="selectIncome" role="button" data-toggle="dropdown"
+															<a class="nav-link text-blue" id="selectIncome"
+																role="button" data-toggle="dropdown"
 																aria-haspopup="true" aria-expanded="false">
 																<span class="treatment">TREATMENT</span>
 																<i role="img"
 																	class="mat-icon notranslate large material-icons mat-icon-no-color mat-chevron-down"
-																	aria-hidden="true" data-mat-icon-type="font">expand_more</i>
+																	aria-hidden="true"
+																	data-mat-icon-type="font">expand_more</i>
 															</a>
 															<div class="dropdown-menu" aria-labelledby="selectIncome">
 																<a class="dropdown-item" href="#">Action</a>
@@ -325,7 +328,8 @@
 												<span class="treatment">View More</span>
 												<i role="img"
 													class="mat-icon notranslate large material-icons mat-icon-no-color mat-chevron-down"
-													aria-hidden="true" data-mat-icon-type="font">keyboard_arrow_right</i>
+													aria-hidden="true"
+													data-mat-icon-type="font">keyboard_arrow_right</i>
 											</a>
 										</div>
 									</div>
@@ -343,12 +347,14 @@
 													id="navbarSupportedContent">
 													<ul class="navbar-nav">
 														<li class="nav-item align-self-lg-center dropdown">
-															<a class="nav-link text-blue" id="selectIncome" role="button" data-toggle="dropdown"
+															<a class="nav-link text-blue" id="selectIncome"
+																role="button" data-toggle="dropdown"
 																aria-haspopup="true" aria-expanded="false">
 																<span class="treatment">TODAY</span>
 																<i role="img"
 																	class="mat-icon notranslate large material-icons mat-icon-no-color mat-chevron-down"
-																	aria-hidden="true" data-mat-icon-type="font">expand_more</i>
+																	aria-hidden="true"
+																	data-mat-icon-type="font">expand_more</i>
 															</a>
 															<div class="dropdown-menu" aria-labelledby="selectIncome">
 																<a class="dropdown-item" href="#">Action</a>
@@ -379,14 +385,15 @@
 												<span class="treatment">View More</span>
 												<i role="img"
 													class="mat-icon notranslate large material-icons mat-icon-no-color mat-chevron-down"
-													aria-hidden="true" data-mat-icon-type="font">keyboard_arrow_right</i>
+													aria-hidden="true"
+													data-mat-icon-type="font">keyboard_arrow_right</i>
 											</a>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-				
+
 						<div class="row my-4">
 							<div class="col-md-6 m-margin-btm">
 								<div class="card-details p-4 active-items-center shadow">
@@ -400,12 +407,14 @@
 													id="navbarSupportedContent">
 													<ul class="navbar-nav">
 														<li class="nav-item align-self-lg-center dropdown">
-															<a class="nav-link text-blue" id="selectPet" role="button" data-toggle="dropdown"
-																aria-haspopup="true" aria-expanded="false">
+															<a class="nav-link text-blue" id="selectPet" role="button"
+																data-toggle="dropdown" aria-haspopup="true"
+																aria-expanded="false">
 																<span class="treatment">TODAY</span>
 																<i role="img"
 																	class="mat-icon notranslate large material-icons mat-icon-no-color mat-chevron-down"
-																	aria-hidden="true" data-mat-icon-type="font">expand_more</i>
+																	aria-hidden="true"
+																	data-mat-icon-type="font">expand_more</i>
 															</a>
 															<div class="dropdown-menu" aria-labelledby="selectPet">
 																<a class="dropdown-item" href="#">Action</a>
@@ -436,7 +445,8 @@
 												<span class="treatment">View More</span>
 												<i role="img"
 													class="mat-icon notranslate large material-icons mat-icon-no-color mat-chevron-down"
-													aria-hidden="true" data-mat-icon-type="font">keyboard_arrow_right</i>
+													aria-hidden="true"
+													data-mat-icon-type="font">keyboard_arrow_right</i>
 											</a>
 										</div>
 									</div>
@@ -454,12 +464,14 @@
 													id="navbarSupportedContent">
 													<ul class="navbar-nav">
 														<li class="nav-item align-self-lg-center dropdown">
-															<a class="nav-link text-blue" id="selectIncome" role="button" data-toggle="dropdown"
+															<a class="nav-link text-blue" id="selectIncome"
+																role="button" data-toggle="dropdown"
 																aria-haspopup="true" aria-expanded="false">
 																<span class="treatment">TODAY</span>
 																<i role="img"
 																	class="mat-icon notranslate large material-icons mat-icon-no-color mat-chevron-down"
-																	aria-hidden="true" data-mat-icon-type="font">expand_more</i>
+																	aria-hidden="true"
+																	data-mat-icon-type="font">expand_more</i>
 															</a>
 															<div class="dropdown-menu" aria-labelledby="selectIncome">
 																<a class="dropdown-item" href="#">Action</a>
@@ -489,14 +501,15 @@
 												<span class="treatment">View More</span>
 												<i role="img"
 													class="mat-icon notranslate large material-icons mat-icon-no-color mat-chevron-down"
-													aria-hidden="true" data-mat-icon-type="font">keyboard_arrow_right</i>
+													aria-hidden="true"
+													data-mat-icon-type="font">keyboard_arrow_right</i>
 											</a>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-				
+
 						<div class="row my-4">
 							<div class="col-12">
 								<div class="card-details p-4 active-items-center shadow">
@@ -507,12 +520,15 @@
 									</div>
 									<div class="row pb-4 text-left">
 										<div class="col-md-6">
-											<p class="circle-span mb-2"><span class="clr-crcle-black"></span>consultation</p>
+											<p class="circle-span mb-2"><span
+													class="clr-crcle-black"></span>consultation</p>
 											<p class="circle-span"><span class="clr-crcle-black"></span>scooting</p>
 										</div>
 										<div class="col-md-6">
-											<p class="circle-span mb-2"><span class="clr-crcle-black"></span>kidney failure treatment</p>
-											<p class="circle-span"><span class="clr-crcle-black"></span>teeth cleaning</p>
+											<p class="circle-span mb-2"><span class="clr-crcle-black"></span>kidney
+												failure treatment</p>
+											<p class="circle-span"><span class="clr-crcle-black"></span>teeth cleaning
+											</p>
 										</div>
 									</div>
 									<div class="row">

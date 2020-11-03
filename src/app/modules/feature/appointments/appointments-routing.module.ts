@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     component: AppointmentsComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '',  component: AppointmentDashboardComponent },
       { path: 'dashboard', component: AppointmentDashboardComponent },
       { path: 'reminders', component: RemindersComponent },
       { path: 'calender', component: CalendarComponent },

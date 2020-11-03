@@ -62,3 +62,63 @@
         transition: $transition-time opacity linear;
     }
 }
+.mb-6{
+    margin-bottom: 90px;
+}
+.img-clinic-male-doc {
+    position: absolute;
+    left: 5%;
+    width: 180px;
+    top: -72px;
+    bottom: 10px;
+}
+// .bg-blue {
+//     background: #03375f;
+//     border-radius: 16px;
+// }
+// .finish-setup {
+//     text-transform: uppercase;
+//     color: #efac36;
+// }
+// .get-started-btn {
+//     text-decoration: none;
+//     color: #fff;
+//     background: #efac39;
+//     padding: 8px 25px;
+//     text-transform: uppercase;
+//     border-radius: 6px;
+//     font-size: 12px;
+// }
+
+@media only screen and (max-width: 991px) {
+    .img-clinic-male-doc {
+        position: absolute;
+        left: 0px;
+        width: 150px;
+        top: -50px;
+    }
+    .m-offset-set {
+        padding-right: 15px;
+    }
+}
+@media only screen and (max-width: 767px) {
+  .m-margin-btm {
+    margin-bottom: 2rem;
+  }
+  .m-hide {
+    display: none;
+  }
+  .m-show {
+    display: block;
+  }
+  .m-offset-set {
+    margin-top: -75px;
+    padding: 15px;
+  }
+  .img-clinic-male-doc {
+    position: inherit;
+    left: 0px;
+    width: 100%;
+    top: -80px;
+  }
+}

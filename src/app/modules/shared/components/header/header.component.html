@@ -12,9 +12,8 @@
                     <span>Four Paws Vet Clinic</span>
                     <mat-icon class="large">expand_more</mat-icon>
                 </a>
-                <div class="dropdown-menu" aria-labelledby="selectClinic">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-menu" aria-labelledby="selectClinic" >
+                    <a class="dropdown-item" href="#" *ngFor="let clinic of clinicData;">{{clinic.name}}</a>
                 </div>
             </li>
             <!-- <li class="nav-item text-blue d-flex ml-auto border-right">
@@ -32,11 +31,11 @@
                 <div class="px-3 align-self-center">
                     <!-- <mat-icon class="cursor-pointer">language</mat-icon> -->
                     <li *ngIf="languageSwitcher">
-                        
-                        <mat-select class="select1" (selectionChange)="serviceapp.changeLanguage($event.value)"
-                                    [value]="translate.currentLang" [placeholder]="translate.currentLang">
-                                    <mat-option></mat-option>
-                          <mat-option *ngFor="let lang of translate.store.langs" [value]="lang">{{lang | uppercase}}</mat-option>
+                        <mat-select class="select1" (selectionChange)="serviceapp.changeLanguage($event.value)" 
+                                    [value]="translate.currentLang">
+                          <mat-option *ngFor="let lang of languages" [value]="lang.language">
+                            <img [src]="lang?.image" class="" height="40" width="40">
+                              {{lang.language | uppercase}}</mat-option>
                         </mat-select>
                       </li>
                 </div>

@@ -89,7 +89,6 @@ export class ContactUsComponent {
 
   async onSubmit() {
     try {
-      console.log(this.contactForm.value)
       
       this.contactForm.markAllAsTouched();
       if (this.contactForm.valid) {

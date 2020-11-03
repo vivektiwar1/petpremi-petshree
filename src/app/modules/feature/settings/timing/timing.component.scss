@@ -1,14 +1,90 @@
 @import "src/styles/variables";
-
+.input-group-prepend {
+    width: 80px;
+}
 .card-details {
     background: $white;
 
-    img {
-        width: 50px;
+   border-radius: $border-radius-18;
+}
+
+
+.timer {
+    background-color: unset;
+}
+
+.time-picker {
+    right: 0;
+    top: 4px;
+}
+
+.error {
+    border-color: $color-danger;
+    outline: none;
+    transition: $transition-time;
+    box-shadow: 0 0 0 0.2rem rgba($color-danger, 0.2);
+
+    &-message {
+        color: $color-danger;
+        height: 1rem;
+        font-size: $font-size-12;
+        text-align: right;
+        span {
+            vertical-align: middle;
+        }
+    }
+}
+
+.loader {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+
+    &-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 56px;
+        right: 0;
+        background: rgba(0, 0, 0, 0.15);
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+}
+
+.remove {
+    &-schedule {
+        position: absolute;
+        top: -8px;
+        right: -8px;
     }
 
-    border-radius: $border-radius-18;
+    &-slot {
+        position: absolute;
+        top: 0;
+        right: 1rem;
+    }
 }
+
+.chip-active {
+    color: $white;
+    background: $color-primary;
+    transition: $transition-time all;
+}
+
+.mat-chip {
+    cursor: pointer;
+    height: 32px;
+    width: 32px;
+    transition: $transition-time all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .owner {
     .details {

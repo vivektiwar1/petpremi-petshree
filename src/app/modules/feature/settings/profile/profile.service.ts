@@ -114,6 +114,7 @@ export class ProfileService {
   }
 
   updateClinicDetails(formData) {
+    console.log(formData)
     return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/partner/address/update/create`, formData).pipe(
       map((response: any) => {
         console.log(response);
@@ -128,7 +129,14 @@ export class ProfileService {
       })
     );
   }
+  updateUserTiming(apiData){
+    return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/partner/address/update/create`,apiData).toPromise(), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
 
+  }
   updateProfileDetails(formData, userId) {
     const apiData = {
       commonParamHash: {
@@ -204,7 +212,7 @@ export class ProfileService {
     );
 
   }
-
+  
   getPartnerDetails(partnerId){
     const apiData = {
       commonParamHash: {
@@ -217,9 +225,6 @@ export class ProfileService {
       }
   };
     return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
-
-
-
   }
 
 

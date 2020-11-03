@@ -32,4 +32,24 @@ export class HeaderService {
       }
     })
   }
+  getLanguages(){
+    const apiData = {
+      commonParamHash: {
+        entityName: "Language",
+        uiBean: "BNELanguage",
+        operation: "SEARCH",
+        pagination: {
+          pageNumber: 0,
+          pageSize: 10
+        },
+        sort: {
+          ASC: []
+        }
+      },
+      objectHash: {
+        status: true
+      }
+    }
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`,apiData).toPromise();
+  }
 }

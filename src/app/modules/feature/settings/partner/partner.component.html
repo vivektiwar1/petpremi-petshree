@@ -173,8 +173,16 @@
     </form>
 
     <div class="accordion" id="accordionExample">
-        <div class="card" *ngFor="let clinicData of clinic; let clinicIndex=index;">
-            <div class="card-header" id="headingOne">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h3 class="title-color">Clinic & Schedule Details</h3>
+
+            <button class="btn btn-effect text-warning no-outline px-0" (click)="addClinic()">
+                + ADD ANOTHER CLINIC
+            </button>
+        </div>
+        <div class="card mb-2" *ngFor="let clinicData of clinic; let clinicIndex=index;">
+            <div class="card-header row no-gutters" id="headingOne">
+               <div class="col-11">
                 <h2 class="mb-0">
                     <button class="btn btn-link" type="button" data-toggle="collapse"
                         attr.data-target="#clinic_{{clinicData?.value?.id}}" aria-expanded="false"
@@ -182,21 +190,20 @@
                         {{clinicData?.value?.name ? clinicData?.value?.name : "Add New"}}
                     </button>
                 </h2>
+               </div>
+               <div class="col-1">
+               <img src="../../../../../assets/icon/dropdown.png" class="text-right"heigh="30px" width="50px">
+               </div>
             </div>
             <div id="clinic_{{clinicData?.value?.id}}" class="collapse" aria-labelledby="headingOne"
                 data-parent="#accordionExample">
-                <div class="col-12 d-flex justify-content-between align-items-center">
-                    <button class="btn btn-effect text-warning no-outline px-0" (click)="addClinic()">
-                        + ADD ANOTHER CLINIC
-                    </button>
-                </div>
+                
                 <div class="card-body">
                     <form class="no-outline" [formGroup]="clinicData" autocomplete="off">
                         <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
                             [class.loader]="apiInProgress.clinicData">
                             <div class="row py-3">
                                 <div class="col-12">
-                                    <h3 class="title-color">Clinic & Schedule Details</h3>
                                     <div class="row mt-3">
                                         <div class="col-12 col-sm-6 form-group mb-0">
                                             <label class="mb-1" for="name">Clinic Name</label>
@@ -268,7 +275,7 @@
                                             <input class="form-control" id="longitude" formControlName="longitude"
                                                 placeholder="Longitude">
                                         </div>
-                                        <!-- <div class="col-12 d-flex justify-content-between align-items-center">
+                                        <div class="col-12 d-flex justify-content-between align-items-center">
                                             <h6 class="title-color mb-0">Add Partner Details</h6>
                                             <button class="btn btn-effect text-warning no-outline px-0"
                                                 (click)="addPartner(clinicIndex)"
@@ -458,11 +465,10 @@
                                                     </div>
                                                 </div>
                                             </ng-container>
-                                        </div> -->
+                                        </div>
                                         <div class="col-12 mt-3 text-right">
-                                            <p>{{clinicData.value.name}}</p>
                                             <app-button className="btn-warning btn-large" buttonText="Save"
-                                                (buttonClicked)="onSubmit('clinicData')"
+                                                (buttonClicked)="onSubmit(clinicData, clinicIndex)"
                                                 >
                                             </app-button>
                                         </div>

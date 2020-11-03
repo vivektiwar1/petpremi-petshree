@@ -49,6 +49,7 @@ export class AppService {
   }
 
   changeLanguage(language) {
+    console.log(language)
     if (this.translate.currentLang !== language) {
       this.store.setLanguage(language);
       AppService.languageCode = language;

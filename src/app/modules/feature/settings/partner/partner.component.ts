@@ -8,7 +8,6 @@ import {map, takeUntil} from 'rxjs/operators';
 import {CommonService} from 'src/app/services/common.service';
 import {AuthService} from 'src/app/shared/services/auth.service';
 import {WhiteSpaceValidator} from 'src/app/validators/common';
-import {ECardService} from '../../e-card/e-card.service';
 import {ActivatePartnerComponent} from '../profile/activate-partner/activate-partner.component';
 import {ProfileService} from '../profile/profile.service';
 
@@ -72,9 +71,7 @@ export class PartnerComponent implements OnInit {
     private matDialog: MatDialog,
     private profileService: ProfileService,
     private toastr: ToastrService,
-    private eCardService: ECardService,
     private router: Router
-
   ) {
     this.canCreatePartner = !!JSON.parse(localStorage.getItem('userData') || '{}').canCreatePartner;
     this.loadData();
@@ -92,6 +89,7 @@ export class PartnerComponent implements OnInit {
         this.weekDays,
         this.stateList,
         this.cityList,
+        this.pinCodeList,
       ] = await Promise.all([
         this.commonService.getUserId(),
         this.commonService.getTitleList(),
@@ -99,7 +97,9 @@ export class PartnerComponent implements OnInit {
         this.commonService.getCountryList(),
         this.commonService.getDaysList(),
         this.commonService.getStateList(1),
-        this.commonService.getCityList(1)
+        this.commonService.getCityList(1),
+        this.commonService.getPinCodeList(1)
+
       ]);
       this.createPartnerForm({});
       await this.getPartnerDetails();
@@ -138,7 +138,9 @@ export class PartnerComponent implements OnInit {
       for (var i = 0; i <= this.partnerDetails.partnerAddresses.length - 1; i++) {
         dataClinic.push(this.createClinicForm(this.partnerDetails.partnerAddresses[i]));
       }
+      
       this.clinic = dataClinic;
+      // console.log(this.clinic)
     } catch (error) {
       this.toastr.error(`Something went wrong!`);
       console.log(error);
@@ -194,9 +196,9 @@ export class PartnerComponent implements OnInit {
 
   createClinicForm(formData) {
     let selectedClinicCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
-    let selectedClinicState = (this.stateList?.find(item => item.id === formData.state?.id) || this.stateList?.[0]) as any;
+    let selectedClinicState = (this.stateList?.find(item => item.id === formData.state?.id) || this.stateList?.[formData.state?.id-1]) as any;
     let selectedClinicCity = (this.cityList?.find(item => item.id === formData.city?.id) || this.cityList?.[0]) as any;
-    let selectedClinicPinCode = (this.pinCodeList?.find(item => item.id === formData.pinCode?.id) || this.pinCodeList?.[0]) as any;
+    let selectedClinicPinCode = (this.pinCodeList?.find(item => item.id === formData.pinCode?.id) || this.pinCodeList[0]) as any;
     let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
     // this.clinicForm = this.partnerDetails?.partnerAddresses.map(res => {
     let clinicForm = this.formBuilder.group({
@@ -213,10 +215,10 @@ export class PartnerComponent implements OnInit {
       Validators.maxLength(selectedCountry?.maxLength || 10)])],
       clinicAddress: ['', Validators.compose([WhiteSpaceValidator])],
       countryName: selectedClinicCountry?.id,
-      country: [selectedCountry?.id],
-      state: selectedClinicState?.id,
-      city: selectedClinicCity?.id,
-      pinCode: selectedClinicPinCode?.id,
+      country: [selectedClinicCountry?.id],
+      state: selectedClinicState?.value,
+      city: selectedClinicCity?.value,
+      pinCode: selectedClinicPinCode?.value,
       businessTimings: this.formBuilder.array([this.createSchedule()]),
       partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails()])
     });
@@ -224,7 +226,6 @@ export class PartnerComponent implements OnInit {
     this.clinicData = this.formBuilder.group({
       // this.clinicForm = this.formBuilder.group({
       partnerId: this.partnerDetails.id,
-      id: formData.id,
       isPartner: true,
       displayOrder: 1,
       name: [formData.name ? formData.name : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
@@ -242,7 +243,6 @@ export class PartnerComponent implements OnInit {
       businessTimings: this.formBuilder.array([this.createSchedule()]),
       partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails()])
     });
-
 
     const countryControl = clinicForm.get('country');
     const stateControl = clinicForm.get('state');
@@ -285,75 +285,6 @@ export class PartnerComponent implements OnInit {
 
     return clinicForm;
   }
-
-  // createClinicFormData(formData) {
-  //   let selectedClinicCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
-  //   let selectedClinicState = (this.stateList?.find(item => item.id === formData.state?.id) || this.stateList?.[0]) as any;
-  //   let selectedClinicCity = (this.cityList?.find(item => item.id === formData.city?.id) || this.cityList?.[0]) as any;
-  //   let selectedClinicPinCode = (this.pinCodeList?.find(item => item.id === formData.pinCode?.id) || this.pinCodeList?.[0]) as any;
-  //   let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
-  //   // this.clinicForm = this.partnerDetails?.partnerAddresses.map(res => {
-  //   this.clinicData = this.formBuilder.group({
-  //     partnerId: this.partnerDetails.id,
-  //     id: formData.id,
-  //     isPartner: true,
-  //     displayOrder: 4,
-  //     name: [formData.name ? formData.name : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
-  //     latitude: ['', Validators.compose([WhiteSpaceValidator])],
-  //     longitude: ['', Validators.compose([WhiteSpaceValidator])],
-  //     mobile: ['', Validators.compose([Validators.required,
-  //     Validators.minLength(selectedCountry?.minLength || 10),
-  //     Validators.maxLength(selectedCountry?.maxLength || 10)])],
-  //     clinicAddress: ['', Validators.compose([WhiteSpaceValidator])],
-  //     countryName: selectedClinicCountry?.id,
-  //     country: [selectedCountry?.id],
-  //     state: selectedClinicState?.id,
-  //     city: selectedClinicCity?.id,
-  //     pinCode: selectedClinicPinCode?.id,
-  //     businessTimings: this.formBuilder.array([this.createSchedule()]),
-  //     partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails()])
-  //   });
-
-
-  //   const countryControl = this.clinicData.get('country');
-  //   const stateControl = this.clinicData.get('state');
-  //   const cityControl = this.clinicData.get('city');
-  //   const countryNameControl = this.clinicData.get('countryName');
-  //   const phoneControl = this.clinicData.get('mobile') as FormControl;
-
-  //   countryNameControl.valueChanges.subscribe(async countryCode => {
-  //     selectedCountry = this.countryList.find(country => country.id === countryCode);
-  //     countryControl.setValue(countryCode, { emitEvent: false });
-  //     this.stateList = await this.commonService.getStateList(countryCode);
-  //   });
-
-  //   stateControl.valueChanges.subscribe(async stateCode => {
-  //     this.cityList = await this.commonService.getCityList(stateCode);
-  //   });
-
-  //   cityControl.valueChanges.subscribe(async cityCode => {
-  //     this.pinCodeList = await this.commonService.getPinCodeList(cityCode);
-  //   });
-
-  //   countryControl.valueChanges.subscribe(async countryCode => {
-  //     selectedClinicCountry = this.countryList.find(country => country.id === countryCode);
-  //     selectedCountry = this.countryList.find(country => country.id === countryCode);
-  //     countryNameControl.setValue(countryCode, { emitEvent: false });
-  //     countryControl.setValue(countryCode, { emitEvent: false });
-  //     this.stateList = await this.commonService.getStateList(countryCode);
-  //     phoneControl.setValidators([Validators.minLength(selectedCountry?.minLength), Validators.maxLength(selectedCountry?.maxLength)]);
-  //     phoneControl.updateValueAndValidity();
-  //   });
-
-  //   phoneControl.valueChanges.pipe(
-  //     map(value => value && value.replace(/\D/g, '')),
-  //     map(value => value && value.replace(/^0/g, '')),
-  //     map(value => value && value.slice(0, selectedCountry.maxLength)),
-  //     takeUntil(this.destroy$)
-  //   ).subscribe(value => phoneControl.setValue(value, { emitEvent: false }));
-  //   // });
-  //   this.scheduleControl = this.clinicData.get('businessTimings') as FormArray;
-  // }
 
 
   createPartnerDetails() {
@@ -511,7 +442,6 @@ export class PartnerComponent implements OnInit {
         days.push({ id: day });
       });
       const timeRanges = data.timeRange;
-      console.log(timeRanges);
       const newRanges = [];
       timeRanges.map(time => {
         const slotData = {
@@ -521,6 +451,7 @@ export class PartnerComponent implements OnInit {
           toMinutes: 0,
           displayOrder: 0
         };
+        // console.log(time.fromHours)
         const fromHoursBreak = time.fromHours.split(':');
         const fromMinutesBreak = fromHoursBreak[1].split(' ');
         slotData.fromHours = (fromMinutesBreak[1] === 'PM' ? (fromHoursBreak[0] / 1) + 12 : fromHoursBreak[0]) / 1;
@@ -535,6 +466,7 @@ export class PartnerComponent implements OnInit {
       newTimings[slot].days = days;
       newTimings[slot].timeRange = newRanges;
     });
+    
     return { businessTimings: newTimings };
   }
 
@@ -548,26 +480,31 @@ export class PartnerComponent implements OnInit {
     });
     return { partnerContactNumbers };
   }
-  async onSubmit(formType) {
-    console.log(formType)
-    console.log(this[formType].value)
+  async onSubmit(formType, index) {
+    console.log("index value is "+index)
+    formType=this.clinic[index].value
     const apiData = {
-      ...this[formType].value,
-      ...('userExperience' in this[formType].value ? {
-        userExperience: this[formType].value.userExperience ? this[formType].value.userExperience : null
-      } : {}),
+      ...formType,
+      // ...('userExperience' in this[formType] ? {
+      //   userExperience: this[formType].userExperience ? this[formType].value.userExperience : null
+      // } : {}),
+      
       ...this.modifyFormDataForBackend(formType, 'state'),
       ...this.modifyFormDataForBackend(formType, 'country'),
       ...this.modifyFormDataForBackend(formType, 'city'),
       ...this.modifyFormDataForBackend(formType, 'pinCode'),
-      // ...this.timeRangeModify(this[formType].value.businessTimings),
-      ...this.modifyPartnerFormData(this[formType].value.partnerContactNumbers)
+      ...this.timeRangeModify(formType.businessTimings),
+      ...this.modifyPartnerFormData(formType.partnerContactNumbers)
     };
+
     delete apiData.countryName;
-    if (this[formType].valid) {
+    delete apiData.id;
+    delete apiData.mobile;
+    if (formType) {
       try {
         this.apiInProgress[formType] = true;
-        // await this.profileService.updateClinicDetails(apiData).toPromise();
+        console.log(apiData)
+        await this.profileService.updateClinicDetails(apiData).toPromise();
         this.apiInProgress[formType] = false;
         this.toastr.success('Saved Successfully!');
       } catch (error) {
@@ -585,7 +522,7 @@ export class PartnerComponent implements OnInit {
 
       const formData = {
         ...this[formType].value,
-        ...this.modifyFormDataForBackend(formType, 'country'),
+        // ...this.modifyFormDataForBackend(formType, 'country'),
       };
       delete formData.countryName;
       try {
@@ -603,14 +540,16 @@ export class PartnerComponent implements OnInit {
   }
 
   modifyFormDataForBackend(formType, formField) {
+   
     return {
-      ...(formField in this[formType].value ?
+      ...(formField in formType ?
         {
-          [formField]: this[formType].value[formField] ?
-            { id: this[formType].value[formField] } : null
+          [formField]: formType[formField] ?
+            { id: formType[formField] } : null
         } : {}
       )
-    };
+    
+    }
   }
 
   async getUserDetails() {

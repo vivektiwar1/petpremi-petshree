@@ -382,10 +382,13 @@ export class ECardService implements OnInit {
 
 
   postEnquiry(apiData) {
+    console.log(apiData.phone)
+
     if (!apiData.phone) {
       delete apiData.phone;
-      delete apiData.countryId;
     }
+    console.log(apiData)
+
     return this.http.put(this.getApiUrl('/enquiry/partner'), apiData);
   }
 
