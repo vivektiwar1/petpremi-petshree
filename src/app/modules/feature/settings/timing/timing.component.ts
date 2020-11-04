@@ -6,6 +6,8 @@ import { ClientDetailsTabLinks } from 'src/app/app.constant';
 import { CommonService } from 'src/app/services/common.service';
 import { WhiteSpaceValidator } from 'src/app/validators/common';
 import { ProfileService } from '../profile/profile.service';
+import { map, takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-partner-timing',
@@ -66,7 +68,8 @@ export class TimingComponent implements OnInit {
   }
   async onSubmit(formType) {
     const apiData = {
-      ...this[formType].value
+      ...this[formType].value,
+      ...this.timeRangeModify(this[formType].value.businessTimings),
     };
 
     if (formType) {
@@ -81,7 +84,7 @@ export class TimingComponent implements OnInit {
         this.toastr.error(`Something went wrong!`);
         this.apiInProgress[formType] = false;
       }
-    } 
+    }
   }
 
   createSchedule() {
@@ -136,4 +139,41 @@ export class TimingComponent implements OnInit {
     const control = this.userTiming.get('businessTimings') as FormArray;
     control.removeAt(scheduleIndex);
   }
+
+  timeRangeModify(Timings) {
+    const newTimings = Timings;
+    Timings.map((data, slot) => {
+      const days = [];
+      data.days.map((day) => {
+        days.push({ id: day });
+      });
+      const timeRanges = data.timeRange;
+      const newRanges = [];
+      timeRanges.map(time => {
+        const slotData = {
+          fromHours: 0,
+          toHours: 0,
+          fromMinutes: 0,
+          toMinutes: 0,
+          displayOrder: 0
+        };
+        // console.log(time.fromHours)
+        const fromHoursBreak = time.fromHours.split(':');
+        const fromMinutesBreak = fromHoursBreak[1].split(' ');
+        slotData.fromHours = (fromMinutesBreak[1] === 'PM' ? (fromHoursBreak[0] / 1) + 12 : fromHoursBreak[0]) / 1;
+        slotData.fromMinutes = fromMinutesBreak[0] / 1;
+        const toHoursBreak = time.toHours.split(':');
+        const toMinutesBreak = toHoursBreak[1].split(' ');
+        slotData.toHours = (toMinutesBreak[1] === 'PM' ? (toHoursBreak[0] / 1) + 12 : toHoursBreak[0]) / 1;
+        slotData.toMinutes = (toMinutesBreak[0]) / 1;
+        slotData.displayOrder = (newRanges.length + 1) * 10;
+        newRanges.push(slotData);
+      });
+      newTimings[slot].days = days;
+      newTimings[slot].timeRange = newRanges;
+    });
+
+    return { businessTimings: newTimings };
+  }
+
 }

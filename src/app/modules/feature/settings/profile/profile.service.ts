@@ -217,7 +217,7 @@ export class ProfileService {
     const apiData = {
       commonParamHash: {
           entityName: 'Partner',
-          uiBean: 'BNEPartnerCard',
+          uiBean: 'BNEPartnerDetails',
           operation: 'SEARCH'
       },
       objectHash: {
