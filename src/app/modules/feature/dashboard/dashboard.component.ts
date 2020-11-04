@@ -257,7 +257,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   }
   createAppointment() {
-    console.log("working")
     const dialog = this.matDialog.open(CreateAppointmentComponent, {
       disableClose: true,
       position: {

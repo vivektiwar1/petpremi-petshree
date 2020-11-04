@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { ClientDetailsTabLinks } from 'src/app/app.constant';
 import { CommonService } from 'src/app/services/common.service';
 import { WhiteSpaceValidator } from 'src/app/validators/common';
 import { ProfileService } from '../profile/profile.service';
-import { map, takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -20,6 +18,8 @@ export class TimingComponent implements OnInit {
   userTiming: FormGroup;
   activeTab: string;
   IndexNumber: any;
+  UserPartnerName:any;
+  partnerAddressList:Array<any>;
   apiInProgress = {
     page: false,
     formType: false,
@@ -47,31 +47,41 @@ export class TimingComponent implements OnInit {
     } catch (error) {
       this.apiInProgress.page = false;
     }
-
   }
   ngOnInit(): void {
-    // this.activeTab = (this.tabLinks.find(link => link.active) || {}).value;
     this.CreateUserTiming({})
     this.loadData()
+    this.getPartnerDetails()
 
+  }
+  async getPartnerDetails(){
+    const userData = JSON.parse(localStorage.getItem('userData'));
+      const partnerId = userData.partnerId;
+    const response: any=await this.profileService.getPartnerDetails(partnerId).toPromise();
+    this.UserPartnerName=response?.responseResult?.data?.content[0].name;
+    var dataResponse=response?.responseResult?.data?.content[0].partnerAddresses;
+    const clinicAddress: any = [];
+    for(var i=0;i<=dataResponse.length;i++){
+      if(dataResponse[i]?.address){
+        clinicAddress.push(dataResponse[i])
+      }
+    }
+    this.partnerAddressList=clinicAddress;
   }
 
   CreateUserTiming(formData) {
     this.userTiming = this.formBuilder.group({
-      name: [formData.name ? formData.name : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
+      name: ['', Validators.compose([Validators.required, WhiteSpaceValidator])],
       address: [formData.clinicAddress ? formData.clinicAddress : '', Validators.compose([WhiteSpaceValidator])],
       businessTimings: this.formBuilder.array([this.createSchedule()])
-
     });
-
-
   }
   async onSubmit(formType) {
     const apiData = {
-      ...this[formType].value,
+      isPartner: false,
+      id:this[formType].value.address,
       ...this.timeRangeModify(this[formType].value.businessTimings),
     };
-
     if (formType) {
       try {
         this.apiInProgress[formType] = true;
@@ -169,8 +179,9 @@ export class TimingComponent implements OnInit {
         slotData.displayOrder = (newRanges.length + 1) * 10;
         newRanges.push(slotData);
       });
-      newTimings[slot].days = days;
       newTimings[slot].timeRange = newRanges;
+      newTimings[slot].days = days;
+
     });
 
     return { businessTimings: newTimings };

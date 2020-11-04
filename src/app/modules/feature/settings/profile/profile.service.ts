@@ -104,7 +104,7 @@ export class ProfileService {
       })
     );
   }
-
+ 
   updateDisplayPicture(type: string, formData) {
     return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/user/${type !== 'Profile' ? type.toLowerCase() : 'uploadProfilePic'}`, formData);
   }
@@ -130,13 +130,13 @@ export class ProfileService {
     );
   }
   updateUserTiming(apiData){
-    return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/partner/address/update/create`,apiData).toPromise(), {
+    return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/partner/address/update/create`,apiData, {
       headers: {
         'Content-Type': 'application/json'
       }
-    }
-
+    }).toPromise()
   }
+  
   updateProfileDetails(formData, userId) {
     const apiData = {
       commonParamHash: {

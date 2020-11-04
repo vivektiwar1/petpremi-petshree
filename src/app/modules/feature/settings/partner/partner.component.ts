@@ -1,15 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { CommonService } from 'src/app/services/common.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { WhiteSpaceValidator } from 'src/app/validators/common';
-import { ActivatePartnerComponent } from '../profile/activate-partner/activate-partner.component';
-import { ProfileService } from '../profile/profile.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {Subject} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
+import {CommonService} from 'src/app/services/common.service';
+import {AuthService} from 'src/app/shared/services/auth.service';
+import {WhiteSpaceValidator} from 'src/app/validators/common';
+import {ActivatePartnerComponent} from '../profile/activate-partner/activate-partner.component';
+import {ProfileService} from '../profile/profile.service';
 
 
 @Component({
@@ -37,6 +37,17 @@ export class PartnerComponent implements OnInit {
   };
 
   destroy$: Subject<void> = new Subject<void>();
+
+  // weekDays = 
+  // [
+  //   { name: 'S', value: 'sunday' },
+  //   { name: 'M', value: 'monday' },
+  //   { name: 'T', value: 'tuesday' },
+  //   { name: 'W', value: 'wednesday' },
+  //   { name: 'T', value: 'thursday' },
+  //   { name: 'F', value: 'friday' },
+  //   { name: 'S', value: 'saturday' },
+  // ];
 
   titleList: Array<any>;
   genderList: Array<any>;
@@ -110,7 +121,6 @@ export class PartnerComponent implements OnInit {
       const userData = JSON.parse(localStorage.getItem('userData'));
       const partnerId = userData.partnerId;
       const response: any = await this.profileService.getPartnerDetails(partnerId).toPromise();
-      // console.log(response.responseResult.data)
       this.partnerDetails = response.responseResult.data.content[0];
       this.partnerForm.controls.businessName.setValue(this.partnerDetails.name);
       this.partnerForm.controls.mobile.setValue(this.partnerDetails.mobile);
@@ -126,12 +136,9 @@ export class PartnerComponent implements OnInit {
       this.partnerForm.controls.address.setValue(this.partnerDetails.address);
       const dataClinic: any = [];
       for (var i = 0; i <= this.partnerDetails.partnerAddresses.length - 1; i++) {
-        dataClinic.push(this.createClinicForm(this.partnerDetails.partnerAddresses[i]));
-        // console.log(dataClinic[i].value.businessTimings)
-        // console.log(this.partnerDetails.partnerAddresses[i].businessTimings)
+        dataClinic.push(this.createClinicForm(this.partnerDetails.partnerAddresses[i]));        
       }
       this.clinic = dataClinic;
-
     } catch (error) {
       this.toastr.error(`Something went wrong!`);
       console.log(error);
@@ -187,7 +194,7 @@ export class PartnerComponent implements OnInit {
 
   createClinicForm(formData) {
     let selectedClinicCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
-    let selectedClinicState = (this.stateList?.find(item => item.id === formData.state?.id) || this.stateList?.[formData.state?.id - 1]) as any;
+    let selectedClinicState = (this.stateList?.find(item => item.id === formData.state?.id) || this.stateList?.[formData.state?.id-1]) as any;
     let selectedClinicCity = (this.cityList?.find(item => item.id === formData.city?.id) || this.cityList?.[0]) as any;
     let selectedClinicPinCode = (this.pinCodeList?.find(item => item.id === formData.pinCode?.id) || this.pinCodeList[0]) as any;
     let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
@@ -204,15 +211,16 @@ export class PartnerComponent implements OnInit {
       mobile: [formData.mobile ? formData.mobile : '', Validators.compose([Validators.required,
       Validators.minLength(selectedCountry?.minLength || 10),
       Validators.maxLength(selectedCountry?.maxLength || 10)])],
-      clinicAddress: ['', Validators.compose([WhiteSpaceValidator])],
+      address: [formData.address ? formData.address : '', Validators.compose([WhiteSpaceValidator])],
       countryName: selectedClinicCountry?.id,
       country: [selectedClinicCountry?.id],
       state: selectedClinicState?.value,
       city: selectedClinicCity?.value,
       pinCode: selectedClinicPinCode?.value,
-      businessTimings: this.formBuilder.array([this.createSchedule(formData.businessTimings)]),
-      partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails(formData.partnerContactNumbers)])
+      businessTimings: this.formBuilder.array([this.createSchedule()]),
+      partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails()])
     });
+
     // this.clinicData = this.formBuilder.group({
     //   // this.clinicForm = this.formBuilder.group({
     //   partnerId: this.partnerDetails.id,
@@ -224,7 +232,7 @@ export class PartnerComponent implements OnInit {
     //   mobile: [formData.mobile ? formData.mobile : '', Validators.compose([Validators.required,
     //   Validators.minLength(selectedCountry?.minLength || 10),
     //   Validators.maxLength(selectedCountry?.maxLength || 10)])],
-    //   clinicAddress: ['', Validators.compose([WhiteSpaceValidator])],
+    //   address: [formData.address ? formData.address : '', Validators.compose([WhiteSpaceValidator])],
     //   countryName: selectedClinicCountry?.id,
     //   country: [selectedCountry?.id],
     //   state: selectedClinicState?.id,
@@ -277,28 +285,14 @@ export class PartnerComponent implements OnInit {
   }
 
 
-  createPartnerDetails(formData) {
-    // console.log(formData)
-    var Partner;
-    if (formData[0]) {
-      Partner = this.formBuilder.group({
-        country: [this.countryList[0].id],
-        title: [this.titleList[0].id],
-        mobile: [formData[0].mobile ? formData[0].mobile : '', Validators.compose([Validators.required])],
-        firstName: [formData[0].firstName ? formData[0].firstName : '', Validators.required],
-        lastName: [formData[0].lastName ? formData[0].lastName : '', Validators.required]
-      });
-    } else {
-      Partner = this.formBuilder.group({
-        country: [this.countryList[0].id],
-        title: [this.titleList[0].id],
-        mobile: ['', Validators.compose([Validators.required])],
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required]
-      });
-    }
-    return Partner;
-
+  createPartnerDetails() {
+    return this.formBuilder.group({
+      country: [this.countryList[0].id],
+      title: [this.titleList[0].id],
+      mobile: ['', Validators.compose([Validators.required])],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required]
+    });
   }
 
   async validatePartnerNumber(event, index) {
@@ -332,7 +326,7 @@ export class PartnerComponent implements OnInit {
 
   addSchedule(index) {
     const control = this.clinic[index].get('businessTimings') as FormArray;
-    control.push(this.createSchedule({}));
+    control.push(this.createSchedule());
   }
   addClinic() {
     const control = this.clinic as FormArray;
@@ -340,43 +334,27 @@ export class PartnerComponent implements OnInit {
   }
   addPartner(index) {
     const control = this.clinic[index].get('partnerContactNumbers') as FormArray;
-    control.push(this.createPartnerDetails({}));
+    control.push(this.createPartnerDetails());
   }
 
   getClinicFormField(key: string) {
     return this.clinicData.get(key) as FormControl;
   }
 
-  createSchedule(timings) {
-    // console.log(timings)
+  createSchedule() {
     return this.formBuilder.group({
       days: [[]],
       timeRange: this.formBuilder.array([
-        this.createSlots(timings[0].timeRange)
+        this.createSlots()
       ])
     });
   }
 
-  createSlots(timerange) {
-    console.log(timerange)
-    var timeRange
-    if (timerange[0]) {
-      timeRange = this.formBuilder.group({
-        fromHours: [timerange[0].fromHours ? timerange[0].fromHours : '', Validators.required],
-        fromMinutes: [timerange[0].fromMinutes ? timerange[0].fromMinutes : '', Validators.required],
-        toHours: [timerange[0].toHours ? timerange[0].toHours : '', Validators.required],
-        toMinutes: [timerange[0].toMinutes ? timerange[0].toMinutes : '', Validators.required],
-      });
-    } else {
-      timeRange = this.formBuilder.group({
-        fromHours: [null, Validators.required],
-        fromMinutes: [null, Validators.required],
-        toHours: [null, Validators.required],
-        toMinutes: [null, Validators.required],
-      });
-    }
-    console.log(timeRange)
-    return timeRange.value;
+  createSlots() {
+    return this.formBuilder.group({
+      fromHours: [null, Validators.required],
+      toHours: [null, Validators.required]
+    });
   }
 
   removeSchedule(scheduleIndex) {
@@ -385,7 +363,7 @@ export class PartnerComponent implements OnInit {
   }
 
   addSlots(index) {
-    ((this.scheduleList[index] as FormGroup).get('timeRange') as FormArray).push(this.createSlots({}));
+    ((this.scheduleList[index] as FormGroup).get('timeRange') as FormArray).push(this.createSlots());
   }
 
   removeSlots(scheduleIndex, slotIndex) {
@@ -454,10 +432,6 @@ export class PartnerComponent implements OnInit {
     });
   }
 
-  timeRangeModifyMerge(){
-
-  }
-  
   timeRangeModify(Timings) {
     const newTimings = Timings;
     Timings.map((data, slot) => {
@@ -490,7 +464,7 @@ export class PartnerComponent implements OnInit {
       newTimings[slot].days = days;
       newTimings[slot].timeRange = newRanges;
     });
-
+    
     return { businessTimings: newTimings };
   }
 
@@ -505,14 +479,14 @@ export class PartnerComponent implements OnInit {
     return { partnerContactNumbers };
   }
   async onSubmit(formType, index) {
-    console.log("index value is " + index)
-    formType = this.clinic[index].value
+    console.log("index value is "+index)
+    formType=this.clinic[index].value
     const apiData = {
       ...formType,
       // ...('userExperience' in this[formType] ? {
       //   userExperience: this[formType].userExperience ? this[formType].value.userExperience : null
       // } : {}),
-
+      
       ...this.modifyFormDataForBackend(formType, 'state'),
       ...this.modifyFormDataForBackend(formType, 'country'),
       ...this.modifyFormDataForBackend(formType, 'city'),
@@ -536,7 +510,7 @@ export class PartnerComponent implements OnInit {
         this.toastr.error(`Something went wrong!`);
         this.apiInProgress[formType] = false;
       }
-    }
+    } 
   }
 
   async onSubmitPartner(formType) {
@@ -564,7 +538,7 @@ export class PartnerComponent implements OnInit {
   }
 
   modifyFormDataForBackend(formType, formField) {
-
+   
     return {
       ...(formField in formType ?
         {
@@ -572,7 +546,7 @@ export class PartnerComponent implements OnInit {
             { id: formType[formField] } : null
         } : {}
       )
-
+    
     }
   }
 
