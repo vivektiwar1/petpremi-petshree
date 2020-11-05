@@ -84,7 +84,6 @@ export class TimingComponent implements OnInit {
     if (formType) {
       try {
         this.apiInProgress[formType] = true;
-        console.log(apiData)
         await this.profileService.updateUserTiming(apiData);
         this.apiInProgress[formType] = false;
         this.toastr.success('Saved Successfully!');

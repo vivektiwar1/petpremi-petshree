@@ -475,7 +475,6 @@ export class PartnerComponent implements OnInit {
     return { partnerContactNumbers };
   }
   async onSubmit(formType, index) {
-    console.log("index value is " + index)
     formType = this.clinic[index].value
     const apiData = {
       ...formType,
@@ -497,7 +496,6 @@ export class PartnerComponent implements OnInit {
     if (formType) {
       try {
         this.apiInProgress[formType] = true;
-        console.log(apiData)
         await this.profileService.updateClinicDetails(apiData).toPromise();
         this.apiInProgress[formType] = false;
         this.toastr.success('Saved Successfully!');
