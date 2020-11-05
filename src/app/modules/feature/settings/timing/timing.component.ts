@@ -6,7 +6,6 @@ import { CommonService } from 'src/app/services/common.service';
 import { WhiteSpaceValidator } from 'src/app/validators/common';
 import { ProfileService } from '../profile/profile.service';
 
-
 @Component({
   selector: 'app-partner-timing',
   templateUrl: './timing.component.html',

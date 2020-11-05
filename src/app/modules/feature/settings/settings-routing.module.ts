@@ -6,6 +6,7 @@ import { SettingsComponent } from './settings.component';
 import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
 import { PartnerComponent } from './partner/partner.component';
 import { TimingComponent } from './timing/timing.component';
+import { PayoutComponent } from './payout/payout.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'customer-profile', component: CustomerProfileComponent },
       { path: 'partner', component: PartnerComponent },
-      { path: 'timings', component: TimingComponent }
+      { path: 'timings', component: TimingComponent },
+      { path: 'payout', component: PayoutComponent }
     ]
   }
 ];
