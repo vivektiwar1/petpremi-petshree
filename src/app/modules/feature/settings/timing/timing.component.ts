@@ -15,14 +15,16 @@ export class TimingComponent implements OnInit {
 
   // readonly tabLinks = ClientDetailsTabLinks;
   userTiming: FormGroup;
+  addTiming: FormGroup;
   activeTab: string;
   IndexNumber: any;
-  UserPartnerName:any;
-  partnerAddressList:Array<any>;
+  UserPartnerName: any;
+  timings: FormArray;
+  Days: Array<any>;
+  partnerAddressList: Array<any>;
   apiInProgress = {
     page: false,
     formType: false,
-
   };
   weekDays: Array<any>;
   constructor(
@@ -48,38 +50,55 @@ export class TimingComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.CreateUserTiming({})
-    this.loadData()
-    this.getPartnerDetails()
+    // this.CreateUserTiming({});
+    this.loadData();
+    this.getPartnerDetails();
+    this.getUserTiming();
 
   }
-  async getPartnerDetails(){
+  async getPartnerDetails() {
     const userData = JSON.parse(localStorage.getItem('userData'));
-      const partnerId = userData.partnerId;
-    const response: any=await this.profileService.getPartnerDetails(partnerId).toPromise();
-    this.UserPartnerName=response?.responseResult?.data?.content[0].name;
-    var dataResponse=response?.responseResult?.data?.content[0].partnerAddresses;
+    const partnerId = userData.partnerId;
+    const response: any = await this.profileService.getPartnerDetails(partnerId).toPromise();
+    this.UserPartnerName = response?.responseResult?.data?.content[0].name;
+    var dataResponse = response?.responseResult?.data?.content[0].partnerAddresses;
     const clinicAddress: any = [];
-    for(var i=0;i<=dataResponse.length;i++){
-      if(dataResponse[i]?.address){
+    for (var i = 0; i <= dataResponse.length; i++) {
+      if (dataResponse[i]?.address) {
         clinicAddress.push(dataResponse[i])
       }
     }
-    this.partnerAddressList=clinicAddress;
+    this.partnerAddressList = clinicAddress;
+  }
+  async getUserTiming() {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const userId = userData.id;
+    var response: any = await this.profileService.getUserTiming(userId).toPromise();
+    response = response?.responseResult?.data?.content[0].partnerAddresses;
+    const dataClinic: any = [];
+    for (var i = 0; i <= response.length - 1; i++) {
+      dataClinic.push(this.CreateUserTiming(response[i]));
+    }
+    this.timings = dataClinic;
   }
 
+
   CreateUserTiming(formData) {
-    this.userTiming = this.formBuilder.group({
-      name: ['', Validators.compose([Validators.required, WhiteSpaceValidator])],
-      address: [formData.clinicAddress ? formData.clinicAddress : '', Validators.compose([WhiteSpaceValidator])],
-      businessTimings: this.formBuilder.array([this.createSchedule()])
+    let userTiming = this.formBuilder.group({
+      name: [this.UserPartnerName ? this.UserPartnerName : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
+      address: [formData.id ? formData?.id : '', Validators.compose([WhiteSpaceValidator])],
+      businessTimings: this.formBuilder.array([this.createSchedule(formData.businessTimings)])
     });
+    return userTiming;
   }
-  async onSubmit(formType) {
+  async onSubmit(formType, index) {
+    formType = this.timings[index].value
+    console.log(formType)
     const apiData = {
       isPartner: false,
-      id:this[formType].value.address,
-      ...this.timeRangeModify(this[formType].value.businessTimings),
+
+      id: formType.address,
+      ...this.timeRangeModify(formType.businessTimings),
     };
     if (formType) {
       try {
@@ -95,31 +114,70 @@ export class TimingComponent implements OnInit {
     }
   }
 
-  createSchedule() {
-    return this.formBuilder.group({
-      days: [[]],
-      timeRange: this.formBuilder.array([
-        this.createSlots()
-      ])
-    });
+  addUserTiming() {
+    const control = this.timings as FormArray;
+    control.push(this.CreateUserTiming(this.timings));
   }
 
-  createSlots() {
-    return this.formBuilder.group({
-      fromHours: [null, Validators.required],
-      toHours: [null, Validators.required]
-    });
+  createSchedule(formData) {
+    var timing;
+    var daystime: any = [];
+    if (formData && formData[0]) {
+      for (var i = 0; i < formData.length; i++) {
+        for (var j = 0; j < formData[i].days.length; j++) {
+          daystime.push(formData[i].days[j].id)
+        }
+        this.Days = daystime;
+
+        timing = this.formBuilder.group({
+          days: [this.Days ? this.Days : []],
+          timeRange: this.formBuilder.array([
+            this.createSlots(formData[i].timeRange)
+          ])
+        });
+      }
+    } else {
+      timing = this.formBuilder.group({
+        days: [[]],
+        timeRange: this.formBuilder.array([
+          this.createSlots({})
+        ])
+      });
+    }
+    return timing;
   }
-  getscheduleList() {
-    // this.IndexNumber = index;
+
+  createSlots(formData) {
+    var timeRange;
+    if (formData && formData[0]) {
+      for (var i = 0; i < formData.length; i++) {
+        var fromHours = formData[i]?.fromHours + ":" + formData[i]?.fromMinutes;
+        var toHours = formData[i]?.toHours + ":" + formData[i]?.toMinutes;
+        timeRange = this.formBuilder.group({
+          fromHours: [fromHours ? fromHours : '', Validators.required],
+          toHours: [toHours ? toHours : '', Validators.required],
+        });
+      }
+
+    } else {
+      timeRange = this.formBuilder.group({
+        fromHours: [null, Validators.required],
+        toHours: [null, Validators.required],
+      });
+    }
+
+    return timeRange;
+  }
+  getscheduleList(index) {
+    this.IndexNumber = index;
     return this.scheduleList
   }
   get scheduleList() {
-    return (this.userTiming.get('businessTimings') as FormArray).controls;
+    return (this.timings[this.IndexNumber].get('businessTimings') as FormArray).controls;
   }
   addSchedule() {
     const control = this.userTiming.get('businessTimings') as FormArray;
-    control.push(this.createSchedule());
+    control.push(this.createSchedule({}));
   }
   selectWeekDays(day, selectionIndex) {
     const control = this.getScheduleDayControl(selectionIndex);
@@ -129,7 +187,6 @@ export class TimingComponent implements OnInit {
       control.setValue(days.filter(item => item !== day)) :
       days.push(day) && control.setValue(days);
     control.updateValueAndValidity();
-    console.log(days);
   }
 
   getScheduleDayControl(index) {
@@ -141,7 +198,7 @@ export class TimingComponent implements OnInit {
   }
 
   addSlots(index) {
-    ((this.scheduleList[index] as FormGroup).get('timeRange') as FormArray).push(this.createSlots());
+    ((this.scheduleList[index] as FormGroup).get('timeRange') as FormArray).push(this.createSlots({}));
   }
   removeSchedule(scheduleIndex) {
     const control = this.userTiming.get('businessTimings') as FormArray;
@@ -165,7 +222,6 @@ export class TimingComponent implements OnInit {
           toMinutes: 0,
           displayOrder: 0
         };
-        // console.log(time.fromHours)
         const fromHoursBreak = time.fromHours.split(':');
         const fromMinutesBreak = fromHoursBreak[1].split(' ');
         slotData.fromHours = (fromMinutesBreak[1] === 'PM' ? (fromHoursBreak[0] / 1) + 12 : fromHoursBreak[0]) / 1;

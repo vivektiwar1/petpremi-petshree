@@ -79,3 +79,88 @@
     align-items: center;
     justify-content: center;
 }
+
+.btn-large {
+    background-color: #3fbaf2;
+    width: 170px;
+    border-radius: 15px;
+    color: white;
+}
+.line {
+    flex: 2;
+}
+.h6_color {
+    color: rgb(107, 104, 104);
+}
+
+div.pay_details {
+    // border-style: groove;
+    border: 1px solid;
+    border-color: rgb(221, 218, 215);
+}
+.icon {
+    text-align: right;
+}
+.payout_text {
+    font: bold;
+    color: #3fbaf2;
+}
+.text_right {
+    font: bold;
+}
+.text_left {
+    color: rgb(151, 150, 150);
+}
+.icon_color {
+    color: #3fbaf2;
+}
+
+.color-y {
+    color: #efac36;
+}
+.input_text {
+    height: 50px;
+}
+.cr-btn {
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+}
+
+.addAccount {
+    display: none;
+    box-shadow: -1px 1px 5px 1px #aaaaaa;
+    position: absolute;
+    right: -480px;
+    top: 0px;
+    overflow: hidden;
+    z-index: 99999;
+    height: 100vh;
+    width: 30%;
+}
+
+@media Screen and (max-width: 998px) {
+    
+    .addAccount {
+        display: none;
+        position: absolute;
+        overflow: hidden;
+        right: 0;
+        z-index: 99999;
+        height: 100vh;
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .addAccount {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .addAccount {
+        width: 100%;
+    }
+}

@@ -9,7 +9,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatChipsModule } from "@angular/material/chips";
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { ActivatePartnerComponent } from './profile/activate-partner/activate-partner.component';
 import { LightboxModule } from 'ngx-lightbox';
@@ -17,7 +17,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
 import { PartnerComponent } from './partner/partner.component';
 import { TimingComponent } from './timing/timing.component';
-import { PayoutComponent } from './payout/payout.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +25,8 @@ import { PayoutComponent } from './payout/payout.component';
     CustomerProfileComponent,
     ActivatePartnerComponent,
     TimingComponent,
-    PayoutComponent,
     PartnerComponent,
-    
+
   ],
   imports: [
     CommonModule,

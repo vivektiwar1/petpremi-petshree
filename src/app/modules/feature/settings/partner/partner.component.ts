@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { WhiteSpaceValidator } from 'src/app/validators/common';
 import { ActivatePartnerComponent } from '../profile/activate-partner/activate-partner.component';
 import { ProfileService } from '../profile/profile.service';
+import * as $ from "jquery";
 
 
 @Component({
@@ -38,17 +39,6 @@ export class PartnerComponent implements OnInit {
 
   destroy$: Subject<void> = new Subject<void>();
 
-  // weekDays = 
-  // [
-  //   { name: 'S', value: 'sunday' },
-  //   { name: 'M', value: 'monday' },
-  //   { name: 'T', value: 'tuesday' },
-  //   { name: 'W', value: 'wednesday' },
-  //   { name: 'T', value: 'thursday' },
-  //   { name: 'F', value: 'friday' },
-  //   { name: 'S', value: 'saturday' },
-  // ];
-
   titleList: Array<any>;
   genderList: Array<any>;
   countryList: Array<any>;
@@ -59,6 +49,7 @@ export class PartnerComponent implements OnInit {
   canCreatePartner: boolean;
   weekDays: Array<any>;
   schedule: Array<any> = [];
+  Days: Array<any> = [];
   userName: any;
   data: any;
   index: any;
@@ -104,8 +95,6 @@ export class PartnerComponent implements OnInit {
       this.createPartnerForm({});
       await this.getPartnerDetails();
       this.createClinicForm({});
-      // this.createClinicFormData({});
-
       this.apiInProgress.page = false;
     } catch (error) {
       this.apiInProgress.page = false;
@@ -114,6 +103,22 @@ export class PartnerComponent implements OnInit {
   }
   async ngOnInit(): Promise<void> {
 
+  }
+
+
+  openSidePaymentDetails() {
+    $("#addAccount").animate({ right: '0px' }, { duration: 500, easing: "linear" });
+    $("#addAccount").css({ 'display': 'block' });
+  }
+
+  closeSidePaymentDetails() {
+    $("#addAccount").animate({ right: '-480px' }, {
+      duration: 250,
+      easing: "linear",
+      complete: function () {
+        $(this).css({ 'display': 'none' });
+      }
+    });
   }
 
   async getPartnerDetails() {
@@ -217,7 +222,7 @@ export class PartnerComponent implements OnInit {
       state: selectedClinicState?.value,
       city: selectedClinicCity?.value,
       pinCode: selectedClinicPinCode?.value,
-      businessTimings: this.formBuilder.array([this.createSchedule()]),
+      businessTimings: this.formBuilder.array([this.createSchedule(formData.businessTimings)]),
       partnerContactNumbers: this.formBuilder.array([this.createPartnerDetails(formData.partnerContactNumbers)])
     });
 
@@ -322,7 +327,7 @@ export class PartnerComponent implements OnInit {
 
   addSchedule(index) {
     const control = this.clinic[index].get('businessTimings') as FormArray;
-    control.push(this.createSchedule());
+    control.push(this.createSchedule({}));
   }
   addClinic() {
     const control = this.clinic as FormArray;
@@ -337,21 +342,56 @@ export class PartnerComponent implements OnInit {
     return this.clinicData.get(key) as FormControl;
   }
 
-  createSchedule() {
-    return this.formBuilder.group({
-      days: [[]],
-      timeRange: this.formBuilder.array([
-        this.createSlots()
-      ])
-    });
+  createSchedule(formData) {
+    var timings;
+    var daystime: any = [];
+    if (formData && formData[0]) {
+      for (var i = 0; i < formData.length; i++) {
+        for (var j = 0; j < formData[i].days.length; j++) {
+          daystime.push(formData[i].days[j].id)
+        }
+        this.Days = daystime
+        timings = this.formBuilder.group({
+          days: [this.Days ? this.Days : []],
+          timeRange: this.formBuilder.array([
+            this.createSlots(formData[i].timeRange)
+          ])
+        });
+      }
+    } else {
+      timings = this.formBuilder.group({
+        days: [[]],
+        timeRange: this.formBuilder.array([
+          this.createSlots({})
+        ])
+      });
+    }
+    return timings;
   }
 
-  createSlots() {
-    return this.formBuilder.group({
-      fromHours: [null, Validators.required],
-      toHours: [null, Validators.required]
-    });
+  createSlots(formData) {
+
+    var timeRange;
+    if (formData && formData[0]) {
+      for (var i = 0; i < formData.length; i++) {
+        var fromHours = formData[i]?.fromHours + ":" + formData[i]?.fromMinutes;
+        var toHours = formData[i]?.toHours + ":" + formData[i]?.toMinutes;
+        timeRange = this.formBuilder.group({
+          fromHours: [fromHours ? fromHours : '', Validators.required],
+          toHours: [toHours ? toHours : '', Validators.required],
+        });
+      }
+
+    } else {
+      timeRange = this.formBuilder.group({
+        fromHours: [null, Validators.required],
+        toHours: [null, Validators.required],
+      });
+    }
+
+    return timeRange;
   }
+
 
   removeSchedule(scheduleIndex) {
     const control = this.clinicData.get('businessTimings') as FormArray;
@@ -359,7 +399,7 @@ export class PartnerComponent implements OnInit {
   }
 
   addSlots(index) {
-    ((this.scheduleList[index] as FormGroup).get('timeRange') as FormArray).push(this.createSlots());
+    ((this.scheduleList[index] as FormGroup).get('timeRange') as FormArray).push(this.createSlots({}));
   }
 
   removeSlots(scheduleIndex, slotIndex) {
@@ -401,7 +441,6 @@ export class PartnerComponent implements OnInit {
       control.setValue(days.filter(item => item !== day)) :
       days.push(day) && control.setValue(days);
     control.updateValueAndValidity();
-    console.log(days);
   }
 
   getScheduleDayControl(index) {
@@ -445,7 +484,6 @@ export class PartnerComponent implements OnInit {
           toMinutes: 0,
           displayOrder: 0
         };
-        // console.log(time.fromHours)
         const fromHoursBreak = time.fromHours.split(':');
         const fromMinutesBreak = fromHoursBreak[1].split(' ');
         slotData.fromHours = (fromMinutesBreak[1] === 'PM' ? (fromHoursBreak[0] / 1) + 12 : fromHoursBreak[0]) / 1;

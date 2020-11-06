@@ -1,155 +1,180 @@
 <div class="accordion" id="accordionExample">
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h2 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    User Timing
-                </button>
-            </h2>
-        </div>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <h3 class="title-color">User Timings</h3>
 
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body">
-                <div class="container-fluid">
-                    <div class="card-details p-4 active ">
-                        <form class="no-outline" [formGroup]="userTiming" autocomplete="off">
-                            <div class="container-fluid my-3 custom-padding bg-white border-radius-xl"
-                                [class.loader]="apiInProgress.formType">
-                                <div class="row py-3">
-                                    <div class="col-12">
-                                        <h3 class="title-color">User Timings</h3>
-                                        <div class="row mt-3">
-                                            <div class="col-12 col-sm-6 form-group mb-0">
-                                                <label class="mb-1" for="name">Name</label>
-                                                <input class="form-control" id="name" formControlName="name"
-                                                    [value]="UserPartnerName" placeholder="Enter Name" readonly>
-                                            </div>
-                                            <div class="col-12 col-sm-6 form-group mb-0">
-                                                <label class="mb-1" for="address">Address</label>
-                                                <mat-select class="form-control" formControlName="address"
-                                                    placeholder="select Address">
-                                                    <mat-option *ngFor="let clinic of partnerAddressList"
-                                                        id={{clinic.id}} [value]="clinic.id">
-                                                        {{clinic.address}}</mat-option>
-                                                </mat-select>
+        <button class="btn btn-effect text-warning no-outline px-0" (click)="addUserTiming()">
+            + ADD User Timing
+        </button>
+    </div>
+    <div class="card mb-2" *ngFor=" let addTiming of timings; let timingindex=index;">
+        <div class="card-header" id="headingOne">
+            <div class="row">
+                <div class="col-11">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                            attr.data-target="#collapseOne{{timingindex}}" aria-expanded="true"
+                            attr.aria-controls="collapseOne{{timingindex}}">
+                            User Timing {{timingindex}}
+                        </button>
+                    </h2>
+                </div>
+
+                <div class="col-1 text-right">
+                    <a data-toggle="collapse" attr.data-target="#collapseOne{{timingindex}}" aria-expanded="false"
+                        attr.aria-controls="collapseOne{{timingindex}}">
+                        <img src="../../../../../assets/icon/dropdown.svg" class="text-right" heigh="10px" width="20px">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="collapseOne{{timingindex}}" class="collapse" aria-labelledby="headingOne"
+                data-parent="#accordionExample">
+                <div class="card-body px-0 p-md-0">
+                    <div class="container-fluid">
+                        <div class="card-details p-4 p-md-4 active">
+                            <form class="no-outline" [formGroup]="addTiming" autocomplete="off">
+                                <div class="my-3  bg-white border-radius-xl"
+                                    [class.loader]="apiInProgress.formType">
+                                    <div class="row py-3">
+                                        <div class="col-12">
+                                            <div class="row mt-3">
+                                                <div class="col-12 col-sm-6 form-group mb-0">
+                                                    <label class="mb-1" for="name{{timingindex}}">Name</label>
+                                                    <input class="form-control" id="name{{timingindex}}"
+                                                        formControlName="name" [value]="UserPartnerName"
+                                                        placeholder="Enter Name" readonly>
+                                                </div>
+                                                <div class="col-12 col-sm-6 form-group mb-0">
+                                                    <label class="mb-1" for="address">Address</label>
+                                                    <mat-select class="form-control" formControlName="address"
+                                                        placeholder="select Address">
+                                                        <mat-option *ngFor="let clinic of partnerAddressList"
+                                                            id={{clinic.id}} [value]="clinic.id">
+                                                            {{clinic.address}}</mat-option>
+                                                    </mat-select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 d-flex justify-content-between align-items-center">
-                                    <h6 class="title-color mb-0">Add Schedule</h6>
-                                    <button class="btn btn-effect text-warning no-outline px-0"
-                                        (click)="addSchedule()">+ ADD
-                                        ANOTHER SCHEDULE</button>
-                                </div>
-                                <div class="col-12" formArrayName="businessTimings">
-                                    <ng-container *ngFor="let item of getscheduleList(); let scheduleIndex = index">
-                                        <div class="row" [formGroupName]="scheduleIndex" [class.mt-3]="scheduleIndex">
-                                            <div class="col-12 position-relative">
-                                                <div class="border rounded p-2">
-                                                    <div class="row">
-                                                        <div class="col-12 col-md-6 form-group">
-                                                            <label class="mb-1"
-                                                                [for]="'name - ' + scheduleIndex">Schedule
-                                                                {{scheduleIndex + 1}}</label>
-                                                            <mat-chip-list>
-                                                                <mat-chip *ngFor="let day of weekDays"
-                                                                    (click)="selectWeekDays(day.value, scheduleIndex)"
-                                                                    [class.chip-active]="getScheduleDayControl(scheduleIndex)?.value?.includes(day.value)">
-                                                                    {{day.name}}
-                                                                </mat-chip>
-                                                            </mat-chip-list>
-                                                        </div>
-                                                        <div class="col-12 col-md-6" formArrayName="timeRange">
-                                                            <ng-container
-                                                                *ngFor="let item of userTiming.get('businessTimings.' + scheduleIndex + '.timeRange')['controls']; let slotsIndex = index">
-                                                                <div class="row" [formGroupName]="slotsIndex"
-                                                                    [class.mt-3]="slotsIndex">
-                                                                    <div class="col-12 position-relative">
-                                                                        <div class="border rounded p-2">
-                                                                            <div class="row">
-                                                                                <div class="col-12 col-sm-6 form-group">
-                                                                                    <label class="mb-1"
-                                                                                        [for]="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex">From</label>
-                                                                                    <div class="position-relative">
-                                                                                        <input
-                                                                                            class="form-control timer"
-                                                                                            id="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex"
-                                                                                            [ngxTimepicker]="toggleTimepicker"
-                                                                                            readonly
-                                                                                            formControlName="fromHours"
-                                                                                            placeholder="Select Time">
-                                                                                        <ngx-material-timepicker-toggle
-                                                                                            class="position-absolute time-picker"
-                                                                                            [for]="toggleTimepicker">
-                                                                                        </ngx-material-timepicker-toggle>
-                                                                                        <ngx-material-timepicker
-                                                                                            #toggleTimepicker>
-                                                                                        </ngx-material-timepicker>
+                                    <div class="col-12 d-flex justify-content-between align-items-center">
+                                        <h6 class="title-color mb-0">Add Schedule</h6>
+                                        <button class="btn btn-effect text-warning no-outline px-0"
+                                            (click)="addSchedule()">+ ADD
+                                            ANOTHER SCHEDULE</button>
+                                    </div>
+                                    <div class="col-12" formArrayName="businessTimings">
+                                        <ng-container
+                                            *ngFor="let item of getscheduleList(timingindex); let scheduleIndex = index">
+                                            <div class="row" [formGroupName]="scheduleIndex"
+                                                [class.mt-3]="scheduleIndex">
+                                                <div class="col-12 position-relative">
+                                                    <div class="border rounded p-2">
+                                                        <div class="row">
+                                                            <div class="col-12 col-md-6 form-group">
+                                                                <label class="mb-1"
+                                                                    [for]="'name - ' + scheduleIndex">Schedule
+                                                                    {{scheduleIndex + 1}}</label>
+                                                                <mat-chip-list>
+                                                                    <mat-chip *ngFor="let day of weekDays"
+                                                                        (click)="selectWeekDays(day.value, scheduleIndex)"
+                                                                        [class.chip-active]="getScheduleDayControl(scheduleIndex)?.value?.includes(day.value)">
+                                                                        {{day.name}}
+                                                                    </mat-chip>
+                                                                </mat-chip-list>
+                                                            </div>
+                                                            <div class="col-12 col-md-6" formArrayName="timeRange">
+                                                                <ng-container
+                                                                    *ngFor="let item of addTiming.get('businessTimings.' + scheduleIndex + '.timeRange')['controls']; let slotsIndex = index">
+                                                                    <div class="row" [formGroupName]="slotsIndex"
+                                                                        [class.mt-3]="slotsIndex">
+                                                                        <div class="col-12 position-relative">
+                                                                            <div class="border rounded p-2">
+                                                                                <div class="row">
+                                                                                    <div
+                                                                                        class="col-12 col-sm-6 form-group">
+                                                                                        <label class="mb-1"
+                                                                                            [for]="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex + ' - ' + timingindex">From</label>
+                                                                                        <div class="position-relative">
+                                                                                            <input
+                                                                                                class="form-control timer"
+                                                                                                id="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex + ' - ' + {{timingindex}}"
+                                                                                                [ngxTimepicker]="toggleTimepicker"
+                                                                                                readonly
+                                                                                                formControlName="fromHours"
+                                                                                                placeholder="Select Time">
+                                                                                            <ngx-material-timepicker-toggle
+                                                                                                class="position-absolute time-picker"
+                                                                                                [for]="toggleTimepicker">
+                                                                                            </ngx-material-timepicker-toggle>
+                                                                                            <ngx-material-timepicker
+                                                                                                #toggleTimepicker>
+                                                                                            </ngx-material-timepicker>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="col-12 col-sm-6 form-group">
-                                                                                    <label class="mb-1"
-                                                                                        [for]="'toHours - ' + scheduleIndex + ' - ' + slotsIndex">To</label>
-                                                                                    <div class="position-relative">
-                                                                                        <input
-                                                                                            class="form-control timer"
-                                                                                            id="'toHours - ' + scheduleIndex + ' - ' + slotsIndex"
-                                                                                            [ngxTimepicker]="toggleToTimepicker"
-                                                                                            readonly
-                                                                                            formControlName="toHours"
-                                                                                            placeholder="Select Time">
-                                                                                        <ngx-material-timepicker-toggle
-                                                                                            class="position-absolute time-picker"
-                                                                                            [for]="toggleToTimepicker">
-                                                                                        </ngx-material-timepicker-toggle>
-                                                                                        <ngx-material-timepicker
-                                                                                            #toggleToTimepicker>
-                                                                                        </ngx-material-timepicker>
-                                                                                    </div>
+                                                                                    <div
+                                                                                        class="col-12 col-sm-6 form-group">
+                                                                                        <label class="mb-1"
+                                                                                            [for]="'toHours - ' + scheduleIndex + ' - ' + slotsIndex + ' - ' + timingindex">To</label>
+                                                                                        <div class="position-relative">
+                                                                                            <input
+                                                                                                class="form-control timer"
+                                                                                                id="'toHours - ' + scheduleIndex + ' - ' + slotsIndex + ' - ' + {{timingindex}}"
+                                                                                                [ngxTimepicker]="toggleToTimepicker"
+                                                                                                readonly
+                                                                                                formControlName="toHours"
+                                                                                                placeholder="Select Time">
+                                                                                            <ngx-material-timepicker-toggle
+                                                                                                class="position-absolute time-picker"
+                                                                                                [for]="toggleToTimepicker">
+                                                                                            </ngx-material-timepicker-toggle>
+                                                                                            <ngx-material-timepicker
+                                                                                                #toggleToTimepicker>
+                                                                                            </ngx-material-timepicker>
+                                                                                        </div>
 
+                                                                                    </div>
                                                                                 </div>
+                                                                                <mat-icon class="remove-slot small"
+                                                                                    *ngIf="slotsIndex"
+                                                                                    (click)="removeSlots(scheduleIndex, slotsIndex)">
+                                                                                    close</mat-icon>
                                                                             </div>
-                                                                            <mat-icon class="remove-slot small"
-                                                                                *ngIf="slotsIndex"
-                                                                                (click)="removeSlots(scheduleIndex, slotsIndex)">
-                                                                                close</mat-icon>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </ng-container>
-                                                            <div class="col-12">
-                                                                <div class="text-right">
-                                                                    <button
-                                                                        class="btn btn-effect text-warning no-outline px-0"
-                                                                        (click)="addSlots(scheduleIndex)">+
-                                                                        ADD ANOTHER SLOT</button>
+                                                                </ng-container>
+                                                                <div class="col-12">
+                                                                    <div class="text-right">
+                                                                        <button
+                                                                            class="btn btn-effect text-warning no-outline px-0"
+                                                                            (click)="addSlots(scheduleIndex)">+
+                                                                            ADD ANOTHER SLOT</button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <mat-icon class="remove-schedule small" *ngIf="scheduleIndex"
+                                                        (click)="removeSchedule(scheduleIndex)">close</mat-icon>
                                                 </div>
-                                                <mat-icon class="remove-schedule small" *ngIf="scheduleIndex"
-                                                    (click)="removeSchedule(scheduleIndex)">close</mat-icon>
                                             </div>
-                                        </div>
-                                    </ng-container>
+                                        </ng-container>
 
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-12 mt-3 text-right">
-                                <app-button className="btn-warning btn-large" buttonText="Save"
-                                    (buttonClicked)="onSubmit('userTiming')">
-                                </app-button>
-                            </div>
-                        </form>
+                                <div class="col-12 mt-3 text-right">
+                                    <app-button className="btn-warning btn-large" buttonText="Save"
+                                        (buttonClicked)="onSubmit('addTiming',timingindex)">
+                                    </app-button>
+                                </div>
+                            </form>
+
+                        </div>
 
                     </div>
 
                 </div>
-
             </div>
         </div>
     </div>

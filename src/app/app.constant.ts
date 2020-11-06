@@ -69,7 +69,6 @@ export const SettingsTabLinks = [
     { name: 'Profile', value: 'profile', active: true },
     { name: 'Partner', value: 'partner', active: false },
     { name: 'Timings', value: 'timings', active: false },
-    { name: 'Payout', value: 'payout', active: false }
     // { name: 'Customer Profile', value: 'customer-profile', active: false },
     // { name: 'Ecard Media', value: 'ecard-media', active: false }
 ];

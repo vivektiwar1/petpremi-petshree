@@ -226,6 +226,19 @@ export class ProfileService {
   };
     return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
   }
+  getUserTiming(userId){
+    const apiData = {
+      commonParamHash: {
+        entityName: "User",
+        uiBean: "BNEUserTimings",
+        operation: "SEARCH"
+    },
+    objectHash: {
+      id:userId
+    }
+  };
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
+  }
 
 
   searchUserName(userName){
