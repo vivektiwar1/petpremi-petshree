@@ -16,6 +16,7 @@ export class TimingComponent implements OnInit {
   // readonly tabLinks = ClientDetailsTabLinks;
   userTiming: FormGroup;
   addTiming: FormGroup;
+  userLeaves: FormGroup;
   activeTab: string;
   IndexNumber: any;
   UserPartnerName: any;
@@ -54,6 +55,7 @@ export class TimingComponent implements OnInit {
     this.loadData();
     this.getPartnerDetails();
     this.getUserTiming();
+    this.CreateUserLeave({});
 
   }
   async getPartnerDetails() {
@@ -86,14 +88,21 @@ export class TimingComponent implements OnInit {
   CreateUserTiming(formData) {
     let userTiming = this.formBuilder.group({
       name: [this.UserPartnerName ? this.UserPartnerName : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
-      address: [formData.id ? formData?.id : '', Validators.compose([WhiteSpaceValidator])],
+      address:[formData.id? formData.id:'',Validators.compose([WhiteSpaceValidator])],
       businessTimings: this.formBuilder.array([this.createSchedule(formData.businessTimings)])
     });
     return userTiming;
   }
+  CreateUserLeave(formData) {
+    this.userLeaves = this.formBuilder.group({
+      name:[this.UserPartnerName? this.UserPartnerName:'', Validators.compose([Validators.required,WhiteSpaceValidator])],
+      address:[formData.id?formData.id:'',Validators.compose([WhiteSpaceValidator])],
+      businessLeaves: this.formBuilder.array([this.createLeave()])
+    });
+    // return userTiming;
+  }
   async onSubmit(formType, index) {
     formType = this.timings[index].value
-    console.log(formType)
     const apiData = {
       isPartner: false,
 
@@ -113,10 +122,34 @@ export class TimingComponent implements OnInit {
       }
     }
   }
+  async onSubmitLeaves(formType) {
+    const apiData = {
+      ...this.timeRangeModify(this[formType].value.businessLeaves),
+
+    };
+    if (formType) {
+      try {
+        this.apiInProgress[formType] = true;
+        // const response:any= await this.profileService.UpdateUserLeaves();
+        this.apiInProgress[formType] = false;
+        this.toastr.success('Leaves Saved Successfully')
+
+      } catch (error) {
+        console.error(error);
+        this.toastr.error("Something Went Wrong")
+        this.apiInProgress[formType] = false;
+
+      }
+    }
+  }
 
   addUserTiming() {
     const control = this.timings as FormArray;
-    control.push(this.CreateUserTiming(this.timings));
+    control.push(this.CreateUserTiming({}));
+  }
+  addUserLeaves() {
+    const control = this.userLeaves.get('businessLeaves') as FormArray;
+    control.push(this.CreateUserTiming({}));
   }
 
   createSchedule(formData) {
@@ -146,6 +179,25 @@ export class TimingComponent implements OnInit {
     }
     return timing;
   }
+  createLeave() {
+    var timing;
+    timing = this.formBuilder.group({
+      timeRange: this.formBuilder.array([
+        this.createLeaveSlots()
+      ])
+    });
+    return timing;
+  }
+
+
+  createLeaveSlots() {
+    var timeRange;
+    timeRange = this.formBuilder.group({
+      fromHours: [null, Validators.required],
+      toHours: [null, Validators.required],
+    });
+    return timeRange;
+  }
 
   createSlots(formData) {
     var timeRange;
@@ -172,20 +224,31 @@ export class TimingComponent implements OnInit {
     this.IndexNumber = index;
     return this.scheduleList
   }
+  getLeaveList() {
+    // this.IndexNumber = index;
+    return this.leaveList
+  }
   get scheduleList() {
     return (this.timings[this.IndexNumber].get('businessTimings') as FormArray).controls;
   }
+  get leaveList() {
+    return (this.userLeaves.get('businessLeaves') as FormArray).controls;
+  }
   addSchedule() {
-    const control = this.userTiming.get('businessTimings') as FormArray;
+    const control = this.timings[this.IndexNumber].get('businessTimings') as FormArray;
     control.push(this.createSchedule({}));
+  }
+  addLeave() {
+    const control = this.userLeaves.get('businessLeaves') as FormArray;
+    control.push(this.createLeave());
   }
   selectWeekDays(day, selectionIndex) {
     const control = this.getScheduleDayControl(selectionIndex);
     control.markAsTouched();
     const days = control?.value as Array<any>;
-    days.includes(day) ?
-      control.setValue(days.filter(item => item !== day)) :
-      days.push(day) && control.setValue(days);
+    days.includes(day)
+    control.setValue(days.filter(item => item !== day))
+    days.push(day) && control.setValue(days);
     control.updateValueAndValidity();
   }
 
@@ -204,14 +267,21 @@ export class TimingComponent implements OnInit {
     const control = this.userTiming.get('businessTimings') as FormArray;
     control.removeAt(scheduleIndex);
   }
+  removeLeavesSchedule(leaveIndex) {
+    const control = this.userLeaves.get('businessLeaves') as FormArray;
+    control.removeAt(leaveIndex);
+  }
 
   timeRangeModify(Timings) {
     const newTimings = Timings;
     Timings.map((data, slot) => {
       const days = [];
-      data.days.map((day) => {
-        days.push({ id: day });
-      });
+      if (data.days) {
+        data.days.map((day) => {
+          days.push({ id: day });
+        });
+      }
+
       const timeRanges = data.timeRange;
       const newRanges = [];
       timeRanges.map(time => {

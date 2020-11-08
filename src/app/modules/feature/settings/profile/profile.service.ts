@@ -104,7 +104,7 @@ export class ProfileService {
       })
     );
   }
- 
+
   updateDisplayPicture(type: string, formData) {
     return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/user/${type !== 'Profile' ? type.toLowerCase() : 'uploadProfilePic'}`, formData);
   }
@@ -129,14 +129,34 @@ export class ProfileService {
       })
     );
   }
-  updateUserTiming(apiData){
-    return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/partner/address/update/create`,apiData, {
+  updateUserTiming(apiData) {
+    return this.httpClient.post(`${environment.apiBase}/service/oauth2/api/partner/address/update/create`, apiData, {
       headers: {
         'Content-Type': 'application/json'
       }
     }).toPromise()
   }
-  
+  submitBankDetails(formData, partnerId) {
+    console.log(partnerId)
+    const apiData = {
+      commonParamHash: {
+        entityName: "Partner",
+        uiBean: "BNEPartnerCard",
+        headerId: (partnerId || '').toString(),
+        operation: "UPDATE"
+      },
+      objectHash: formData
+    }
+    console.log(apiData)
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData)
+  }
+  UpdateUserLeaves() {
+    const apiData = {
+
+    }
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData)
+
+  }
   updateProfileDetails(formData, userId) {
     const apiData = {
       commonParamHash: {
@@ -164,7 +184,7 @@ export class ProfileService {
     );
   }
 
-  updatePartnerDetails(formData, partnerId){
+  updatePartnerDetails(formData, partnerId) {
 
     const apiData = {
       commonParamHash: {
@@ -212,79 +232,79 @@ export class ProfileService {
     );
 
   }
-  
-  getPartnerDetails(partnerId){
+
+  getPartnerDetails(partnerId) {
     const apiData = {
       commonParamHash: {
-          entityName: 'Partner',
-          uiBean: 'BNEPartnerDetails',
-          operation: 'SEARCH'
+        entityName: 'Partner',
+        uiBean: 'BNEPartnerDetails',
+        operation: 'SEARCH'
       },
       objectHash: {
-          id: partnerId
+        id: partnerId
       }
-  };
+    };
     return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
   }
-  getUserTiming(userId){
+  getUserTiming(userId) {
     const apiData = {
       commonParamHash: {
         entityName: "User",
         uiBean: "BNEUserTimings",
         operation: "SEARCH"
-    },
-    objectHash: {
-      id:userId
-    }
-  };
-    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
-  }
-
-
-  searchUserName(userName){
-    const  apiData = {
-      commonParamHash: {
-          entityName: 'Partner',
-          uiBean: 'BNEPartnerCard',
-          operation: 'SEARCH',
-          pagination: {
-              pageNumber: 0,
-              pageSize: 2
-          },
-          sort: {
-              DESC: [
-                  'id'
-              ]
-          }
       },
       objectHash: {
-          userName
+        id: userId
       }
-  };
+    };
+    return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
+  }
+
+
+  searchUserName(userName) {
+    const apiData = {
+      commonParamHash: {
+        entityName: 'Partner',
+        uiBean: 'BNEPartnerCard',
+        operation: 'SEARCH',
+        pagination: {
+          pageNumber: 0,
+          pageSize: 2
+        },
+        sort: {
+          DESC: [
+            'id'
+          ]
+        }
+      },
+      objectHash: {
+        userName
+      }
+    };
     return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
 
   }
 
-  searchPartnerByNumber(mobile){
-    const  apiData = {
+  searchPartnerByNumber(mobile) {
+    const apiData = {
       commonParamHash: {
         entityName: 'PartnerContactNumber',
         uiBean: 'BNEPartnerContactNumber',
         operation: 'SEARCH',
         pagination: {
-            pageNumber: 0,
-            pageSize: 5
+          pageNumber: 0,
+          pageSize: 5
         },
         sort: {
-            DESC: [
-                'id'
-            ]
+          DESC: [
+            'id'
+          ]
         }
-    },
-    objectHash: {
+      },
+      objectHash: {
         mobile_LIKE: mobile
-    }
-  };
+      }
+    };
     return this.httpClient.post(`${environment.apiBase}/service/api/crud`, apiData);
 
   }

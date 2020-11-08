@@ -189,10 +189,6 @@
                     <div class="container-fluid">
                         <div class="card-details p-0 p-md-4 active ">
                             <div class="row">
-                                <div class="col-sm-12">
-                                    <input type="button" class="btn btn-color btn-large" value="Payout Settings">
-                                    <hr>
-                                </div>
                                 <div class="col-12 col-md-7">
                                     <div class="row no-gutters">
                                         <div class="col-sm-10 mb-3 mt-3">
@@ -216,7 +212,7 @@
                                                             <p class="text_left">Bank Name</p>
                                                         </div>
                                                         <div class="col-sm-5 text-center text-md-right">
-                                                            <p class="text_right">Paytm Payments Bank ltd.</p>
+                                                            <p class="text_right">{{this.partnerDetails.bankName}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="row no-gutters">
@@ -224,7 +220,7 @@
                                                             <p class="text_left">Bank Ifsc Code</p>
                                                         </div>
                                                         <div class="col-sm-5 text-center text-md-right">
-                                                            <p class="text_right">PAYTM10G9778</p>
+                                                            <p class="text_right">{{this.partnerDetails.ifsc}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="row no-gutters">
@@ -232,7 +228,7 @@
                                                             <p class="text_left">Bank Account Number</p>
                                                         </div>
                                                         <div class="col-sm-5 text-right">
-                                                            <p class="text-center text-md-right">9988776655</p>
+                                                            <p class="text-center text-md-right">{{this.partnerDetails.bankAccountNumber}}</p>
                                                         </div>
                                                     </div>
 
@@ -283,21 +279,23 @@
                 <h1 class="text-center pt-5 color-b">Add New Bank Details</h1>
                 <p class="text-center pt-2 color-y">Add your bank details here </p>
 
-                <form action="#" class="mt-4">
-                    <div class="form-group fg">
-                        <input type="number" class="form-control input_text" id="account"
-                            placeholder="Enter Bank Account Number" name="account">
+                <form [formGroup]="accountDetails" class="mt-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control input_text" id="bankName" placeholder="Enter Bank Name"
+                            name="bankName" formControlName="bankName">
                     </div>
-                    <div class="form-group fg   ">
-                        <input type="number" class="form-control input_text" id="reaccount"
-                            placeholder="Re-Enter Bank Account Number" name="reaccount">
+                    <div class="form-group">
+                        <input type="number" class="form-control input_text" id="bankAccountNumber"
+                            placeholder="Enter Bank Account Number" name="bankAccountNumber"
+                            formControlName="bankAccountNumber">
                     </div>
 
-                    <div class="form-group fg   ">
+                    <div class="form-group">
                         <input type="text" class="form-control input_text" id="ifsc" placeholder="Enter Your Ifsc Code"
-                            name="ifsc">
+                            name="ifsc" formControlName="ifsc">
                     </div>
-                    <button type="submit" class="btn btn-primary cr-btn" value="Select">Confirm</button>
+                    <button type="submit" class="btn btn-primary cr-btn" value="Select"
+                        (click)="onSubmitBankDetails('accountDetails')">Confirm</button>
                 </form>
             </div>
         </div>
@@ -374,9 +372,15 @@
                                         </div>
 
                                         <div class="col-12 col-sm-6 form-group">
+
                                             <input-dropdown label="State" name="state" placeholder="Select State"
                                                 [parentFormGroup]="clinicData" [selectionList]="stateList">
                                             </input-dropdown>
+                                            <!-- <mat-label>State</mat-label>
+                                            <mat-select class="border rounded mat-height">
+                                               <input placeholder="Search your state here" (keyup)="onKey($event.target.value)"> 
+                                              <mat-option *ngFor="let state of stateList" [value]="state">{{state.name}}</mat-option>
+                                            </mat-select> -->
                                         </div>
 
                                         <div class="col-12 col-sm-6 form-group">

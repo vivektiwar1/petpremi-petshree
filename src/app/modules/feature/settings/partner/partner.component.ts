@@ -23,6 +23,7 @@ export class PartnerComponent implements OnInit {
   @Input() clinicIndex: any;
   // clinicForm: FormGroup;
   clinicData: FormGroup;
+  accountDetails: FormGroup;
   partnerForm: FormGroup;
   scheduleControl: FormArray;
   slotsControl: FormArray;
@@ -43,6 +44,7 @@ export class PartnerComponent implements OnInit {
   genderList: Array<any>;
   countryList: Array<any>;
   stateList: Array<any>;
+  state: Array<any>;
   cityList: Array<any>;
   clinic: FormArray;
   pinCodeList: Array<any>;
@@ -95,6 +97,7 @@ export class PartnerComponent implements OnInit {
       this.createPartnerForm({});
       await this.getPartnerDetails();
       this.createClinicForm({});
+      this.createAddBankDetails({})
       this.apiInProgress.page = false;
     } catch (error) {
       this.apiInProgress.page = false;
@@ -119,6 +122,14 @@ export class PartnerComponent implements OnInit {
         $(this).css({ 'display': 'none' });
       }
     });
+  }
+  onKey(value) {
+    this.stateList = this.search(value);
+  }
+
+  search(value: string) {
+    let filter = value.toLowerCase();
+    return this.stateList.filter(option => option.name.toLowerCase().startsWith(filter));
   }
 
   async getPartnerDetails() {
@@ -150,6 +161,7 @@ export class PartnerComponent implements OnInit {
     }
   }
 
+
   createPartnerForm(formData) {
     const reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
     let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[1]) as any;
@@ -157,7 +169,6 @@ export class PartnerComponent implements OnInit {
       userName: [formData.partnerName ? formData.partnerName : null, Validators.compose([Validators.required, WhiteSpaceValidator])],
       businessName: [null, Validators.compose([Validators.required])],
       email: [null, Validators.compose([Validators.required, Validators.email])],
-      // partnerCountryId: [selectedPartnerCountry?.id],
       mobile: [, Validators.compose([Validators.required,
       Validators.minLength(selectedCountry?.minLength || 10),
       Validators.maxLength(selectedCountry?.maxLength || 10)])],
@@ -192,6 +203,13 @@ export class PartnerComponent implements OnInit {
     ).subscribe(value => phoneControl.setValue(value, { emitEvent: false }));
 
   }
+  createAddBankDetails(formData) {
+    this.accountDetails = this.formBuilder.group({
+      bankName: [formData?.bankName ? formData?.bankName : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
+      bankAccountNumber: [formData?.bankAccountNumber ? formData?.bankAccountNumber : '', ([Validators.required, WhiteSpaceValidator])],
+      ifsc: [formData?.ifsc ? formData?.ifsc : '', ([Validators.required, WhiteSpaceValidator])]
+    })
+  }
 
   getPartnerFormField(key: string) {
     return this.partnerForm.get(key) as FormControl;
@@ -203,13 +221,11 @@ export class PartnerComponent implements OnInit {
     let selectedClinicCity = (this.cityList?.find(item => item.id === formData.city?.id) || this.cityList?.[0]) as any;
     let selectedClinicPinCode = (this.pinCodeList?.find(item => item.id === formData.pinCode?.id) || this.pinCodeList[0]) as any;
     let selectedCountry = (this.countryList?.find(item => item.id === formData.country?.id) || this.countryList?.[0]) as any;
-    // this.clinicForm = this.partnerDetails?.partnerAddresses.map(res => {
     let clinicForm = this.formBuilder.group({
-      // this.clinicForm = this.formBuilder.group({
       partnerId: this.partnerDetails.id,
       id: formData.id,
       isPartner: true,
-      displayOrder: 1,
+      displayOrder: [formData.displayOrder ? formData.displayOrder : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
       name: [formData.name ? formData.name : '', Validators.compose([Validators.required, WhiteSpaceValidator])],
       latitude: [formData.latitude ? formData.latitude : '', Validators.compose([WhiteSpaceValidator])],
       longitude: [formData.longitude ? formData.longitude : '', Validators.compose([WhiteSpaceValidator])],
@@ -552,7 +568,6 @@ export class PartnerComponent implements OnInit {
 
       const formData = {
         ...this[formType].value,
-        // ...this.modifyFormDataForBackend(formType, 'country'),
       };
       delete formData.countryName;
       try {
@@ -568,7 +583,23 @@ export class PartnerComponent implements OnInit {
       }
     }
   }
-
+  async onSubmitBankDetails(formType) {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const partnerId = userData.partnerId;
+    const formData = {
+      ...this[formType].value,
+    }
+    try {
+      this.apiInProgress[formType] = true;
+      const response: any = await this.profileService.submitBankDetails(formData, partnerId).toPromise();
+      this.apiInProgress[formType] = false;
+      this.toastr.success('Saved Successfully!');
+    } catch (error) {
+      console.error(error);
+      this.toastr.error(`Something went wrong!`);
+      this.apiInProgress[formType] = false;
+    }
+  }
   modifyFormDataForBackend(formType, formField) {
 
     return {
@@ -628,7 +659,6 @@ export class PartnerComponent implements OnInit {
 
 
   show() {
-    console.log(this.clinicData.value);
   }
 
 

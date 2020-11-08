@@ -1,7 +1,146 @@
 <div class="accordion" id="accordionExample">
     <div class="col-12 d-flex justify-content-between align-items-center mb-2">
-        <h3 class="title-color">User Timings</h3>
+        <h3 class="title-color">User Leaves</h3>
+        <button class="btn btn-effect text-warning no-outline px-0" (click)="addUserLeaves()">
+            + ADD User Leave
+        </button>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    User Leaves
+                </button>
+            </h2>
+        </div>
 
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body px-0 p-md-0">
+                <div class="container-fluid">
+                    <div class="card-details p-4 p-md-4 active">
+                        <form class="no-outline" [formGroup]="userLeaves" autocomplete="off">
+                            <div class="row mt-3">
+                                <div class="col-12 col-sm-6 form-group mb-0">
+                                    <label class="mb-1" for="name">Name</label>
+                                    <input class="form-control" id="name" formControlName="name"
+                                        [value]="UserPartnerName" placeholder="Enter Name" readonly>
+                                </div>
+                                <div class="col-12 col-sm-6 form-group mb-0">
+                                    <label class="mb-1" for="address">Address</label>
+                                    <mat-select class="form-control" formControlName="address"
+                                        placeholder="select Address">
+                                        <mat-option *ngFor="let clinic of partnerAddressList" id={{clinic.id}}
+                                            [value]="clinic.id">
+                                            {{clinic.address}}</mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                            <div class="my-3  bg-white border-radius-xl" [class.loader]="apiInProgress.formType">
+                                <div class="col-12 d-flex justify-content-between align-items-center">
+                                    <h6 class="title-color mb-0">Add Leave</h6>
+                                    <button class="btn btn-effect text-warning no-outline px-0" (click)="addLeave()">+
+                                        ADD
+                                        ANOTHER LEAVE</button>
+                                </div>
+                                <div class="col-12" formArrayName="businessLeaves">
+                                    <ng-container *ngFor="let item of getLeaveList(); let leaveIndex = index">
+                                        <div class="row" [formGroupName]="leaveIndex" [class.mt-3]="leaveIndex">
+                                            <div class="col-12 position-relative">
+                                                <div class="border rounded p-2">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-12" formArrayName="timeRange">
+                                                            <ng-container
+                                                                *ngFor="let item of userLeaves.get('businessLeaves.' + leaveIndex + '.timeRange')['controls']; let slotsIndex = index">
+                                                                <div class="row" [formGroupName]="slotsIndex"
+                                                                    [class.mt-3]="slotsIndex">
+                                                                    <div class="col-12 position-relative">
+                                                                        <div class=" p-2">
+                                                                            <div class="row">
+                                                                                <div class="col-12 col-sm-6 form-group">
+                                                                                    <label class="mb-1"
+                                                                                        [for]="'fromHours - ' + leaveIndex + ' - ' + slotsIndex">From
+                                                                                        Time</label>
+                                                                                    <div class="position-relative">
+                                                                                        <input
+                                                                                            class="form-control timer"
+                                                                                            id="'fromHours - ' + scheduleIndex + ' - ' + slotsIndex"
+                                                                                            [ngxTimepicker]="toggleTimepicker"
+                                                                                            readonly
+                                                                                            formControlName="fromHours"
+                                                                                            placeholder="Select Time">
+                                                                                        <ngx-material-timepicker-toggle
+                                                                                            class="position-absolute time-picker"
+                                                                                            [for]="toggleTimepicker">
+                                                                                        </ngx-material-timepicker-toggle>
+                                                                                        <ngx-material-timepicker
+                                                                                            #toggleTimepicker>
+                                                                                        </ngx-material-timepicker>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-6 form-group">
+                                                                                    <label class="mb-1"
+                                                                                        [for]="'toHours - ' + leaveIndex + ' - ' + slotsIndex">To
+                                                                                        Time</label>
+                                                                                    <div class="position-relative">
+                                                                                        <input
+                                                                                            class="form-control timer"
+                                                                                            id="'toHours - ' + scheduleIndex + ' - ' + slotsIndex"
+                                                                                            [ngxTimepicker]="toggleToTimepicker"
+                                                                                            readonly
+                                                                                            formControlName="toHours"
+                                                                                            placeholder="Select Time">
+                                                                                        <ngx-material-timepicker-toggle
+                                                                                            class="position-absolute time-picker"
+                                                                                            [for]="toggleToTimepicker">
+                                                                                        </ngx-material-timepicker-toggle>
+                                                                                        <ngx-material-timepicker
+                                                                                            #toggleToTimepicker>
+                                                                                        </ngx-material-timepicker>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </ng-container>
+                                                            <div class="col-12">
+                                                                <div class="text-right">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <mat-icon class="remove-schedule small" *ngIf="leaveIndex"
+                                                    (click)="removeLeavesSchedule(leaveIndex)">close</mat-icon>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3 text-right">
+                                <app-button className="btn-warning btn-large" buttonText="Save"
+                                    (buttonClicked)="onSubmitLeaves('userLeaves')">
+                                </app-button>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="accordion" id="accordionExample">
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <h3 class="title-color">User Timings & Leaves</h3>
         <button class="btn btn-effect text-warning no-outline px-0" (click)="addUserTiming()">
             + ADD User Timing
         </button>
@@ -34,8 +173,7 @@
                     <div class="container-fluid">
                         <div class="card-details p-4 p-md-4 active">
                             <form class="no-outline" [formGroup]="addTiming" autocomplete="off">
-                                <div class="my-3  bg-white border-radius-xl"
-                                    [class.loader]="apiInProgress.formType">
+                                <div class="my-3  bg-white border-radius-xl" [class.loader]="apiInProgress.formType">
                                     <div class="row py-3">
                                         <div class="col-12">
                                             <div class="row mt-3">
@@ -179,3 +317,31 @@
         </div>
     </div>
 </div>
+
+
+<!-- <div class="accordion" id="accordionExample">
+   
+    <div class="card mb-2" >
+        <div class="card-header" id="headingOne">
+            <div class="row">
+                <div class="col-11">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                            attr.data-target="#collapseOne" aria-expanded="true"
+                            attr.aria-controls="collapseOne">
+                            User Timing 
+                        </button>
+                    </h2>
+                </div>
+
+                <div class="col-1 text-right">
+                    <a data-toggle="collapse" attr.data-target="#collapseOne" aria-expanded="false"
+                        attr.aria-controls="collapseOne">
+                        <img src="../../../../../assets/icon/dropdown.svg" class="text-right" heigh="10px" width="20px">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                data-parent="#accordionExample"> -->

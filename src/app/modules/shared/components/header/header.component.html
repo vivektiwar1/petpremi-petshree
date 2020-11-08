@@ -35,7 +35,7 @@
                                     [value]="translate.currentLang">
                           <mat-option *ngFor="let lang of languages" [value]="lang.language">
                             <img [src]="lang?.image" class="" height="40" width="40">
-                              {{lang.language | uppercase}}</mat-option>
+                              {{lang.name | uppercase}}</mat-option>
                         </mat-select>
                       </li>
                 </div>
