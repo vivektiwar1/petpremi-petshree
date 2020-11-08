@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { ProfileComponent } from './profile/profile.component';
-import { SettingsComponent } from './settings.component';
-import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
-import { PartnerComponent } from './partner/partner.component';
-import { TimingComponent } from './timing/timing.component';
+import {ProfileComponent} from './profile/profile.component';
+import {SettingsComponent} from './settings.component';
+import {CustomerProfileComponent} from './customer-profile/customer-profile.component';
+import {PartnerComponent} from './partner/partner.component';
+import {TimingComponent} from './timing/timing.component';
 
 const routes: Routes = [
   {
